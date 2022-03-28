@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.employees.ui;
 import cz.muni.fi.pv168.employees.data.TestDataGenerator;
 import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Employee;
+import cz.muni.fi.pv168.employees.ui.action.AddAction;
 import cz.muni.fi.pv168.employees.ui.action.DeleteAction;
 import cz.muni.fi.pv168.employees.ui.action.QuitAction;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
@@ -35,11 +36,13 @@ public class MainWindow {
     private final ListModel<Department> departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
 
     private final Action quitAction = new QuitAction();
+    private final Action addAction;
     private final Action deleteAction;
 
     public MainWindow() {
         frame = createFrame();
         employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
+        addAction = new AddAction(employeeTable, testDataGenerator, departmentListModel);
         deleteAction = new DeleteAction(employeeTable);
         employeeTable.setComponentPopupMenu(createEmployeeTablePopupMenu());
         frame.add(new JScrollPane(employeeTable), BorderLayout.CENTER);
@@ -84,14 +87,7 @@ public class MainWindow {
         var menuBar = new JMenuBar();
         var editMenu = new JMenu("Edit");
         editMenu.setMnemonic('e');
-
-        var addMenuItem = new JMenuItem("Add", Icons.ADD_ICON);
-        addMenuItem.addActionListener(this::addRow);
-        addMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl N"));
-        addMenuItem.setToolTipText("Adds new employee");
-        addMenuItem.setMnemonic('a');
-        editMenu.add(addMenuItem);
-
+        editMenu.add(addAction);
         editMenu.addSeparator();
         editMenu.add(quitAction);
         menuBar.add(editMenu);
@@ -107,13 +103,6 @@ public class MainWindow {
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         // here you can put the code for handling selection change
-    }
-
-    private void addRow(ActionEvent e) {
-        var employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
-        var dialog = new EmployeeDialog(testDataGenerator.createTestEmployee(), departmentListModel);
-        dialog.show(employeeTable, "Add Employee")
-                .ifPresent(employeeTableModel::addRow);
     }
 
     private void editSelectedRow(ActionEvent e) {
