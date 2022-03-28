@@ -6,11 +6,13 @@ public class Employee {
 
     private String firstName;
     private String lastName;
+    private Gender gender;
     private Department department;
 
-    public Employee(String firstName, String lastName, Department department) {
+    public Employee(String firstName, String lastName, Gender gender, Department department) {
         setFirstName(firstName);
         setLastName(lastName);
+        setGender(gender);
         setDepartment(department);
     }
 
@@ -28,6 +30,14 @@ public class Employee {
 
     public void setLastName(String lastName) {
         this.lastName = Objects.requireNonNull(lastName, "lastName must not be null");
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = Objects.requireNonNull(gender, "gender must not be null");
     }
 
     public Department getDepartment() {

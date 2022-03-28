@@ -2,7 +2,9 @@ package cz.muni.fi.pv168.employees.data;
 
 import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Employee;
+import cz.muni.fi.pv168.employees.model.Gender;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -11,14 +13,14 @@ import java.util.stream.Stream;
 
 public final class TestDataGenerator {
 
-    private static final Map<Integer, List<String>> FIRST_NAMES = Map.of(
-            0, List.of("Jiří", "Jan", "Petr", "Josef", "Pavel", "Martin", "Tomáš", "Jaroslav", "Miroslav", "Zdeněk"),
-            1, List.of("Jana", "Marie", "Eva", "Hana", "Anna", "Lenka", "Kateřina", "Lucie", "Věra", "Alena")
+    private static final Map<Gender, List<String>> FIRST_NAMES = Map.of(
+            Gender.MALE, List.of("Jiří", "Jan", "Petr", "Josef", "Pavel", "Martin", "Tomáš", "Jaroslav", "Miroslav", "Zdeněk"),
+            Gender.FEMALE, List.of("Jana", "Marie", "Eva", "Hana", "Anna", "Lenka", "Kateřina", "Lucie", "Věra", "Alena")
     );
 
-    private static final Map<Integer, List<String>> LAST_NAMES = Map.of(
-            0, List.of("Novák", "Novotný", "Dvořák", "Černý", "Procházka", "Šťastný", "Veselý", "Horák", "Němec", "Pokorný"),
-            1, List.of("Nováková", "Novotná", "Dvořáková", "Černá", "Procházková", "Šťastná", "Veselá", "Horáková", "Němcová", "Pokorná")
+    private static final Map<Gender, List<String>> LAST_NAMES = Map.of(
+            Gender.MALE, List.of("Novák", "Novotný", "Dvořák", "Černý", "Procházka", "Šťastný", "Veselý", "Horák", "Němec", "Pokorný"),
+            Gender.FEMALE, List.of("Nováková", "Novotná", "Dvořáková", "Černá", "Procházková", "Šťastná", "Veselá", "Horáková", "Němcová", "Pokorná")
     );
 
     private static final List<Department> DEPARTMENTS = List.of(
@@ -30,11 +32,11 @@ public final class TestDataGenerator {
     private final Random random = new Random(2L);
 
     public Employee createTestEmployee() {
-        int gender = random.nextInt(2);
+        Gender gender = selectRandom(Arrays.asList(Gender.values()));
         String firstName = selectRandom(FIRST_NAMES.get(gender));
         String lastName = selectRandom(LAST_NAMES.get(gender));
         Department department = selectRandom(DEPARTMENTS);
-        return new Employee(firstName, lastName, department);
+        return new Employee(firstName, lastName, gender, department);
     }
 
     public List<Employee> createTestEmployees(int count) {
