@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.employees.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Employee {
@@ -7,12 +8,14 @@ public class Employee {
     private String firstName;
     private String lastName;
     private Gender gender;
+    private LocalDate birthDate;
     private Department department;
 
-    public Employee(String firstName, String lastName, Gender gender, Department department) {
+    public Employee(String firstName, String lastName, Gender gender, LocalDate birthDate, Department department) {
         setFirstName(firstName);
         setLastName(lastName);
         setGender(gender);
+        setBirthDate(birthDate);
         setDepartment(department);
     }
 
@@ -38,6 +41,14 @@ public class Employee {
 
     public void setGender(Gender gender) {
         this.gender = Objects.requireNonNull(gender, "gender must not be null");
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = Objects.requireNonNull(birthDate, "birthDate must not be null");
     }
 
     public Department getDepartment() {
