@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.employees.ui;
 
 import cz.muni.fi.pv168.employees.data.TestDataGenerator;
-import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Employee;
 import cz.muni.fi.pv168.employees.ui.action.AddAction;
 import cz.muni.fi.pv168.employees.ui.action.DeleteAction;
@@ -18,7 +17,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
-import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.BorderLayout;
@@ -27,9 +25,6 @@ import java.util.List;
 public class MainWindow {
 
     private final JFrame frame;
-    private final JTable employeeTable;
-    private final TestDataGenerator testDataGenerator = new TestDataGenerator();
-    private final ListModel<Department> departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
 
     private final Action quitAction = new QuitAction();
     private final Action addAction;
@@ -38,7 +33,9 @@ public class MainWindow {
 
     public MainWindow() {
         frame = createFrame();
-        employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
+        var testDataGenerator = new TestDataGenerator();
+        var employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
+        var departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
         addAction = new AddAction(employeeTable, testDataGenerator, departmentListModel);
         deleteAction = new DeleteAction(employeeTable);
         editAction = new EditAction(employeeTable, departmentListModel);
