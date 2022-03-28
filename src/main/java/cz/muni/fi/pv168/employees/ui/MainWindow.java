@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.employees.ui;
 
 import cz.muni.fi.pv168.employees.data.TestDataGenerator;
 import cz.muni.fi.pv168.employees.model.Employee;
+import cz.muni.fi.pv168.employees.model.Gender;
 import cz.muni.fi.pv168.employees.ui.action.AddAction;
 import cz.muni.fi.pv168.employees.ui.action.DeleteAction;
 import cz.muni.fi.pv168.employees.ui.action.EditAction;
@@ -10,6 +11,8 @@ import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
 
 import javax.swing.Action;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -62,6 +65,8 @@ public class MainWindow {
         var table = new JTable(model);
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        var genderComboBox = new JComboBox<>(Gender.values());
+        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
         return table;
     }
 
