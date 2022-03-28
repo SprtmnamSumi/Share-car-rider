@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.employees.ui;
 import cz.muni.fi.pv168.employees.data.TestDataGenerator;
 import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Employee;
+import cz.muni.fi.pv168.employees.ui.action.DeleteAction;
 import cz.muni.fi.pv168.employees.ui.action.QuitAction;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.employees.ui.dialog.EmployeeDialog;
@@ -24,8 +25,6 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainWindow {
@@ -36,10 +35,13 @@ public class MainWindow {
     private final ListModel<Department> departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
 
     private final Action quitAction = new QuitAction();
+    private final Action deleteAction;
 
     public MainWindow() {
         frame = createFrame();
         employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
+        deleteAction = new DeleteAction(employeeTable);
+        employeeTable.setComponentPopupMenu(createEmployeeTablePopupMenu());
         frame.add(new JScrollPane(employeeTable), BorderLayout.CENTER);
         frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
         frame.setJMenuBar(createMenuBar());
@@ -61,19 +63,13 @@ public class MainWindow {
         var table = new JTable(model);
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
-        table.setComponentPopupMenu(createEmployeeTablePopupMenu());
         return table;
     }
 
     private JPopupMenu createEmployeeTablePopupMenu() {
         var menu = new JPopupMenu();
 
-        var deleteMenuItem = new JMenuItem("Delete", Icons.DELETE_ICON);
-        deleteMenuItem.addActionListener(this::deleteSelectedRows);
-        deleteMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl D"));
-        deleteMenuItem.setToolTipText("Deletes selected employees");
-        deleteMenuItem.setMnemonic('d');
-        menu.add(deleteMenuItem);
+        menu.add(deleteAction);
 
         var editMenuItem = new JMenuItem("Edit", Icons.EDIT_ICON);
         editMenuItem.addActionListener(this::editSelectedRow);
@@ -131,17 +127,5 @@ public class MainWindow {
         var dialog = new EmployeeDialog(employee, departmentListModel);
         dialog.show(employeeTable, "Edit Employee")
                 .ifPresent(employeeTableModel::updateRow);
-    }
-
-    private void deleteSelectedRows(ActionEvent e) {
-        var employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
-        Arrays.stream(employeeTable.getSelectedRows())
-                // view row index must be converted to model row index
-                .map(employeeTable::convertRowIndexToModel)
-                .boxed()
-                // We need to delete rows in descending order to not change index of rows
-                // which are not deleted yet
-                .sorted(Comparator.reverseOrder())
-                .forEach(employeeTableModel::deleteRow);
     }
 }
