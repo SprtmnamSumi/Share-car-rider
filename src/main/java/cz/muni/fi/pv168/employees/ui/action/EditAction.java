@@ -32,6 +32,9 @@ public final class EditAction extends AbstractAction {
         if (selectedRows.length != 1) {
             throw new IllegalStateException("Invalid selected rows count (must be 1): " + selectedRows.length);
         }
+        if (employeeTable.isEditing()) {
+            employeeTable.getCellEditor().cancelCellEditing();
+        }
         var employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
         int modelRow = employeeTable.convertRowIndexToModel(selectedRows[0]);
         var employee = employeeTableModel.getEntity(modelRow);
