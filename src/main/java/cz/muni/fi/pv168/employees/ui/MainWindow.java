@@ -3,12 +3,13 @@ package cz.muni.fi.pv168.employees.ui;
 import cz.muni.fi.pv168.employees.data.TestDataGenerator;
 import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Employee;
+import cz.muni.fi.pv168.employees.ui.action.QuitAction;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.employees.ui.dialog.EmployeeDialog;
 import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
 import cz.muni.fi.pv168.employees.ui.resources.Icons;
 
-import javax.swing.JButton;
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -33,6 +34,8 @@ public class MainWindow {
     private final JTable employeeTable;
     private final TestDataGenerator testDataGenerator = new TestDataGenerator();
     private final ListModel<Department> departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
+
+    private final Action quitAction = new QuitAction();
 
     public MainWindow() {
         frame = createFrame();
@@ -94,23 +97,15 @@ public class MainWindow {
         editMenu.add(addMenuItem);
 
         editMenu.addSeparator();
-        var quitMenuItem = new JMenuItem("Quit", Icons.QUIT_ICON);
-        quitMenuItem.setToolTipText("Terminates the application");
-        quitMenuItem.addActionListener(this::quit);
-        quitMenuItem.setMnemonic('q');
-        editMenu.add(quitMenuItem);
+        editMenu.add(quitAction);
         menuBar.add(editMenu);
         return menuBar;
     }
 
     private JToolBar createToolbar() {
         var toolbar = new JToolBar();
-        var quitButton = new JButton(Icons.QUIT_ICON);
-        quitButton.addActionListener(this::quit);
-        quitButton.setToolTipText("Terminates the application");
-        toolbar.add(quitButton);
+        toolbar.add(quitAction);
         toolbar.addSeparator();
-
         return toolbar;
     }
 
@@ -148,9 +143,5 @@ public class MainWindow {
                 // which are not deleted yet
                 .sorted(Comparator.reverseOrder())
                 .forEach(employeeTableModel::deleteRow);
-    }
-
-    private void quit(ActionEvent e) {
-        System.exit(0);
     }
 }
