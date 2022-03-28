@@ -5,27 +5,23 @@ import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Employee;
 import cz.muni.fi.pv168.employees.ui.action.AddAction;
 import cz.muni.fi.pv168.employees.ui.action.DeleteAction;
+import cz.muni.fi.pv168.employees.ui.action.EditAction;
 import cz.muni.fi.pv168.employees.ui.action.QuitAction;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
-import cz.muni.fi.pv168.employees.ui.dialog.EmployeeDialog;
 import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
-import cz.muni.fi.pv168.employees.ui.resources.Icons;
 
 import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class MainWindow {
@@ -38,12 +34,14 @@ public class MainWindow {
     private final Action quitAction = new QuitAction();
     private final Action addAction;
     private final Action deleteAction;
+    private final Action editAction;
 
     public MainWindow() {
         frame = createFrame();
         employeeTable = createEmployeeTable(testDataGenerator.createTestEmployees(10));
         addAction = new AddAction(employeeTable, testDataGenerator, departmentListModel);
         deleteAction = new DeleteAction(employeeTable);
+        editAction = new EditAction(employeeTable, departmentListModel);
         employeeTable.setComponentPopupMenu(createEmployeeTablePopupMenu());
         frame.add(new JScrollPane(employeeTable), BorderLayout.CENTER);
         frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
@@ -71,15 +69,8 @@ public class MainWindow {
 
     private JPopupMenu createEmployeeTablePopupMenu() {
         var menu = new JPopupMenu();
-
         menu.add(deleteAction);
-
-        var editMenuItem = new JMenuItem("Edit", Icons.EDIT_ICON);
-        editMenuItem.addActionListener(this::editSelectedRow);
-        editMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl E"));
-        editMenuItem.setToolTipText("Edits selected employee");
-        editMenuItem.setMnemonic('e');
-        menu.add(editMenuItem);
+        menu.add(editAction);
         return menu;
     }
 
@@ -103,18 +94,5 @@ public class MainWindow {
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         // here you can put the code for handling selection change
-    }
-
-    private void editSelectedRow(ActionEvent e) {
-        int[] selectedRows = employeeTable.getSelectedRows();
-        if (selectedRows.length != 1) {
-            throw new IllegalStateException("Invalid selected rows count (must be 1): " + selectedRows.length);
-        }
-        var employeeTableModel = (EmployeeTableModel) employeeTable.getModel();
-        int modelRow = employeeTable.convertRowIndexToModel(selectedRows[0]);
-        var employee = employeeTableModel.getEntity(modelRow);
-        var dialog = new EmployeeDialog(employee, departmentListModel);
-        dialog.show(employeeTable, "Edit Employee")
-                .ifPresent(employeeTableModel::updateRow);
     }
 }
