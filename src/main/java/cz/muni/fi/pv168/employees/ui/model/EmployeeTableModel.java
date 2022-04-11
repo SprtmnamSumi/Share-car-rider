@@ -11,6 +11,12 @@ public class EmployeeTableModel extends AbstractTableModel {
 
     private final List<Employee> employees;
 
+    private final List<Column<Employee, ?>> columns = List.of(
+            Column.editable("First name", String.class, Employee::getFirstName, Employee::setFirstName),
+            Column.editable("Last name", String.class, Employee::getLastName, Employee::setLastName),
+            Column.editable("Department", Department.class, Employee::getDepartment, Employee::setDepartment)
+    );
+
     public EmployeeTableModel(List<Employee> employees) {
         this.employees = new ArrayList<>(employees);
     }
@@ -22,77 +28,34 @@ public class EmployeeTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return columns.size();
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         var employee = getEntity(rowIndex);
-        switch (columnIndex) {
-            case 0:
-                return employee.getFirstName();
-            case 1:
-                return employee.getLastName();
-            case 2:
-                return employee.getDepartment();
-            default:
-                throw new IndexOutOfBoundsException("Invalid column index: " + columnIndex);
-        }
+        return columns.get(columnIndex).getValue(employee);
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "First Name";
-            case 1:
-                return "Last Name";
-            case 2:
-                return "Department";
-            default:
-                throw new IndexOutOfBoundsException("Invalid column index: " + columnIndex);
-        }
+        return columns.get(columnIndex).getName();
     }
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-            case 1:
-                return String.class;
-            case 2:
-                return Department.class;
-            default:
-                throw new IndexOutOfBoundsException("Invalid column index: " + columnIndex);
-        }
+        return columns.get(columnIndex).getColumnType();
     }
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-            case 1:
-                return true;
-            case 2:
-                return false;
-            default:
-                throw new IndexOutOfBoundsException("Invalid column index: " + columnIndex);
-        }
+        return columns.get(columnIndex).isEditable();
     }
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        var employee = employees.get(rowIndex);
-        switch (columnIndex) {
-            case 0:
-                employee.setFirstName((String) value);
-                break;
-            case 1:
-                employee.setLastName((String) value);
-                break;
-            default:
-                throw new IndexOutOfBoundsException("Invalid column index: " + columnIndex);
-        }
+        var employee = getEntity(rowIndex);
+        columns.get(columnIndex).setValue(value, employee);
     }
 
     public void deleteRow(int rowIndex) {
