@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.employees.ui.model;
 
 import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Employee;
+import cz.muni.fi.pv168.employees.model.Gender;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -14,7 +15,8 @@ public class EmployeeTableModel extends AbstractTableModel {
     private final List<Column<Employee, ?>> columns = List.of(
             Column.editable("First name", String.class, Employee::getFirstName, Employee::setFirstName),
             Column.editable("Last name", String.class, Employee::getLastName, Employee::setLastName),
-            Column.editable("Department", Department.class, Employee::getDepartment, Employee::setDepartment)
+            Column.editable("Department", Department.class, Employee::getDepartment, Employee::setDepartment),
+            Column.editable("Gender", Gender.class, Employee::getGender, Employee::setGender)
     );
 
     public EmployeeTableModel(List<Employee> employees) {
