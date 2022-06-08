@@ -74,6 +74,7 @@ public class MainWindow {
         var menu = new JPopupMenu();
         menu.add(deleteAction);
         menu.add(editAction);
+        menu.add(addAction);
         return menu;
     }
 
