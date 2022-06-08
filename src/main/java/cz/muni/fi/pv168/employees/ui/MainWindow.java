@@ -82,6 +82,8 @@ public class MainWindow {
         var editMenu = new JMenu("Edit");
         editMenu.setMnemonic('e');
         editMenu.add(addAction);
+        editMenu.add(editAction);
+        editMenu.add(deleteAction);
         editMenu.addSeparator();
         editMenu.add(quitAction);
         menuBar.add(editMenu);
