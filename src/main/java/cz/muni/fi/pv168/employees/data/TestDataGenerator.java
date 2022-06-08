@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.time.Month.DECEMBER;
@@ -52,7 +51,7 @@ public final class TestDataGenerator {
         return Stream
                 .generate(this::createTestEmployee)
                 .limit(count)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<Department> getDepartments() {
