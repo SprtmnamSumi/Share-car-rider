@@ -92,6 +92,9 @@ public class MainWindow {
         var toolbar = new JToolBar();
         toolbar.add(quitAction);
         toolbar.addSeparator();
+        toolbar.add(addAction);
+        toolbar.add(editAction);
+        toolbar.add(deleteAction);
         return toolbar;
     }
 
