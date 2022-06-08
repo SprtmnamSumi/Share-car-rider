@@ -48,6 +48,7 @@ public class MainWindow {
         frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
         frame.setJMenuBar(createMenuBar());
         frame.pack();
+        changeActionsState(0);
     }
 
     public void show() {
@@ -103,6 +104,12 @@ public class MainWindow {
 
     private void rowSelectionChanged(ListSelectionEvent listSelectionEvent) {
         var selectionModel = (ListSelectionModel) listSelectionEvent.getSource();
-        // here you can put the code for handling selection change
+        var count = selectionModel.getSelectedItemsCount();
+        changeActionsState(count);
+    }
+
+    private void changeActionsState(int selectedItemsCount) {
+        editAction.setEnabled(selectedItemsCount == 1);
+        deleteAction.setEnabled(selectedItemsCount >= 1);
     }
 }
