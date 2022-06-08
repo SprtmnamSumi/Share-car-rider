@@ -15,12 +15,12 @@ public class EmployeeTableModel extends AbstractTableModel {
     private final List<Employee> employees;
 
     private final List<Column<Employee, ?>> columns = List.of(
-            Column.editable("First name", String.class, Employee::getFirstName, Employee::setFirstName),
-            Column.editable("Last name", String.class, Employee::getLastName, Employee::setLastName),
-            Column.editable("Department", Department.class, Employee::getDepartment, Employee::setDepartment),
             Column.editable("Gender", Gender.class, Employee::getGender, Employee::setGender),
             Column.readonly("Age", Integer.class, this::calculateAge),
-            Column.readonly("Birthdate", LocalDate.class, Employee::getBirthDate)
+            Column.editable("Last name", String.class, Employee::getLastName, Employee::setLastName),
+            Column.editable("First name", String.class, Employee::getFirstName, Employee::setFirstName),
+            Column.readonly("Birthdate", LocalDate.class, Employee::getBirthDate),
+            Column.editable("Department", Department.class, Employee::getDepartment, Employee::setDepartment)
     );
 
     private int calculateAge(Employee employee) {
