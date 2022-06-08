@@ -19,7 +19,8 @@ public class EmployeeTableModel extends AbstractTableModel {
             Column.editable("Last name", String.class, Employee::getLastName, Employee::setLastName),
             Column.editable("Department", Department.class, Employee::getDepartment, Employee::setDepartment),
             Column.editable("Gender", Gender.class, Employee::getGender, Employee::setGender),
-            Column.readonly("Age", Integer.class, this::calculateAge)
+            Column.readonly("Age", Integer.class, this::calculateAge),
+            Column.readonly("Birthdate", LocalDate.class, Employee::getBirthDate)
     );
 
     private int calculateAge(Employee employee) {
