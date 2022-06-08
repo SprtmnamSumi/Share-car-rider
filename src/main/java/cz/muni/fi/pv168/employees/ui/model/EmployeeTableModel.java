@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class EmployeeTableModel extends AbstractTableModel {
@@ -29,7 +30,7 @@ public class EmployeeTableModel extends AbstractTableModel {
                 .getYears();
     }
 
-    public EmployeeTableModel(List<Employee> employees) {
+    public EmployeeTableModel(Collection<Employee> employees) {
         this.employees = new ArrayList<>(employees);
     }
 
