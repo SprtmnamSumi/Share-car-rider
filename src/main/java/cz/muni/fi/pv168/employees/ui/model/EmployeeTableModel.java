@@ -5,6 +5,8 @@ import cz.muni.fi.pv168.employees.model.Employee;
 import cz.muni.fi.pv168.employees.model.Gender;
 
 import javax.swing.table.AbstractTableModel;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,15 @@ public class EmployeeTableModel extends AbstractTableModel {
             Column.editable("First name", String.class, Employee::getFirstName, Employee::setFirstName),
             Column.editable("Last name", String.class, Employee::getLastName, Employee::setLastName),
             Column.editable("Department", Department.class, Employee::getDepartment, Employee::setDepartment),
-            Column.editable("Gender", Gender.class, Employee::getGender, Employee::setGender)
+            Column.editable("Gender", Gender.class, Employee::getGender, Employee::setGender),
+            Column.readonly("Age", Integer.class, this::calculateAge)
     );
+
+    private int calculateAge(Employee employee) {
+        return Period
+                .between(employee.getBirthDate(), LocalDate.now())
+                .getYears();
+    }
 
     public EmployeeTableModel(List<Employee> employees) {
         this.employees = new ArrayList<>(employees);
