@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.employees.model.Gender;
 import cz.muni.fi.pv168.employees.ui.model.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
+import cz.muni.fi.pv168.employees.ui.renderers.GenderRenderer;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -45,6 +46,8 @@ public class EmployeeTablePanel extends JPanel {
         table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
         var departmentComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(departmentListModel));
         table.setDefaultEditor(Department.class, new DefaultCellEditor(departmentComboBox));
+
+        table.setDefaultRenderer(Gender.class, new GenderRenderer());
 
         return table;
     }
