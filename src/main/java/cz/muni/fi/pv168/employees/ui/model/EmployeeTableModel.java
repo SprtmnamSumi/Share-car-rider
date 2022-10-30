@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class EmployeeTableModel extends AbstractTableModel {
+/**
+ * {@link javax.swing.table.TableModel} for {@link Employee} objects.
+ */
+public class EmployeeTableModel extends AbstractTableModel implements EntityTableModel<Employee> {
 
     private final List<Employee> employees;
 
@@ -87,6 +90,7 @@ public class EmployeeTableModel extends AbstractTableModel {
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
 
+    @Override
     public Employee getEntity(int rowIndex) {
         return employees.get(rowIndex);
     }

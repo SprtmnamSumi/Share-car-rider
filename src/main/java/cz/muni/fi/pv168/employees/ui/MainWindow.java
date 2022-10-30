@@ -7,6 +7,8 @@ import cz.muni.fi.pv168.employees.ui.action.EditAction;
 import cz.muni.fi.pv168.employees.ui.action.QuitAction;
 import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
+import cz.muni.fi.pv168.employees.ui.model.EntityListModelAdapter;
+import cz.muni.fi.pv168.employees.ui.panels.EmployeeListPanel;
 import cz.muni.fi.pv168.employees.ui.panels.EmployeeTablePanel;
 
 import javax.swing.Action;
@@ -14,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;
+import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import java.awt.BorderLayout;
@@ -32,12 +35,20 @@ public class MainWindow {
         var testDataGenerator = new TestDataGenerator();
         var departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
         var employeeTableModel = new EmployeeTableModel(testDataGenerator.createTestEmployees(10));
+        var employeeListModel = new EntityListModelAdapter<>(employeeTableModel);
         var employeeTablePanel = new EmployeeTablePanel(employeeTableModel, departmentListModel, this::changeActionsState);
+        var employeeListPanel = new EmployeeListPanel(employeeListModel);
+
         addAction = new AddAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
         deleteAction = new DeleteAction(employeeTablePanel.getTable());
         editAction = new EditAction(employeeTablePanel.getTable(), departmentListModel);
         employeeTablePanel.setComponentPopupMenu(createEmployeeTablePopupMenu());
-        frame.add(employeeTablePanel, BorderLayout.CENTER);
+
+        var tabbedPane = new JTabbedPane();
+        tabbedPane.addTab("Employees (table)", employeeTablePanel);
+        tabbedPane.addTab("Employees (list)", employeeListPanel);
+
+        frame.add(tabbedPane, BorderLayout.CENTER);
         frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
         frame.setJMenuBar(createMenuBar());
         frame.pack();
