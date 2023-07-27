@@ -70,8 +70,10 @@ public class EmployeeTableModel extends AbstractTableModel implements EntityTabl
 
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        var employee = getEntity(rowIndex);
-        columns.get(columnIndex).setValue(value, employee);
+        if (value != null) {
+            var employee = getEntity(rowIndex);
+            columns.get(columnIndex).setValue(value, employee);
+        }
     }
 
     public void deleteRow(int rowIndex) {
