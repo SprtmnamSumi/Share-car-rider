@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.employees.model.Employee;
 import cz.muni.fi.pv168.employees.model.Gender;
 import cz.muni.fi.pv168.employees.ui.model.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.employees.ui.model.LocalDateModel;
+import cz.muni.fi.pv168.employees.ui.renderers.DepartmentRenderer;
 import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
 
@@ -41,11 +42,14 @@ public final class EmployeeDialog extends EntityDialog<Employee> {
     }
 
     private void addFields() {
+        var deparmentComboBox = new JComboBox<>(departmentModel);
+        deparmentComboBox.setRenderer(new DepartmentRenderer());
+
         add("First Name:", firstNameField);
         add("Last Name:", lastNameField);
         add("Gender:", new JComboBox<>(genderModel));
         add("Birth Date:", new JDatePicker(birthDateModel));
-        add("Department:", new JComboBox<>(departmentModel));
+        add("Department:", deparmentComboBox);
     }
 
     @Override
