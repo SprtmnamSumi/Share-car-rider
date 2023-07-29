@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.employees.ui.renderers.DepartmentRenderer;
 import cz.muni.fi.pv168.employees.ui.renderers.GenderRenderer;
+import cz.muni.fi.pv168.employees.ui.renderers.LocalDateRenderer;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -16,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.BorderLayout;
+import java.time.LocalDate;
 import java.util.function.Consumer;
 
 /**
@@ -54,6 +56,7 @@ public class EmployeeTablePanel extends JPanel {
 
         table.setDefaultRenderer(Gender.class, new GenderRenderer());
         table.setDefaultRenderer(Department.class, departmentRenderer);
+        table.setDefaultRenderer(LocalDate.class, new LocalDateRenderer());
 
         return table;
     }
