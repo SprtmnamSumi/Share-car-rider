@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.employees.ui;
 
 import cz.muni.fi.pv168.employees.data.TestDataGenerator;
+import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Gender;
 import cz.muni.fi.pv168.employees.ui.action.AddAction;
 import cz.muni.fi.pv168.employees.ui.action.DeleteAction;
@@ -8,13 +9,16 @@ import cz.muni.fi.pv168.employees.ui.action.EditAction;
 import cz.muni.fi.pv168.employees.ui.action.QuitAction;
 import cz.muni.fi.pv168.employees.ui.filters.EmployeeTableFilter;
 import cz.muni.fi.pv168.employees.ui.filters.components.FilterComboboxBuilder;
+import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterDepartmentValues;
 import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterGenderValues;
 import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.employees.ui.model.EntityListModelAdapter;
 import cz.muni.fi.pv168.employees.ui.panels.EmployeeListPanel;
 import cz.muni.fi.pv168.employees.ui.panels.EmployeeTablePanel;
+import cz.muni.fi.pv168.employees.ui.renderers.DepartmentRenderer;
 import cz.muni.fi.pv168.employees.ui.renderers.GenderRenderer;
+import cz.muni.fi.pv168.employees.ui.renderers.SpecialFilterDepartmentValuesRenderer;
 import cz.muni.fi.pv168.employees.ui.renderers.SpecialFilterGenderValuesRenderer;
 import cz.muni.fi.pv168.employees.util.Either;
 
@@ -64,11 +68,22 @@ public class MainWindow {
         employeeTablePanel.getTable().setRowSorter(rowSorter);
 
         var genderFilter = createGenderFilter(employeeTableFilter);
+        var departmentFilter = createDepartmentFilter(employeeTableFilter, departmentListModel);
 
-        frame.add(createToolbar(genderFilter), BorderLayout.BEFORE_FIRST_LINE);
+        frame.add(createToolbar(genderFilter, departmentFilter), BorderLayout.BEFORE_FIRST_LINE);
         frame.setJMenuBar(createMenuBar());
         frame.pack();
         changeActionsState(0);
+    }
+
+    private static JComboBox<Either<SpecialFilterDepartmentValues, Department>> createDepartmentFilter(
+            EmployeeTableFilter employeeTableFilter, DepartmentListModel departmentListModel) {
+        return FilterComboboxBuilder.create(SpecialFilterDepartmentValues.class, departmentListModel)
+                .setSelectedItem(SpecialFilterDepartmentValues.ALL)
+                .setSpecialValuesRenderer(new SpecialFilterDepartmentValuesRenderer())
+                .setValuesRenderer(new DepartmentRenderer())
+                .setFilter(employeeTableFilter::filterDepartment)
+                .build();
     }
 
     private static JComboBox<Either<SpecialFilterGenderValues, Gender>> createGenderFilter(

@@ -1,10 +1,13 @@
 package cz.muni.fi.pv168.employees.ui.filters;
 
+import cz.muni.fi.pv168.employees.model.Department;
 import cz.muni.fi.pv168.employees.model.Employee;
 import cz.muni.fi.pv168.employees.model.Gender;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.EntityMatcher;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.EntityMatchers;
+import cz.muni.fi.pv168.employees.ui.filters.matchers.employee.EmployeeDepartmentMatcher;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.employee.EmployeeGenderMatcher;
+import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterDepartmentValues;
 import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterGenderValues;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.employees.util.Either;
@@ -30,6 +33,13 @@ public final class EmployeeTableFilter {
         );
     }
 
+    public void filterDepartment(Either<SpecialFilterDepartmentValues, Department> selectedItem) {
+        selectedItem.apply(
+                l -> employeeCompoundMatcher.setDepartmentMatcher(l.getMatcher()),
+                r -> employeeCompoundMatcher.setDepartmentMatcher(new EmployeeDepartmentMatcher(r))
+        );
+    }
+
     /**
      * Container class for all matchers for the EmployeeTable.
      *
@@ -40,6 +50,7 @@ public final class EmployeeTableFilter {
 
         private final TableRowSorter<EmployeeTableModel> rowSorter;
         private EntityMatcher<Employee> genderMatcher = EntityMatchers.all();
+        private EntityMatcher<Employee> departmentMatcher = EntityMatchers.all();
 
         private EmployeeCompoundMatcher(TableRowSorter<EmployeeTableModel> rowSorter) {
             this.rowSorter = rowSorter;
@@ -50,9 +61,14 @@ public final class EmployeeTableFilter {
             rowSorter.sort();
         }
 
+        private void setDepartmentMatcher(EntityMatcher<Employee> departmentMatcher) {
+            this.departmentMatcher = departmentMatcher;
+            rowSorter.sort();
+        }
+
         @Override
         public boolean evaluate(Employee employee) {
-            return Stream.of(genderMatcher)
+            return Stream.of(genderMatcher, departmentMatcher)
                     .allMatch(m -> m.evaluate(employee));
         }
     }
