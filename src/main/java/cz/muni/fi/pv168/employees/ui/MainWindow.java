@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.employees.ui.action.EditAction;
 import cz.muni.fi.pv168.employees.ui.action.QuitAction;
 import cz.muni.fi.pv168.employees.ui.filters.EmployeeTableFilter;
 import cz.muni.fi.pv168.employees.ui.filters.components.FilterComboboxBuilder;
+import cz.muni.fi.pv168.employees.ui.filters.components.FilterListModelBuilder;
 import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterDepartmentValues;
 import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterGenderValues;
 import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
@@ -25,9 +26,11 @@ import cz.muni.fi.pv168.employees.util.Either;
 import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
@@ -68,7 +71,7 @@ public class MainWindow {
         employeeTablePanel.getTable().setRowSorter(rowSorter);
 
         var genderFilter = createGenderFilter(employeeTableFilter);
-        var departmentFilter = createDepartmentFilter(employeeTableFilter, departmentListModel);
+        var departmentFilter = new JScrollPane(createDepartmentFilter(employeeTableFilter, departmentListModel));
 
         frame.add(createToolbar(genderFilter, departmentFilter), BorderLayout.BEFORE_FIRST_LINE);
         frame.setJMenuBar(createMenuBar());
@@ -76,10 +79,11 @@ public class MainWindow {
         changeActionsState(0);
     }
 
-    private static JComboBox<Either<SpecialFilterDepartmentValues, Department>> createDepartmentFilter(
+    private static JList<Either<SpecialFilterDepartmentValues, Department>> createDepartmentFilter(
             EmployeeTableFilter employeeTableFilter, DepartmentListModel departmentListModel) {
-        return FilterComboboxBuilder.create(SpecialFilterDepartmentValues.class, departmentListModel)
-                .setSelectedItem(SpecialFilterDepartmentValues.ALL)
+        return FilterListModelBuilder.create(SpecialFilterDepartmentValues.class, departmentListModel)
+                .setSelectedIndex(0)
+                .setVisibleRowsCount(3)
                 .setSpecialValuesRenderer(new SpecialFilterDepartmentValuesRenderer())
                 .setValuesRenderer(new DepartmentRenderer())
                 .setFilter(employeeTableFilter::filterDepartment)

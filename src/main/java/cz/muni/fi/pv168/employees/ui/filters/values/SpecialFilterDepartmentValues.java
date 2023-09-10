@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.employees.ui.filters.values;
 
 import cz.muni.fi.pv168.employees.model.Employee;
-import cz.muni.fi.pv168.employees.ui.filters.matchers.employee.EmployeeDepartmentNoNerdMatcher;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.EntityMatcher;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.EntityMatchers;
+import cz.muni.fi.pv168.employees.ui.filters.matchers.employee.EmployeeDepartmentNoNerdMatcher;
 
 import java.util.Objects;
 

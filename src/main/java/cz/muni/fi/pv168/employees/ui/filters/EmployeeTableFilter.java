@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.employees.model.Employee;
 import cz.muni.fi.pv168.employees.model.Gender;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.EntityMatcher;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.EntityMatchers;
+import cz.muni.fi.pv168.employees.ui.filters.matchers.employee.EmployeeDepartmentCompoundMatcher;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.employee.EmployeeDepartmentMatcher;
 import cz.muni.fi.pv168.employees.ui.filters.matchers.employee.EmployeeGenderMatcher;
 import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterDepartmentValues;
@@ -13,6 +14,8 @@ import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.employees.util.Either;
 
 import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -33,11 +36,13 @@ public final class EmployeeTableFilter {
         );
     }
 
-    public void filterDepartment(Either<SpecialFilterDepartmentValues, Department> selectedItem) {
-        selectedItem.apply(
-                l -> employeeCompoundMatcher.setDepartmentMatcher(l.getMatcher()),
-                r -> employeeCompoundMatcher.setDepartmentMatcher(new EmployeeDepartmentMatcher(r))
-        );
+    public void filterDepartment(List<Either<SpecialFilterDepartmentValues, Department>> selectedItems) {
+        List<EntityMatcher<Employee>> matchers = new ArrayList<>();
+        selectedItems.forEach(either -> either.apply(
+                l -> matchers.add(l.getMatcher()),
+                r -> matchers.add(new EmployeeDepartmentMatcher(r))
+        ));
+        employeeCompoundMatcher.setDepartmentMatcher(new EmployeeDepartmentCompoundMatcher(matchers));
     }
 
     /**

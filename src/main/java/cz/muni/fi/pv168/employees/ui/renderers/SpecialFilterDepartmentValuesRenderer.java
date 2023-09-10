@@ -11,7 +11,6 @@ public class SpecialFilterDepartmentValuesRenderer extends AbstractRenderer<Spec
         super(SpecialFilterDepartmentValues.class);
     }
 
-    @Override
     protected void updateLabel(JLabel label, SpecialFilterDepartmentValues value) {
         switch (value) {
             case ALL -> renderAll(label);
