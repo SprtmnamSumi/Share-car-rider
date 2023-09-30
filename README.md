@@ -1,4 +1,4 @@
-# PV168 Project: {{ PROJECT NAME }}
+# PV168 Project: Share Car Rider
 
 <!--- FIXME: fill in the PROJECT NAME above and include short description of what the project is about -->
 {{ PROJECT DESCRIPTION }}
@@ -7,22 +7,22 @@
 
 | Seminar Group | Team |
 |-------------- | ---- |
-| PV168/0X      | Y    | <!--- FIXME: fill in the seminar group and team identification -->
+| PV168/01      | Y    | <!--- FIXME: fill in the seminar group and team identification -->
 
 ### Members
 
 | Role           | Person               |
 |----------------|----------------------|
-|Team Lead       | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
-|Member          | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
-|Member          | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
-|Member          | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
+|Team Lead       | [Ondřej Man](https://is.muni.cz/auth/osoba/525025) |
+|Member          | [Sabrina Orálková](https://is.muni.cz/auth/osoba/525089) |
+|Member          | [Marek Horský](https://is.muni.cz/auth/osoba/525245) |
+|Member          | [Jan Šmíd](https://is.muni.cz/auth/osoba/524816) |
 
 ### Evaluators
 
 | Role           | Person               |
 |----------------|----------------------|
-|Customer        | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
+|Customer        | [Šimon Mačejovský](https://is.muni.cz/auth/osoba/444140) |
 |Technical Coach | [Name Surname](https://is.muni.cz/auth/osoba/UCO) | <!--- FIXME: fill in the name and UCO -->
 
 ## TODO
