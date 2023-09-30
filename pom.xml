@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.muni.fi.pv168.seminar0X.teamY</groupId><!-- FIXME: change it to your seminar group and assigned team number -->
-    <artifactId>Share Car Rider</artifactId><!-- FIXME: change it to your specific project NAME -->
+    <artifactId>Share Car Rider</artifactId>
     <version>1.0-SNAPSHOT</version>
     <url>https://gitlab.fi.muni.cz/xhorsky/pv-168-project-share-car-rider</url>
 
