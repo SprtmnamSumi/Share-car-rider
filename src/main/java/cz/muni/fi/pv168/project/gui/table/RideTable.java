@@ -10,10 +10,10 @@ import java.util.List;
  * Class instance of table filled with rides.
  */
 public class RideTable extends JTable {
-    TableColumn dateColumn = new TableColumn();
-    TableColumn nameColumn = new TableColumn();
-    TableColumn distanceColumn = new TableColumn();
-    TableColumn categoryColumn = new TableColumn();
+    private final TableColumn dateColumn = new TableColumn();
+    private final TableColumn nameColumn = new TableColumn();
+    private final TableColumn distanceColumn = new TableColumn();
+    private final TableColumn categoryColumn = new TableColumn();
     public RideTable() {
         super();
 

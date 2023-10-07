@@ -11,7 +11,6 @@ import java.util.List;
 
 public class MainFrame extends JFrame {
     private final static GridBagConstraints constraints = new GridBagConstraints();
-
     private final static Dimension minDimension = new Dimension(320,320);
     private final static Dimension prefDimension = new Dimension(1920,1080);
     public MainFrame() throws HeadlessException {
@@ -24,7 +23,7 @@ public class MainFrame extends JFrame {
         constraints.gridx = 0;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1.0;
-        constraints.weighty = 0;
+        constraints.weighty = 0.0;
 
         // Fill
         addContents(List.of(
