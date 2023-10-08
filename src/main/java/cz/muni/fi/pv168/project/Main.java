@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project;
 import cz.muni.fi.pv168.project.gui.MainFrame;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * The entry point of the application.

@@ -10,15 +10,14 @@ import java.util.List;
 
 
 public class MainFrame extends JFrame {
-    private final static GridBagConstraints constraints = new GridBagConstraints();
+    private final static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();;
     private final static Dimension minDimension = new Dimension(320,320);
-    private final static Dimension prefDimension = new Dimension(1920,1080);
+    private final GridBagConstraints constraints = new GridBagConstraints();
     public MainFrame() throws HeadlessException {
         super();
 
         // Set look
         this.setMinimumSize(minDimension);
-        this.setPreferredSize(prefDimension);
         this.setLayout(new GridBagLayout());
         constraints.gridx = 0;
         constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -27,9 +26,9 @@ public class MainFrame extends JFrame {
 
         // Fill
         addContents(List.of(
-                new MainToolBar(),
-                new FilterBar(),
-                new JScrollPane(new RideTable())));
+                new MainToolBar(new Dimension(50,40)),
+                new FilterBar(new Dimension(screenSize.width,100)),
+                new JScrollPane(new RideTable(screenSize))));
     }
 
     private void addContents(List<Component> components){

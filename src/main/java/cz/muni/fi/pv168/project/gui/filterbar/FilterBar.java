@@ -10,8 +10,6 @@ import java.awt.*;
 import java.util.List;
 
 public class FilterBar extends JPanel{
-    private final static Dimension DEFAULT_DIMENSION = new Dimension(50,100);
-
     private final TextFieldPanel numberOfPassengersPanel;
     private final SpinnerDatePanel dateFromPanel;
     private final SpinnerDatePanel dateToPanel;
@@ -20,11 +18,11 @@ public class FilterBar extends JPanel{
     private final TextFieldPanel distanceFromPanel;
     private final TextFieldPanel distanceToPanel;
 
-    public FilterBar() {
+    public FilterBar(Dimension dimension) {
         super(new FlowLayout(FlowLayout.LEFT));
 
         // Set look
-        this.setMaximumSize(DEFAULT_DIMENSION);
+        this.setMaximumSize(dimension);
 
         numberOfPassengersPanel = new TextFieldPanel("Number Of Passengers");
         this.add(numberOfPassengersPanel);

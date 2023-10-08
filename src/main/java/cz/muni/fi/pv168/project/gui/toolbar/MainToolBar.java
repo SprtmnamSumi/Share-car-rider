@@ -7,10 +7,9 @@ import java.awt.*;
  * Class instance of main toolbar with predefined actions
  */
 public class MainToolBar extends JToolBar {
-    private final static Dimension DEFAULT_DIMENSION = new Dimension(50,50);
-    public MainToolBar() {
+    public MainToolBar(Dimension dimension) {
         super();
-        this.setPreferredSize(DEFAULT_DIMENSION);
+        this.setPreferredSize(dimension);
         this.setFloatable(false);
         this.addActionButton(new JButton("File"));
         this.addActionButton(new JButton("Insert"));
@@ -20,7 +19,7 @@ public class MainToolBar extends JToolBar {
         this.addActionButton(new JButton("Stats"));
     }
     void addActionButton(Component button) {
-        button.setPreferredSize(DEFAULT_DIMENSION);
+        button.setPreferredSize(this.getPreferredSize());
         this.add(button);
     }
 }
