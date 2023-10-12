@@ -1,10 +1,9 @@
 package cz.muni.fi.pv168.employees.data;
 
-import cz.muni.fi.pv168.employees.model.Department;
-import cz.muni.fi.pv168.employees.model.Employee;
-import cz.muni.fi.pv168.employees.model.Gender;
+import cz.muni.fi.pv168.employees.model.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +44,20 @@ public final class TestDataGenerator {
         LocalDate birthDate = selectRandomLocalDate(MIN_BIRTH_DATE, MAX_BIRTH_DATE);
         Department department = selectRandom(DEPARTMENTS);
         return new Employee(firstName, lastName, gender, birthDate, department);
+    }
+
+    public CarRide createTestRide() {
+        String title = "Test";
+        String description = "Test";
+        int distance = 100;
+        LocalDate birthDate = LocalDate.of(2021, JANUARY, 1);
+        Department fuelConsumption = selectRandom(DEPARTMENTS);
+        int costOfFuelPerLitre = 100;
+        int numberOfPassengers = 1;
+        double comission = 0.1;
+        LocalDateTime date = LocalDateTime.of(2021, JANUARY, 1, 0, 0);
+        Category category = new Category("Test", "Test");
+        return new CarRide(title, description, distance, birthDate, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, comission, date, category);
     }
 
     public List<Employee> createTestEmployees(int count) {

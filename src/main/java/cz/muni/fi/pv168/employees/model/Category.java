@@ -1,72 +1,37 @@
 package cz.muni.fi.pv168.employees.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class CarRide {
+public class Category {
 
-    private String title;
-    private String description;
-    private Gender distance;
-    private LocalDate birthDate;
-    private Department fuelConsumption;
-    private int costOfFuelPerLitre;
-    private int numberOfPassengers;
-    private double comission;
-    private LocalDateTime date;
-    private Category category;
+    private String name;
+    private String colour;
 
-    public CarRide(String firstName, String lastName, Gender gender, LocalDate birthDate, Department department) {
-        setTitle(firstName);
-        setDescription(lastName);
-        setDistance(gender);
-        setBirthDate(birthDate);
-        setFuelConsumption(department);
+
+    public Category(String name, String colour) {
+        setName(name);
+        setColour(colour);
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = Objects.requireNonNull(title, "firstName must not be null");
+    public void setName(String name) {
+        this.name = Objects.requireNonNull(name, "firstName must not be null");
     }
 
-    public String getDescription() {
-        return description;
+    public String getColour() {
+        return colour;
     }
 
-    public void setDescription(String description) {
-        this.description = Objects.requireNonNull(description, "lastName must not be null");
+    public void setColour(String colour) {
+        this.colour = Objects.requireNonNull(colour, "lastName must not be null");
     }
 
-    public Gender getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Gender distance) {
-        this.distance = Objects.requireNonNull(distance, "gender must not be null");
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = Objects.requireNonNull(birthDate, "birthDate must not be null");
-    }
-
-    public Department getFuelConsumption() {
-        return fuelConsumption;
-    }
-
-    public void setFuelConsumption(Department fuelConsumption) {
-        this.fuelConsumption = Objects.requireNonNull(fuelConsumption, "department must not be null");
-    }
 
     @Override
     public String toString() {
-        return title + ' ' + description;
+        return name + ' ' + colour;
     }
 }

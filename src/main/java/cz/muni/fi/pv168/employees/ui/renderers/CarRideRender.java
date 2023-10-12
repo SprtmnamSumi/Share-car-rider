@@ -1,17 +1,17 @@
 package cz.muni.fi.pv168.employees.ui.renderers;
 
-import cz.muni.fi.pv168.employees.model.Employee;
+import cz.muni.fi.pv168.employees.model.CarRide;
 
-import javax.swing.JLabel;
+import javax.swing.*;
 
-public class EmployeeRenderer extends AbstractRenderer<Employee> {
+public class CarRideRender extends AbstractRenderer<CarRide> {
 
-    public EmployeeRenderer() {
-        super(Employee.class);
+    public CarRideRender() {
+        super(CarRide.class);
     }
 
     @Override
-    protected void updateLabel(JLabel label, Employee value) {
-        label.setText(String.format("%s %s", value.getFirstName(), value.getLastName()));
+    protected void updateLabel(JLabel label, CarRide value) {
+        label.setText(String.format("%s %s", value.getTitle(), value.getDescription()));
     }
 }

@@ -1,46 +1,58 @@
 package cz.muni.fi.pv168.employees.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Employee {
+public class CarRide {
 
-    private String firstName;
-    private String lastName;
-    private Gender gender;
+    private String title;
+    private String description;
+    private int distance;
     private LocalDate birthDate;
-    private Department department;
+    private Department fuelConsumption;
+    private int costOfFuelPerLitre;
+    private int numberOfPassengers;
+    private double comission;
+    private LocalDateTime date;
+    private Category category;
 
-    public Employee(String firstName, String lastName, Gender gender, LocalDate birthDate, Department department) {
-        setFirstName(firstName);
-        setLastName(lastName);
-        setGender(gender);
-        setBirthDate(birthDate);
-        setDepartment(department);
+    public CarRide(String Title, String Description, int Distance, LocalDate BirthDate, Department FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double Comission, LocalDateTime Date, Category Category) {
+        setTitle(Title);
+        setDescription(Description);
+        setDistance(Distance);
+        setBirthDate(BirthDate);
+        setFuelConsumption(FuelConsumption);
+        setCostOfFuelPerLitre(CostOfFuelPerLitre);
+        setNumberOfPassengers(NumberOfPassengers);
+        setComission(Comission);
+        setDate(Date);
+        setCategory(Category);
     }
 
-    public String getFirstName() {
-        return firstName;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = Objects.requireNonNull(firstName, "firstName must not be null");
+    public void setTitle(String title) {
+        this.title = Objects.requireNonNull(title, "firstName must not be null");
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = Objects.requireNonNull(lastName, "lastName must not be null");
+    public void setDescription(String description) {
+        this.description = Objects.requireNonNull(description, "lastName must not be null");
     }
 
-    public Gender getGender() {
-        return gender;
+    public int getDistance() {
+        return distance;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = Objects.requireNonNull(gender, "gender must not be null");
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     public LocalDate getBirthDate() {
@@ -51,16 +63,56 @@ public class Employee {
         this.birthDate = Objects.requireNonNull(birthDate, "birthDate must not be null");
     }
 
-    public Department getDepartment() {
-        return department;
+    public Department getFuelConsumption() {
+        return fuelConsumption;
     }
 
-    public void setDepartment(Department department) {
-        this.department = Objects.requireNonNull(department, "department must not be null");
+    public void setFuelConsumption(Department fuelConsumption) {
+        this.fuelConsumption = Objects.requireNonNull(fuelConsumption, "department must not be null");
     }
 
     @Override
     public String toString() {
-        return firstName + ' ' + lastName;
+        return title + ' ' + description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public double getComission() {
+        return comission;
+    }
+
+    public void setComission(double comission) {
+        this.comission = comission;
+    }
+
+    public int getNumberOfPassengers() {
+        return numberOfPassengers;
+    }
+
+    public void setNumberOfPassengers(int numberOfPassengers) {
+        this.numberOfPassengers = numberOfPassengers;
+    }
+
+    public int getCostOfFuelPerLitre() {
+        return costOfFuelPerLitre;
+    }
+
+    public void setCostOfFuelPerLitre(int costOfFuelPerLitre) {
+        this.costOfFuelPerLitre = costOfFuelPerLitre;
     }
 }

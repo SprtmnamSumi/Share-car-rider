@@ -1,60 +1,62 @@
 package cz.muni.fi.pv168.employees.ui.dialog;
 
+import cz.muni.fi.pv168.employees.model.CarRide;
 import cz.muni.fi.pv168.employees.model.Department;
-import cz.muni.fi.pv168.employees.model.Employee;
-import cz.muni.fi.pv168.employees.model.Gender;
 import cz.muni.fi.pv168.employees.ui.model.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.employees.ui.model.LocalDateModel;
 import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
+import javax.swing.*;
 import java.time.LocalDate;
 
-public final class EmployeeDialog extends EntityDialog<Employee> {
+public final class RideDialog extends EntityDialog<CarRide> {
 
-    private final JTextField firstNameField = new JTextField();
-    private final JTextField lastNameField = new JTextField();
-    private final ComboBoxModel<Gender> genderModel = new DefaultComboBoxModel<>(Gender.values());
+    private final JTextField titleField = new JTextField();
+    private final JTextField descriptionField = new JTextField();
+
+
+    private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
+    private final JSpinner fuelConsiumption = new JSpinner(new SpinnerNumberModel());
+    private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
+    private final JSpinner numberOfPassengers = new JSpinner(new SpinnerNumberModel());
+    private final JSpinner commision = new JSpinner(new SpinnerNumberModel());
+
     private final ComboBoxModel<Department> departmentModel;
-    private final DateModel<LocalDate> birthDateModel = new LocalDateModel();
+    private final DateModel<LocalDate> dateField = new LocalDateModel();
 
-    private final Employee employee;
+    private final CarRide carRide;
 
-    public EmployeeDialog(Employee employee, ListModel<Department> departmentModel) {
-        this.employee = employee;
+    public RideDialog(CarRide carRide, ListModel<Department> departmentModel) {
+        this.carRide = carRide;
         this.departmentModel = new ComboBoxModelAdapter<>(departmentModel);
         setValues();
         addFields();
     }
 
     private void setValues() {
-        firstNameField.setText(employee.getFirstName());
-        lastNameField.setText(employee.getLastName());
-        genderModel.setSelectedItem(employee.getGender());
-        departmentModel.setSelectedItem(employee.getDepartment());
-        birthDateModel.setValue(employee.getBirthDate());
+        titleField.setText(carRide.getTitle());
+        descriptionField.setText(carRide.getDescription());
+
+        departmentModel.setSelectedItem(carRide.getCategory());
+//        dateField.setValue(carRide.getDate());
     }
 
     private void addFields() {
-        add("First Name:", firstNameField);
-        add("Last Name:", lastNameField);
-        add("Gender:", new JComboBox<>(genderModel));
-        add("Birth Date:", new JDatePicker(birthDateModel));
-        add("Department:", new JComboBox<>(departmentModel));
+        add("Title", titleField);
+        add("Description", descriptionField);
+        add("Distance", distanceField);
+        add("Average Fuel Consumption (per 100km)", new JDatePicker(dateField));
+        add("Cost of Fuel (per 1 l:", new JComboBox<>(departmentModel));
     }
 
     @Override
-    Employee getEntity() {
-        employee.setFirstName(firstNameField.getText());
-        employee.setLastName(lastNameField.getText());
-        employee.setGender((Gender) genderModel.getSelectedItem());
-        employee.setDepartment((Department) departmentModel.getSelectedItem());
-        employee.setBirthDate(birthDateModel.getValue());
-        return employee;
+    CarRide getEntity() {
+//        carRide.setFirstName(titleField.getText());
+//        carRide.setLastName(descriptionField.getText());
+//        carRide.setGender((Gender) genderModel.getSelectedItem());
+//        carRide.setDepartment((Department) departmentModel.getSelectedItem());
+//        carRide.setBirthDate(dateField.getValue());
+        return carRide;
     }
 }
