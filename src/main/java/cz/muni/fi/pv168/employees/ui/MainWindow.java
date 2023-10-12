@@ -2,34 +2,20 @@ package cz.muni.fi.pv168.employees.ui;
 
 import cz.muni.fi.pv168.employees.data.TestDataGenerator;
 import cz.muni.fi.pv168.employees.model.Gender;
-import cz.muni.fi.pv168.employees.ui.action.AddAction;
-import cz.muni.fi.pv168.employees.ui.action.DeleteAction;
-import cz.muni.fi.pv168.employees.ui.action.EditAction;
-import cz.muni.fi.pv168.employees.ui.action.QuitAction;
+import cz.muni.fi.pv168.employees.ui.action.*;
 import cz.muni.fi.pv168.employees.ui.filters.EmployeeTableFilter;
 import cz.muni.fi.pv168.employees.ui.filters.components.FilterComboboxBuilder;
 import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterGenderValues;
-import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
-import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
-import cz.muni.fi.pv168.employees.ui.model.EntityListModelAdapter;
+import cz.muni.fi.pv168.employees.ui.model.*;
 import cz.muni.fi.pv168.employees.ui.panels.EmployeeListPanel;
 import cz.muni.fi.pv168.employees.ui.panels.EmployeeTablePanel;
 import cz.muni.fi.pv168.employees.ui.renderers.GenderRenderer;
 import cz.muni.fi.pv168.employees.ui.renderers.SpecialFilterGenderValuesRenderer;
 import cz.muni.fi.pv168.employees.util.Either;
 
-import javax.swing.Action;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPopupMenu;
-import javax.swing.JTabbedPane;
-import javax.swing.JToolBar;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.table.TableRowSorter;
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.*;
 
 public class MainWindow {
 
@@ -39,6 +25,12 @@ public class MainWindow {
     private final Action deleteAction;
     private final Action editAction;
 
+    private final Action settingsAction;
+    private final Action currenciesAction;
+    private final Action importAction;
+    private final Action exportAction;
+    private final Action info;
+
     public MainWindow() {
         frame = createFrame();
         var testDataGenerator = new TestDataGenerator();
@@ -47,17 +39,27 @@ public class MainWindow {
         var employeeListModel = new EntityListModelAdapter<>(employeeTableModel);
         var employeeTablePanel = new EmployeeTablePanel(employeeTableModel, departmentListModel, this::changeActionsState);
         var employeeListPanel = new EmployeeListPanel(employeeListModel);
+        var templateListPanel = new EmployeeListPanel(employeeListModel);
 
         addAction = new AddAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
         deleteAction = new DeleteAction(employeeTablePanel.getTable());
         editAction = new EditAction(employeeTablePanel.getTable(), departmentListModel);
+        settingsAction = new SettingsAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
+        currenciesAction = new currenciesAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
+        importAction = new ImportAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
+        exportAction = new ExportAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
+        info = new InfoAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
+
         employeeTablePanel.setComponentPopupMenu(createEmployeeTablePopupMenu());
 
-        var tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Employees (table)", employeeTablePanel);
-        tabbedPane.addTab("Employees (list)", employeeListPanel);
+        var tabbedPane = new TabPanel();
+
+        tabbedPane.addSpecialTab("Car Rides", employeeTablePanel, new ButtonTabComponent(tabbedPane, addAction));
+        tabbedPane.addSpecialTab("Categories", employeeListPanel, new ButtonTabComponent(tabbedPane, addAction));
+        tabbedPane.addSpecialTab("Templates", templateListPanel, new ButtonTabComponent(tabbedPane, addAction));
 
         frame.add(tabbedPane, BorderLayout.CENTER);
+
 
         var rowSorter = new TableRowSorter<>(employeeTableModel);
         var employeeTableFilter = new EmployeeTableFilter(rowSorter);
@@ -65,8 +67,9 @@ public class MainWindow {
 
         var genderFilter = createGenderFilter(employeeTableFilter);
 
-        frame.add(createToolbar(genderFilter), BorderLayout.BEFORE_FIRST_LINE);
+//        frame.add(createToolbar(genderFilter), BorderLayout.BEFORE_FIRST_LINE);
         frame.setJMenuBar(createMenuBar());
+        frame.add(new JLabel("Total distance"), BorderLayout.PAGE_END);
         frame.pack();
         changeActionsState(0);
     }
@@ -86,7 +89,7 @@ public class MainWindow {
     }
 
     private JFrame createFrame() {
-        var frame = new JFrame("Employee records");
+        var frame = new JFrame("Share Car Ride");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         return frame;
     }
@@ -99,16 +102,39 @@ public class MainWindow {
         return menu;
     }
 
+
+    private JMenu editBar() {
+        var editMenu = new JMenu("File");
+        editMenu.setMnemonic('f');
+
+        editMenu.add(settingsAction);
+        editMenu.addSeparator();
+
+        editMenu.add(currenciesAction);
+        editMenu.addSeparator();
+
+        editMenu.add(importAction);
+        editMenu.add(exportAction);
+        editMenu.addSeparator();
+
+        editMenu.add(quitAction);
+
+        return editMenu;
+    }
+
+    private JMenu helpBar() {
+        var helpMenu = new JMenu("Help");
+        helpMenu.setMnemonic('h');
+        helpMenu.add(info);
+        return helpMenu;
+    }
+
     private JMenuBar createMenuBar() {
         var menuBar = new JMenuBar();
-        var editMenu = new JMenu("Edit");
-        editMenu.setMnemonic('e');
-        editMenu.add(addAction);
-        editMenu.add(editAction);
-        editMenu.add(deleteAction);
-        editMenu.addSeparator();
-        editMenu.add(quitAction);
-        menuBar.add(editMenu);
+        var editBar = editBar();
+        menuBar.add(editBar);
+        var helpBar = helpBar();
+        menuBar.add(helpBar);
         return menuBar;
     }
 

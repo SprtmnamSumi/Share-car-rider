@@ -7,14 +7,9 @@ import cz.muni.fi.pv168.employees.ui.model.DepartmentListModel;
 import cz.muni.fi.pv168.employees.ui.model.EmployeeTableModel;
 import cz.muni.fi.pv168.employees.ui.renderers.GenderRenderer;
 
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.util.function.Consumer;
 
 /**
@@ -28,7 +23,10 @@ public class EmployeeTablePanel extends JPanel {
     public EmployeeTablePanel(EmployeeTableModel employeeTableModel, DepartmentListModel departmentListModel, Consumer<Integer> onSelectionChange) {
         setLayout(new BorderLayout());
         table = setUpTable(employeeTableModel, departmentListModel);
+        add(new FilterBar(), BorderLayout.PAGE_START);
+
         add(new JScrollPane(table), BorderLayout.CENTER);
+        add(new JLabel("Filtered distance"), BorderLayout.PAGE_END);
 
         this.onSelectionChange = onSelectionChange;
     }
