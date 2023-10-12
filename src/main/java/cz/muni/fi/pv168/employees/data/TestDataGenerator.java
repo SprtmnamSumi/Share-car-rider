@@ -33,8 +33,9 @@ public final class TestDataGenerator {
                     "Nováková", "Novotná", "Dvořáková", "Černá", "Procházková", "Šťastná", "Veselá", "Horáková", "Němcová", "Pokorná")
     );
     private static final List<String> CATEGORY = List.of(
-            ""
+            "BMW", "Tesla", "Skoda", "Subaru", "Honda", "Bentley", "Autobus", "Helicopter helicopter", "Páracopter páracopter"
     );
+
 
     private static final LocalDate MIN_BIRTH_DATE = LocalDate.of(1950, JANUARY, 1);
     private static final LocalDate MAX_BIRTH_DATE = LocalDate.of(2002, DECEMBER, 31);
@@ -76,6 +77,15 @@ public final class TestDataGenerator {
     }
 
     public List<CarRide> createTestRides(int count) {
+        return new LinkedList<>();
+//        return Stream
+//                .generate(this::createTestRide)
+//                .limit(count)
+//                .toList();
+    }
+
+
+    public List<Category> createTestCategories(int count) {
         return new LinkedList<>();
 //        return Stream
 //                .generate(this::createTestRide)

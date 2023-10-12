@@ -43,11 +43,14 @@ public class MainWindow {
         var employeeListPanel = new EmployeeListPanel(employeeListModel);
         var templateListPanel = new EmployeeListPanel(employeeListModel);
 
+        var categoryListModel = new CategoryListModel(testDataGenerator.createTestCategories(10));
         var carRideTableModel = new CarRideTableModel(testDataGenerator.createTestRides(10));
         var carRideListModel = new EntityListModelAdapter<>(carRideTableModel);
         var carRideTablePanel = new CarRideTablePanel(carRideTableModel, departmentListModel, this::changeActionsState);
 
-        addAction = new AddAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
+//        addAction = new AddAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
+
+        addAction = new AddRideAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel);
         deleteAction = new DeleteAction(employeeTablePanel.getTable());
         editAction = new EditAction(employeeTablePanel.getTable(), departmentListModel);
         settingsAction = new SettingsAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
