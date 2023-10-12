@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.employees.ui.filters.EmployeeTableFilter;
 import cz.muni.fi.pv168.employees.ui.filters.components.FilterComboboxBuilder;
 import cz.muni.fi.pv168.employees.ui.filters.values.SpecialFilterGenderValues;
 import cz.muni.fi.pv168.employees.ui.model.*;
+import cz.muni.fi.pv168.employees.ui.panels.CarRideTablePanel;
 import cz.muni.fi.pv168.employees.ui.panels.EmployeeListPanel;
 import cz.muni.fi.pv168.employees.ui.panels.EmployeeTablePanel;
 import cz.muni.fi.pv168.employees.ui.renderers.GenderRenderer;
@@ -34,12 +35,17 @@ public class MainWindow {
     public MainWindow() {
         frame = createFrame();
         var testDataGenerator = new TestDataGenerator();
+
         var departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
         var employeeTableModel = new EmployeeTableModel(testDataGenerator.createTestEmployees(10));
         var employeeListModel = new EntityListModelAdapter<>(employeeTableModel);
         var employeeTablePanel = new EmployeeTablePanel(employeeTableModel, departmentListModel, this::changeActionsState);
         var employeeListPanel = new EmployeeListPanel(employeeListModel);
         var templateListPanel = new EmployeeListPanel(employeeListModel);
+
+        var carRideTableModel = new CarRideTableModel(testDataGenerator.createTestRides(10));
+        var carRideListModel = new EntityListModelAdapter<>(carRideTableModel);
+        var carRideTablePanel = new CarRideTablePanel(carRideTableModel, departmentListModel, this::changeActionsState);
 
         addAction = new AddAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
         deleteAction = new DeleteAction(employeeTablePanel.getTable());

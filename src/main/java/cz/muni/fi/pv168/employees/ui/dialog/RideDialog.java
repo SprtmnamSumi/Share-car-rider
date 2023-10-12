@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.employees.ui.dialog;
 
 import cz.muni.fi.pv168.employees.model.CarRide;
-import cz.muni.fi.pv168.employees.model.Department;
+import cz.muni.fi.pv168.employees.model.Category;
 import cz.muni.fi.pv168.employees.ui.model.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.employees.ui.model.LocalDateModel;
 import org.jdatepicker.DateModel;
@@ -22,12 +22,12 @@ public final class RideDialog extends EntityDialog<CarRide> {
     private final JSpinner numberOfPassengers = new JSpinner(new SpinnerNumberModel());
     private final JSpinner commision = new JSpinner(new SpinnerNumberModel());
 
-    private final ComboBoxModel<Department> departmentModel;
+    private final ComboBoxModel<Category> departmentModel;
     private final DateModel<LocalDate> dateField = new LocalDateModel();
 
     private final CarRide carRide;
 
-    public RideDialog(CarRide carRide, ListModel<Department> departmentModel) {
+    public RideDialog(CarRide carRide, ListModel<Category> departmentModel) {
         this.carRide = carRide;
         this.departmentModel = new ComboBoxModelAdapter<>(departmentModel);
         setValues();

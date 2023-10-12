@@ -13,11 +13,11 @@ public class CarRide {
     private Department fuelConsumption;
     private int costOfFuelPerLitre;
     private int numberOfPassengers;
-    private double comission;
+    private double commission;
     private LocalDateTime date;
     private Category category;
 
-    public CarRide(String Title, String Description, int Distance, LocalDate BirthDate, Department FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double Comission, LocalDateTime Date, Category Category) {
+    public CarRide(String Title, String Description, int Distance, LocalDate BirthDate, Department FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, LocalDateTime Date, Category Category) {
         setTitle(Title);
         setDescription(Description);
         setDistance(Distance);
@@ -25,7 +25,7 @@ public class CarRide {
         setFuelConsumption(FuelConsumption);
         setCostOfFuelPerLitre(CostOfFuelPerLitre);
         setNumberOfPassengers(NumberOfPassengers);
-        setComission(Comission);
+        setCommission(commission);
         setDate(Date);
         setCategory(Category);
     }
@@ -92,12 +92,12 @@ public class CarRide {
         this.date = date;
     }
 
-    public double getComission() {
-        return comission;
+    public double getCommission() {
+        return commission;
     }
 
-    public void setComission(double comission) {
-        this.comission = comission;
+    public void setCommission(double commission) {
+        this.commission = commission;
     }
 
     public int getNumberOfPassengers() {
