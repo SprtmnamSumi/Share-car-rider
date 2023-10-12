@@ -2,11 +2,11 @@ package cz.muni.fi.pv168.employees.data;
 
 import cz.muni.fi.pv168.employees.model.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
-
 import static java.time.Month.DECEMBER;
 import static java.time.Month.JANUARY;
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -35,14 +35,23 @@ public final class TestDataGenerator {
     private static final List<String> CATEGORY = List.of(
             "BMW", "Tesla", "Skoda", "Subaru", "Honda", "Bentley", "Autobus", "Helicopter helicopter", "Páracopter páracopter"
     );
+    private static final List<String> CARNAME = List.of(
+            "Karmen", "Ferda", "Luigiano", "Beatle", "S3XY"
+    );
+    private static final List<String> COLOR = List.of(
+            "white", "black", "red", "blue", "green", "yellomello", "grey"
+    );
 
 
     private static final LocalDate MIN_BIRTH_DATE = LocalDate.of(1950, JANUARY, 1);
     private static final LocalDate MAX_BIRTH_DATE = LocalDate.of(2002, DECEMBER, 31);
     private final Random random = new Random(2L);
     Random rand = new Random();
-    int upperbound = 1000000;
-    int DISTANCE = rand.nextInt(upperbound);
+    private static final int upperbound = 1000000;
+    private final int DISTANCE = rand.nextInt(upperbound);
+    private final double DISTANCEDOUBLE = rand.nextDouble();
+
+    //private static final LocalDate RANDOMDATE = new SimpleDateFormat("yyyyMMdd").format(new LocalDate[]);
 
 
     public Employee createTestEmployee() {
@@ -54,19 +63,21 @@ public final class TestDataGenerator {
         return new Employee(firstName, lastName, gender, birthDate, department);
     }
 
+    public Category crateTestCategory() {
+        var category = new Category("df", "fd");
+        return category;
+    }
+
 
     public CarRide createTestRide() {
         String title = "Test";
         String description = "Test";
         int distance = 100;
-        LocalDate birthDate = LocalDate.of(2021, JANUARY, 1);
-        Department fuelConsumption = selectRandom(DEPARTMENTS);
         int costOfFuelPerLitre = 100;
         int numberOfPassengers = 1;
-        double comission = 0.1;
         LocalDateTime date = LocalDateTime.of(2021, JANUARY, 1, 0, 0);
-        Category category = new Category("Test", "Test");
-        return new CarRide(title, description, distance, birthDate, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, comission, date, category);
+        Category category = crateTestCategory();
+        return new CarRide(title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, date, category);
     }
 
     public List<Employee> createTestEmployees(int count) {

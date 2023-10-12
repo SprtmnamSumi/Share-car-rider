@@ -29,11 +29,11 @@ public class CarRideTableModel extends AbstractTableModel implements EntityTable
         this.carRides = new ArrayList<>(carRides);
     }
 
-    private int calculateAge(CarRide carRide) {
-        return Period
-                .between(carRide.getBirthDate(), LocalDate.now())
-                .getYears();
-    }
+//    private int calculateAge(CarRide carRide) {
+//        return Period
+//                .between(carRide.getBirthDate(), LocalDate.now())
+//                .getYears();
+//    }
 
     @Override
     public int getRowCount() {

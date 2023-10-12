@@ -8,20 +8,18 @@ public class CarRide {
 
     private String title;
     private String description;
-    private int distance;
-    private LocalDate birthDate;
-    private Department fuelConsumption;
-    private int costOfFuelPerLitre;
+    private double distance;
+    private double fuelConsumption;
+    private double costOfFuelPerLitre;
     private int numberOfPassengers;
     private double commission;
     private LocalDateTime date;
     private Category category;
 
-    public CarRide(String Title, String Description, int Distance, LocalDate BirthDate, Department FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, LocalDateTime Date, Category Category) {
+    public CarRide(String Title, String Description, int Distance, double FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, LocalDateTime Date, Category Category) {
         setTitle(Title);
         setDescription(Description);
         setDistance(Distance);
-        setBirthDate(BirthDate);
         setFuelConsumption(FuelConsumption);
         setCostOfFuelPerLitre(CostOfFuelPerLitre);
         setNumberOfPassengers(NumberOfPassengers);
@@ -36,7 +34,7 @@ public class CarRide {
     }
 
     public void setTitle(String title) {
-        this.title = Objects.requireNonNull(title, "firstName must not be null");
+        this.title = Objects.requireNonNull(title, "title must not be null");
     }
 
     public String getDescription() {
@@ -44,10 +42,10 @@ public class CarRide {
     }
 
     public void setDescription(String description) {
-        this.description = Objects.requireNonNull(description, "lastName must not be null");
+        this.description = Objects.requireNonNull(description, "description must not be null");
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
@@ -55,21 +53,6 @@ public class CarRide {
         this.distance = distance;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = Objects.requireNonNull(birthDate, "birthDate must not be null");
-    }
-
-    public Department getFuelConsumption() {
-        return fuelConsumption;
-    }
-
-    public void setFuelConsumption(Department fuelConsumption) {
-        this.fuelConsumption = Objects.requireNonNull(fuelConsumption, "department must not be null");
-    }
 
     @Override
     public String toString() {
@@ -108,11 +91,19 @@ public class CarRide {
         this.numberOfPassengers = numberOfPassengers;
     }
 
-    public int getCostOfFuelPerLitre() {
+    public double getCostOfFuelPerLitre() {
         return costOfFuelPerLitre;
     }
 
-    public void setCostOfFuelPerLitre(int costOfFuelPerLitre) {
+    public void setCostOfFuelPerLitre(double costOfFuelPerLitre) {
         this.costOfFuelPerLitre = costOfFuelPerLitre;
+    }
+
+    public double getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    public void setFuelConsumption(double fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
     }
 }
