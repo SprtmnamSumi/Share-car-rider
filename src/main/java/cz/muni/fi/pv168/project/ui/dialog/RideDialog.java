@@ -2,6 +2,8 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.entities.CarRide;
 import cz.muni.fi.pv168.project.entities.Category;
+import cz.muni.fi.pv168.project.entities.Currency;
+import cz.muni.fi.pv168.project.entities.old.Gender;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
 import org.jdatepicker.DateModel;
@@ -15,7 +17,7 @@ public final class RideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
     private final JTextField templateField = new JTextField();
-
+    private final ComboBoxModel<Currency> currencyModel = new DefaultComboBoxModel<>(Currency.values());
     private final JTextField currency = new JTextField();
     private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
@@ -51,7 +53,7 @@ public final class RideDialog extends EntityDialog<CarRide> {
         add("Distance", distanceField);
         add("Average Fuel Consumption (per 100km)", fuelConsiumption);
         add("Cost of Fuel (per 1 l:", costOfFuel);
-        add("Currency", currency);
+        add("Currency:", new JComboBox<>(currencyModel));
         add("Rate", rateField);
         add("Number of Passengers", numberOfPassengers);
         add("Commision", commision);
