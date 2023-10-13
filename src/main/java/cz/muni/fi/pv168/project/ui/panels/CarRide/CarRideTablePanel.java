@@ -30,7 +30,9 @@ public class CarRideTablePanel extends JPanel {
         add(new FilterBar(), BorderLayout.PAGE_START);
 
         add(new JScrollPane(table), BorderLayout.CENTER);
-        add(new JLabel("Filtered distance"), BorderLayout.PAGE_END);
+        JLabel filteredDistance = new JLabel("Filtered distance");
+        filteredDistance.setBorder(BorderFactory.createEmptyBorder(5,5,0,5));
+        add(filteredDistance, BorderLayout.PAGE_END);
 
         this.onSelectionChange = onSelectionChange;
     }

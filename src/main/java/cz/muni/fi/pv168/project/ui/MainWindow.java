@@ -32,6 +32,7 @@ import cz.muni.fi.pv168.project.ui.renderers.OLD.SpecialFilterGenderValuesRender
 import cz.muni.fi.pv168.project.util.Either;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
@@ -107,7 +108,9 @@ public class MainWindow {
         //frame.add(createToolbar(genderFilter, departmentFilter), BorderLayout.BEFORE_FIRST_LINE);
 
         frame.setJMenuBar(createMenuBar());
-        frame.add(new JLabel("Total distance"), BorderLayout.PAGE_END);
+        JLabel jlabel = new JLabel("Total distance");
+        jlabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        frame.add(jlabel, BorderLayout.PAGE_END);
         frame.pack();
         changeActionsState(0);
     }
