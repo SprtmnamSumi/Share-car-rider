@@ -1,5 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
+import cz.muni.fi.pv168.project.data.TestDataGenerator;
+import cz.muni.fi.pv168.project.entities.Category;
+import cz.muni.fi.pv168.project.entities.Currency;
 import cz.muni.fi.pv168.project.entities.old.Department;
 import cz.muni.fi.pv168.project.entities.old.Gender;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
@@ -13,6 +16,8 @@ import cz.muni.fi.pv168.project.ui.renderers.OLD.GenderRenderer;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -24,7 +29,7 @@ public class CarRideTablePanel extends JPanel {
     private final JTable table;
     private final Consumer<Integer> onSelectionChange;
 
-    public CarRideTablePanel(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, Consumer<Integer> onSelectionChange) {
+       public CarRideTablePanel(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, Consumer<Integer> onSelectionChange) {
         setLayout(new BorderLayout());
         table = setUpTable(carRideTableModel, categoryListModel);
         add(new FilterBar(), BorderLayout.PAGE_START);
@@ -63,9 +68,13 @@ public class CarRideTablePanel extends JPanel {
     }
 
     public static class FilterBar extends JPanel {
+        private final List<String> currencyModel = Arrays.stream(Currency.values()).map(Currency::name).toList();
+        private final List<String>  categories;
 
         public FilterBar() {
             super(new FlowLayout(FlowLayout.LEFT));
+            TestDataGenerator testDataGenerator = new TestDataGenerator();
+            categories =  testDataGenerator.createTestCategories(10).stream().map(Category::getName).toList();
 
             //        // Set look
             //        this.setMaximumSize(dimension);
@@ -80,11 +89,11 @@ public class CarRideTablePanel extends JPanel {
             this.add(dateToPanel);
 
             ComboBoxPanel categoryPanel = new ComboBoxPanel("Category");
-            categoryPanel.setComboBoxItems(/* Example list */ java.util.List.of("Car", "Bus", "Train"));
+            categoryPanel.setComboBoxItems(categories);
             this.add(categoryPanel);
 
             ComboBoxPanel currencyPanel = new ComboBoxPanel("Currency");
-            currencyPanel.setComboBoxItems(/* Example list */ List.of("Euro", "Dollar", "Czech Crown"));
+            currencyPanel.setComboBoxItems(currencyModel);
             this.add(currencyPanel);
 
             TextFieldPanel distanceFromPanel = new TextFieldPanel("Distance from");
