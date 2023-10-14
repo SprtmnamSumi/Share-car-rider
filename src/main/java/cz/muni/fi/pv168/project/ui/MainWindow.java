@@ -12,7 +12,7 @@ import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.common.ButtonTabComponent;
 import cz.muni.fi.pv168.project.ui.model.templates.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
-import cz.muni.fi.pv168.project.ui.panels.OLD.CategoryTablePanel;
+import cz.muni.fi.pv168.project.ui.panels.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.TemplateablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
 
@@ -41,20 +41,6 @@ public class MainWindow {
         var testDataGenerator = new TestDataGenerator();
         var templateListModel = new CarRideListModel(testDataGenerator.createTestTemplates(10));
 
-        // OLD START
-//        var departmentListModel = new DepartmentListModel(testDataGenerator.getDepartments());
-//        var employeeTableModel = new OLDEmployeeTableModel(testDataGenerator.createTestEmployees(10));
-//        var employeeListModel = new EntityListModelAdapter<>(employeeTableModel);
-//        var employeeTablePanel = new EmployeeTablePanel(employeeTableModel, departmentListModel, this::changeActionsState);
-//        var employeeListPanel = new EmployeeListPanel(employeeListModel);
-
-
-//        deleteAction = new DeleteAction(employeeTablePanel.getTable());
-//        editAction = new EditAction(employeeTablePanel.getTable(), departmentListModel);
-
-
-        // OLD END
-
 
         var categoryTableModel = new CategoryTableModel(testDataGenerator.createTestCategories(10));
         var categoryListModel = new CategoryListModel(testDataGenerator.createTestCategories(10));
@@ -74,7 +60,6 @@ public class MainWindow {
 //        var carRideListPanel = new CarRideListPanel(carRideListModel);
         addCarRide = new AddRideAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel, templateListModel);
 
-//        employeeTablePanel.setComponentPopupMenu(createEmployeeTablePopupMenu());
 
         addTemplate = new AddTemplateAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel, templateListModel);
         settingsAction = new SettingsAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel);
@@ -92,16 +77,6 @@ public class MainWindow {
         frame.add(tabbedPane, BorderLayout.CENTER);
 
 
-//        var rowSorter = new TableRowSorter<>(employeeTableModel);
-//        var employeeTableFilter = new OLDEmployeeTableFilter(rowSorter);
-//        employeeTablePanel.getTable().setRowSorter(rowSorter);
-//
-//        var genderFilter = createGenderFilter(employeeTableFilter);
-//        var departmentFilter = new JScrollPane(createDepartmentFilter(employeeTableFilter, departmentListModel));
-
-
-        //frame.add(createToolbar(genderFilter, departmentFilter), BorderLayout.BEFORE_FIRST_LINE);
-
         frame.setJMenuBar(createMenuBar());
         JLabel jlabel = new JLabel("Total distance");
         jlabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -109,27 +84,6 @@ public class MainWindow {
         frame.pack();
         changeActionsState(0);
     }
-
-//    private static JList<Either<SpecialFilterDepartmentValues, Department>> createDepartmentFilter(
-//            OLDEmployeeTableFilter employeeTableFilter, DepartmentListModel departmentListModel) {
-//        return FilterListModelBuilder.create(SpecialFilterDepartmentValues.class, departmentListModel)
-//                .setSelectedIndex(0)
-//                .setVisibleRowsCount(3)
-//                .setSpecialValuesRenderer(new SpecialFilterDepartmentValuesRenderer())
-//                .setValuesRenderer(new DepartmentRenderer())
-//                .setFilter(employeeTableFilter::filterDepartment)
-//                .build();
-//    }
-
-//    private static JComboBox<Either<SpecialFilterGenderValues, Gender>> createGenderFilter(
-//            OLDEmployeeTableFilter employeeTableFilter) {
-//        return FilterComboboxBuilder.create(SpecialFilterGenderValues.class, Gender.values())
-//                .setSelectedItem(SpecialFilterGenderValues.BOTH)
-//                .setSpecialValuesRenderer(new SpecialFilterGenderValuesRenderer())
-//                .setValuesRenderer(new GenderRenderer())
-//                .setFilter(employeeTableFilter::filterGender)
-//                .build();
-//    }
 
     public void show() {
         frame.setVisible(true);
@@ -140,14 +94,6 @@ public class MainWindow {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         return frame;
     }
-
-//    private JPopupMenu createEmployeeTablePopupMenu() {
-//        var menu = new JPopupMenu();
-//        menu.add(deleteAction);
-//        menu.add(editAction);
-//        menu.add(addCarRide);
-//        return menu;
-//    }
 
 
     private JMenu editBar() {
@@ -185,22 +131,7 @@ public class MainWindow {
         return menuBar;
     }
 
-    //    private JToolBar createToolbar(Component... components) {
-//        var toolbar = new JToolBar();
-//        toolbar.add(quitAction);
-//        toolbar.addSeparator();
-//        toolbar.add(addCarRide);
-//        toolbar.add(editAction);
-//        toolbar.add(deleteAction);
-//        toolbar.addSeparator();
-//
-//        for (var component : components) {
-//            toolbar.add(component);
-//        }
-//
-//        return toolbar;
-//    }
-//
+
     private void changeActionsState(int selectedItemsCount) {
 //        editAction.setEnabled(selectedItemsCount == 1);
 //        deleteAction.setEnabled(selectedItemsCount >= 1);

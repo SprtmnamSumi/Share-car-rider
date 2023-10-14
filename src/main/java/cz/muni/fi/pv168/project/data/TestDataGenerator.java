@@ -18,21 +18,6 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public final class TestDataGenerator {
 
-//    //OLD START
-//    private static final Map<Gender, List<String>> FIRST_NAMES = Map.of(
-//            Gender.MALE, List.of("Jiří", "Jan", "Petr", "Josef", "Pavel", "Martin", "Tomáš", "Jaroslav", "Miroslav", "Zdeněk"),
-//            Gender.FEMALE, List.of("Jana", "Marie", "Eva", "Hana", "Anna", "Lenka", "Kateřina", "Lucie", "Věra", "Alena")
-//    );
-//    private static final Map<Gender, List<String>> LAST_NAMES = Map.of(
-//            Gender.MALE, List.of("Novák", "Novotný", "Dvořák", "Černý", "Procházka", "Šťastný", "Veselý", "Horák", "Němec", "Pokorný"),
-//            Gender.FEMALE, List.of("Nováková", "Novotná", "Dvořáková", "Černá", "Procházková", "Šťastná", "Veselá", "Horáková", "Němcová", "Pokorná")
-//    );
-//    private static final List<Department> DEPARTMENTS = List.of(
-//            new Department("IT", "007"),
-//            new Department("Sales", "666"),
-//            new Department("HR", "112")
-//    );
-    //OLD END
 
     private static final Map<List<String>, List<String>> NAMES = Map.of(
             List.of("Jiří", "Jan", "Petr", "Josef", "Pavel", "Martin", "Tomáš", "Jaroslav", "Miroslav", "Zdeněk",
@@ -56,15 +41,8 @@ public final class TestDataGenerator {
     Random rand = new Random();
     private final int DISTANCE = rand.nextInt(upperbound);
     private final double DISTANCEDOUBLE = rand.nextDouble();
+    //private static final LocalDate RANDOMDATE = new SimpleDateFormat("yyyyMMdd").format(new LocalDate[]);
 
-//    public Employee createTestEmployee() {
-//        Gender gender = selectRandom(Arrays.asList(Gender.values()));
-//        String firstName = selectRandom(FIRST_NAMES.get(gender));
-//        String lastName = selectRandom(LAST_NAMES.get(gender));
-//        LocalDate birthDate = selectRandomLocalDate(MIN_BIRTH_DATE, MAX_BIRTH_DATE);
-//        Department department = selectRandom(DEPARTMENTS);
-//        return new Employee(firstName, lastName, gender, birthDate, department);
-//    }
 
     public CarRideTemplate createTestTemplate() {
         String title = "Test";
@@ -77,18 +55,6 @@ public final class TestDataGenerator {
         return new CarRideTemplate(title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, category);
     }
 
-//    public List<Employee> createTestEmployees(int count) {
-//        return Stream
-//                .generate(this::createTestEmployee)
-//                .limit(count)
-//                .toList();
-//    }
-//
-//    public List<Department> getDepartments() {
-//        return DEPARTMENTS;
-//    }
-
-    //private static final LocalDate RANDOMDATE = new SimpleDateFormat("yyyyMMdd").format(new LocalDate[]);
 
     public cz.muni.fi.pv168.project.entities.Category crateTestCategory() {
         var category = new Category("df", "fd");

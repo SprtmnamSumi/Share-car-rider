@@ -19,12 +19,6 @@ public final class CarRideTableFilter {
         rowSorter.setRowFilter(rideCompoundMatcher);
     }
 
-//    public void filterGender(Either<SpecialFilterGenderValues, Gender> selectedItem) {
-//        selectedItem.apply(
-//                l -> rideCompoundMatcher.setGenderMatcher(l.getMatcher()),
-//                r -> rideCompoundMatcher.setGenderMatcher(new EmployeeGenderMatcher(r))
-//        );
-//    }
 
     /**
      * Container class for all matchers for the EmployeeTable.
@@ -40,11 +34,6 @@ public final class CarRideTableFilter {
         private RideCompoundMatcher(TableRowSorter<CarRideTableModel> rowSorter) {
             this.rowSorter = rowSorter;
         }
-
-//        private void setGenderMatcher(EntityMatcher<Employee> genderMatcher) {
-//            this.genderMatcher = genderMatcher;
-//            rowSorter.sort();
-//        }
 
         @Override
         public boolean evaluate(CarRide carRide) {
