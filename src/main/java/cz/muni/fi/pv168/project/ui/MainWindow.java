@@ -75,12 +75,7 @@ public class MainWindow {
         tabbedPane.addSpecialTab("Templates", templateRideTablePanel, new ButtonTabComponent(tabbedPane, addTemplate, "Add new template"));
 
         frame.add(tabbedPane, BorderLayout.CENTER);
-
-
         frame.setJMenuBar(createMenuBar());
-        JLabel jlabel = new JLabel("Total distance");
-        jlabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        frame.add(jlabel, BorderLayout.PAGE_END);
         frame.pack();
         changeActionsState(0);
     }
