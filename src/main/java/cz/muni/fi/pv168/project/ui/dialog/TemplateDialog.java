@@ -7,13 +7,12 @@ import cz.muni.fi.pv168.project.entities.Currency;
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
-import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 import org.jdatepicker.DateModel;
 
 import javax.swing.*;
 import java.time.LocalDate;
 
-public final class RideDialog extends EntityDialog<CarRide> {
+public final class TemplateDialog extends EntityDialog<CarRide> {
 
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
@@ -32,7 +31,7 @@ public final class RideDialog extends EntityDialog<CarRide> {
 
     private final CarRide carRide;
 
-    public RideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<CarRideTemplate> templateModel) {
+    public TemplateDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<CarRideTemplate> templateModel) {
         this.carRide = carRide;
         this.categoryModel = new ComboBoxModelAdapter<>(categoryModel);
         this.categoryMmodel = new ComboBoxModelAdapter<>((templateModel));
@@ -57,8 +56,6 @@ public final class RideDialog extends EntityDialog<CarRide> {
         add("Cost of Fuel (1l)", new CostBar());
         add("Number of Passengers", numberOfPassengers);
         add("Commision (%)", commision);
-//        add("Date", new JDatePicker(dateField));
-        add("Date", new DateBar(dateField));
         add("Category", new JComboBox<>(categoryModel));
         add("Count me in the calculation of per price person", new JCheckBox());
     }

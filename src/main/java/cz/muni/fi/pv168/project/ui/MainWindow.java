@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.entities.old.Gender;
 import cz.muni.fi.pv168.project.ui.action.CarRide.AddRideAction;
 import cz.muni.fi.pv168.project.ui.action.Category.AddCategoryAction;
 import cz.muni.fi.pv168.project.ui.action.*;
+import cz.muni.fi.pv168.project.ui.action.Templates.AddTemplateAction;
 import cz.muni.fi.pv168.project.ui.action.old.tobeused.DeleteAction;
 import cz.muni.fi.pv168.project.ui.action.old.tobeused.EditAction;
 import cz.muni.fi.pv168.project.ui.filters.OLDEmployeeTableFilter;
@@ -13,10 +14,11 @@ import cz.muni.fi.pv168.project.ui.filters.OLDvalues.SpecialFilterDepartmentValu
 import cz.muni.fi.pv168.project.ui.filters.OLDvalues.SpecialFilterGenderValues;
 import cz.muni.fi.pv168.project.ui.filters.components.FilterComboboxBuilder;
 import cz.muni.fi.pv168.project.ui.filters.components.FilterListModelBuilder;
-import cz.muni.fi.pv168.project.ui.model.*;
+import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideListModel;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.OLDEmployeeTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.model.common.ButtonTabComponent;
 import cz.muni.fi.pv168.project.ui.model.old.DepartmentListModel;
@@ -32,7 +34,6 @@ import cz.muni.fi.pv168.project.ui.renderers.OLD.SpecialFilterGenderValuesRender
 import cz.muni.fi.pv168.project.util.Either;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
@@ -49,6 +50,8 @@ public class MainWindow {
     private final Action currenciesAction;
     private final Action importAction;
     private final Action exportAction;
+
+    private final Action addTemplate;
     private final Action info;
 
     public MainWindow() {
@@ -63,6 +66,8 @@ public class MainWindow {
         var employeeTablePanel = new EmployeeTablePanel(employeeTableModel, departmentListModel, this::changeActionsState);
         var employeeListPanel = new EmployeeListPanel(employeeListModel);
 
+        var templateListModel = new CarRideListModel(testDataGenerator.createTestTemplates(10));
+
         var templateListPanel = new EmployeeListPanel(employeeListModel);
         deleteAction = new DeleteAction(employeeTablePanel.getTable());
         editAction = new EditAction(employeeTablePanel.getTable(), departmentListModel);
@@ -70,6 +75,7 @@ public class MainWindow {
         currenciesAction = new InfoAction.currenciesAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
         importAction = new ImportAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
         exportAction = new ExportAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
+
         info = new InfoAction(employeeTablePanel.getTable(), testDataGenerator, departmentListModel);
         // OLD END
 
@@ -83,16 +89,16 @@ public class MainWindow {
         var carRideTablePanel = new CarRideTablePanel(carRideTableModel, categoryListModel, this::changeActionsState);
 //        var carRideListModel = new EntityListModelAdapter<>(carRideTableModel);
 //        var carRideListPanel = new CarRideListPanel(carRideListModel);
+        addCarRide = new AddRideAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel, templateListModel);
 
-        addCarRide = new AddRideAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel);
-
+        addTemplate = new AddTemplateAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel, templateListModel);
         employeeTablePanel.setComponentPopupMenu(createEmployeeTablePopupMenu());
 
         var tabbedPane = new TabPanel();
 
         tabbedPane.addSpecialTab("Car Rides", carRideTablePanel, new ButtonTabComponent(tabbedPane, addCarRide, "Add new ride"));
         tabbedPane.addSpecialTab("Categories", categoryTablePanel, new ButtonTabComponent(tabbedPane, addCategory, "Add new category"));
-        tabbedPane.addSpecialTab("Templates", templateListPanel, new ButtonTabComponent(tabbedPane, addCarRide, "Add new template"));
+        tabbedPane.addSpecialTab("Templates", templateListPanel, new ButtonTabComponent(tabbedPane, addTemplate, "Add new template"));
 
         frame.add(tabbedPane, BorderLayout.CENTER);
 
@@ -109,7 +115,7 @@ public class MainWindow {
 
         frame.setJMenuBar(createMenuBar());
         JLabel jlabel = new JLabel("Total distance");
-        jlabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        jlabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         frame.add(jlabel, BorderLayout.PAGE_END);
         frame.pack();
         changeActionsState(0);

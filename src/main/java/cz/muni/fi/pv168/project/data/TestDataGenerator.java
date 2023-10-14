@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.data;
 
 
 import cz.muni.fi.pv168.project.entities.CarRide;
+import cz.muni.fi.pv168.project.entities.CarRideTemplate;
 import cz.muni.fi.pv168.project.entities.Category;
 import cz.muni.fi.pv168.project.entities.old.Department;
 import cz.muni.fi.pv168.project.entities.old.Employee;
@@ -69,6 +70,17 @@ public final class TestDataGenerator {
         return new Employee(firstName, lastName, gender, birthDate, department);
     }
 
+    public CarRideTemplate createTestTemplate() {
+        String title = "Test";
+        String description = "Test";
+        double distance = 100;
+        int costOfFuelPerLitre = 100;
+        int numberOfPassengers = 1;
+        LocalDateTime date = LocalDateTime.of(2021, JANUARY, 1, 0, 0);
+        Category category = crateTestCategory();
+        return new CarRideTemplate(title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, category);
+    }
+
     public List<Employee> createTestEmployees(int count) {
         return Stream
                 .generate(this::createTestEmployee)
@@ -102,6 +114,13 @@ public final class TestDataGenerator {
     public List<CarRide> createTestRides(int count) {
         return Stream
                 .generate(this::createTestRide)
+                .limit(count)
+                .toList();
+    }
+
+    public List<CarRideTemplate> createTestTemplates(int count) {
+        return Stream
+                .generate(this::createTestTemplate)
                 .limit(count)
                 .toList();
     }
