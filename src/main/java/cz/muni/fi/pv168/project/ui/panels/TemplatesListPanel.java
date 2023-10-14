@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.panels;
 
-import cz.muni.fi.pv168.project.entities.old.Gender;
+import cz.muni.fi.pv168.project.entities.Category;
 
 import javax.swing.*;
 
@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class TemplatesListPanel extends JPanel {
 
-    public TemplatesListPanel(ListModel<Gender> employeeListModel) {
+    public TemplatesListPanel(ListModel<Category> employeeListModel) {
 //        var list = new JList<>(employeeListModel);
 //        list.setCellRenderer(new EmployeeRenderer());
 //        setLayout(new BorderLayout());

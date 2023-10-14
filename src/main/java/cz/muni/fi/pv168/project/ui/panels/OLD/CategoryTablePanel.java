@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.panels.OLD;
 
-import cz.muni.fi.pv168.project.entities.old.Gender;
+//import cz.muni.fi.pv168.project.entities.old.Gender;
+
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
-import cz.muni.fi.pv168.project.ui.renderers.OLD.GenderRenderer;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -38,10 +38,10 @@ public class CategoryTablePanel extends JPanel {
 
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
-        var genderComboBox = new JComboBox<>(Gender.values());
-        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
-
-        table.setDefaultRenderer(Gender.class, new GenderRenderer());
+//        var genderComboBox = new JComboBox<>(Gender.values());
+//        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
+//
+//        table.setDefaultRenderer(Gender.class, new GenderRenderer());
 
         return table;
     }

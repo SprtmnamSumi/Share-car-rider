@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.entities.old.Department;
+import cz.muni.fi.pv168.project.entities.Category;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 public final class SettingsAction extends AbstractAction {
 
 
-    public SettingsAction(JTable employeeTable, TestDataGenerator testDataGenerator, ListModel<Department> departmentListModel) {
+    public SettingsAction(JTable employeeTable, TestDataGenerator testDataGenerator, ListModel<Category> departmentListModel) {
         super("Settings", null);
         putValue(SHORT_DESCRIPTION, "Settings");
 //        putValue(MNEMONIC_KEY, KeyEvent.VK_A);

@@ -1,11 +1,9 @@
 package cz.muni.fi.pv168.project.ui.renderers;
 
-import cz.muni.fi.pv168.project.entities.old.Gender;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
+//import cz.muni.fi.pv168.project.entities.old.Gender;
 
 import javax.swing.*;
 import java.util.Currency;
-import java.util.Map;
 
 public final class CurrencyRenderer extends AbstractRenderer<Currency> {
 
@@ -13,7 +11,7 @@ public final class CurrencyRenderer extends AbstractRenderer<Currency> {
         super(Currency.class);
     }
 
-        @Override
+    @Override
     protected void updateLabel(JLabel label, Currency value) {
         if (value != null) {
             label.setText(value.toString());
