@@ -6,6 +6,9 @@ pom.xml.versionsBackup
 *.iml
 /.idea/
 
+# VS Code specific
+.vscode/
+
 # Apache Derby specific
 /derby.log
 
