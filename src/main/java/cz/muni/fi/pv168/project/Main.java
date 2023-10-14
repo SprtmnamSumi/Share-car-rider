@@ -1,31 +1,29 @@
 package cz.muni.fi.pv168.project;
 
-import cz.muni.fi.pv168.project.gui.MainFrame;
+import cz.muni.fi.pv168.project.ui.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- * The entry point of the application.
- */
 public class Main {
-    private Main() {
-        throw new AssertionError("This class is not intended for instantiation.");
+
+    public static void main(String[] args) {
+        initNimbusLookAndFeel();
+        EventQueue.invokeLater(() -> new MainWindow().show());
     }
 
-    public static void main(String[] args){
-        setUIStyle();
-        JFrame frame = new MainFrame();
-        frame.setTitle("Share Car Rider");
-        frame.setVisible(true);
-    }
-
-    private static void setUIStyle(){
+    private static void initNimbusLookAndFeel() {
         try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        }
-        catch(UnsupportedLookAndFeelException| ClassNotFoundException| InstantiationException|  IllegalAccessException e){
-            System.err.println("Unsupported Look and Feel");
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Nimbus layout initialization failed", ex);
         }
     }
 }
