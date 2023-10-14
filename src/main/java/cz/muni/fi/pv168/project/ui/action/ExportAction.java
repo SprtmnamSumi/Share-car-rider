@@ -10,7 +10,7 @@ public final class ExportAction extends AbstractAction {
 
 
     public ExportAction(JTable employeeTable, TestDataGenerator testDataGenerator, ListModel<Category> departmentListModel) {
-        super("Import", null);
+        super("Export", null);
         putValue(SHORT_DESCRIPTION, "Export");
 //        putValue(MNEMONIC_KEY, KeyEvent.VK_A);
 //        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
