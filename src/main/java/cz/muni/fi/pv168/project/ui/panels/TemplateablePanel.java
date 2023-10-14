@@ -27,11 +27,7 @@ public class TemplateablePanel extends JPanel {
         setLayout(new BorderLayout());
         table = setUpTable(carRideTableModel, categoryListModel);
         add(new FilterBar(), BorderLayout.PAGE_START);
-
         add(new JScrollPane(table), BorderLayout.CENTER);
-        JLabel filteredDistance = new JLabel("Filtered distance");
-        filteredDistance.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-        add(filteredDistance, BorderLayout.PAGE_END);
 
         this.onSelectionChange = onSelectionChange;
     }

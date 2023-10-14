@@ -21,7 +21,6 @@ public class CategoryTablePanel extends JPanel {
         setLayout(new BorderLayout());
         table = setUpTable(carRideTableModel);
         add(new JScrollPane(table), BorderLayout.CENTER);
-        add(new JLabel("Filtered distance"), BorderLayout.PAGE_END);
 
         this.onSelectionChange = onSelectionChange;
     }

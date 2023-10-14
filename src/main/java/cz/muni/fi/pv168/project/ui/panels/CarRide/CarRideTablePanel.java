@@ -1,19 +1,12 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.entities.Category;
-import cz.muni.fi.pv168.project.entities.Currency;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
-import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
-import cz.muni.fi.pv168.project.ui.panels.commonPanels.SpinnerDatePanel;
-import cz.muni.fi.pv168.project.ui.panels.commonPanels.TextFieldPanel;
+import cz.muni.fi.pv168.project.ui.panels.TemplateablePanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -27,12 +20,17 @@ public class CarRideTablePanel extends JPanel {
     public CarRideTablePanel(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, Consumer<Integer> onSelectionChange) {
         setLayout(new BorderLayout());
         table = setUpTable(carRideTableModel, categoryListModel);
-        add(new FilterBar(), BorderLayout.PAGE_START);
+        CarRideFilterBar filterBar = new CarRideFilterBar();
+        CarRideStatisticsBar statsPanel = new CarRideStatisticsBar(carRideTableModel);
+        table.getModel().addTableModelListener(e->
+        {
+            statsPanel.updateFilteredStats();
+            statsPanel.updateTotalStats();
+        });
 
+        add(filterBar, BorderLayout.PAGE_START);
         add(new JScrollPane(table), BorderLayout.CENTER);
-        JLabel filteredDistance = new JLabel("Filtered distance");
-        filteredDistance.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-        add(filteredDistance, BorderLayout.PAGE_END);
+        add(statsPanel, BorderLayout.PAGE_END);
 
         this.onSelectionChange = onSelectionChange;
     }
@@ -61,46 +59,6 @@ public class CarRideTablePanel extends JPanel {
         var count = selectionModel.getSelectedItemsCount();
         if (onSelectionChange != null) {
             onSelectionChange.accept(count);
-        }
-    }
-
-    public static class FilterBar extends JPanel {
-        private final List<String> currencyModel = Arrays.stream(Currency.values()).map(Currency::name).toList();
-        private final List<String> categories;
-
-        public FilterBar() {
-            super(new FlowLayout(FlowLayout.LEFT));
-            TestDataGenerator testDataGenerator = new TestDataGenerator();
-            categories = testDataGenerator.createTestCategories(10).stream().map(Category::getName).toList();
-
-            //        // Set look
-            //        this.setMaximumSize(dimension);
-
-            TextFieldPanel numberOfPassengersPanel = new TextFieldPanel("Number Of Passengers");
-            this.add(numberOfPassengersPanel);
-
-            SpinnerDatePanel dateFromPanel = new SpinnerDatePanel("Date From");
-            this.add(dateFromPanel);
-
-            SpinnerDatePanel dateToPanel = new SpinnerDatePanel("Date to");
-            this.add(dateToPanel);
-
-            ComboBoxPanel categoryPanel = new ComboBoxPanel("Category");
-            categoryPanel.setComboBoxItems(categories);
-            this.add(categoryPanel);
-
-            ComboBoxPanel currencyPanel = new ComboBoxPanel("Currency");
-            currencyPanel.setComboBoxItems(currencyModel);
-            this.add(currencyPanel);
-
-            TextFieldPanel distanceFromPanel = new TextFieldPanel("Distance from");
-            this.add(distanceFromPanel);
-
-            TextFieldPanel distanceToPanel = new TextFieldPanel("Distance to");
-            this.add(distanceToPanel);
-
-            JButton filterButton = new JButton("Reset Filter");
-            this.add(filterButton);
         }
     }
 }
