@@ -11,7 +11,7 @@ public final class CategoryDialog extends EntityDialog<Category> {
 
     private final Category category;
 
-    public CategoryDialog(Category category) {
+    public CategoryDialog(Category category, ListModel<Category> categoriestListModel) {
         this.category = category;
         setValues();
         addFields();

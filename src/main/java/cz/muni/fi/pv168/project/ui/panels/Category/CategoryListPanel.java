@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.panels;
+package cz.muni.fi.pv168.project.ui.panels.Category;
 
 import cz.muni.fi.pv168.project.entities.Category;
 import cz.muni.fi.pv168.project.ui.renderers.CategoryRenderer;

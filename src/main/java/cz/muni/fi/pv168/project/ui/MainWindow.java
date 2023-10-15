@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.ui.action.CarRide.AddRideAction;
+import cz.muni.fi.pv168.project.ui.action.CarRide.AddCarRideAction;
+import cz.muni.fi.pv168.project.ui.action.CarRide.DeleteCarRideAction;
+import cz.muni.fi.pv168.project.ui.action.CarRide.EditCarRideAction;
 import cz.muni.fi.pv168.project.ui.action.Category.AddCategoryAction;
 import cz.muni.fi.pv168.project.ui.action.*;
 import cz.muni.fi.pv168.project.ui.action.Templates.AddTemplateAction;
@@ -10,10 +12,10 @@ import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.common.ButtonTabComponent;
-import cz.muni.fi.pv168.project.ui.model.templates.TemplateTableModel;
+import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
-import cz.muni.fi.pv168.project.ui.panels.CategoryTablePanel;
-import cz.muni.fi.pv168.project.ui.panels.TemplateablePanel;
+import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
+import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
 
 import javax.swing.*;
@@ -23,7 +25,10 @@ public class MainWindow {
 
     private final JFrame frame;
     private final Action quitAction = new QuitAction();
-    private final Action addCarRide;
+    private final Action addCarRideAction;
+    private final Action editCarRideAction;
+    private final Action deleteCarRideAction;
+
     private final Action addCategory;
 //    private final Action deleteAction;
 //    private final Action editAction;
@@ -44,21 +49,23 @@ public class MainWindow {
 
         var categoryTableModel = new CategoryTableModel(testDataGenerator.createTestCategories(10));
         var categoryListModel = new CategoryListModel(testDataGenerator.createTestCategories(10));
-        var categoryTablePanel = new CategoryTablePanel(categoryTableModel, this::changeActionsState);
+        var categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryListModel, testDataGenerator);
 //        var categoryListPanel = new CategoryListPanel(categoryListModel);
-        addCategory = new AddCategoryAction(categoryTablePanel.getTable(), testDataGenerator);
+        addCategory = new AddCategoryAction(categoryTablePanel.getTable(), testDataGenerator, categoryListModel);
 
         var templateTableModel = new TemplateTableModel(testDataGenerator.createTestTemplates(10));
-        var templateRideTablePanel = new TemplateablePanel(templateTableModel, categoryListModel, this::changeActionsState);
+        var templateRideTablePanel = new TemplateTablePanel(templateTableModel, categoryListModel, templateListModel, testDataGenerator);
 //        var carRideListModel = new EntityListModelAdapter<>(carRideTableModel);
 //        var carRideListPanel = new CarRideListPanel(carRideListModel);
 
 
         var carRideTableModel = new CarRideTableModel(testDataGenerator.createTestRides(10));
-        var carRideTablePanel = new CarRideTablePanel(carRideTableModel, categoryListModel, this::changeActionsState);
+        CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, categoryListModel, templateListModel, testDataGenerator);
 //        var carRideListModel = new EntityListModelAdapter<>(carRideTableModel);
 //        var carRideListPanel = new CarRideListPanel(carRideListModel);
-        addCarRide = new AddRideAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel, templateListModel);
+        addCarRideAction = new AddCarRideAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel, templateListModel);
+        editCarRideAction = new EditCarRideAction(carRideTablePanel.getTable(), categoryListModel, templateListModel);
+        deleteCarRideAction = new DeleteCarRideAction(carRideTablePanel.getTable());
 
 
         addTemplate = new AddTemplateAction(carRideTablePanel.getTable(), testDataGenerator, categoryListModel, templateListModel);
@@ -70,14 +77,13 @@ public class MainWindow {
 
         var tabbedPane = new TabPanel();
 
-        tabbedPane.addSpecialTab("Car Rides", carRideTablePanel, new ButtonTabComponent(tabbedPane, addCarRide, "Add new ride"));
+        tabbedPane.addSpecialTab("Car Rides", carRideTablePanel, new ButtonTabComponent(tabbedPane, addCarRideAction, "Add new ride"));
         tabbedPane.addSpecialTab("Categories", categoryTablePanel, new ButtonTabComponent(tabbedPane, addCategory, "Add new category"));
         tabbedPane.addSpecialTab("Templates", templateRideTablePanel, new ButtonTabComponent(tabbedPane, addTemplate, "Add new template"));
 
         frame.add(tabbedPane, BorderLayout.CENTER);
         frame.setJMenuBar(createMenuBar());
         frame.pack();
-        changeActionsState(0);
     }
 
     public void show() {
@@ -124,11 +130,5 @@ public class MainWindow {
         var helpBar = helpBar();
         menuBar.add(helpBar);
         return menuBar;
-    }
-
-
-    private void changeActionsState(int selectedItemsCount) {
-//        editAction.setEnabled(selectedItemsCount == 1);
-//        deleteAction.setEnabled(selectedItemsCount >= 1);
     }
 }

@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.data;
 
 
 import cz.muni.fi.pv168.project.entities.CarRide;
-import cz.muni.fi.pv168.project.entities.CarRideTemplate;
+import cz.muni.fi.pv168.project.entities.Template;
 import cz.muni.fi.pv168.project.entities.Category;
 
 import java.time.LocalDate;
@@ -44,7 +44,7 @@ public final class TestDataGenerator {
     //private static final LocalDate RANDOMDATE = new SimpleDateFormat("yyyyMMdd").format(new LocalDate[]);
 
 
-    public CarRideTemplate createTestTemplate() {
+    public Template createTestTemplate() {
         String title = "Test";
         String description = "Test";
         double distance = 100;
@@ -52,7 +52,7 @@ public final class TestDataGenerator {
         int numberOfPassengers = 1;
         LocalDateTime date = LocalDateTime.of(2021, JANUARY, 1, 0, 0);
         Category category = crateTestCategory();
-        return new CarRideTemplate(title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, category);
+        return new Template(title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, category);
     }
 
 
@@ -80,7 +80,7 @@ public final class TestDataGenerator {
                 .toList();
     }
 
-    public List<CarRideTemplate> createTestTemplates(int count) {
+    public List<Template> createTestTemplates(int count) {
         return Stream
                 .generate(this::createTestTemplate)
                 .limit(count)

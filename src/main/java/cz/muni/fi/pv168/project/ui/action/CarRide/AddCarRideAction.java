@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.entities.CarRideTemplate;
+import cz.muni.fi.pv168.project.entities.Template;
 import cz.muni.fi.pv168.project.entities.Category;
-import cz.muni.fi.pv168.project.ui.dialog.RideDialog;
+import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
@@ -11,14 +11,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public final class AddRideAction extends AbstractAction {
+public final class AddCarRideAction extends AbstractAction {
 
     private final JTable carRidesTable;
     private final TestDataGenerator testDataGenerator;
     private final ListModel<Category> categoriestListModel;
-    private final ListModel<CarRideTemplate> carRideTemplateListModel;
+    private final ListModel<Template> carRideTemplateListModel;
 
-    public AddRideAction(JTable carRidesTable, TestDataGenerator testDataGenerator, ListModel<Category> categoriestListModel, ListModel<CarRideTemplate> carRideTemplateListModel) {
+    public AddCarRideAction(JTable carRidesTable, TestDataGenerator testDataGenerator, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
         super("Add", Icons.ADD_ICON);
         this.carRidesTable = carRidesTable;
         this.testDataGenerator = testDataGenerator;
@@ -32,7 +32,7 @@ public final class AddRideAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var dialog = new RideDialog(testDataGenerator.createTestRide(), categoriestListModel, carRideTemplateListModel);
+        var dialog = new CarRideDialog(testDataGenerator.createTestRide(), categoriestListModel, carRideTemplateListModel);
         dialog.show(carRidesTable, "Add Cat ride")
                 .ifPresent(carRidesTableModel::addRow);
     }

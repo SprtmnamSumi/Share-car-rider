@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.entities.CarRide;
-import cz.muni.fi.pv168.project.entities.CarRideTemplate;
+import cz.muni.fi.pv168.project.entities.Template;
 import cz.muni.fi.pv168.project.entities.Category;
 import cz.muni.fi.pv168.project.entities.Currency;
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
@@ -13,13 +13,13 @@ import org.jdatepicker.DateModel;
 import javax.swing.*;
 import java.time.LocalDate;
 
-public final class RideDialog extends EntityDialog<CarRide> {
+public final class CarRideDialog extends EntityDialog<CarRide> {
 
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
     private final JTextField templateField = new JTextField();
     private final ComboBoxModel<Currency> currencyModel = new DefaultComboBoxModel<>(Currency.values());
-    private final ComboBoxModel<CarRideTemplate> categoryMmodel;
+    private final ComboBoxModel<Template> categoryMmodel;
     private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner fuelConsiumption = new JSpinner(new SpinnerNumberModel());
@@ -32,7 +32,7 @@ public final class RideDialog extends EntityDialog<CarRide> {
 
     private final CarRide carRide;
 
-    public RideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<CarRideTemplate> templateModel) {
+    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Template> templateModel) {
         this.carRide = carRide;
         this.categoryModel = new ComboBoxModelAdapter<>(categoryModel);
         this.categoryMmodel = new ComboBoxModelAdapter<>((templateModel));
