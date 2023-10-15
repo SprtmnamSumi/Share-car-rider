@@ -1,12 +1,14 @@
-package cz.muni.fi.pv168.project.ui.panels.CarRide;
+package cz.muni.fi.pv168.project.ui.panels.Template;
 
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.ui.action.CarRide.AddCarRideAction;
-import cz.muni.fi.pv168.project.ui.action.CarRide.DeleteCarRideAction;
-import cz.muni.fi.pv168.project.ui.action.CarRide.EditCarRideAction;
+import cz.muni.fi.pv168.project.ui.action.Templates.AddTemplateAction;
+import cz.muni.fi.pv168.project.ui.action.Templates.DeleteTemplateAction;
+import cz.muni.fi.pv168.project.ui.action.Templates.EditTemplateAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideListModel;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
+import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideFilterBar;
+import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideStatisticsBar;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -14,9 +16,9 @@ import java.awt.*;
 import java.util.function.Consumer;
 
 /**
- * Panel with car ride records in a table.
+ * Panel with template records in a table.
  */
-public class CarRideTablePanel extends JPanel {
+public class TemplateTablePanel extends JPanel {
 
     private final JTable table;
     private final Consumer<Integer> onSelectionChange;
@@ -24,11 +26,11 @@ public class CarRideTablePanel extends JPanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
-    public CarRideTablePanel(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel, TestDataGenerator testDataGenerator) {
+    public TemplateTablePanel(TemplateTableModel TemplateTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel, TestDataGenerator testDataGenerator) {
         setLayout(new BorderLayout());
-        table = setUpTable(carRideTableModel, categoryListModel, templateListModel, testDataGenerator);
+        table = setUpTable(TemplateTableModel, categoryListModel, templateListModel, testDataGenerator);
         CarRideFilterBar filterBar = new CarRideFilterBar();
-        CarRideStatisticsBar statsPanel = new CarRideStatisticsBar(carRideTableModel);
+        CarRideStatisticsBar statsPanel = new CarRideStatisticsBar(TemplateTableModel);
         table.getModel().addTableModelListener(e->
         {
             statsPanel.updateFilteredStats();
@@ -46,15 +48,15 @@ public class CarRideTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel, TestDataGenerator testDataGenerator) {
-        var table = new JTable(carRideTableModel);
+    private JTable setUpTable(TemplateTableModel TemplateTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel, TestDataGenerator testDataGenerator) {
+        var table = new JTable(TemplateTableModel);
 
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
 
-        addCarRideAction = new AddCarRideAction(table, testDataGenerator, categoryListModel, templateListModel);
-        editCarRideAction = new EditCarRideAction(table, categoryListModel, templateListModel);
-        deleteCarRideAction = new DeleteCarRideAction(table);
+        addCarRideAction = new AddTemplateAction(table, testDataGenerator, categoryListModel, templateListModel);
+        editCarRideAction = new EditTemplateAction(table, categoryListModel, templateListModel);
+        deleteCarRideAction = new DeleteTemplateAction(table);
 
         table.setComponentPopupMenu(createCarRideTablePopUpMenu());
 //        var genderComboBox = new JComboBox<>(Gender.values());

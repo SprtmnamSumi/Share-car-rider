@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.entities;
 
 import java.time.LocalDateTime;
 
-public class CarRide extends CarRideTemplate {
+public class CarRide extends Template {
     private LocalDateTime date;
 
     public CarRide(String Title, String Description, Double Distance, double FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, LocalDateTime Date, Category Category) {

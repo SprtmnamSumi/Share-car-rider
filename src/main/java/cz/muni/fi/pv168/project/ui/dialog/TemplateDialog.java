@@ -1,9 +1,8 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.entities.CarRide;
-import cz.muni.fi.pv168.project.entities.CarRideTemplate;
 import cz.muni.fi.pv168.project.entities.Category;
 import cz.muni.fi.pv168.project.entities.Currency;
+import cz.muni.fi.pv168.project.entities.Template;
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
@@ -12,13 +11,13 @@ import org.jdatepicker.DateModel;
 import javax.swing.*;
 import java.time.LocalDate;
 
-public final class TemplateDialog extends EntityDialog<CarRide> {
+public final class TemplateDialog extends EntityDialog<Template> {
 
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
     private final JTextField templateField = new JTextField();
     private final ComboBoxModel<Currency> currencyModel = new DefaultComboBoxModel<>(Currency.values());
-    private final ComboBoxModel<CarRideTemplate> categoryMmodel;
+    private final ComboBoxModel<Template> categoryMmodel;
     private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner fuelConsiumption = new JSpinner(new SpinnerNumberModel());
@@ -29,10 +28,10 @@ public final class TemplateDialog extends EntityDialog<CarRide> {
     private final ComboBoxModel<Category> categoryModel;
     private final DateModel<LocalDate> dateField = new LocalDateModel();
 
-    private final CarRide carRide;
+    private final Template template;
 
-    public TemplateDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<CarRideTemplate> templateModel) {
-        this.carRide = carRide;
+    public TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Template> templateModel) {
+        this.template = template;
         this.categoryModel = new ComboBoxModelAdapter<>(categoryModel);
         this.categoryMmodel = new ComboBoxModelAdapter<>((templateModel));
         setValues();
@@ -40,11 +39,11 @@ public final class TemplateDialog extends EntityDialog<CarRide> {
     }
 
     private void setValues() {
-        titleField.setText(carRide.getTitle());
-        descriptionField.setText(carRide.getDescription());
+        titleField.setText(template.getTitle());
+        descriptionField.setText(template.getDescription());
 
-        categoryModel.setSelectedItem(carRide.getCategory());
-//        dateField.setValue(carRide.getDate());
+        categoryModel.setSelectedItem(template.getCategory());
+//        dateField.setValue(template.getDate());
     }
 
     private void addFields() {
@@ -61,12 +60,12 @@ public final class TemplateDialog extends EntityDialog<CarRide> {
     }
 
     @Override
-    CarRide getEntity() {
-//        carRide.setFirstName(titleField.getText());
-//        carRide.setLastName(descriptionField.getText());
-//        carRide.setGender((Gender) genderModel.getSelectedItem());
-//        carRide.setDepartment((Department) departmentModel.getSelectedItem());
-//        carRide.setBirthDate(dateField.getValue());
-        return carRide;
+    Template getEntity() {
+//        template.setFirstName(titleField.getText());
+//        template.setLastName(descriptionField.getText());
+//        template.setGender((Gender) genderModel.getSelectedItem());
+//        template.setDepartment((Department) departmentModel.getSelectedItem());
+//        template.setBirthDate(dateField.getValue());
+        return template;
     }
 }

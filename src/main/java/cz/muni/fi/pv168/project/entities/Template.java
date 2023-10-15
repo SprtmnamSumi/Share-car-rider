@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.entities;
 
 import java.util.Objects;
 
-public class CarRideTemplate {
+public class Template {
 
     private String title;
     private String description;
@@ -13,7 +13,7 @@ public class CarRideTemplate {
     private double commission;
     private Category category;
 
-    public CarRideTemplate(String Title, String Description, Double Distance, double FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category) {
+    public Template(String Title, String Description, Double Distance, double FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category) {
         setTitle(Title);
         setDescription(Description);
         setDistance(Distance);
