@@ -1,28 +1,31 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import cz.muni.fi.pv168.project.entities.CarRide;
+import cz.muni.fi.pv168.project.bussiness.model.CarRide;
+import cz.muni.fi.pv168.project.bussiness.model.Entity;
+import cz.muni.fi.pv168.project.bussiness.service.crud.ICrudService;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.
  */
-public abstract class TableModel<T> extends AbstractTableModel implements EntityTableModel<T> {
+public abstract class TableModel<T extends Entity> extends AbstractTableModel implements EntityTableModel<T> {
 
-    private final List<T> carRides;
     private final List<Column<T, ?>> columns;
+    private final ICrudService<T> entityCrudService;
+    private List<T> entities;
 
-    public TableModel(Collection<T> carRides, List<Column<T, ?>> columns) {
-        this.carRides = new ArrayList<>(carRides);
+    public TableModel(ICrudService<T> entityCrudService, List<Column<T, ?>> columns) {
+        this.entityCrudService = entityCrudService;
+        this.entities = entityCrudService.findAll();
         this.columns = columns;
     }
 
     @Override
     public int getRowCount() {
-        return carRides.size();
+        return entities.size();
     }
 
     @Override
@@ -54,29 +57,41 @@ public abstract class TableModel<T> extends AbstractTableModel implements Entity
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         if (value != null) {
-            var carRide = getEntity(rowIndex);
-            columns.get(columnIndex).setValue(value, carRide);
+            var entity = getEntity(rowIndex);
+            columns.get(columnIndex).setValue(value, entity);
+            updateRow(entity);
         }
     }
 
     public void deleteRow(int rowIndex) {
-        carRides.remove(rowIndex);
+        var entityToBeDeleted = getEntity(rowIndex);
+        entityCrudService.deleteByGuid(entityToBeDeleted.getGuid());
+        entities.remove(rowIndex);
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
 
-    public void addRow(T carRide) {
-        int newRowIndex = carRides.size();
-        carRides.add(carRide);
+    public void addRow(T entity) {
+        entityCrudService.create(entity)
+                .intoException();
+        int newRowIndex = entities.size();
+        entities.add(entity);
         fireTableRowsInserted(newRowIndex, newRowIndex);
     }
 
-    public void updateRow(T carRide) {
-        int rowIndex = carRides.indexOf(carRide);
+    public void updateRow(T entity) {
+        entityCrudService.update(entity)
+                .intoException();
+        int rowIndex = entities.indexOf(entity);
         fireTableRowsUpdated(rowIndex, rowIndex);
+    }
+
+    public void refresh() {
+        this.entities = new ArrayList<>(entityCrudService.findAll());
+        fireTableDataChanged();
     }
 
     @Override
     public T getEntity(int rowIndex) {
-        return carRides.get(rowIndex);
+        return entities.get(rowIndex);
     }
 }

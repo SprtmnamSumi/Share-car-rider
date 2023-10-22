@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.ui.panels.Category;
 
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.ui.action.Category.AddCategoryAction;
 import cz.muni.fi.pv168.project.ui.action.Category.DeleteCategoryAction;
 import cz.muni.fi.pv168.project.ui.action.Category.EditCategoryAction;
@@ -23,9 +22,9 @@ public class CategoryTablePanel extends JPanel {
     private Action editCategoryAction;
     private Action deleteCategoryAction;
 
-    public CategoryTablePanel(CategoryTableModel categoryTableModel, CategoryListModel categoryListModel, TestDataGenerator testDataGenerator) {
+    public CategoryTablePanel(CategoryTableModel categoryTableModel, CategoryListModel categoryListModel) {
         setLayout(new BorderLayout());
-        table = setUpTable(categoryTableModel, categoryListModel, testDataGenerator);
+        table = setUpTable(categoryTableModel, categoryListModel);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         this.onSelectionChange = this::changeActionsState;
@@ -35,21 +34,18 @@ public class CategoryTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(CategoryTableModel categoryTableModel, CategoryListModel categoryListModel, TestDataGenerator testDataGenerator) {
+    private JTable setUpTable(CategoryTableModel categoryTableModel, CategoryListModel categoryListModel) {
         var table = new JTable(categoryTableModel);
 
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
 
-        addCategoryAction = new AddCategoryAction(table, testDataGenerator, categoryListModel);
+        addCategoryAction = new AddCategoryAction(table, categoryListModel);
         editCategoryAction = new EditCategoryAction(table, categoryListModel);
         deleteCategoryAction = new DeleteCategoryAction(table);
 
         table.setComponentPopupMenu(createCategoryTablePopUpMenu());
-//        var genderComboBox = new JComboBox<>(Gender.values());
-//        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
-//
-//        table.setDefaultRenderer(Gender.class, new GenderRenderer());
+
 
         return table;
     }

@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action.Templates;
 
-import cz.muni.fi.pv168.project.entities.Category;
-import cz.muni.fi.pv168.project.entities.Template;
+import cz.muni.fi.pv168.project.bussiness.model.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Template;
 import cz.muni.fi.pv168.project.ui.dialog.TemplateDialog;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
@@ -18,7 +18,7 @@ public final class EditTemplateAction extends AbstractAction {
     private final ListModel<Template> carRideTemplateListModel;
 
     public EditTemplateAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
-        super("Edit", Icons.ADD_ICON);
+        super("Edit", Icons.EDIT_ICON);
         this.templateTable = carRidesTable;
         this.categoriestListModel = categoriestListModel;
         this.carRideTemplateListModel = carRideTemplateListModel;

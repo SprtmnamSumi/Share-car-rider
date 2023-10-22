@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.entities.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Category;
 
 import javax.swing.*;
 
@@ -18,7 +18,8 @@ public final class CategoryDialog extends EntityDialog<Category> {
     }
 
     private void setValues() {
-
+        nameField.setText(category.getName());
+        colorField.setText(category.getColour());
     }
 
     private void addFields() {
@@ -28,12 +29,8 @@ public final class CategoryDialog extends EntityDialog<Category> {
 
     @Override
     Category getEntity() {
-//        category.setName(nam.getText());
-//        carRide.setFirstName(titleField.getText());
-//        carRide.setLastName(descriptionField.getText());
-//        carRide.setGender((Gender) genderModel.getSelectedItem());
-//        carRide.setDepartment((Department) departmentModel.getSelectedItem());
-//        carRide.setBirthDate(dateField.getValue());
+        category.setName(nameField.getText());
+        category.setColour(colorField.getText());
         return category;
     }
 }

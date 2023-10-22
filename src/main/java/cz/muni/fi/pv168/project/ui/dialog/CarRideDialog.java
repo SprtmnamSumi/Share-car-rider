@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.entities.CarRide;
-import cz.muni.fi.pv168.project.entities.Template;
-import cz.muni.fi.pv168.project.entities.Category;
-import cz.muni.fi.pv168.project.entities.Currency;
+import cz.muni.fi.pv168.project.bussiness.model.CarRide;
+import cz.muni.fi.pv168.project.bussiness.model.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Currency;
+import cz.muni.fi.pv168.project.bussiness.model.Template;
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
@@ -43,7 +43,6 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private void setValues() {
         titleField.setText(carRide.getTitle());
         descriptionField.setText(carRide.getDescription());
-
         categoryModel.setSelectedItem(carRide.getCategory());
 //        dateField.setValue(carRide.getDate());
     }
@@ -57,7 +56,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         add("Cost of Fuel (1l)", new CostBar());
         add("Number of Passengers", numberOfPassengers);
         add("Commision (%)", commision);
-//        add("Date", new JDatePicker(dateField));
+
         add("Date", new DateBar(dateField));
         add("Category", new JComboBox<>(categoryModel));
         add("Count me in the calculation of per price person", new JCheckBox());

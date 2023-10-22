@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
-import cz.muni.fi.pv168.project.entities.CarRide;
-import cz.muni.fi.pv168.project.entities.Category;
-import cz.muni.fi.pv168.project.entities.Template;
+import cz.muni.fi.pv168.project.bussiness.model.CarRide;
+import cz.muni.fi.pv168.project.bussiness.model.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Template;
 import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
@@ -19,7 +19,7 @@ public final class EditCarRideAction extends AbstractAction {
     private final ListModel<Template> carRideTemplateListModel;
 
     public EditCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
-        super("Edit", Icons.ADD_ICON);
+        super("Edit", Icons.EDIT_ICON);
         this.carRidesTable = carRidesTable;
         this.categoriestListModel = categoriestListModel;
         this.carRideTemplateListModel = carRideTemplateListModel;
