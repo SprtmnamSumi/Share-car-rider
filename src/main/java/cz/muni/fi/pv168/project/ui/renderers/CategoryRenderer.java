@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.renderers;
 
-import cz.muni.fi.pv168.project.entities.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Category;
 
 import javax.swing.*;
 

@@ -35,7 +35,6 @@ public class EntityListModelAdapter<E> extends AbstractListModel<E> {
             case TableModelEvent.UPDATE -> this.fireContentsChanged(this, event.getFirstRow(), event.getLastRow());
             case TableModelEvent.DELETE -> this.fireIntervalRemoved(this, event.getFirstRow(), event.getLastRow());
             default -> {
-                // there should be no other events
             }
         }
     }

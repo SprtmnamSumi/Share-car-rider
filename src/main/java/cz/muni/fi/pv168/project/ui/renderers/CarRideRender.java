@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.renderers;
 
-import cz.muni.fi.pv168.project.entities.CarRide;
+import cz.muni.fi.pv168.project.bussiness.model.CarRide;
 
 import javax.swing.*;
 

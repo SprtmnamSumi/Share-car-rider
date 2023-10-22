@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.ui.panels.Template;
 
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.ui.action.Templates.AddTemplateAction;
 import cz.muni.fi.pv168.project.ui.action.Templates.DeleteTemplateAction;
 import cz.muni.fi.pv168.project.ui.action.Templates.EditTemplateAction;
@@ -26,12 +25,12 @@ public class TemplateTablePanel extends JPanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
-    public TemplateTablePanel(TemplateTableModel TemplateTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel, TestDataGenerator testDataGenerator) {
+    public TemplateTablePanel(TemplateTableModel TemplateTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel) {
         setLayout(new BorderLayout());
-        table = setUpTable(TemplateTableModel, categoryListModel, templateListModel, testDataGenerator);
+        table = setUpTable(TemplateTableModel, categoryListModel, templateListModel);
         CarRideFilterBar filterBar = new CarRideFilterBar();
         CarRideStatisticsBar statsPanel = new CarRideStatisticsBar(TemplateTableModel);
-        table.getModel().addTableModelListener(e->
+        table.getModel().addTableModelListener(e ->
         {
             statsPanel.updateFilteredStats();
             statsPanel.updateTotalStats();
@@ -48,23 +47,18 @@ public class TemplateTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(TemplateTableModel TemplateTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel, TestDataGenerator testDataGenerator) {
+    private JTable setUpTable(TemplateTableModel TemplateTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel) {
         var table = new JTable(TemplateTableModel);
 
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
 
-        addCarRideAction = new AddTemplateAction(table, testDataGenerator, categoryListModel, templateListModel);
+        addCarRideAction = new AddTemplateAction(table, categoryListModel, templateListModel);
         editCarRideAction = new EditTemplateAction(table, categoryListModel, templateListModel);
         deleteCarRideAction = new DeleteTemplateAction(table);
 
         table.setComponentPopupMenu(createCarRideTablePopUpMenu());
-//        var genderComboBox = new JComboBox<>(Gender.values());
-//        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
-//        var departmentComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(departmentListModel));
-//        table.setDefaultEditor(Department.class, new DefaultCellEditor(departmentComboBox));
-//
-//        table.setDefaultRenderer(Gender.class, new GenderRenderer());
+
 
         return table;
     }

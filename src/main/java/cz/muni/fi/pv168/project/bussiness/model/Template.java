@@ -1,8 +1,8 @@
-package cz.muni.fi.pv168.project.entities;
+package cz.muni.fi.pv168.project.bussiness.model;
 
 import java.util.Objects;
 
-public class Template {
+public class Template extends Entity {
 
     private String title;
     private String description;
@@ -13,7 +13,8 @@ public class Template {
     private double commission;
     private Category category;
 
-    public Template(String Title, String Description, Double Distance, double FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category) {
+    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category) {
+        super(guid);
         setTitle(Title);
         setDescription(Description);
         setDistance(Distance);

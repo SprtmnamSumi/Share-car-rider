@@ -11,19 +11,18 @@ public abstract class Column<E, T> {
     private final Class<T> columnType;
 
     private Column(String name, Class<T> columnClass, Function<E, T> valueGetter) {
-        // see Item 49: Check parameters for validity
         this.name = Objects.requireNonNull(name, "name cannot be null");
         this.columnType = Objects.requireNonNull(columnClass, "column class cannot be null");
         this.valueGetter = Objects.requireNonNull(valueGetter, "value getter cannot be null");
     }
 
-    // see Item 1: Consider static factory methods instead of constructors
+
     public static <E, T> Column<E, T> editable(String name, Class<T> columnClass, Function<E, T> valueGetter,
                                                BiConsumer<E, T> valueSetter) {
         return new Editable<>(name, columnClass, valueGetter, valueSetter);
     }
 
-    // see Item 1: Consider static factory methods instead of constructors
+
     public static <E, T> Column<E, T> readonly(String name, Class<T> columnClass, Function<E, T> valueGetter) {
         return new ReadOnly<>(name, columnClass, valueGetter);
     }
@@ -77,7 +76,7 @@ public abstract class Column<E, T> {
 
         @Override
         public void setValue(Object value, E entity) {
-            valueSetter.accept(entity, getColumnType().cast(value)); // see Item 33: Consider type-safe heterogeneous containers
+            valueSetter.accept(entity, getColumnType().cast(value));
         }
     }
 }

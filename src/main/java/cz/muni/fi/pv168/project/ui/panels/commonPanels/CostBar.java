@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
+import cz.muni.fi.pv168.project.bussiness.model.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Currency;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.entities.Category;
-import cz.muni.fi.pv168.project.entities.Currency;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.PlaceholderTextField;
 
 import javax.swing.*;
@@ -19,8 +19,6 @@ public class CostBar extends JPanel {
         TestDataGenerator testDataGenerator = new TestDataGenerator();
         categories = testDataGenerator.createTestCategories(10).stream().map(Category::getName).toList();
 
-        //        // Set look
-//                this.setMaximumSize(dimension);
         var x = new JTextField();
 
 

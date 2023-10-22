@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
+import cz.muni.fi.pv168.project.bussiness.model.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Currency;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.entities.Category;
-import cz.muni.fi.pv168.project.entities.Currency;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.SpinnerDatePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TextFieldPanel;
@@ -21,8 +21,6 @@ public class CarRideFilterBar extends JPanel {
         TestDataGenerator testDataGenerator = new TestDataGenerator();
         categories = testDataGenerator.createTestCategories(10).stream().map(Category::getName).toList();
 
-        //        // Set look
-        //        this.setMaximumSize(dimension);
 
         TextFieldPanel numberOfPassengersPanel = new TextFieldPanel("Number Of Passengers");
         this.add(numberOfPassengersPanel);

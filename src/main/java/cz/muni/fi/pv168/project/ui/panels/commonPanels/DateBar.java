@@ -17,8 +17,6 @@ public class DateBar extends JPanel {
         TestDataGenerator testDataGenerator = new TestDataGenerator();
 
 
-        //        // Set look
-//                this.setMaximumSize(dimension);
         var x = new JTextField();
 
 

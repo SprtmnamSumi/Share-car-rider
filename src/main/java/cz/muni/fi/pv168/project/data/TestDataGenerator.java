@@ -1,15 +1,16 @@
 package cz.muni.fi.pv168.project.data;
 
 
-import cz.muni.fi.pv168.project.entities.CarRide;
-import cz.muni.fi.pv168.project.entities.Template;
-import cz.muni.fi.pv168.project.entities.Category;
+import cz.muni.fi.pv168.project.bussiness.model.CarRide;
+import cz.muni.fi.pv168.project.bussiness.model.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Template;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static java.time.Month.DECEMBER;
@@ -52,12 +53,12 @@ public final class TestDataGenerator {
         int numberOfPassengers = 1;
         LocalDateTime date = LocalDateTime.of(2021, JANUARY, 1, 0, 0);
         Category category = crateTestCategory();
-        return new Template(title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, category);
+        return new Template(UUID.randomUUID().toString(), title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, category);
     }
 
 
     public Category crateTestCategory() {
-        var category = new Category("df", "fd");
+        var category = new Category(UUID.randomUUID().toString(), "df", "fd");
         return category;
     }
 
@@ -70,7 +71,7 @@ public final class TestDataGenerator {
         int numberOfPassengers = 1;
         LocalDateTime date = LocalDateTime.of(2021, JANUARY, 1, 0, 0);
         Category category = crateTestCategory();
-        return new CarRide(title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, date, category);
+        return new CarRide(UUID.randomUUID().toString(), title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, date, category);
     }
 
     public List<CarRide> createTestRides(int count) {

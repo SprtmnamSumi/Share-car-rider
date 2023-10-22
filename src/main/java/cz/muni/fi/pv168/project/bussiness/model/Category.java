@@ -1,13 +1,14 @@
-package cz.muni.fi.pv168.project.entities;
+package cz.muni.fi.pv168.project.bussiness.model;
 
 import java.util.Objects;
 
-public class Category {
+public class Category extends Entity {
 
     private String name;
     private String colour;
 
-    public Category(String name, String colour) {
+    public Category(String guid, String name, String colour) {
+        super(guid);
         setName(name);
         setColour(colour);
     }

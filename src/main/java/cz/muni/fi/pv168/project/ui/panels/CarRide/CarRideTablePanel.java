@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.ui.action.CarRide.AddCarRideAction;
 import cz.muni.fi.pv168.project.ui.action.CarRide.DeleteCarRideAction;
 import cz.muni.fi.pv168.project.ui.action.CarRide.EditCarRideAction;
@@ -24,12 +23,12 @@ public class CarRideTablePanel extends JPanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
-    public CarRideTablePanel(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel, TestDataGenerator testDataGenerator) {
+    public CarRideTablePanel(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel) {
         setLayout(new BorderLayout());
-        table = setUpTable(carRideTableModel, categoryListModel, templateListModel, testDataGenerator);
+        table = setUpTable(carRideTableModel, categoryListModel, templateListModel);
         CarRideFilterBar filterBar = new CarRideFilterBar();
         CarRideStatisticsBar statsPanel = new CarRideStatisticsBar(carRideTableModel);
-        table.getModel().addTableModelListener(e->
+        table.getModel().addTableModelListener(e ->
         {
             statsPanel.updateFilteredStats();
             statsPanel.updateTotalStats();
@@ -46,23 +45,17 @@ public class CarRideTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel, TestDataGenerator testDataGenerator) {
+    private JTable setUpTable(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel) {
         var table = new JTable(carRideTableModel);
 
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
 
-        addCarRideAction = new AddCarRideAction(table, testDataGenerator, categoryListModel, templateListModel);
+        addCarRideAction = new AddCarRideAction(table, categoryListModel, templateListModel);
         editCarRideAction = new EditCarRideAction(table, categoryListModel, templateListModel);
         deleteCarRideAction = new DeleteCarRideAction(table);
 
         table.setComponentPopupMenu(createCarRideTablePopUpMenu());
-//        var genderComboBox = new JComboBox<>(Gender.values());
-//        table.setDefaultEditor(Gender.class, new DefaultCellEditor(genderComboBox));
-//        var departmentComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(departmentListModel));
-//        table.setDefaultEditor(Department.class, new DefaultCellEditor(departmentComboBox));
-//
-//        table.setDefaultRenderer(Gender.class, new GenderRenderer());
 
         return table;
     }

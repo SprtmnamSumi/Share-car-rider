@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action.Category;
 
-import cz.muni.fi.pv168.project.entities.Category;
+import cz.muni.fi.pv168.project.bussiness.model.Category;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
@@ -16,7 +16,7 @@ public final class EditCategoryAction extends AbstractAction {
     private final ListModel<Category> categoriestListModel;
 
     public EditCategoryAction(JTable categoryTable, ListModel<Category> categoriestListModel) {
-        super("Edit", Icons.ADD_ICON);
+        super("Edit", Icons.EDIT_ICON);
         this.categoryTable = categoryTable;
         this.categoriestListModel = categoriestListModel;
         putValue(SHORT_DESCRIPTION, "Edits Category");
