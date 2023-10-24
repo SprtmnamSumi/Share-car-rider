@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import cz.muni.fi.pv168.project.bussiness.model.CarRide;
-import cz.muni.fi.pv168.project.bussiness.model.Entity;
-import cz.muni.fi.pv168.project.bussiness.service.crud.ICrudService;
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
 
     public TableModel(ICrudService<T> entityCrudService, List<Column<T, ?>> columns) {
         this.entityCrudService = entityCrudService;
-        this.entities = entityCrudService.findAll();
+        this.entities = new ArrayList<T>(entityCrudService.findAll());
         this.columns = columns;
     }
 
