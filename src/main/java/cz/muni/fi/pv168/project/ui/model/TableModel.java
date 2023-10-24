@@ -19,7 +19,7 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
 
     public TableModel(ICrudService<T> entityCrudService, List<Column<T, ?>> columns) {
         this.entityCrudService = entityCrudService;
-        this.entities = entityCrudService.findAll();
+        this.entities = new ArrayList<T>(entityCrudService.findAll());
         this.columns = columns;
     }
 
