@@ -45,18 +45,13 @@ public class MainWindowImpl implements MainWindow{
     private final Action addTemplate;
     private final Action info;
 
-    private final EntityListModelAdapter<CarRide> carRideListModel;
-    private final EntityListModelAdapter<Template> templateListModel;
-    private final EntityListModelAdapter<Category> categoryListModel;
     @Inject
-    public MainWindowImpl(CarRideTableModel carRideTableModel,
+    public MainWindowImpl(EntityListModelAdapter<Template> templateListModel,
+                          EntityListModelAdapter<Category> categoryListModel,
+                          CarRideTableModel carRideTableModel,
                           TemplateTableModel templateTableModel,
                           CategoryTableModel categoryTableModel) {
         frame = createFrame();
-
-        carRideListModel = new EntityListModelAdapter<>(carRideTableModel);
-        templateListModel = new EntityListModelAdapter<>(templateTableModel);
-        categoryListModel = new EntityListModelAdapter<>(categoryTableModel);
 
         var carRideTablePanel = new CarRideTablePanel(carRideTableModel, categoryListModel, templateListModel);
         var templateTablePanel = new TemplateTablePanel(templateTableModel, categoryListModel, templateListModel);
@@ -96,7 +91,6 @@ public class MainWindowImpl implements MainWindow{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         return frame;
     }
-
 
     private JMenu editBar() {
         var editMenu = new JMenu("File");

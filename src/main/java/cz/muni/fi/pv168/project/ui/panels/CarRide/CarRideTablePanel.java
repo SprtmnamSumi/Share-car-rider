@@ -5,10 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.CarRide.AddCarRideAction;
 import cz.muni.fi.pv168.project.ui.action.CarRide.DeleteCarRideAction;
 import cz.muni.fi.pv168.project.ui.action.CarRide.EditCarRideAction;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideListModel;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
-import cz.muni.fi.pv168.project.ui.model.Template.TemplateListModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 
 import javax.swing.*;
@@ -30,8 +27,8 @@ public class CarRideTablePanel extends JPanel {
     public CarRideTablePanel(CarRideTableModel carRideTableModel, EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel) {
         setLayout(new BorderLayout());
         table = setUpTable(carRideTableModel, categoryListModel, templateListModel);
-        CarRideFilterBar filterBar = new CarRideFilterBar();
-        CarRideStatisticsBar statsPanel = new CarRideStatisticsBar(carRideTableModel);
+        CarRideFilterPanel filterBar = new CarRideFilterPanel();
+        CarRideStatisticsPanel statsPanel = new CarRideStatisticsPanel(carRideTableModel);
         table.getModel().addTableModelListener(e ->
         {
             statsPanel.updateFilteredStats();

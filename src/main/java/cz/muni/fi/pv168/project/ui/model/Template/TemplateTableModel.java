@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.model.Template;
 
+import com.google.inject.Singleton;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.crud.ICarRideTempalteService;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * {@link javax.swing.table.TableModel} for {@link Template} objects.
  */
+@Singleton
 public class TemplateTableModel extends TableModel<Template> {
 
     @Inject

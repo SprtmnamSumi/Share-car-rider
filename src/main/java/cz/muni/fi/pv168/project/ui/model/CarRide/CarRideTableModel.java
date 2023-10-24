@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.model.CarRide;
 
+import com.google.inject.Singleton;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.service.crud.ICarRideICrudService;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.
  */
+@Singleton
 public class CarRideTableModel extends TableModel<CarRide> {
 
     @Inject
