@@ -1,11 +1,15 @@
 package cz.muni.fi.pv168.project.ui.panels.Template;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.Templates.AddTemplateAction;
 import cz.muni.fi.pv168.project.ui.action.Templates.DeleteTemplateAction;
 import cz.muni.fi.pv168.project.ui.action.Templates.EditTemplateAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideListModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideFilterBar;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideStatisticsBar;
 
@@ -25,7 +29,7 @@ public class TemplateTablePanel extends JPanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
-    public TemplateTablePanel(TemplateTableModel TemplateTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel) {
+    public TemplateTablePanel(TemplateTableModel TemplateTableModel, EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel) {
         setLayout(new BorderLayout());
         table = setUpTable(TemplateTableModel, categoryListModel, templateListModel);
         CarRideFilterBar filterBar = new CarRideFilterBar();
@@ -47,7 +51,7 @@ public class TemplateTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(TemplateTableModel TemplateTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel) {
+    private JTable setUpTable(TemplateTableModel TemplateTableModel, EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel) {
         var table = new JTable(TemplateTableModel);
 
         table.setAutoCreateRowSorter(true);

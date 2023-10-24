@@ -1,11 +1,15 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.CarRide.AddCarRideAction;
 import cz.muni.fi.pv168.project.ui.action.CarRide.DeleteCarRideAction;
 import cz.muni.fi.pv168.project.ui.action.CarRide.EditCarRideAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideListModel;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
+import cz.muni.fi.pv168.project.ui.model.Template.TemplateListModel;
+import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -23,7 +27,7 @@ public class CarRideTablePanel extends JPanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
-    public CarRideTablePanel(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel) {
+    public CarRideTablePanel(CarRideTableModel carRideTableModel, EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel) {
         setLayout(new BorderLayout());
         table = setUpTable(carRideTableModel, categoryListModel, templateListModel);
         CarRideFilterBar filterBar = new CarRideFilterBar();
@@ -45,7 +49,7 @@ public class CarRideTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(CarRideTableModel carRideTableModel, CategoryListModel categoryListModel, CarRideListModel templateListModel) {
+    private JTable setUpTable(CarRideTableModel carRideTableModel, EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel) {
         var table = new JTable(carRideTableModel);
 
         table.setAutoCreateRowSorter(true);

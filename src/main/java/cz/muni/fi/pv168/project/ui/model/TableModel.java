@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import cz.muni.fi.pv168.project.bussiness.model.CarRide;
-import cz.muni.fi.pv168.project.bussiness.model.Entity;
-import cz.muni.fi.pv168.project.bussiness.service.crud.ICrudService;
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;

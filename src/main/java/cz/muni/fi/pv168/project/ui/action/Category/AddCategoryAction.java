@@ -1,10 +1,11 @@
 package cz.muni.fi.pv168.project.ui.action.Category;
 
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.bussiness.model.Category;
+import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ public final class AddCategoryAction extends AbstractAction {
     private final ListModel<Category> categoryListModel;
 
 
-    public AddCategoryAction(JTable categoryTable, CategoryListModel categoryListModel) {
+    public AddCategoryAction(JTable categoryTable, EntityListModelAdapter<Category> categoryListModel) {
         super("Add", Icons.ADD_ICON);
         this.categoryTable = categoryTable;
         this.categoryListModel = categoryListModel;

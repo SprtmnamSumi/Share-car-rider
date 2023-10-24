@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.filters;
 
-import cz.muni.fi.pv168.project.bussiness.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.ui.filters.matchers.EntityMatcher;
 import cz.muni.fi.pv168.project.ui.filters.matchers.EntityMatchers;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;

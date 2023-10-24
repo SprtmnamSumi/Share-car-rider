@@ -1,10 +1,12 @@
 package cz.muni.fi.pv168.project.ui.panels.Category;
 
+import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.action.Category.AddCategoryAction;
 import cz.muni.fi.pv168.project.ui.action.Category.DeleteCategoryAction;
 import cz.muni.fi.pv168.project.ui.action.Category.EditCategoryAction;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -22,7 +24,7 @@ public class CategoryTablePanel extends JPanel {
     private Action editCategoryAction;
     private Action deleteCategoryAction;
 
-    public CategoryTablePanel(CategoryTableModel categoryTableModel, CategoryListModel categoryListModel) {
+    public CategoryTablePanel(CategoryTableModel categoryTableModel, EntityListModelAdapter<Category> categoryListModel) {
         setLayout(new BorderLayout());
         table = setUpTable(categoryTableModel, categoryListModel);
         add(new JScrollPane(table), BorderLayout.CENTER);
@@ -34,7 +36,7 @@ public class CategoryTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(CategoryTableModel categoryTableModel, CategoryListModel categoryListModel) {
+    private JTable setUpTable(CategoryTableModel categoryTableModel, EntityListModelAdapter<Category> categoryListModel) {
         var table = new JTable(categoryTableModel);
 
         table.setAutoCreateRowSorter(true);

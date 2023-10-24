@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.model.CarRide;
 
-import cz.muni.fi.pv168.project.bussiness.model.CarRide;
-import cz.muni.fi.pv168.project.bussiness.model.Category;
-import cz.muni.fi.pv168.project.bussiness.service.crud.ICarRideICrudService;
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.service.crud.ICarRideICrudService;
 import cz.muni.fi.pv168.project.ui.model.Column;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 

@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.storage;
 
 
-import cz.muni.fi.pv168.project.bussiness.model.Entity;
-import cz.muni.fi.pv168.project.bussiness.repository.Repository;
+import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.repository.Repository;
 
 import java.util.*;
 
