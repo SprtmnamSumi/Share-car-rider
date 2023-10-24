@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import cz.muni.fi.pv168.project.ui.MainWindow;
-import cz.muni.fi.pv168.project.ui.MainWindowImpl;
 
 import javax.swing.*;
 import java.awt.*;
