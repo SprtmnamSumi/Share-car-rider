@@ -91,10 +91,6 @@ public class MainWindow {
         var templateTablePanel = new TemplateTablePanel(templateTableModel, categoryListModel, templateListModel);
         var categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryListModel);
 
-        var carRideListPanel = new CarRideListPanel(carRideListModel);
-        var templateListPanel = new TemplateListPanel(templateListModel);
-        var categoryListPanel = new CategoryListPanel(categoryListModel);
-
         addCategory = new AddCategoryAction(categoryTablePanel.getTable(), categoryListModel);
 
         addCarRideAction = new AddCarRideAction(carRideTablePanel.getTable(), categoryListModel, templateListModel);
