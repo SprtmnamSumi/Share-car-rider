@@ -6,7 +6,7 @@ import javax.swing.border.Border;
 import javax.swing.table.TableModel;
 import java.awt.*;
 
-public class CarRideStatisticsBar extends JPanel {
+public class CarRideStatisticsPanel extends JPanel {
     private final TableModel model;
     private final JLabel filteredDistance = new JLabel();
     private final JLabel filteredExpenses = new JLabel();
@@ -17,7 +17,7 @@ public class CarRideStatisticsBar extends JPanel {
     private final JLabel totalRides = new JLabel();
     private final Border labelBorder = BorderFactory.createEmptyBorder(0, 0, 0, 5);
 
-    public CarRideStatisticsBar(TableModel model) {
+    public CarRideStatisticsPanel(TableModel model) {
         super(new BorderLayout());
         this.model = model;
 

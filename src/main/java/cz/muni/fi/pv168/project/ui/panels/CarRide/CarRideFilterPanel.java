@@ -12,11 +12,11 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class CarRideFilterBar extends JPanel {
+public class CarRideFilterPanel extends JPanel {
     private final List<String> currencyModel = Arrays.stream(Currency.values()).map(Currency::name).toList();
     private final List<String> categories;
 
-    public CarRideFilterBar() {
+    public CarRideFilterPanel() {
         super(new FlowLayout(FlowLayout.LEFT));
         TestDataGenerator testDataGenerator = new TestDataGenerator();
         categories = testDataGenerator.createTestCategories(10).stream().map(Category::getName).toList();
