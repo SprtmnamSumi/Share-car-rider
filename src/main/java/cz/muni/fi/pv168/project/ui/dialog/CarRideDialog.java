@@ -18,10 +18,10 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JComboBox<Category> categoryJComboBox;
     private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
-    private final JSpinner fuelConsiumption = new JSpinner(new SpinnerNumberModel());
+    private final JSpinner fuelConsumption = new JSpinner(new SpinnerNumberModel());
     private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
     private final JSpinner numberOfPassengers = new JSpinner(new SpinnerNumberModel());
-    private final JSpinner commision = new JSpinner(new SpinnerNumberModel());
+    private final JSpinner commission = new JSpinner(new SpinnerNumberModel());
     private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
     private final CarRide carRide;
@@ -39,21 +39,21 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         titleField.setText(carRide.getTitle());
         descriptionField.setText(carRide.getDescription());
         distanceField.setValue(carRide.getDistance());
-        fuelConsiumption.setValue(carRide.getFuelConsumption());
+        fuelConsumption.setValue(carRide.getFuelConsumption());
         costOfFuel.setValue(carRide.getCostOfFuelPerLitre());
         numberOfPassengers.setValue(carRide.getNumberOfPassengers());
-        commision.setValue(carRide.getCommission());
+        commission.setValue(carRide.getCommission());
         categoryJComboBox.setSelectedItem(carRide.getCategory());
         dateBar.setDate(carRide.getDate());
     }
 
-    private <T> T getSpinnerValue(JSpinner spinner) {
+    private String getSpinnerValue(JSpinner spinner) {
         try {
             spinner.commitEdit();
         } catch (java.text.ParseException e) {
         }
-        T value = (T) spinner.getValue();
-        return value;
+
+        return spinner.getValue().toString();
     }
 
     private void addFields() {
@@ -61,10 +61,10 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         add("Title", titleField);
         add("Description", descriptionField);
         add("Distance", distanceField);
-        add("Average Fuel Consumption (per 100km)", fuelConsiumption);
+        add("Average Fuel Consumption (per 100km)", fuelConsumption);
         add("Cost of Fuel (1l)", costOfFuel);
         add("Number of Passengers", numberOfPassengers);
-        add("Commision (%)", commision);
+        add("Commission (%)", commission);
         add("Date", dateBar);
         add("Category", categoryJComboBox);
         add("Count me in the calculation of per price person", isChecked);
@@ -74,11 +74,11 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     CarRide getEntity() {
         carRide.setTitle(titleField.getText());
         carRide.setDescription(descriptionField.getText());
-//        carRide.setDistance(getSpinnerValue(distanceField));
-//        fuelConsiumption.setValue(getSpinnerValue(fuelConsiumption));
-//        carRide.setCostOfFuelPerLitre(getSpinnerValue(costOfFuel));
-        carRide.setNumberOfPassengers(getSpinnerValue(numberOfPassengers));
-//        carRide.setCommission(getSpinnerValue(commision));
+        carRide.setDistance(Double.parseDouble(getSpinnerValue(distanceField)));
+        carRide.setFuelConsumption(Double.parseDouble(getSpinnerValue(fuelConsumption)));
+        carRide.setCostOfFuelPerLitre(Double.parseDouble(getSpinnerValue(costOfFuel)));
+        carRide.setNumberOfPassengers(Integer.parseInt(getSpinnerValue(numberOfPassengers)));
+        carRide.setCommission(Double.parseDouble(getSpinnerValue(costOfFuel)));
         carRide.setCategory((Category) categoryJComboBox.getSelectedItem());
         carRide.setDate(dateBar.getDate());
         return carRide;
