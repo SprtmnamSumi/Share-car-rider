@@ -1,6 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
 
+import cz.muni.fi.pv168.project.ui.panels.commonPanels.NameValuePanel;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.TableModel;
@@ -8,14 +10,13 @@ import java.awt.*;
 
 public class CarRideStatisticsPanel extends JPanel {
     private final TableModel model;
-    private final JLabel filteredDistance = new JLabel();
-    private final JLabel filteredExpenses = new JLabel();
-    private final JLabel todayExpenses = new JLabel();
-    private final JLabel totalDistance = new JLabel();
-    private final JLabel totalExpenses = new JLabel();
-    private final JLabel totalRevenues = new JLabel();
-    private final JLabel totalRides = new JLabel();
-    private final Border labelBorder = BorderFactory.createEmptyBorder(0, 0, 0, 5);
+    private final NameValuePanel filteredDistance = new NameValuePanel("Filtered distance");
+    private final NameValuePanel filteredExpenses = new NameValuePanel("Filtered expenses:");
+    private final NameValuePanel todayExpenses = new NameValuePanel("Today expenses:");
+    private final NameValuePanel totalDistance = new NameValuePanel("Total distance:");
+    private final NameValuePanel totalExpenses = new NameValuePanel("Total expenses:");
+    private final NameValuePanel totalRevenues = new NameValuePanel("Total revenues:");
+    private final NameValuePanel totalRides = new NameValuePanel("Total rides:");
 
     public CarRideStatisticsPanel(TableModel model) {
         super(new BorderLayout());
@@ -24,23 +25,16 @@ public class CarRideStatisticsPanel extends JPanel {
         JPanel filteredRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         add(filteredRow, BorderLayout.PAGE_START);
         filteredRow.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 0));
-        filteredDistance.setBorder(labelBorder);
         filteredRow.add(filteredDistance);
-        filteredExpenses.setBorder(labelBorder);
         filteredRow.add(filteredExpenses);
-        todayExpenses.setBorder(labelBorder);
         filteredRow.add(todayExpenses);
 
         JPanel totalRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         add(totalRow, BorderLayout.CENTER);
         totalRow.setBorder(BorderFactory.createEmptyBorder(0, 3, 3, 0));
-        totalDistance.setBorder(labelBorder);
         totalRow.add(totalDistance);
-        totalRides.setBorder(labelBorder);
         totalRow.add(totalRides);
-        totalRevenues.setBorder(labelBorder);
         totalRow.add(totalRevenues);
-        totalExpenses.setBorder(labelBorder);
         totalRow.add(totalExpenses);
 
         updateFilteredStats();
@@ -48,14 +42,15 @@ public class CarRideStatisticsPanel extends JPanel {
     }
 
     public void updateFilteredStats() {
-        filteredDistance.setText("Filtered distance: 50 km");
-        filteredExpenses.setText("Filtered expenses: 50 km");
+        filteredDistance.setValue("50 km");
+        filteredExpenses.setValue("50 km");
     }
 
     public void updateTotalStats() {
-        totalDistance.setText("Total distance: 123 km");
-        totalRides.setText("Total rides: " + model.getRowCount());
-        totalRevenues.setText("Total revenues: 500 CZK");
-        totalExpenses.setText("Total expenses: 400 CZK");
+        totalDistance.setValue("123 km");
+        totalRides.setValue(""+model.getRowCount());
+        totalRevenues.setValue("500 CZK");
+        totalExpenses.setValue("400 CZK");
+        todayExpenses.setValue("100 CZK");
     }
 }
