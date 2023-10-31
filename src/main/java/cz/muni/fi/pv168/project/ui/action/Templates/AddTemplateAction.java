@@ -12,14 +12,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public final class AddTemplateAction extends AbstractAction {
+final class AddTemplateAction extends AbstractAction {
 
     private final JTable templateTable;
 
     private final ListModel<Category> categoriestListModel;
     private final ListModel<Template> carRideTemplateListModel;
 
-    public AddTemplateAction(JTable templateTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
+    AddTemplateAction(JTable templateTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
         super("Add", Icons.ADD_ICON);
         this.templateTable = templateTable;
 

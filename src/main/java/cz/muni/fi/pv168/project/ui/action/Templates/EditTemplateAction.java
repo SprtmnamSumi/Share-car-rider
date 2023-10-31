@@ -10,14 +10,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public final class EditTemplateAction extends AbstractAction {
+final class EditTemplateAction extends AbstractAction {
 
     private final JTable templateTable;
 
     private final ListModel<Category> categoriestListModel;
     private final ListModel<Template> carRideTemplateListModel;
 
-    public EditTemplateAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
+    EditTemplateAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
         super("Edit", Icons.EDIT_ICON);
         this.templateTable = carRidesTable;
         this.categoriestListModel = categoriestListModel;

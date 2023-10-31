@@ -1,20 +1,9 @@
 package cz.muni.fi.pv168.project.ui;
 
-import cz.muni.fi.pv168.project.business.model.*;
-import cz.muni.fi.pv168.project.business.service.crud.CarRideCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.CarRideTemplateCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.CategoryCrudService;
-import cz.muni.fi.pv168.project.business.service.validation.CarRideTemplateValidator;
-import cz.muni.fi.pv168.project.business.service.validation.CarRideValidator;
-import cz.muni.fi.pv168.project.business.service.validation.CategoryValidator;
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.storage.InMemoryRepository;
-import cz.muni.fi.pv168.project.ui.action.CarRide.AddCarRideAction;
-import cz.muni.fi.pv168.project.ui.action.CarRide.DeleteCarRideAction;
-import cz.muni.fi.pv168.project.ui.action.CarRide.EditCarRideAction;
-import cz.muni.fi.pv168.project.ui.action.Category.AddCategoryAction;
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.*;
-import cz.muni.fi.pv168.project.ui.action.Templates.AddTemplateAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
@@ -29,14 +18,11 @@ import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainWindowImpl implements MainWindow{
+public class MainWindowImpl implements MainWindow {
 
     private final JFrame frame;
     private final Action quitAction = new QuitAction();
     private final Action addCarRideAction;
-    private final Action editCarRideAction;
-    private final Action deleteCarRideAction;
-
     private final Action addCategory;
     private final Action settingsAction;
     private final Action currenciesAction;
@@ -46,25 +32,22 @@ public class MainWindowImpl implements MainWindow{
     private final Action info;
 
     @Inject
-    public MainWindowImpl(EntityListModelAdapter<Template> templateListModel,
-                          EntityListModelAdapter<Category> categoryListModel,
+    public MainWindowImpl(DefaultActionFactory<CarRide> carActionFactory,
+                          DefaultActionFactory<Category> categoryActionFactory,
+                          DefaultActionFactory<Template> templateActionFactory,
                           CarRideTableModel carRideTableModel,
-                          TemplateTableModel templateTableModel,
-                          CategoryTableModel categoryTableModel) {
+                          CategoryTableModel categoryTableModel,
+                          TemplateTableModel templateTableModel) {
         frame = createFrame();
 
-        var carRideTablePanel = new CarRideTablePanel(carRideTableModel, categoryListModel, templateListModel);
-        var templateTablePanel = new TemplateTablePanel(templateTableModel, categoryListModel, templateListModel);
-        var categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryListModel);
+        CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory);
+        CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
+        TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
 
-        addCategory = new AddCategoryAction(categoryTablePanel.getTable(), categoryListModel);
+        addCarRideAction = carActionFactory.getAddAction(carRideTablePanel.getTable());
+        addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
+        addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
 
-        addCarRideAction = new AddCarRideAction(carRideTablePanel.getTable(), categoryListModel, templateListModel);
-        editCarRideAction = new EditCarRideAction(carRideTablePanel.getTable(), categoryListModel, templateListModel);
-        deleteCarRideAction = new DeleteCarRideAction(carRideTablePanel.getTable());
-
-
-        addTemplate = new AddTemplateAction(templateTablePanel.getTable(), categoryListModel, templateListModel);
         settingsAction = new SettingsAction();
         currenciesAction = new InfoAction.currenciesAction();
         importAction = new ImportAction();
@@ -81,6 +64,7 @@ public class MainWindowImpl implements MainWindow{
         frame.setJMenuBar(createMenuBar());
         frame.pack();
     }
+
     @Override
     public void show() {
         frame.setVisible(true);

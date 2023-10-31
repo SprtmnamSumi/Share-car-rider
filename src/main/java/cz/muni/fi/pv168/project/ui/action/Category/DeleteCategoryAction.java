@@ -9,11 +9,11 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public final class DeleteCategoryAction extends AbstractAction {
+final class DeleteCategoryAction extends AbstractAction {
 
     private final JTable categoryTable;
 
-    public DeleteCategoryAction(JTable categoryTable) {
+    DeleteCategoryAction(JTable categoryTable) {
         super("Delete", Icons.DELETE_ICON);
         this.categoryTable = categoryTable;
         putValue(SHORT_DESCRIPTION, "Deletes Category");

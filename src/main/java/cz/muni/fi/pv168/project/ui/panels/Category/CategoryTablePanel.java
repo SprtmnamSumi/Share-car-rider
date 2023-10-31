@@ -1,13 +1,10 @@
 package cz.muni.fi.pv168.project.ui.panels.Category;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.ui.action.Category.AddCategoryAction;
-import cz.muni.fi.pv168.project.ui.action.Category.DeleteCategoryAction;
-import cz.muni.fi.pv168.project.ui.action.Category.EditCategoryAction;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
+import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 
+import javax.inject.Inject;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
@@ -24,9 +21,10 @@ public class CategoryTablePanel extends JPanel {
     private Action editCategoryAction;
     private Action deleteCategoryAction;
 
-    public CategoryTablePanel(CategoryTableModel categoryTableModel, EntityListModelAdapter<Category> categoryListModel) {
+    @Inject
+    public CategoryTablePanel(CategoryTableModel categoryTableModel, DefaultActionFactory<Category> actionFactory) {
         setLayout(new BorderLayout());
-        table = setUpTable(categoryTableModel, categoryListModel);
+        table = setUpTable(categoryTableModel, actionFactory);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         this.onSelectionChange = this::changeActionsState;
@@ -36,15 +34,15 @@ public class CategoryTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(CategoryTableModel categoryTableModel, EntityListModelAdapter<Category> categoryListModel) {
+    private JTable setUpTable(CategoryTableModel categoryTableModel, DefaultActionFactory<Category> actionFactory) {
         var table = new JTable(categoryTableModel);
 
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
 
-        addCategoryAction = new AddCategoryAction(table, categoryListModel);
-        editCategoryAction = new EditCategoryAction(table, categoryListModel);
-        deleteCategoryAction = new DeleteCategoryAction(table);
+        addCategoryAction = actionFactory.getAddAction(table);
+        editCategoryAction = actionFactory.getEditAction(table);
+        deleteCategoryAction = actionFactory.getDeleteAction(table);
 
         table.setComponentPopupMenu(createCategoryTablePopUpMenu());
 

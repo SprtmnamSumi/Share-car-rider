@@ -12,14 +12,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public final class AddCategoryAction extends AbstractAction {
+final class AddCategoryAction extends AbstractAction {
 
     private final JTable categoryTable;
 
     private final ListModel<Category> categoryListModel;
 
 
-    public AddCategoryAction(JTable categoryTable, EntityListModelAdapter<Category> categoryListModel) {
+    AddCategoryAction(JTable categoryTable, EntityListModelAdapter<Category> categoryListModel) {
         super("Add", Icons.ADD_ICON);
         this.categoryTable = categoryTable;
         this.categoryListModel = categoryListModel;
