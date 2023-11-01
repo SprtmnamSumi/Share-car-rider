@@ -27,7 +27,8 @@ public class Main {
                 new cz.muni.fi.pv168.project.business.service.validation.Module(),
                 new cz.muni.fi.pv168.project.business.service.crud.Module(),
                 new cz.muni.fi.pv168.project.business.repository.Module(),
-                new cz.muni.fi.pv168.project.ui.model.Module()));
+                new cz.muni.fi.pv168.project.ui.model.Module(),
+                new cz.muni.fi.pv168.project.ui.action.Module()));
     }
 
     private static void initNimbusLookAndFeel() {

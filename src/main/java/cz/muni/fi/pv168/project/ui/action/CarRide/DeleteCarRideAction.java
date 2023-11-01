@@ -9,11 +9,11 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public final class DeleteCarRideAction extends AbstractAction {
+final class DeleteCarRideAction extends AbstractAction {
 
     private final JTable templateTable;
 
-    public DeleteCarRideAction(JTable templateTable) {
+    DeleteCarRideAction(JTable templateTable) {
         super("Delete", Icons.DELETE_ICON);
         this.templateTable = templateTable;
         putValue(SHORT_DESCRIPTION, "Deletes Car Ride");

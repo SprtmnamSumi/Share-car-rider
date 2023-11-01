@@ -1,12 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.Template;
 
-import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.ui.action.Templates.AddTemplateAction;
-import cz.muni.fi.pv168.project.ui.action.Templates.DeleteTemplateAction;
-import cz.muni.fi.pv168.project.ui.action.Templates.EditTemplateAction;
+import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideFilterPanel;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideStatisticsPanel;
 
@@ -26,9 +22,9 @@ public class TemplateTablePanel extends JPanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
-    public TemplateTablePanel(TemplateTableModel TemplateTableModel, EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel) {
+    public TemplateTablePanel(TemplateTableModel TemplateTableModel, DefaultActionFactory<Template> actionFactory) {
         setLayout(new BorderLayout());
-        table = setUpTable(TemplateTableModel, categoryListModel, templateListModel);
+        table = setUpTable(TemplateTableModel, actionFactory);
         CarRideFilterPanel filterBar = new CarRideFilterPanel();
         CarRideStatisticsPanel statsPanel = new CarRideStatisticsPanel(TemplateTableModel);
         table.getModel().addTableModelListener(e ->
@@ -48,15 +44,15 @@ public class TemplateTablePanel extends JPanel {
         return table;
     }
 
-    private JTable setUpTable(TemplateTableModel TemplateTableModel, EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel) {
+    private JTable setUpTable(TemplateTableModel TemplateTableModel, DefaultActionFactory<Template> actionFactory) {
         var table = new JTable(TemplateTableModel);
 
         table.setAutoCreateRowSorter(true);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
 
-        addCarRideAction = new AddTemplateAction(table, categoryListModel, templateListModel);
-        editCarRideAction = new EditTemplateAction(table, categoryListModel, templateListModel);
-        deleteCarRideAction = new DeleteTemplateAction(table);
+        addCarRideAction = actionFactory.getAddAction(table);
+        editCarRideAction = actionFactory.getEditAction(table);
+        deleteCarRideAction = actionFactory.getDeleteAction(table);
 
         table.setComponentPopupMenu(createCarRideTablePopUpMenu());
 

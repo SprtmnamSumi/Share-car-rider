@@ -9,13 +9,13 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public final class EditCategoryAction extends AbstractAction {
+final class EditCategoryAction extends AbstractAction {
 
     private final JTable categoryTable;
 
     private final ListModel<Category> categoriestListModel;
 
-    public EditCategoryAction(JTable categoryTable, ListModel<Category> categoriestListModel) {
+    EditCategoryAction(JTable categoryTable, ListModel<Category> categoriestListModel) {
         super("Edit", Icons.EDIT_ICON);
         this.categoryTable = categoryTable;
         this.categoriestListModel = categoriestListModel;
