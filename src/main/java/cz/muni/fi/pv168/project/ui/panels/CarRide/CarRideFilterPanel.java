@@ -3,6 +3,9 @@ package cz.muni.fi.pv168.project.ui.panels.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
+import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideListModel;
+import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.SpinnerDatePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TextFieldPanel;
@@ -25,7 +28,7 @@ public class CarRideFilterPanel extends JPanel {
         TextFieldPanel numberOfPassengersPanel = new TextFieldPanel("Number Of Passengers");
         this.add(numberOfPassengersPanel);
 
-        SpinnerDatePanel dateFromPanel = new SpinnerDatePanel("Date From");
+        SpinnerDatePanel dateFromPanel = new SpinnerDatePanel("Date from");
         this.add(dateFromPanel);
 
         SpinnerDatePanel dateToPanel = new SpinnerDatePanel("Date to");
@@ -47,5 +50,14 @@ public class CarRideFilterPanel extends JPanel {
 
         JButton filterButton = new JButton("Reset Filter");
         this.add(filterButton);
+        filterButton.addActionListener((a) ->
+                {
+                    numberOfPassengersPanel.getTextField().setText("");
+                    distanceFromPanel.getTextField().setText("");
+                    distanceToPanel.getTextField().setText("");
+                    categoryPanel.getComboBox().setSelectedIndex(0);
+                    currencyPanel.getComboBox().setSelectedIndex(0);
+                }
+        );
     }
 }

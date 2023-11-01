@@ -22,11 +22,11 @@ public class TemplateTablePanel extends JPanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
-    public TemplateTablePanel(TemplateTableModel TemplateTableModel, DefaultActionFactory<Template> actionFactory) {
+    public TemplateTablePanel(TemplateTableModel templateTableModel, DefaultActionFactory<Template> actionFactory) {
         setLayout(new BorderLayout());
-        table = setUpTable(TemplateTableModel, actionFactory);
+        table = setUpTable(templateTableModel, actionFactory);
         CarRideFilterPanel filterBar = new CarRideFilterPanel();
-        CarRideStatisticsPanel statsPanel = new CarRideStatisticsPanel(TemplateTableModel);
+        CarRideStatisticsPanel statsPanel = new CarRideStatisticsPanel(templateTableModel);
         table.getModel().addTableModelListener(e ->
         {
             statsPanel.updateFilteredStats();
