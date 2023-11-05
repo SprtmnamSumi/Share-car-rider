@@ -90,6 +90,9 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
         fireTableDataChanged();
     }
 
+    public List<T> getAllEntities() {
+        return List.copyOf(entities);
+    }
     @Override
     public T getEntity(int rowIndex) {
         return entities.get(rowIndex);

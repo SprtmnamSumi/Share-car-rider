@@ -26,16 +26,9 @@ public class TemplateTablePanel extends JPanel {
         setLayout(new BorderLayout());
         table = setUpTable(templateTableModel, actionFactory);
         CarRideFilterPanel filterBar = new CarRideFilterPanel();
-        CarRideStatisticsPanel statsPanel = new CarRideStatisticsPanel(templateTableModel);
-        table.getModel().addTableModelListener(e ->
-        {
-            statsPanel.updateFilteredStats();
-            statsPanel.updateTotalStats();
-        });
 
         add(filterBar, BorderLayout.PAGE_START);
         add(new JScrollPane(table), BorderLayout.CENTER);
-        add(statsPanel, BorderLayout.PAGE_END);
 
         this.onSelectionChange = this::changeActionsState;
     }

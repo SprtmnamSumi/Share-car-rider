@@ -78,7 +78,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setFuelConsumption(Double.parseDouble(getSpinnerValue(fuelConsumption)));
         carRide.setCostOfFuelPerLitre(Double.parseDouble(getSpinnerValue(costOfFuel)));
         carRide.setNumberOfPassengers(Integer.parseInt(getSpinnerValue(numberOfPassengers)));
-        carRide.setCommission(Double.parseDouble(getSpinnerValue(costOfFuel)));
+        carRide.setCommission(Double.parseDouble(getSpinnerValue(commission)));
         carRide.setCategory((Category) categoryJComboBox.getSelectedItem());
         carRide.setDate(dateBar.getDate());
         return carRide;
