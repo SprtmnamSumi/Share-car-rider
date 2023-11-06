@@ -13,6 +13,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.jtattoo.plaf.smart.*;
+
 public class Main {
 
     private static Injector _injector;
@@ -37,20 +39,15 @@ public class Main {
 
     public static void initLookAndFeel() {
         Properties properties = Config.loadProperties();
-        String lookAndFeels = "Nimbus";
+        String lookAndFeelsClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
         if (properties.getProperty("mode").equals(ColorTheme.DARK.name())) {
-            lookAndFeels = "GTK+";
+            lookAndFeelsClassName = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
         }
 
         try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if (lookAndFeels.equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            UIManager.setLookAndFeel(lookAndFeelsClassName);
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeels + " layout initialization failed", ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeelsClassName + " layout initialization failed", ex);
         }
     }
 }
