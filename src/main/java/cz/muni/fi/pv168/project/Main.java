@@ -2,11 +2,14 @@ package cz.muni.fi.pv168.project;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import cz.muni.fi.pv168.project.business.service.properties.Config;
 import cz.muni.fi.pv168.project.ui.MainWindow;
+import cz.muni.fi.pv168.project.ui.theme.ColorTheme;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +19,8 @@ public class Main {
 
     public static void main(String[] args) {
         _injector = getInjector();
-        initNimbusLookAndFeel();
+        Config.tryCreateProperties();
+        initLookAndFeel();
         EventQueue.invokeLater(() -> _injector.getInstance(MainWindow.class).show());
     }
 
@@ -31,16 +35,22 @@ public class Main {
                 new cz.muni.fi.pv168.project.ui.action.Module()));
     }
 
-    private static void initNimbusLookAndFeel() {
+    public static void initLookAndFeel() {
+        Properties properties = Config.loadProperties();
+        String lookAndFeels = "Nimbus";
+        if (properties.getProperty("mode").equals(ColorTheme.DARK.name())) {
+            lookAndFeels = "GTK+";
+        }
+
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if (lookAndFeels.equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Nimbus layout initialization failed", ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeels + " layout initialization failed", ex);
         }
     }
 }
