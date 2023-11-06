@@ -13,8 +13,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.jtattoo.plaf.smart.*;
-
 public class Main {
 
     private static Injector _injector;
