@@ -1,16 +1,17 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.service.statistics.CarRideStatistics;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.NameValuePanel;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.TableModel;
 import java.awt.*;
 
 public class CarRideStatisticsPanel extends JPanel {
-    private final TableModel model;
-    private final NameValuePanel filteredDistance = new NameValuePanel("Filtered distance");
+    private final TableModel<CarRide> model;
+    private final NameValuePanel filteredDistance = new NameValuePanel("Filtered distance:");
     private final NameValuePanel filteredExpenses = new NameValuePanel("Filtered expenses:");
     private final NameValuePanel todayExpenses = new NameValuePanel("Today expenses:");
     private final NameValuePanel totalDistance = new NameValuePanel("Total distance:");
@@ -18,7 +19,7 @@ public class CarRideStatisticsPanel extends JPanel {
     private final NameValuePanel totalRevenues = new NameValuePanel("Total revenues:");
     private final NameValuePanel totalRides = new NameValuePanel("Total rides:");
 
-    public CarRideStatisticsPanel(TableModel model) {
+    public CarRideStatisticsPanel(TableModel<CarRide> model) {
         super(new BorderLayout());
         this.model = model;
 
@@ -42,15 +43,17 @@ public class CarRideStatisticsPanel extends JPanel {
     }
 
     public void updateFilteredStats() {
-        filteredDistance.setValue("50 km");
-        filteredExpenses.setValue("50 km");
+        var entities = model.getAllEntities();
+        filteredDistance.setValue(String.format("%.2f", CarRideStatistics.getTotalDistance(entities))); //Set to only filtered CarRides after filtering is finished.
+        filteredExpenses.setValue(String.format("%.2f", CarRideStatistics.getTotalExpenses(entities))); //Set to only filtered CarRides after filtering is finished.
     }
 
     public void updateTotalStats() {
-        totalDistance.setValue("123 km");
-        totalRides.setValue(""+model.getRowCount());
-        totalRevenues.setValue("500 CZK");
-        totalExpenses.setValue("400 CZK");
-        todayExpenses.setValue("100 CZK");
+        var entities = model.getAllEntities();
+        totalDistance.setValue(String.format("%.2f", CarRideStatistics.getTotalDistance(entities)));
+        totalRides.setValue(CarRideStatistics.getTotalRides(entities).toString());
+        totalRevenues.setValue(String.format("%.2f", CarRideStatistics.getTotalRevenues(entities)));
+        totalExpenses.setValue(String.format("%.2f", CarRideStatistics.getTotalExpenses(entities)));
+        todayExpenses.setValue(String.format("%.2f", CarRideStatistics.getTodayExpenses(entities)));
     }
 }
