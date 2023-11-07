@@ -12,7 +12,7 @@ public class ComboBoxPanel<T> extends FilterComponentPanel {
     }
 
     public void setComboBoxItems(List<T> comboBoxItems) {
-        comboBox.addItem(null);
+        comboBox.removeAllItems();
         for (T item : comboBoxItems) {
             comboBox.addItem(item);
         }
