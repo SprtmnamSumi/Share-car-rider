@@ -37,15 +37,20 @@ public class Main {
 
     public static void initLookAndFeel() {
         Properties properties = Config.loadProperties();
-        String lookAndFeelsClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+        String lookAndFeels = "Nimbus";
         if (properties.getProperty("mode").equals(ColorTheme.DARK.name())) {
-            lookAndFeelsClassName = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+            lookAndFeels = "GTK+";
         }
 
         try {
-            UIManager.setLookAndFeel(lookAndFeelsClassName);
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if (lookAndFeels.equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeelsClassName + " layout initialization failed", ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeels + " layout initialization failed", ex);
         }
     }
 }
