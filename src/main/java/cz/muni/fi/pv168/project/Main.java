@@ -24,7 +24,7 @@ public class Main {
         EventQueue.invokeLater(() -> _injector.getInstance(MainWindow.class).show());
     }
 
-    private static Injector getInjector(){
+    private static Injector getInjector() {
         return Guice.createInjector(List.of(
                 new cz.muni.fi.pv168.project.business.model.Module(),
                 new cz.muni.fi.pv168.project.ui.Module(),
@@ -37,20 +37,15 @@ public class Main {
 
     public static void initLookAndFeel() {
         Properties properties = Config.loadProperties();
-        String lookAndFeels = "Nimbus";
+        String lookAndFeelsClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
         if (properties.getProperty("mode").equals(ColorTheme.DARK.name())) {
-            lookAndFeels = "GTK+";
+            lookAndFeelsClassName = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
         }
 
         try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if (lookAndFeels.equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            UIManager.setLookAndFeel(lookAndFeelsClassName);
         } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeels + " layout initialization failed", ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeelsClassName + " layout initialization failed", ex);
         }
     }
 }
