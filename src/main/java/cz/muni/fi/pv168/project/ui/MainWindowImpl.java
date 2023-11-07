@@ -4,10 +4,10 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.*;
+import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.model.common.ButtonTabComponent;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
@@ -28,6 +28,7 @@ public class MainWindowImpl implements MainWindow {
     private final Action currenciesAction;
     private final Action importAction;
     private final Action exportAction;
+    private final Action colorThemeAction;
     private final Action addTemplate;
     private final Action info;
 
@@ -52,6 +53,7 @@ public class MainWindowImpl implements MainWindow {
         currenciesAction = new InfoAction.currenciesAction();
         importAction = new ImportAction();
         exportAction = new ExportAction();
+        colorThemeAction = new ColorThemeAction();
         info = new InfoAction();
 
         var tabbedPane = new TabPanel();
@@ -88,6 +90,9 @@ public class MainWindowImpl implements MainWindow {
 
         editMenu.add(importAction);
         editMenu.add(exportAction);
+        editMenu.addSeparator();
+
+        editMenu.add(colorThemeAction);
         editMenu.addSeparator();
 
         editMenu.add(quitAction);
