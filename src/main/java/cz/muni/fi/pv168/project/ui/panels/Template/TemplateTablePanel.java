@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.panels.Template;
 
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideFilterPanel;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideStatisticsPanel;
@@ -25,9 +26,9 @@ public class TemplateTablePanel extends JPanel {
     public TemplateTablePanel(TemplateTableModel templateTableModel, DefaultActionFactory<Template> actionFactory) {
         setLayout(new BorderLayout());
         table = setUpTable(templateTableModel, actionFactory);
-        CarRideFilterPanel filterBar = new CarRideFilterPanel();
+        //CarRideFilterPanel filterBar = new CarRideFilterPanel(templateTableModel);
 
-        add(filterBar, BorderLayout.PAGE_START);
+        //add(filterBar, BorderLayout.PAGE_START);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         this.onSelectionChange = this::changeActionsState;
