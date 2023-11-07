@@ -10,6 +10,7 @@ import javax.swing.*;
  *
  * @param <T> entity type
  */
+
 public abstract class EntityMatcher<T> extends RowFilter<EntityTableModel<T>, Integer> {
 
     @Override
