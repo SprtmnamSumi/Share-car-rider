@@ -11,10 +11,6 @@ public class TextFieldPanel extends FilterComponentPanel {
         this.add(textField);
     }
 
-    public void reset(){
-        textField.setText("");
-    }
-
     public JTextField getTextField() {
         return textField;
     }

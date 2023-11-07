@@ -41,7 +41,7 @@ public class MainWindowImpl implements MainWindow {
                           TemplateTableModel templateTableModel) {
         frame = createFrame();
 
-        CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory);
+        CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
         TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
 
