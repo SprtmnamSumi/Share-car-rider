@@ -1,52 +1,41 @@
 package cz.muni.fi.pv168.project.ui.panels.filters;
 
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.filters.Filters;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TextFieldPanel;
 
-import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.ParseException;
 
-public class PassengersFilterPanel extends JPanel {
+public class PassengersFilterPanel extends FilterPanel {
 
     private final TextFieldPanel passengersField;
     private final CarRideTableFilter filter;
 
+    private final KeyListener listener = new TypeListener();
+
     public PassengersFilterPanel(CarRideTableFilter filter) {
         super();
         this.filter = filter;
-
         passengersField = new TextFieldPanel("Number Of Passengers");
-        KeyListener listener = new TypeListener();
-
         passengersField.getTextField().addKeyListener(listener);
-
         this.add(passengersField);
     }
-
+    @Override
     public void reset() {
         passengersField.getTextField().setText("");
+        listener.keyReleased(null);
     }
 
     private class TypeListener extends KeyAdapter {
         @Override
-        public void keyTyped(KeyEvent e) {
-            if (isFilterValid()) {
+        public void keyReleased(KeyEvent e) {
+            if (isIntInputValid(passengersField.getTextField())) {
                 filter.filterByPassengers(Integer.parseInt(passengersField.getTextField().getText()));
             } else {
-                filter.removePassengersFilter();
+                filter.removeFilter(Filters.PASSENGERS_FILTER);
             }
         }
-    }
-
-    private boolean isFilterValid() {
-        try {
-            int value = Integer.parseInt(passengersField.getTextField().getText());
-            return value >= 0;
-        } catch (NumberFormatException ignored) {
-        }
-        return false;
     }
 }

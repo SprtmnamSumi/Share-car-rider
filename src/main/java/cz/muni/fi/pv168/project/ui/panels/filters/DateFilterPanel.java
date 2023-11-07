@@ -4,35 +4,38 @@ import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.SpinnerDatePanel;
 
 import javax.swing.*;
-import java.sql.Time;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Date;
 
-public class DateFilterPanel extends JPanel {
+public class DateFilterPanel extends FilterPanel {
 
-    SpinnerDatePanel dateFromPanel;
-    SpinnerDatePanel dateToPanel;
+    private final SpinnerDatePanel dateFromPanel;
+    private final SpinnerDatePanel dateToPanel;
     private final CarRideTableFilter filter;
-    public DateFilterPanel(CarRideTableFilter filter){
+
+    public DateFilterPanel(CarRideTableFilter filter) {
         super();
         this.filter = filter;
         dateFromPanel = new SpinnerDatePanel("Date from");
         dateToPanel = new SpinnerDatePanel("Date to");
 
-        dateFromPanel.getSpinnerDate().addChangeListener(change -> refreshDateFilter(dateFromPanel, dateToPanel));
-        dateToPanel.getSpinnerDate().addChangeListener(change -> refreshDateFilter(dateFromPanel, dateToPanel));
+        dateFromPanel.getSpinnerDate().addChangeListener(change -> refreshFilter());
+        dateToPanel.getSpinnerDate().addChangeListener(change -> refreshFilter());
 
         this.add(dateFromPanel);
         this.add(dateToPanel);
     }
 
-    public void reset(){
-        dateFromPanel.setSpinnerDate(Time.valueOf(LocalDateTime.MIN.toLocalTime()));
-        dateToPanel.setSpinnerDate(Time.valueOf(LocalDateTime.now().toLocalTime()));
+    @Override
+    public void reset() {
+        dateFromPanel.setSpinnerDate(Date.from(Instant.ofEpochSecond(0)));
+        dateToPanel.setSpinnerDate(Date.from(Instant.now()));
+        refreshFilter();
     }
 
-    private void refreshDateFilter(SpinnerDatePanel from, SpinnerDatePanel to){
-        filter.filterByTime((Date) from.getSpinnerDate().getValue(), (Date) to.getSpinnerDate().getValue());
+    private void refreshFilter() {
+        filter.filterByDate(
+                (Date) dateFromPanel.getSpinnerDate().getValue(),
+                (Date) dateToPanel.getSpinnerDate().getValue());
     }
 }
