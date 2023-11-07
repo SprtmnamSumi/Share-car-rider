@@ -1,11 +1,10 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyListModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
-import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 
 import javax.swing.*;
 
@@ -13,7 +12,7 @@ public class TemplateDialog extends EntityDialog<Template> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
     private final JTextField templateField = new JTextField();
-    private final ComboBoxModel<Currency> currencyModel = new DefaultComboBoxModel<>(Currency.values());
+    private final JComboBox<Currency> currencyModel = new JComboBox<>(new ComboBoxModelAdapter<>(new CurrencyListModel(Currency.getCurrencies())));
     private final JComboBox<Template> templateComboBoxModel;
     private final JComboBox<Category> categoryJComboBox;
     private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());

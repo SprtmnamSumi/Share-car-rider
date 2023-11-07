@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
 final class EditCarRideAction extends AbstractAction {
 
     private final JTable carRidesTable;
-
     private final ListModel<Category> categoriestListModel;
     private final ListModel<Template> carRideTemplateListModel;
     private final TableModel<Template> repository;

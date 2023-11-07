@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CostBar extends JPanel {
-    private final List<String> currencyModel = Arrays.stream(Currency.values()).map(Currency::name).toList();
+    private final List<String> currencyModel = Currency.getCurrencies().stream().map(Currency::getName).toList();
     private final List<String> categories;
 
     public CostBar() {
