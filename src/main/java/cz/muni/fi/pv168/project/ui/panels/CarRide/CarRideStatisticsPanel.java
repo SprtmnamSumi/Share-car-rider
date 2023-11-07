@@ -44,16 +44,16 @@ public class CarRideStatisticsPanel extends JPanel {
 
     public void updateFilteredStats() {
         var entities = model.getAllEntities();
-        filteredDistance.setValue(CarRideStatistics.getTotalDistance(entities).toString()); //Set to only filtered CarRides after filtering is finished.
-        filteredExpenses.setValue(CarRideStatistics.getTotalExpenses(entities).toString()); //Set to only filtered CarRides after filtering is finished.
+        filteredDistance.setValue(String.format("%.2f", CarRideStatistics.getTotalDistance(entities))); //Set to only filtered CarRides after filtering is finished.
+        filteredExpenses.setValue(String.format("%.2f", CarRideStatistics.getTotalExpenses(entities))); //Set to only filtered CarRides after filtering is finished.
     }
 
     public void updateTotalStats() {
         var entities = model.getAllEntities();
-        totalDistance.setValue(CarRideStatistics.getTotalDistance(entities).toString());
+        totalDistance.setValue(String.format("%.2f", CarRideStatistics.getTotalDistance(entities)));
         totalRides.setValue(CarRideStatistics.getTotalRides(entities).toString());
-        totalRevenues.setValue(CarRideStatistics.getTotalRevenues(entities).toString());
-        totalExpenses.setValue(CarRideStatistics.getTotalExpenses(entities).toString());
-        todayExpenses.setValue(CarRideStatistics.getTodayExpenses(entities).toString());
+        totalRevenues.setValue(String.format("%.2f", CarRideStatistics.getTotalRevenues(entities)));
+        totalExpenses.setValue(String.format("%.2f", CarRideStatistics.getTotalExpenses(entities)));
+        todayExpenses.setValue(String.format("%.2f", CarRideStatistics.getTodayExpenses(entities)));
     }
 }
