@@ -1,14 +1,10 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
-import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
-import cz.muni.fi.pv168.project.ui.panels.filters.DateFilterPanel;
+import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.panels.filters.*;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
-import cz.muni.fi.pv168.project.ui.panels.commonPanels.TextFieldPanel;
-import cz.muni.fi.pv168.project.ui.panels.filters.DistanceFilterPanel;
-import cz.muni.fi.pv168.project.ui.panels.filters.PassengersFilterPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,19 +13,14 @@ import java.util.List;
 
 public class CarRideFilterPanel extends JPanel {
 
-    private final DistanceFilterPanel distanceFilter;
-    private final DateFilterPanel dateFilter;
-    private final PassengersFilterPanel passengerFilter;
-    private final ComboBoxPanel categoryPanel;
-    private final ComboBoxPanel currencyPanel;
-    private final List<String> currencyModel = Arrays.stream(Currency.values()).map(Currency::name).toList();
-    private final List<String> categories;
+    private final FilterPanel distanceFilter;
+    private final FilterPanel dateFilter;
+    private final FilterPanel passengerFilter;
+    private final FilterPanel categoryPanel;
+    private final ComboBoxPanel<String> currencyPanel;
 
-    public CarRideFilterPanel(CarRideTableFilter filter) {
+    public CarRideFilterPanel(CarRideTableFilter filter, CategoryTableModel categories) {
         super(new FlowLayout(FlowLayout.LEFT));
-
-        TestDataGenerator testDataGenerator = new TestDataGenerator();
-        categories = testDataGenerator.createTestCategories(10).stream().map(Category::getName).toList();
 
         passengerFilter = new PassengersFilterPanel(filter);
         this.add(passengerFilter);
@@ -37,27 +28,32 @@ public class CarRideFilterPanel extends JPanel {
         dateFilter = new DateFilterPanel(filter);
         this.add(dateFilter);
 
-        categoryPanel = new ComboBoxPanel("Category");
-        categoryPanel.setComboBoxItems(categories);
+        categoryPanel = new CategoryFilterPanel(filter, categories);
         this.add(categoryPanel);
 
-        currencyPanel = new ComboBoxPanel("Currency");
-        currencyPanel.setComboBoxItems(currencyModel);
+        currencyPanel = new ComboBoxPanel<>("Currency");
+        currencyPanel.setComboBoxItems(Arrays.stream(Currency.values()).map(Currency::name).toList());
         this.add(currencyPanel);
 
         distanceFilter = new DistanceFilterPanel(filter);
         this.add(distanceFilter);
 
         JButton filterButton = new JButton("Reset Filter");
-        this.add(filterButton);
         filterButton.addActionListener((a) -> resetFilters());
+        this.add(filterButton);
+
+        updateValues();
         resetFilters();
+    }
+
+    public void updateValues() {
+        categoryPanel.updateValues();
     }
     private void resetFilters(){
         dateFilter.reset();
         distanceFilter.reset();
         passengerFilter.reset();
-        categoryPanel.getComboBox().setSelectedIndex(0);
-        currencyPanel.getComboBox().setSelectedIndex(0);
+        categoryPanel.reset();
+        currencyPanel.getComboBox().setSelectedItem(null);
     }
 }

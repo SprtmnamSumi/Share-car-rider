@@ -1,76 +1,73 @@
 package cz.muni.fi.pv168.project.ui.filters;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.ui.filters.matchers.*;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.ui.filters.matchers.CarRideMatcherFactory;
+import cz.muni.fi.pv168.project.ui.filters.matchers.EntityMatcher;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 
 import javax.swing.table.TableRowSorter;
 import java.util.Date;
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
+
+import static cz.muni.fi.pv168.project.ui.filters.Filters.*;
 
 
 public final class CarRideTableFilter {
     private final RideCompoundMatcher rideCompoundMatcher;
 
+    private final CarRideMatcherFactory matcherFactory;
+
     public CarRideTableFilter(TableRowSorter<CarRideTableModel> rowSorter) {
         rideCompoundMatcher = new RideCompoundMatcher(rowSorter);
+        matcherFactory = new CarRideMatcherFactory();
         rowSorter.setRowFilter(rideCompoundMatcher);
     }
 
-    public void filterByTime(Date fromDate, Date toDate) {
-        rideCompoundMatcher.setDateMatcher(new DateIntervalMatcher(fromDate, toDate));
+    public void filterByCategory(Category category) {
+        rideCompoundMatcher.addMatcher(CATEGORY_FILTER, matcherFactory.getCategoryMatcher(category));
+    }
+
+    public void filterByDate(Date fromDate, Date toDate) {
+        rideCompoundMatcher.addMatcher(DATE_FILTER, matcherFactory.getDateMatcher(fromDate, toDate));
     }
 
     public void filterByDistance(int fromDistance, int toDistance) {
-        rideCompoundMatcher.setDistanceMatcher(new DistanceIntervalMatcher(fromDistance, toDistance));
+        rideCompoundMatcher.addMatcher(DISTANCE_FILTER, matcherFactory.getDistanceMatcher(fromDistance, toDistance));
     }
 
-    public void filterByPassengers(int passengers) {
-        rideCompoundMatcher.setPassengerMatcher(new PassengersCountMatcher(passengers));
+    public void filterByPassengers(int passengersCount) {
+        rideCompoundMatcher.addMatcher(PASSENGERS_FILTER, matcherFactory.getPassengersMatcher(passengersCount));
     }
 
-    public void removePassengersFilter() {
-        rideCompoundMatcher.setPassengerMatcher(EntityMatchers.all());
+    public void removeFilter(Filters filter) {
+        rideCompoundMatcher.removeMatcher(filter);
     }
-    public void removeDistanceFilter() {
-        rideCompoundMatcher.setDistanceMatcher(EntityMatchers.all());
-    }
-
-    public void removeDateFilter() {
-        rideCompoundMatcher.setDateMatcher(EntityMatchers.all());
-    }
-
 
     private static class RideCompoundMatcher extends EntityMatcher<CarRide> {
 
         private final TableRowSorter<CarRideTableModel> rowSorter;
-        private EntityMatcher<CarRide> dateMatcher = EntityMatchers.all();
-        private EntityMatcher<CarRide> passengerMatcher = EntityMatchers.all();
-        private EntityMatcher<CarRide> distanceMatcher = EntityMatchers.all();
+
+        private final Map<Filters, EntityMatcher<CarRide>> entityMatchers = new HashMap<>();
 
         private RideCompoundMatcher(TableRowSorter<CarRideTableModel> rowSorter) {
             this.rowSorter = rowSorter;
         }
 
-        private void setDistanceMatcher(EntityMatcher<CarRide> distanceMatcher) {
-            this.distanceMatcher = distanceMatcher;
+        private void addMatcher(Filters key, EntityMatcher<CarRide> matcher) {
+            entityMatchers.put(key, matcher);
             rowSorter.sort();
         }
 
-        private void setPassengerMatcher(EntityMatcher<CarRide> passengerMatcher) {
-            this.passengerMatcher = passengerMatcher;
+        private void removeMatcher(Filters key) {
+            entityMatchers.remove(key);
             rowSorter.sort();
         }
-
-        private void setDateMatcher(EntityMatcher<CarRide> dateMatcher) {
-            this.dateMatcher = dateMatcher;
-            rowSorter.sort();
-        }
-
 
         @Override
         public boolean evaluate(CarRide carRide) {
-            return Stream.of(dateMatcher, distanceMatcher, passengerMatcher).allMatch(m -> m.evaluate(carRide));
+            return entityMatchers.values().stream().allMatch(m -> m.evaluate(carRide));
         }
     }
 }

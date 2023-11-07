@@ -33,4 +33,15 @@ public class Category extends Entity {
     public String toString() {
         return name;
     }
+
+
+    @Override
+    public boolean equals(Object object){
+        Category category = (Category) object;
+        return category != null && Objects.equals(category.guid, guid);
+    }
+    @Override
+    public int hashCode(){
+        return guid.hashCode();
+    }
 }

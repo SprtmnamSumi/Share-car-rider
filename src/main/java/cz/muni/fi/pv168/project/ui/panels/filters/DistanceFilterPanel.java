@@ -8,11 +8,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class DistanceFilterPanel extends JPanel {
+public class DistanceFilterPanel extends FilterPanel {
     private final TextFieldPanel distanceFromPanel;
 
     private final TextFieldPanel distanceToPanel;
     private final CarRideTableFilter filter;
+
+    private final KeyListener listener = new TypeListener();
 
     public DistanceFilterPanel(CarRideTableFilter filter) {
         super();
@@ -20,7 +22,6 @@ public class DistanceFilterPanel extends JPanel {
 
         distanceFromPanel = new TextFieldPanel("Distance from");
         distanceToPanel = new TextFieldPanel("Distance to");
-        KeyListener listener = new TypeListener();
 
         distanceFromPanel.getTextField().addKeyListener(listener);
         distanceToPanel.getTextField().addKeyListener(listener);
@@ -29,21 +30,23 @@ public class DistanceFilterPanel extends JPanel {
         this.add(distanceToPanel);
     }
 
-    public void reset(){
+    @Override
+    public void reset() {
         distanceFromPanel.getTextField().setText("");
         distanceToPanel.getTextField().setText("");
+        listener.keyReleased(null);
     }
 
-    private class TypeListener extends KeyAdapter{
+    private class TypeListener extends KeyAdapter {
         @Override
-        public void keyTyped(KeyEvent e){
-            int leftBound = distanceFromPanel.getTextField().getText().isEmpty()
-                    ? Integer.MIN_VALUE
-                    : Integer.parseInt(distanceFromPanel.getTextField().getText());
+        public void keyReleased(KeyEvent e) {
+            int leftBound = isIntInputValid(distanceFromPanel.getTextField())
+                    ? Integer.parseInt(distanceFromPanel.getTextField().getText())
+                    : Integer.MIN_VALUE;
 
-            int rightBound = distanceToPanel.getTextField().getText().isEmpty()
-                    ? Integer.MAX_VALUE
-                    : Integer.parseInt(distanceToPanel.getTextField().getText());
+            int rightBound = isIntInputValid(distanceToPanel.getTextField())
+                    ? Integer.parseInt(distanceToPanel.getTextField().getText())
+                    : Integer.MAX_VALUE;
 
             filter.filterByDistance(leftBound, rightBound);
         }
