@@ -3,10 +3,14 @@ package cz.muni.fi.pv168.project.ui;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.action.*;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
+import cz.muni.fi.pv168.project.ui.action.Currency.ChooseCurrencyAction;
+import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.model.common.ButtonTabComponent;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
@@ -25,7 +29,7 @@ public class MainWindowImpl implements MainWindow {
     private final Action addCarRideAction;
     private final Action addCategory;
     private final Action settingsAction;
-    private final Action currenciesAction;
+    private final Action chooseCurrencyAction;
     private final Action importAction;
     private final Action exportAction;
     private final Action colorThemeAction;
@@ -36,9 +40,11 @@ public class MainWindowImpl implements MainWindow {
     public MainWindowImpl(DefaultActionFactory<CarRide> carActionFactory,
                           DefaultActionFactory<Category> categoryActionFactory,
                           DefaultActionFactory<Template> templateActionFactory,
+                          CurrencyActionFactory currencyActionFactory,
                           CarRideTableModel carRideTableModel,
                           CategoryTableModel categoryTableModel,
-                          TemplateTableModel templateTableModel) {
+                          TemplateTableModel templateTableModel,
+                          CurrencyTableModel currencyTableModel) {
         frame = createFrame();
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory);
@@ -49,8 +55,9 @@ public class MainWindowImpl implements MainWindow {
         addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
         addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
 
+        chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable());
+
         settingsAction = new SettingsAction();
-        currenciesAction = new InfoAction.currenciesAction();
         importAction = new ImportAction();
         exportAction = new ExportAction();
         colorThemeAction = new ColorThemeAction();
@@ -85,7 +92,7 @@ public class MainWindowImpl implements MainWindow {
         editMenu.add(settingsAction);
         editMenu.addSeparator();
 
-        editMenu.add(currenciesAction);
+        editMenu.add(chooseCurrencyAction);
         editMenu.addSeparator();
 
         editMenu.add(importAction);

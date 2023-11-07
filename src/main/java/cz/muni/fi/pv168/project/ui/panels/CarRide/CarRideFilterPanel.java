@@ -3,9 +3,6 @@ package cz.muni.fi.pv168.project.ui.panels.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideListModel;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.SpinnerDatePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TextFieldPanel;
@@ -16,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CarRideFilterPanel extends JPanel {
-    private final List<String> currencyModel = Arrays.stream(Currency.values()).map(Currency::name).toList();
+    private final List<String> currencyModel = Currency.getCurrencies().stream().map(Currency::getName).toList();
     private final List<String> categories;
 
     public CarRideFilterPanel() {
