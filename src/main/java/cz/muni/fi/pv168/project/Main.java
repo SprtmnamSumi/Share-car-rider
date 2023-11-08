@@ -24,7 +24,7 @@ public class Main {
         EventQueue.invokeLater(() -> _injector.getInstance(MainWindow.class).show());
     }
 
-    private static Injector getInjector(){
+    private static Injector getInjector() {
         return Guice.createInjector(List.of(
                 new cz.muni.fi.pv168.project.business.model.Module(),
                 new cz.muni.fi.pv168.project.ui.Module(),
