@@ -11,7 +11,7 @@ public class CurrencyValidator implements Validator<Currency> {
     public ValidationResult validate(Currency model) {
 
         var validators = List.of(
-                Validator.extracting(Currency::getName, new StringLengthValidator(2, 150, "Title"))
+                Validator.extracting(Currency::getName, new StringLengthValidator(0, 150, "Title"))
         );
         return Validator.compose(validators).validate(model);
     }

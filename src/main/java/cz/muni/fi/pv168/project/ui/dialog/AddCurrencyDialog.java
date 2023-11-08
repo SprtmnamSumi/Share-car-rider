@@ -10,7 +10,7 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
     private final JSpinner rateToDollar = new JSpinner(new SpinnerNumberModel());
     private final Currency currency;
 
-    public AddCurrencyDialog(Currency currency, ListModel<Currency> currencyListModel) {
+    public AddCurrencyDialog(Currency currency) {
         this.currency = currency;
         setValues();
         addFields();
@@ -29,6 +29,6 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
 
     @Override
     Currency getEntity() {
-        return null;
+        return currency;
     }
 }

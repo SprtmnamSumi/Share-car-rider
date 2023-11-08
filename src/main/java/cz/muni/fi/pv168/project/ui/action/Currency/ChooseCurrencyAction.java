@@ -2,11 +2,10 @@ package cz.muni.fi.pv168.project.ui.action.Currency;
 
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.ui.dialog.AddCurrencyDialog;
 import cz.muni.fi.pv168.project.ui.dialog.ChooseCurrencyDialog;
-import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
+import cz.muni.fi.pv168.project.ui.model.ListModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +15,7 @@ public final class ChooseCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
     private final ListModel<Currency> currencyListModel;
 
-    public ChooseCurrencyAction(JTable currencyTable, EntityListModelAdapter<Currency> currencyListModel) {
+    public ChooseCurrencyAction(JTable currencyTable, ListModel<Currency> currencyListModel) {
         super("Add", Icons.ADD_ICON);
         this.currencyTable = currencyTable;
         this.currencyListModel = currencyListModel;
@@ -27,9 +26,7 @@ public final class ChooseCurrencyAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var categoryTableModel = (CurrencyTableModel) currencyTable.getModel();
-        var dialog = new ChooseCurrencyDialog(Currency.createCurrency("", "", 0.0), currencyListModel);
-        dialog.show(currencyTable, "Add category")
-                .ifPresent(categoryTableModel::addRow);
+        var dialog = new ChooseCurrencyDialog(currencyTable, Currency.createCurrency("", "", 0.0), currencyListModel);
+        dialog.show(currencyTable, "Choose Currency");
     }
 }

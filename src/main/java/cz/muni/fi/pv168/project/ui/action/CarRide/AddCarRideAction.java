@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
+import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
