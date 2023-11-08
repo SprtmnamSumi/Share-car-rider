@@ -55,7 +55,7 @@ public class MainWindowImpl implements MainWindow {
         addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
         addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
 
-        chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable());
+        chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
 
         settingsAction = new SettingsAction();
         importAction = new ImportAction();
