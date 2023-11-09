@@ -1,6 +1,8 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
+
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
@@ -16,12 +18,15 @@ final class AddCarRideAction extends AbstractAction {
     private final JTable carRidesTable;
 
     private final ListModel<Category> categoriestListModel;
+    private final ListModel<Currency> currencyListModel;
     private final ListModel<Template> carRideTemplateListModel;
     private final TableModel<Template> repository;
 
-    AddCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository) {
+
+    AddCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository) {
         super("Add", Icons.ADD_ICON);
         this.carRidesTable = carRidesTable;
+        this.currencyListModel = currencyListModel;
         this.categoriestListModel = categoriestListModel;
         this.carRideTemplateListModel = carRideTemplateListModel;
         this.repository = repository;
@@ -33,7 +38,9 @@ final class AddCarRideAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var dialog = new CarRideDialog(categoriestListModel, carRideTemplateListModel, repository);
+
+        var dialog = new CarRideDialog(categoriestListModel, currencyListModel, carRideTemplateListModel, repository);
+
         dialog.show(carRidesTable, "Add Cat ride")
                 .ifPresent(carRidesTableModel::addRow);
     }

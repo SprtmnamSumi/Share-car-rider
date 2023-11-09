@@ -4,8 +4,9 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
+import cz.muni.fi.pv168.project.ui.panels.TablePanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -16,9 +17,8 @@ import java.util.function.Consumer;
 /**
  * Panel with car ride records in a table.
  */
-public class CarRideTablePanel extends JPanel {
+public class CarRideTablePanel extends TablePanel<CarRide> {
 
-    private final JTable table;
     private final Consumer<Integer> onSelectionChange;
 
     private final CarRideStatisticsPanel statsPanel;
@@ -30,13 +30,15 @@ public class CarRideTablePanel extends JPanel {
 
     public CarRideTablePanel(CarRideTableModel carRideTableModel,
                              DefaultActionFactory<CarRide> actionFactory,
-                             CategoryTableModel categoryTableModel) {
-        setLayout(new BorderLayout());
+                             CategoryTableModel categoryTableModel,
+                             CurrencyTableModel currencyTableModel){
+        super(carRideTableModel);
+
         var rowSorter = new TableRowSorter<>(carRideTableModel);
-        table = setUpTable(carRideTableModel, actionFactory);
+        setUpTable(actionFactory);
         table.setRowSorter(rowSorter);
 
-        filterPanel = new CarRideFilterPanel(new CarRideTableFilter(rowSorter), categoryTableModel);
+        filterPanel = new CarRideFilterPanel(new CarRideTableFilter(rowSorter), categoryTableModel, currencyTableModel);
         categoryTableModel.addTableModelListener(e -> updateStats());
         statsPanel = new CarRideStatisticsPanel(carRideTableModel);
 
@@ -47,15 +49,7 @@ public class CarRideTablePanel extends JPanel {
         this.onSelectionChange = this::changeActionsState;
     }
 
-    public JTable getTable() {
-        return table;
-    }
-
-    private JTable setUpTable(CarRideTableModel carRideTableModel,
-                              DefaultActionFactory<CarRide> carRideActionFactory) {
-        var table = new JTable(carRideTableModel);
-
-        table.setAutoCreateRowSorter(true);
+    private void setUpTable(DefaultActionFactory<CarRide> carRideActionFactory) {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.getModel().addTableModelListener(e -> updateStats());
 
@@ -64,8 +58,6 @@ public class CarRideTablePanel extends JPanel {
         deleteCarRideAction = carRideActionFactory.getDeleteAction(table);
 
         table.setComponentPopupMenu(createCarRideTablePopUpMenu());
-
-        return table;
     }
 
     private JPopupMenu createCarRideTablePopUpMenu() {
