@@ -39,7 +39,7 @@ public class Main {
         Properties properties = Config.loadProperties();
         String lookAndFeelsClassName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
         if (properties.getProperty("mode").equals(ColorTheme.DARK.name())) {
-            lookAndFeelsClassName = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+            lookAndFeelsClassName = "com.jtattoo.plaf.noire.NoireLookAndFeel";
         }
 
         try {
