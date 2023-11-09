@@ -8,5 +8,6 @@ public class Module extends AbstractModule {
         bind(ICarRideICrudService.class).to(CarRideCrudService.class);
         bind(ICarRideTempalteService.class).to(CarRideTemplateCrudService.class);
         bind(ICategoryCrudService.class).to(CategoryCrudService.class);
+        bind(ICurrencyCrudService.class).to(CurrencyCrudService.class);
     }
 }

@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.action.CarRide;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
@@ -13,14 +14,17 @@ import javax.swing.*;
 
 public class CarRideActionFactory implements DefaultActionFactory<CarRide> {
     private final EntityListModelAdapter<Category> categoryListModel;
+    private final EntityListModelAdapter<Currency> currencyListModel;
     private final EntityListModelAdapter<Template> templateListModel;
     private final TableModel<Template> repository;
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CategoryTableModel categoryTableMode;
 
     @Inject
-    public CarRideActionFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableMode) {
+
+    public CarRideActionFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Currency> currencyListModel, EntityListModelAdapter<Template> templateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableMode) {
         this.categoryListModel = categoryListModel;
+        this.currencyListModel = currencyListModel;
         this.templateListModel = templateListModel;
         this.repository = repository;
         this.categoryActionFactory = categoryActionFactory;
@@ -28,14 +32,15 @@ public class CarRideActionFactory implements DefaultActionFactory<CarRide> {
     }
 
     public Action getAddAction(JTable table) {
-        return new AddCarRideAction(table, categoryListModel, templateListModel, repository, categoryActionFactory, categoryTableMode);
+        return new AddCarRideAction(table, categoryListModel, currencyListModel, templateListModel, repository, categoryActionFactory, categoryTableMode);
     }
 
     public Action getDeleteAction(JTable table) {
         return new DeleteCarRideAction(table);
     }
 
+
     public Action getEditAction(JTable table) {
-        return new EditCarRideAction(table, categoryListModel, templateListModel, repository, categoryActionFactory, categoryTableMode);
+        return new EditCarRideAction(table, categoryListModel, currencyListModel, templateListModel, repository, categoryActionFactory, categoryTableMode);
     }
 }
