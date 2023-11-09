@@ -75,7 +75,7 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
                 .intoException();
         int newRowIndex = entities.size();
         entities.add(entity);
-        fireTableRowsInserted(newRowIndex, newRowIndex);
+        fireTableRowsInserted(0, newRowIndex);
     }
 
     public void updateRow(T entity) {
@@ -93,6 +93,7 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
     public List<T> getAllEntities() {
         return List.copyOf(entities);
     }
+
     @Override
     public T getEntity(int rowIndex) {
         return entities.get(rowIndex);

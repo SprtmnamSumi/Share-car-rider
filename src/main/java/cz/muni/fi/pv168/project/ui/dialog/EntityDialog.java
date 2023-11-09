@@ -9,7 +9,7 @@ import static javax.swing.JOptionPane.*;
 
 abstract class EntityDialog<E> {
 
-    private final JPanel panel = new JPanel();
+    protected final JPanel panel = new JPanel();
 
     EntityDialog() {
         panel.setLayout(new MigLayout("wrap 2"));

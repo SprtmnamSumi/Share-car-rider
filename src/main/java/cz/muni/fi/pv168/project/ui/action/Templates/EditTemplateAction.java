@@ -1,9 +1,11 @@
 package cz.muni.fi.pv168.project.ui.action.Templates;
 
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.dialog.TemplateDialog;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
@@ -15,11 +17,13 @@ final class EditTemplateAction extends AbstractAction {
     private final JTable templateTable;
 
     private final ListModel<Category> categoriestListModel;
+    private final ListModel<Currency> currencyListModel;
     private final ListModel<Template> carRideTemplateListModel;
 
-    EditTemplateAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
+    EditTemplateAction(JTable carRidesTable, ListModel<Category> categoriestListModel, EntityListModelAdapter<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel) {
         super("Edit", Icons.EDIT_ICON);
         this.templateTable = carRidesTable;
+        this.currencyListModel = currencyListModel;
         this.categoriestListModel = categoriestListModel;
         this.carRideTemplateListModel = carRideTemplateListModel;
         putValue(SHORT_DESCRIPTION, "Edits Car Ride");
@@ -39,7 +43,7 @@ final class EditTemplateAction extends AbstractAction {
         TemplateTableModel templateListModel = (TemplateTableModel) templateTable.getModel();
         int modelRow = templateTable.convertRowIndexToModel(selectedRows[0]);
         Template template = templateListModel.getEntity(modelRow);
-        TemplateDialog templateDialog = new TemplateDialog(template, categoriestListModel, carRideTemplateListModel);
+        TemplateDialog templateDialog = new TemplateDialog(template, categoriestListModel, currencyListModel, carRideTemplateListModel);
         templateDialog.show(templateTable, "Edit Template")
                 .ifPresent(templateListModel::updateRow);
     }
