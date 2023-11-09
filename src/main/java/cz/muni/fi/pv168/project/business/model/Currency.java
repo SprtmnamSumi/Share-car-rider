@@ -12,23 +12,16 @@ public class Currency extends Entity{
 
     private Double rateToDollar;
 
-    private final static List<Currency> currencies = new ArrayList<>();
     private static Currency chosenCurrency = createDollarCurrency();
-    public static Currency createCurrency(String name, String symbol, Double rateToDollar) {
-        Currency currency = new Currency(name, symbol, rateToDollar);
-        currencies.add(currency);
-        return currency;
 
-    }
-
-    private Currency(String name, String symbol, Double rateToDollar) {
+    public Currency(String name, String symbol, Double rateToDollar) {
         this.name = name;
         this.symbol = symbol;
         this.rateToDollar = rateToDollar;
     }
 
     private static Currency createDollarCurrency() {
-        return createCurrency("dollar", "$", 1.0);
+        return new Currency("dollar", "$", 1.0);
     }
 
     public String getName() {
@@ -43,11 +36,12 @@ public class Currency extends Entity{
         return rateToDollar;
     }
 
-    public static List<Currency> getCurrencies() {
-        return List.copyOf(currencies);
-    }
-
     public static Currency getChosenCurrency() {
         return chosenCurrency;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

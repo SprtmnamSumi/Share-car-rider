@@ -9,12 +9,13 @@ import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
     private final JTextField templateField = new JTextField();
-    private final JComboBox<Currency> currencyModel = new JComboBox<>(new ComboBoxModelAdapter<>(new CurrencyListModel(Currency.getCurrencies())));
+    private final JComboBox<Currency> currencyJComboBox;
     private final JComboBox<Template> templateComboBoxModel;
     private final JComboBox<Category> categoryJComboBox;
     private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
@@ -27,11 +28,12 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final DateBar dateBar = new DateBar();
     private final CarRide carRide;
 
-    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Template> templateModel) {
+    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel) {
         this.carRide = carRide;
 
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));
+        currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         setValues();
         addFields();
     }

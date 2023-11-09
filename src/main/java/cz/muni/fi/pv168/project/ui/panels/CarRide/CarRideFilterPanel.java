@@ -9,11 +9,12 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.TextFieldPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CarRideFilterPanel extends JPanel {
-    private final List<String> currencyModel = Currency.getCurrencies().stream().map(Currency::getName).toList();
+    private final List<String> currencyModel = new ArrayList<>();
     private final List<String> categories;
 
     public CarRideFilterPanel() {
