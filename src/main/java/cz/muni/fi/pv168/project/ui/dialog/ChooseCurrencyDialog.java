@@ -19,7 +19,7 @@ public class ChooseCurrencyDialog extends EntityDialog<Currency> {
         this.currencyListModel = currencyListModel;
         this.currencyCombo = new JComboBox<>(new ComboBoxModelAdapter<>(currencyListModel));
 
-        addCurrencyButton = new JButton("Select a file");
+        addCurrencyButton = new JButton("Add new currency");
         addCurrencyButton.addActionListener(new AddCurrencyAction(currencyTable));
 
         addFields();

@@ -15,12 +15,10 @@ public final class ChooseCurrencyAction extends AbstractAction {
     private final EntityListModelAdapter<Currency> currencyListModel;
 
     public ChooseCurrencyAction(JTable currencyTable, EntityListModelAdapter<Currency> currencyListModel) {
-        super("Add", Icons.ADD_ICON);
+        super("Choose currency", null);
         this.currencyTable = currencyTable;
         this.currencyListModel = currencyListModel;
-        putValue(SHORT_DESCRIPTION, "Adds new Currency");
-        putValue(MNEMONIC_KEY, KeyEvent.VK_A);
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
+        putValue(SHORT_DESCRIPTION, "Choose Currency");
     }
 
     @Override
