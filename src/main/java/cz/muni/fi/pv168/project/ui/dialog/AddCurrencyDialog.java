@@ -12,12 +12,12 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
 
     public AddCurrencyDialog(Currency currency) {
         this.currency = currency;
-        setValues();
+        //setValues();
         addFields();
     }
 
     private void setValues() {
-        nameTextField.setText(currency.getName());
+        nameTextField.setText("X");
         symbolTextField.setText(currency.getSymbol());
     }
 
@@ -29,6 +29,6 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
 
     @Override
     Currency getEntity() {
-        return currency;
+        return new Currency(nameTextField.getText(), symbolTextField.getText(), 1.0);
     }
 }

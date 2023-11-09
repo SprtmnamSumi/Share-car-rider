@@ -25,7 +25,7 @@ public final class ChooseCurrencyAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var dialog = new ChooseCurrencyDialog(currencyTable, Currency.createCurrency("", "", 0.0), currencyListModel);
+        var dialog = new ChooseCurrencyDialog(currencyTable, new Currency("", "", 0.0), currencyListModel);
         dialog.show(currencyTable, "Choose Currency");
     }
 }

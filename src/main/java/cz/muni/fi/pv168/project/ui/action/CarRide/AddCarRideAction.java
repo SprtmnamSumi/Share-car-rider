@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
+import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
@@ -8,6 +10,7 @@ import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
+import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
@@ -19,12 +22,15 @@ final class AddCarRideAction extends AbstractAction {
     private final JTable carRidesTable;
 
     private final ListModel<Category> categoriestListModel;
+    private final ListModel<Currency> currencyListModel;
     private final ListModel<Template> carRideTemplateListModel;
     private final TableModel<Template> repository;
 
-    AddCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository) {
+
+    AddCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository) {
         super("Add", Icons.ADD_ICON);
         this.carRidesTable = carRidesTable;
+        this.currencyListModel = currencyListModel;
         this.categoriestListModel = categoriestListModel;
         this.carRideTemplateListModel = carRideTemplateListModel;
         this.repository = repository;
@@ -36,7 +42,8 @@ final class AddCarRideAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var dialog = new CarRideDialog(createPrefilledCarAction(), categoriestListModel, carRideTemplateListModel, repository);
+        var dialog = new CarRideDialog(createPrefilledCarAction(), categoriestListModel, currencyListModel, carRideTemplateListModel, repository);
+
         dialog.show(carRidesTable, "Add Cat ride")
                 .ifPresent(carRidesTableModel::addRow);
     }

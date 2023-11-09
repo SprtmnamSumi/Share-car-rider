@@ -15,12 +15,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static javax.swing.JOptionPane.*;
+import java.util.ArrayList;
 
 public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
     private final JTextField templateField = new JTextField();
-    private final JComboBox<Currency> currencyModel = new JComboBox<>(new ComboBoxModelAdapter<>(new CurrencyListModel(Currency.getCurrencies())));
+    private final JComboBox<Currency> currencyJComboBox;
     private final JComboBox<Template> templateComboBoxModel;
     private final JComboBox<Category> categoryJComboBox;
     private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
@@ -32,14 +33,14 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
     private final CarRide carRide;
-
     private final TableModel<Template> entityCrudService;
 
-    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService) {
+    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService) {
         this.carRide = carRide;
 
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));
+        currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         setValues();
         addFields();
 
