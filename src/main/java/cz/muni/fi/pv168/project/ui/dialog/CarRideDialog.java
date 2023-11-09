@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
@@ -12,7 +13,7 @@ import javax.swing.*;
 import java.util.Optional;
 import java.util.UUID;
 
-import static javax.swing.JOptionPane.OK_OPTION;
+import static javax.swing.JOptionPane.*;
 
 public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
@@ -108,15 +109,16 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     @Override
     public Optional<CarRide> show(JComponent parentComponent, String title) {
-        int result = JOptionPane.showOptionDialog(parentComponent, panel, "Title",
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"OK", "Cancel", "Save as template"}, null);
-        if (result == OK_OPTION) {
-            return Optional.of(getEntity());
-        } else if (result == 2) {
-            addTemplate(getAsTemplate());
-            return Optional.empty();
-        } else {
+        int result = JOptionPane.showOptionDialog(parentComponent, panel, title,
+                OK_CANCEL_OPTION, PLAIN_MESSAGE, null, null, null);
+        if (result != OK_OPTION) {
             return Optional.empty();
         }
+
+        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
+        if (res == OK_OPTION) {
+            addTemplate(getAsTemplate());
+        }
+        return Optional.of(getEntity());
     }
 }
