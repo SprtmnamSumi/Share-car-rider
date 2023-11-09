@@ -1,9 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
@@ -35,13 +33,8 @@ final class AddCarRideAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var dialog = new CarRideDialog(createPrefilledCarAction(), categoriestListModel, carRideTemplateListModel, repository);
+        var dialog = new CarRideDialog(categoriestListModel, carRideTemplateListModel, repository);
         dialog.show(carRidesTable, "Add Cat ride")
                 .ifPresent(carRidesTableModel::addRow);
-    }
-
-    private CarRide createPrefilledCarAction() {
-        var testDataGenerator = new TestDataGenerator();
-        return testDataGenerator.createTestRide();
     }
 }
