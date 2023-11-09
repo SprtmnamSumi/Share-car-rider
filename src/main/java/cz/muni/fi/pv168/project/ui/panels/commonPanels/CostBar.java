@@ -7,11 +7,12 @@ import cz.muni.fi.pv168.project.ui.panels.CarRide.PlaceholderTextField;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CostBar extends JPanel {
-    private final List<String> currencyModel = Arrays.stream(Currency.values()).map(Currency::name).toList();
+    private final List<String> currencyModel = new ArrayList<>();
     private final List<String> categories;
 
     public CostBar() {

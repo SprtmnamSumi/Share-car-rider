@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.panels.TablePanel;
 
 import javax.swing.*;
@@ -29,14 +30,15 @@ public class CarRideTablePanel extends TablePanel<CarRide> {
 
     public CarRideTablePanel(CarRideTableModel carRideTableModel,
                              DefaultActionFactory<CarRide> actionFactory,
-                             CategoryTableModel categoryTableModel){
+                             CategoryTableModel categoryTableModel,
+                             CurrencyTableModel currencyTableModel){
         super(carRideTableModel);
 
         var rowSorter = new TableRowSorter<>(carRideTableModel);
         setUpTable(actionFactory);
         table.setRowSorter(rowSorter);
 
-        filterPanel = new CarRideFilterPanel(new CarRideTableFilter(rowSorter), categoryTableModel);
+        filterPanel = new CarRideFilterPanel(new CarRideTableFilter(rowSorter), categoryTableModel, currencyTableModel);
         categoryTableModel.addTableModelListener(e -> updateStats());
         statsPanel = new CarRideStatisticsPanel(carRideTableModel);
 
