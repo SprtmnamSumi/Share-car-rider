@@ -4,6 +4,7 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
+import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 
@@ -14,16 +15,20 @@ public class CarRideActionFactory implements DefaultActionFactory<CarRide> {
     private final EntityListModelAdapter<Category> categoryListModel;
     private final EntityListModelAdapter<Template> templateListModel;
     private final TableModel<Template> repository;
+    private final DefaultActionFactory<Category> categoryActionFactory;
+    private final CategoryTableModel categoryTableMode;
 
     @Inject
-    public CarRideActionFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel, TableModel<Template> repository) {
+    public CarRideActionFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Template> templateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableMode) {
         this.categoryListModel = categoryListModel;
         this.templateListModel = templateListModel;
         this.repository = repository;
+        this.categoryActionFactory = categoryActionFactory;
+        this.categoryTableMode = categoryTableMode;
     }
 
     public Action getAddAction(JTable table) {
-        return new AddCarRideAction(table, categoryListModel, templateListModel, repository);
+        return new AddCarRideAction(table, categoryListModel, templateListModel, repository, categoryActionFactory, categoryTableMode);
     }
 
     public Action getDeleteAction(JTable table) {
@@ -31,6 +36,6 @@ public class CarRideActionFactory implements DefaultActionFactory<CarRide> {
     }
 
     public Action getEditAction(JTable table) {
-        return new EditCarRideAction(table, categoryListModel, templateListModel, repository);
+        return new EditCarRideAction(table, categoryListModel, templateListModel, repository, categoryActionFactory, categoryTableMode);
     }
 }
