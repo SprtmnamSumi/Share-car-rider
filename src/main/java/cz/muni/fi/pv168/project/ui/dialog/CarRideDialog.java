@@ -6,16 +6,16 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyListModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
 import static javax.swing.JOptionPane.*;
-import java.util.ArrayList;
 
 public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
@@ -32,25 +32,33 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JSpinner commission = new JSpinner(new SpinnerNumberModel());
     private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
-    private final CarRide carRide;
+
+
     private final TableModel<Template> entityCrudService;
 
-    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService) {
-        this.carRide = carRide;
+    public CarRideDialog(ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService) {
+        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
+
 
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
-        setValues();
+        setValues(carRide);
         addFields();
 
         this.entityCrudService = entityCrudService;
 
-
+        templateComboBoxModel.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                var template = (Template) e.getItem();
+                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitre(), template.getNumberOfPassengers(), template.getCommission(), LocalDateTime.now(), template.getCategory());
+                setValues(templateCarRide);
+            }
+        });
     }
 
 
-    private void setValues() {
+    private void setValues(CarRide carRide) {
         titleField.setText(carRide.getTitle());
         descriptionField.setText(carRide.getDescription());
         distanceField.setValue(carRide.getDistance());
@@ -61,6 +69,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         categoryJComboBox.setSelectedItem(carRide.getCategory());
         dateBar.setDate(carRide.getDate());
     }
+
 
     private String getSpinnerValue(JSpinner spinner) {
         try {
@@ -87,6 +96,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     @Override
     CarRide getEntity() {
+        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
         carRide.setTitle(titleField.getText());
         carRide.setDescription(descriptionField.getText());
         carRide.setDistance(Double.parseDouble(getSpinnerValue(distanceField)));
@@ -115,6 +125,10 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
                 OK_CANCEL_OPTION, PLAIN_MESSAGE, null, null, null);
         if (result != OK_OPTION) {
             return Optional.empty();
+        }
+
+        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
+            return Optional.of(getEntity());
         }
 
         int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
