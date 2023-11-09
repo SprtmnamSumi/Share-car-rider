@@ -49,7 +49,6 @@ final class EditCarRideAction extends AbstractAction {
         CarRide carRide = carRideTableModel.getEntity(modelRow);
 
         CarRideDialog CarRideDialog = new CarRideDialog(categoriestListModel, currencyListModel, carRideTemplateListModel, repository);
-
         CarRideDialog.show(carRidesTable, "Edit Car Ride")
                 .ifPresent(carRideTableModel::updateRow);
     }
