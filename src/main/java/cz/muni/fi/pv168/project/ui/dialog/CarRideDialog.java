@@ -21,7 +21,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
     private final JTextField templateField = new JTextField();
-    private final ComboBoxModel<Currency> currencyModel = new DefaultComboBoxModel<>(Currency.values());
+    private final JComboBox<Currency> currencyJComboBox;
     private final JComboBox<Template> templateComboBoxModel;
     private final JComboBox<Category> categoryJComboBox;
     private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
@@ -36,11 +36,12 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     private final TableModel<Template> entityCrudService;
 
-    public CarRideDialog(ListModel<Category> categoryModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService) {
+    public CarRideDialog(ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService) {
         var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
 
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));
+        currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         setValues(carRide);
         addFields();
 
