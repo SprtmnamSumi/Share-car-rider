@@ -13,7 +13,7 @@ public class Template extends Entity {
     private double commission;
     private Category category;
 
-    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, int CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category) {
+    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category) {
         super(guid);
         setTitle(Title);
         setDescription(Description);
