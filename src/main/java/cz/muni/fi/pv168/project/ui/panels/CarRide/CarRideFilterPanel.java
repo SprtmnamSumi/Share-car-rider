@@ -16,7 +16,7 @@ public class CarRideFilterPanel extends JPanel {
     private final FilterPanel distanceFilter;
     private final FilterPanel dateFilter;
     private final FilterPanel passengerFilter;
-    private final FilterPanel categoryPanel;
+    private final CategoryFilterPanel categoryPanel;
     //private final FilterPanel currencyPanel;
 
     public CarRideFilterPanel(CarRideTableFilter filter, CategoryTableModel categories, CurrencyTableModel currencyTableModel) {

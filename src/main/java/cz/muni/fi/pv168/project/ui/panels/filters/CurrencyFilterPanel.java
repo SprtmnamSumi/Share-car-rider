@@ -27,13 +27,6 @@ public class CurrencyFilterPanel extends FilterPanel {
         comboBoxPanel.getComboBox().setSelectedItem(null);
     }
 
-    @Override
-    public void updateValues() {
-        Object selection = comboBoxPanel.getComboBox().getSelectedItem();
-        comboBoxPanel.setComboBoxItems(categories.getAllEntities().stream().toList());
-        comboBoxPanel.getComboBox().setSelectedItem(selection);
-    }
-
     private void refreshFilter() {
         Category category = (Category) comboBoxPanel.getComboBox().getSelectedItem();
         if (category != null) {
