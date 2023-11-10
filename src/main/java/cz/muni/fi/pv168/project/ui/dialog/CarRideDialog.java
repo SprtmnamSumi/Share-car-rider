@@ -39,12 +39,10 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
 
     private final TableModel<Template> entityCrudService;
+    CarRide carRide;
 
-
-    public CarRideDialog(ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel) {
-        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
-
-
+    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel) {
+        this.carRide = carRide;
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
@@ -102,7 +100,6 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     @Override
     CarRide getEntity() {
-        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
         carRide.setTitle(titleField.getText());
         carRide.setDescription(descriptionField.getText());
         carRide.setDistance(Double.parseDouble(getSpinnerValue(distanceField)));

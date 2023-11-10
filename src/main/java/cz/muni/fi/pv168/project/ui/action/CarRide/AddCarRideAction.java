@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
@@ -14,6 +15,7 @@ import cz.muni.fi.pv168.project.ui.resources.Icons;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.time.LocalDateTime;
 
 final class AddCarRideAction extends AbstractAction {
 
@@ -44,8 +46,8 @@ final class AddCarRideAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-
-        var dialog = new CarRideDialog(categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableMode);
+        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
+        var dialog = new CarRideDialog(carRide, categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableMode);
         dialog.show(carRidesTable, "Add Cat ride")
                 .ifPresent(carRidesTableModel::addRow);
     }
