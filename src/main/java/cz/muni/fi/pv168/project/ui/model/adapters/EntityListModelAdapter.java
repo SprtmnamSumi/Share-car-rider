@@ -5,6 +5,8 @@ import cz.muni.fi.pv168.project.ui.model.EntityTableModel;
 import javax.inject.Inject;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The {@link EntityListModelAdapter} is an adaptation for table, so it can be used as a list.
@@ -39,5 +41,9 @@ public class EntityListModelAdapter<E> extends AbstractListModel<E> {
             default -> {
             }
         }
+    }
+
+    public List<E> getAll() {
+        return Collections.unmodifiableList(entityTableModel.getAll());
     }
 }
