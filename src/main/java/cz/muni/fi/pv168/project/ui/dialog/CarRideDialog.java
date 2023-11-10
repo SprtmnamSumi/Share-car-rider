@@ -11,11 +11,10 @@ import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
+import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 
 import javax.swing.*;
-import java.awt.event.ItemEvent;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,17 +23,18 @@ import static javax.swing.JOptionPane.*;
 public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
-    private final JComboBox<Currency> currencyJComboBox;
+
     private final JComboBox<Template> templateComboBoxModel;
     private final CurrencyConverter currencyConverter;
     private final CategoryBar categoryBar;
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner fuelConsumption = new JSpinner(new SpinnerNumberModel());
-    private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
     private final JSpinner numberOfPassengers = new JSpinner(new SpinnerNumberModel());
     private final JSpinner commission = new JSpinner(new SpinnerNumberModel());
     private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
+
+    private final CostBar costBar;
 
 
     private final TableModel<Template> entityCrudService;
@@ -42,22 +42,15 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
         this.carRide = carRide;
+        costBar = new CostBar(currencyModel);
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         this.currencyConverter = currencyConverter;
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
-        currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
+
         setValues(carRide);
         addFields();
 
         this.entityCrudService = entityCrudService;
-
-        templateComboBoxModel.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                var template = (Template) e.getItem();
-                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), LocalDateTime.now(), template.getCategory(), currencyModel.getElementAt(0));
-                setValues(templateCarRide);
-            }
-        });
     }
 
 
@@ -70,9 +63,8 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         categoryBar.setSelectedItem(carRide.getCategory());
         dateBar.setDate(carRide.getDate());
         commission.setValue(carRide.getCommission());
-        currencyJComboBox.setSelectedItem(carRide.getCurrency());
         double costOfFuelPerLitre = currencyConverter.convertFromDolarsToCurrency(carRide.getCurrency(), carRide.getCostOfFuelPerLitreInDollars());
-        costOfFuel.setValue(costOfFuelPerLitre);
+
     }
 
 
@@ -91,12 +83,11 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         add("Description", descriptionField);
         add("Distance", distanceField);
         add("Average Fuel Consumption (per 100km)", fuelConsumption);
-        add("Cost of Fuel (1l)", costOfFuel);
         add("Number of Passengers", numberOfPassengers);
         add("Commission (%)", commission);
         add("Date", dateBar);
         add("Category", categoryBar);
-        add("Currency", currencyJComboBox);
+        add("Cost of Fuel (1l)", costBar);
         add("Count me in the calculation of per price person", isChecked);
     }
 
@@ -110,17 +101,17 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setCommission(Double.parseDouble(getSpinnerValue(commission)));
         carRide.setCategory(categoryBar.getSelectedItem());
         carRide.setDate(dateBar.getDate());
-        carRide.setCurrency((Currency) currencyJComboBox.getSelectedItem());
 
-        var costInDefCurrency = Double.parseDouble(getSpinnerValue(costOfFuel));
-        var costInDollars = currencyConverter.convertFromCurrencyTOdollars(carRide.getCurrency(), costInDefCurrency);
-        carRide.setCostOfFuelPerLitre(costInDollars);
+//        carRide.setCurrency((Currency) currencyJComboBox.getSelectedItem());
+//        var costInDefCurrency = Double.parseDouble(getSpinnerValue(costOfFuel));
+//        var costInDollars = currencyConverter.convertFromCurrencyTOdollars(carRide.getCurrency(), costInDefCurrency);
+//        carRide.setCostOfFuelPerLitre(costInDollars);
         return carRide;
     }
 
     Template getAsTemplate() {
         var ride = getEntity();
-        Template template = new Template(UUID.randomUUID().toString(), ride.getTitle(), ride.getDescription(), ride.getDistance(), ride.getFuelConsumption(), ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(), ride.getCommission(), ride.getCategory(), currencyJComboBox.getItemAt(0));
+        Template template = new Template(UUID.randomUUID().toString(), ride.getTitle(), ride.getDescription(), ride.getDistance(), ride.getFuelConsumption(), ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(), ride.getCommission(), ride.getCategory(), ride.getCurrency());
         return template;
     }
 
