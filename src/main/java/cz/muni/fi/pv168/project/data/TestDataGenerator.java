@@ -81,8 +81,8 @@ public class TestDataGenerator {
         int numberOfPassengers = randomGenerator.nextInt(1, 10);
         double commission = randomGenerator.nextInt(0, 100);
         LocalDateTime date = LocalDateTime.of(
-                randomGenerator.nextInt(2000, 2024),
-                randomGenerator.nextInt(1, 13),
+                randomGenerator.nextInt(2023, 2024),
+                randomGenerator.nextInt(10, 12),
                 randomGenerator.nextInt(1, 29),
                 randomGenerator.nextInt(0, 24),
                 randomGenerator.nextInt(0, 60));
