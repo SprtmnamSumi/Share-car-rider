@@ -10,12 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class PassengersFilterPanel extends FilterPanel {
-    private final ValidatedTextFieldPanel passengersField = new ValidatedTextFieldPanel("Number Of Passengers") {
-        @Override
-        public boolean evaluate() {
-            return StringUtils.isNumber(passengersField.getTextField().getText());
-        }
-    };
+    private final ValidatedTextFieldPanel passengersField = new ValidatedTextFieldPanel("Number Of Passengers");
     private final CarRideTableFilter filter;
     private final KeyListener listener = new TypeListener();
 
