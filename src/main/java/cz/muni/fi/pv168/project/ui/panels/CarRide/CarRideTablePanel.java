@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
@@ -31,7 +32,8 @@ public class CarRideTablePanel extends TablePanel<CarRide> {
     public CarRideTablePanel(CarRideTableModel carRideTableModel,
                              DefaultActionFactory<CarRide> actionFactory,
                              CategoryTableModel categoryTableModel,
-                             CurrencyTableModel currencyTableModel){
+                             CurrencyTableModel currencyTableModel,
+                             ICarRideStatistics ICarRideStatistics) {
         super(carRideTableModel);
 
         var rowSorter = new TableRowSorter<>(carRideTableModel);
@@ -40,7 +42,7 @@ public class CarRideTablePanel extends TablePanel<CarRide> {
 
         filterPanel = new CarRideFilterPanel(new CarRideTableFilter(rowSorter), categoryTableModel, currencyTableModel);
         categoryTableModel.addTableModelListener(e -> updateStats());
-        statsPanel = new CarRideStatisticsPanel(carRideTableModel);
+        statsPanel = new CarRideStatisticsPanel(carRideTableModel, ICarRideStatistics);
 
         add(filterPanel, BorderLayout.PAGE_START);
         add(new JScrollPane(table), BorderLayout.CENTER);

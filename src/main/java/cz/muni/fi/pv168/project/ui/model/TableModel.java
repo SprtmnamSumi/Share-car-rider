@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -97,5 +98,9 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
     @Override
     public T getEntity(int rowIndex) {
         return entities.get(rowIndex);
+    }
+
+    public List<T> getAll() {
+        return Collections.unmodifiableList(entities);
     }
 }

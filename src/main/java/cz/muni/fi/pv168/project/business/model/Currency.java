@@ -1,27 +1,16 @@
 package cz.muni.fi.pv168.project.business.model;
 
-import cz.muni.fi.pv168.project.ui.model.ListModel;
+public class Currency extends Entity {
+    private final String name;
 
-import java.util.ArrayList;
-import java.util.List;
+    private final String symbol;
 
-public class Currency extends Entity{
-    private String name;
-
-    private String symbol;
-
-    private Double rateToDollar;
-
-    private static Currency chosenCurrency = createDollarCurrency();
-
+    private final Double rateToDollar;
+    
     public Currency(String name, String symbol, Double rateToDollar) {
         this.name = name;
         this.symbol = symbol;
         this.rateToDollar = rateToDollar;
-    }
-
-    private static Currency createDollarCurrency() {
-        return new Currency("dollar", "$", 1.0);
     }
 
     public String getName() {
@@ -36,9 +25,6 @@ public class Currency extends Entity{
         return rateToDollar;
     }
 
-    public static Currency getChosenCurrency() {
-        return chosenCurrency;
-    }
 
     @Override
     public String toString() {

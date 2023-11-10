@@ -28,7 +28,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JComboBox<Template> templateComboBoxModel;
 
     private final CategoryBar categoryBar;
-    private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
+
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner fuelConsumption = new JSpinner(new SpinnerNumberModel());
     private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
@@ -96,6 +96,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         add("Commission (%)", commission);
         add("Date", dateBar);
         add("Category", categoryBar);
+        add("Currency", currencyJComboBox);
         add("Count me in the calculation of per price person", isChecked);
     }
 

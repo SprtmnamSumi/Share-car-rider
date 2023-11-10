@@ -3,10 +3,8 @@ package cz.muni.fi.pv168.project.ui;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.ui.action.*;
-import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
-import cz.muni.fi.pv168.project.ui.action.Currency.ChooseCurrencyAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
@@ -44,10 +42,11 @@ public class MainWindowImpl implements MainWindow {
                           CarRideTableModel carRideTableModel,
                           CategoryTableModel categoryTableModel,
                           TemplateTableModel templateTableModel,
-                          CurrencyTableModel currencyTableModel) {
+                          CurrencyTableModel currencyTableModel,
+                          ICarRideStatistics ICarRideStatistics) {
         frame = createFrame();
 
-        CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel);
+        CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
         TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
 
