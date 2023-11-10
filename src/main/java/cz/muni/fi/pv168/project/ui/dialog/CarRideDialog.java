@@ -24,9 +24,10 @@ import static javax.swing.JOptionPane.*;
 public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
-    private final JTextField templateField = new JTextField();
+
     private final JComboBox<Currency> currencyJComboBox;
     private final JComboBox<Template> templateComboBoxModel;
+    private final CurrencyConverter currencyConverter;
 
     private final CategoryBar categoryBar;
 
@@ -45,6 +46,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
         this.carRide = carRide;
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
+        this.currencyConverter = currencyConverter;
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         setValues(carRide);

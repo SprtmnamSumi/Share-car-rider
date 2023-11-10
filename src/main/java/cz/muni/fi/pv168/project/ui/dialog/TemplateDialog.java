@@ -3,20 +3,21 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyListModel;
+import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 
 import javax.swing.*;
-import java.util.ArrayList;
+import java.awt.event.ItemEvent;
 
 public class TemplateDialog extends EntityDialog<Template> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
-    private final JTextField templateField = new JTextField();
+
     private final JComboBox<Currency> currencyJComboBox;
+    private final CurrencyConverter currencyConverter;
     private final JComboBox<Template> templateComboBoxModel;
     private final JComboBox<Category> categoryJComboBox;
-    private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
+
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner fuelConsumption = new JSpinner(new SpinnerNumberModel());
     private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
@@ -25,14 +26,31 @@ public class TemplateDialog extends EntityDialog<Template> {
     private final JCheckBox isChecked = new JCheckBox();
     private final Template template;
 
-    public TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel) {
+    public TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter) {
         this.template = template;
 
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
+        this.currencyConverter = currencyConverter;
         setValues();
         addFields();
+
+        templateComboBoxModel.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                var ntemplate = (Template) e.getItem();
+                this.template.setTitle(ntemplate.getTitle());
+                this.template.setDescription(ntemplate.getDescription());
+                this.template.setDistance(ntemplate.getDistance());
+                this.template.setFuelConsumption(ntemplate.getFuelConsumption());
+                this.template.setCostOfFuelPerLitre(ntemplate.getCostOfFuelPerLitre());
+                this.template.setNumberOfPassengers(ntemplate.getNumberOfPassengers());
+                this.template.setCommission(ntemplate.getCommission());
+                this.template.setCategory(ntemplate.getCategory());
+                setValues();
+            }
+        });
+
     }
 
     private void setValues() {
