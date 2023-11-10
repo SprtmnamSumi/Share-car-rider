@@ -20,7 +20,7 @@ public class CurrencyConverter implements ICurrencyConverter {
 //        var defaultCurrecy = currencyListModel.getAll().stream().filter(x -> x.getName().equals(currency)).findFirst().orElseThrow();
 //        this.defaultCurrency = defaultCurrecy;
 
-        this.defaultCurrency = new Currency("CZK", "Kč", 10000000000000.0);
+        this.defaultCurrency = new Currency("CZK", "Kč", 1.0);
     }
 
     @Override

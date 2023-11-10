@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
@@ -41,7 +42,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final TableModel<Template> entityCrudService;
     CarRide carRide;
 
-    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel) {
+    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
         this.carRide = carRide;
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
