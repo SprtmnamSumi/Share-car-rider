@@ -35,7 +35,6 @@ public class DateFilterPanel extends FilterPanel {
         dateToPanel.setSpinnerDate(Date.from(Instant.now().plusSeconds(TimeUnit.DAYS.toSeconds(1))));
         refreshFilter();
     }
-
     private void refreshFilter() {
         filter.filterByDate(
                 (Date) dateFromPanel.getSpinnerDate().getValue(),
