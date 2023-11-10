@@ -13,9 +13,13 @@ import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 final class AddCarRideAction extends AbstractAction {
@@ -29,10 +33,20 @@ final class AddCarRideAction extends AbstractAction {
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CategoryTableModel categoryTableMode;
     private final CurrencyConverter currencyConverter;
+    private BufferedImage addImage;
 
 
     AddCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableMode, CurrencyConverter currencyConverter) {
-        super("Add", Icons.ADD_ICON);
+        super("Add");
+
+        try {
+            addImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/add.png"));
+            Icon customIcon = new ImageIcon(addImage);
+            putValue(SMALL_ICON, customIcon);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        };
+
         this.carRidesTable = carRidesTable;
         this.currencyListModel = currencyListModel;
         this.categoriestListModel = categoriestListModel;

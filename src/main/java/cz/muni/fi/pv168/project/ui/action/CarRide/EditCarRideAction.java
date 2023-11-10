@@ -13,9 +13,13 @@ import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 final class EditCarRideAction extends AbstractAction {
 
@@ -27,10 +31,20 @@ final class EditCarRideAction extends AbstractAction {
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CategoryTableModel categoryTableModel;
     private final CurrencyConverter currencyConverter;
+    private BufferedImage editImage;
 
 
     EditCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, EntityListModelAdapter<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
-        super("Edit", Icons.EDIT_ICON);
+        super("Edit");
+
+        try {
+            editImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/editing.png"));
+            Icon customIcon = new ImageIcon(editImage);
+            putValue(SMALL_ICON, customIcon);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        };
+
         this.carRidesTable = carRidesTable;
         this.currencyListModel = currencyListModel;
         this.categoriestListModel = categoriestListModel;

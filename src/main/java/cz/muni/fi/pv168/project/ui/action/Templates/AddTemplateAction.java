@@ -10,9 +10,13 @@ import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 final class AddTemplateAction extends AbstractAction {
 
@@ -22,9 +26,19 @@ final class AddTemplateAction extends AbstractAction {
     private final ListModel<Currency> currencyListModel;
     private final ListModel<Template> carRideTemplateListModel;
     private final CurrencyConverter currencyConverter;
+    private BufferedImage addImage;
 
     AddTemplateAction(JTable templateTable, ListModel<Category> categoriestListModel, EntityListModelAdapter<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, CurrencyConverter currencyConverter) {
-        super("Add", Icons.ADD_ICON);
+        super("Add");
+
+        try {
+            addImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/add.png"));
+            Icon customIcon = new ImageIcon(addImage);
+            putValue(SMALL_ICON, customIcon);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        };
+
         this.templateTable = templateTable;
 
         this.categoriestListModel = categoriestListModel;

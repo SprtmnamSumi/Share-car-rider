@@ -5,18 +5,32 @@ import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.resources.Icons;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 final class EditCategoryAction extends AbstractAction {
 
     private final JTable categoryTable;
 
     private final ListModel<Category> categoriestListModel;
+    private BufferedImage editImage;
 
     EditCategoryAction(JTable categoryTable, ListModel<Category> categoriestListModel) {
-        super("Edit", Icons.EDIT_ICON);
+        super("Edit");
+
+        try {
+            editImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/editing.png"));
+            Icon customIcon = new ImageIcon(editImage);
+            putValue(SMALL_ICON, customIcon);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        };
+
         this.categoryTable = categoryTable;
         this.categoriestListModel = categoriestListModel;
         putValue(SHORT_DESCRIPTION, "Edits Category");
