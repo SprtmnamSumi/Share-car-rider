@@ -25,10 +25,10 @@ public class CarRideTableModel extends TableModel<CarRide> {
     @Inject
     public CarRideTableModel(ICarRideICrudService crudService) {
         super(crudService, List.of(
-                Column.editable("Date", LocalDateTime.class, CarRide::getDate, CarRide::setDate),
-                Column.editable("Name", String.class, CarRide::getTitle, CarRide::setTitle),
-                Column.editable("Distance", Double.class, CarRide::getDistance, CarRide::setDistance),
-                Column.editable("Category", Category.class, CarRide::getCategory, CarRide::setCategory)
+                Column.readonly("Date", LocalDateTime.class, CarRide::getDate),
+                Column.readonly("Name", String.class, CarRide::getTitle),
+                Column.readonly("Distance", Double.class, CarRide::getDistance),
+                Column.readonly("Category", Category.class, CarRide::getCategory)
         ));
     }
 }

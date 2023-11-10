@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.business.model;
 import java.util.Objects;
 
 public class Template extends Entity {
-
     private String title;
     private String description;
     private double distance;

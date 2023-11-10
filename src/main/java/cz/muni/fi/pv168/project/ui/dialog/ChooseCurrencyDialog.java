@@ -9,13 +9,12 @@ import javax.swing.*;
 
 
 public class ChooseCurrencyDialog extends EntityDialog<Currency> {
-    private final Currency currency;
     private final EntityListModelAdapter<Currency> currencyListModel;
     private final JComboBox<Currency> currencyCombo;
     private final JButton addCurrencyButton;
 
-    public ChooseCurrencyDialog(JTable currencyTable, Currency currency, EntityListModelAdapter<Currency> currencyListModel) {
-        this.currency = currency;
+    public ChooseCurrencyDialog(JTable currencyTable, EntityListModelAdapter<Currency> currencyListModel) {
+
         this.currencyListModel = currencyListModel;
         this.currencyCombo = new JComboBox<>(new ComboBoxModelAdapter<>(currencyListModel));
 
@@ -32,6 +31,7 @@ public class ChooseCurrencyDialog extends EntityDialog<Currency> {
 
     @Override
     Currency getEntity() {
+        Currency currency = (Currency) currencyCombo.getSelectedItem();
         return currency;
     }
 }

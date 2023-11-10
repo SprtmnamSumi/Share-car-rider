@@ -21,10 +21,9 @@ public class TemplateTableModel extends TableModel<Template> {
     @Inject
     public TemplateTableModel(ICarRideTempalteService crudService) {
         super(crudService, List.of(
-                Column.editable("Name", String.class, Template::getTitle, Template::setTitle),
-                Column.editable("Distance", Double.class, Template::getDistance, Template::setDistance),
-                Column.editable("Category", Category.class, Template::getCategory, Template::setCategory)
+                Column.readonly("Name", String.class, Template::getTitle),
+                Column.readonly("Distance", Double.class, Template::getDistance),
+                Column.readonly("Category", Category.class, Template::getCategory)
         ));
-
     }
 }
