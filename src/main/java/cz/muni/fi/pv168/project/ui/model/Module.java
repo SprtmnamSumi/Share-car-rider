@@ -4,15 +4,13 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
-import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.model.*;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
+import cz.muni.fi.pv168.project.ui.model.corversions.ConversionTableModel;
 
 public class Module extends AbstractModule {
     @Override
@@ -26,6 +24,9 @@ public class Module extends AbstractModule {
 
         bind(new TypeLiteral<TableModel<Currency>>() {
         }).to(CurrencyTableModel.class);
+
+        bind(new TypeLiteral<TableModel<CurrencyConversion>>() {
+        }).to(ConversionTableModel.class);
     }
 
     @Provides
@@ -49,6 +50,12 @@ public class Module extends AbstractModule {
     @Provides
     @Singleton
     EntityListModelAdapter<Currency> getCurrencyModelAdapter(TableModel<Currency> carRideTableModel) {
+        return new EntityListModelAdapter<>(carRideTableModel);
+    }
+
+    @Provides
+    @Singleton
+    EntityListModelAdapter<CurrencyConversion> getCurrencyConversionModelAdapter(TableModel<CurrencyConversion> carRideTableModel) {
         return new EntityListModelAdapter<>(carRideTableModel);
     }
 }
