@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.service.statistics.CarRideStatistics;
+import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.NameValuePanel;
 
@@ -18,10 +18,12 @@ public class CarRideStatisticsPanel extends JPanel {
     private final NameValuePanel totalExpenses = new NameValuePanel("Total expenses:");
     private final NameValuePanel totalRevenues = new NameValuePanel("Total revenues:");
     private final NameValuePanel totalRides = new NameValuePanel("Total rides:");
+    private final ICarRideStatistics ICarRideStatistics;
 
-    public CarRideStatisticsPanel(TableModel<CarRide> model) {
+    public CarRideStatisticsPanel(TableModel<CarRide> model, ICarRideStatistics ICarRideStatistics1) {
         super(new BorderLayout());
         this.model = model;
+        this.ICarRideStatistics = ICarRideStatistics1;
 
         JPanel filteredRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         add(filteredRow, BorderLayout.PAGE_START);
@@ -44,16 +46,16 @@ public class CarRideStatisticsPanel extends JPanel {
 
     public void updateFilteredStats() {
         var entities = model.getAllEntities();
-        filteredDistance.setValue(String.format("%.2f", CarRideStatistics.getTotalDistance(entities))); //Set to only filtered CarRides after filtering is finished.
-        filteredExpenses.setValue(String.format("%.2f", CarRideStatistics.getTotalExpenses(entities))); //Set to only filtered CarRides after filtering is finished.
+        filteredDistance.setValue(String.format("%.2f", ICarRideStatistics.getTotalDistance(entities))); //Set to only filtered CarRides after filtering is finished.
+        filteredExpenses.setValue(String.format("%.2f", ICarRideStatistics.getTotalExpenses(entities))); //Set to only filtered CarRides after filtering is finished.
     }
 
     public void updateTotalStats() {
         var entities = model.getAllEntities();
-        totalDistance.setValue(String.format("%.2f", CarRideStatistics.getTotalDistance(entities)));
-        totalRides.setValue(CarRideStatistics.getTotalRides(entities).toString());
-        totalRevenues.setValue(String.format("%.2f", CarRideStatistics.getTotalRevenues(entities)));
-        totalExpenses.setValue(String.format("%.2f", CarRideStatistics.getTotalExpenses(entities)));
-        todayExpenses.setValue(String.format("%.2f", CarRideStatistics.getTodayExpenses(entities)));
+        totalDistance.setValue(String.format("%.2f", ICarRideStatistics.getTotalDistance(entities)));
+        totalRides.setValue(ICarRideStatistics.getTotalRides(entities).toString());
+        totalRevenues.setValue(String.format("%.2f", ICarRideStatistics.getTotalRevenues(entities)));
+        totalExpenses.setValue(String.format("%.2f", ICarRideStatistics.getTotalExpenses(entities)));
+        todayExpenses.setValue(String.format("%.2f", ICarRideStatistics.getTodayExpenses(entities)));
     }
 }

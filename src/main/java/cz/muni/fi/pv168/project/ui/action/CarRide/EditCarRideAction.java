@@ -4,6 +4,7 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
@@ -25,9 +26,10 @@ final class EditCarRideAction extends AbstractAction {
     private final TableModel<Template> repository;
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CategoryTableModel categoryTableModel;
+    private final CurrencyConverter currencyConverter;
 
 
-    EditCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, EntityListModelAdapter<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel) {
+    EditCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, EntityListModelAdapter<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
         super("Edit", Icons.EDIT_ICON);
         this.carRidesTable = carRidesTable;
         this.currencyListModel = currencyListModel;
@@ -36,6 +38,7 @@ final class EditCarRideAction extends AbstractAction {
         this.repository = repository;
         this.categoryActionFactory = categoryActionFactory;
         this.categoryTableModel = categoryTableModel;
+        this.currencyConverter = currencyConverter;
         putValue(SHORT_DESCRIPTION, "Edits Car Ride");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
@@ -54,7 +57,7 @@ final class EditCarRideAction extends AbstractAction {
         int modelRow = carRidesTable.convertRowIndexToModel(selectedRows[0]);
         CarRide carRide = carRideTableModel.getEntity(modelRow);
 
-        CarRideDialog CarRideDialog = new CarRideDialog(categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableModel);
+        CarRideDialog CarRideDialog = new CarRideDialog(carRide, categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableModel, currencyConverter);
 
         CarRideDialog.show(carRidesTable, "Edit Car Ride")
                 .ifPresent(carRideTableModel::updateRow);

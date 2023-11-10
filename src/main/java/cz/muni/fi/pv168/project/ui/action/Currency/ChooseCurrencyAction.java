@@ -4,11 +4,9 @@ package cz.muni.fi.pv168.project.ui.action.Currency;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.dialog.ChooseCurrencyDialog;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 public final class ChooseCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
@@ -21,9 +19,15 @@ public final class ChooseCurrencyAction extends AbstractAction {
         putValue(SHORT_DESCRIPTION, "Choose Currency");
     }
 
+    public void addRow(Currency entity) {
+
+        var entiName = entity.getName();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        var dialog = new ChooseCurrencyDialog(currencyTable, new Currency("", "", 0.0), currencyListModel);
-        dialog.show(currencyTable, "Choose Currency");
+        var dialog = new ChooseCurrencyDialog(currencyTable, currencyListModel);
+        dialog.show(currencyTable, "Choose Currency")
+                .ifPresent(this::addRow);
     }
 }

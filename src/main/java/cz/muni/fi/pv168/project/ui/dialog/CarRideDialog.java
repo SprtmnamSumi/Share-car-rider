@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
@@ -28,7 +29,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JComboBox<Template> templateComboBoxModel;
 
     private final CategoryBar categoryBar;
-    private final JSpinner rateField = new JSpinner(new SpinnerNumberModel());
+
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner fuelConsumption = new JSpinner(new SpinnerNumberModel());
     private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
@@ -39,12 +40,10 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
 
     private final TableModel<Template> entityCrudService;
+    CarRide carRide;
 
-
-    public CarRideDialog(ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel) {
-        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
-
-
+    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
+        this.carRide = carRide;
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
@@ -96,12 +95,12 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         add("Commission (%)", commission);
         add("Date", dateBar);
         add("Category", categoryBar);
+        add("Currency", currencyJComboBox);
         add("Count me in the calculation of per price person", isChecked);
     }
 
     @Override
     CarRide getEntity() {
-        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
         carRide.setTitle(titleField.getText());
         carRide.setDescription(descriptionField.getText());
         carRide.setDistance(Double.parseDouble(getSpinnerValue(distanceField)));
