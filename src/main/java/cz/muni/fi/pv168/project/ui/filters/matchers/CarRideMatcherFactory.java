@@ -3,6 +3,8 @@ package cz.muni.fi.pv168.project.ui.filters.matchers;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Date;
 
@@ -11,8 +13,9 @@ public class CarRideMatcherFactory {
         return new EntityMatcher<>() {
             @Override
             public boolean evaluate(CarRide entity) {
-                long entityTime = entity.getDate().toInstant(ZoneOffset.ofHours(0)).toEpochMilli();
-                return fromDate.toInstant().toEpochMilli() <= entityTime && entityTime <= toDate.toInstant().toEpochMilli();
+                LocalDateTime from = LocalDateTime.ofInstant(fromDate.toInstant(), ZoneId.systemDefault());
+                LocalDateTime to = LocalDateTime.ofInstant(toDate.toInstant(), ZoneId.systemDefault());
+                return from.isBefore(entity.getDate()) && entity.getDate().isBefore(to);
             }
         };
     }

@@ -8,7 +8,9 @@ import java.awt.*;
 public class CategoryTableCell extends DefaultTableCellRenderer {
     public CategoryTableCell(Category category){
         super();
-        this.setText(category.getName());
-        this.setBackground(new Color(category.getColour()));
+        if(category!=null){
+            this.setText(category.getName());
+            this.setBackground(new Color(category.getColour()));
+        }
     }
 }
