@@ -20,7 +20,7 @@ public class CategoryTableModel extends TableModel<Category> {
     public CategoryTableModel(ICategoryCrudService categoryCrudService) {
         super(categoryCrudService, List.of(
                 Column.editable("Name", String.class, Category::getName, Category::setName),
-                Column.editable("Colour", String.class, Category::getColour, Category::setColour)));
+                Column.editable("Colour", Integer.class, Category::getColour, Category::setColour)));
     }
 
 }

@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Category extends Entity {
 
     private String name;
-    private String colour;
+    private int colour;
 
-    public Category(String guid, String name, String colour) {
+    public Category(String guid, String name, int colour) {
         super(guid);
         setName(name);
         setColour(colour);
@@ -21,11 +21,11 @@ public class Category extends Entity {
         this.name = Objects.requireNonNull(name, "name must not be null");
     }
 
-    public String getColour() {
+    public int getColour() {
         return colour;
     }
 
-    public void setColour(String colour) {
+    public void setColour(int colour) {
         this.colour = Objects.requireNonNull(colour, "colour must not be null");
     }
 

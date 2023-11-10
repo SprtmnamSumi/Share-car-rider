@@ -8,6 +8,11 @@ import cz.muni.fi.pv168.project.ui.model.Column;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.inject.Inject;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
 

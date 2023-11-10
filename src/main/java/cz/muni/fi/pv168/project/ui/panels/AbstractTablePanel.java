@@ -6,10 +6,10 @@ import cz.muni.fi.pv168.project.ui.model.TableModel;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class TablePanel<T extends Entity> extends JPanel {
+public abstract class AbstractTablePanel<T extends Entity> extends JPanel {
     protected JTable table;
 
-    public TablePanel(TableModel<T> tableModel){
+    public AbstractTablePanel(TableModel<T> tableModel){
         table = new JTable(tableModel){
             public boolean isCellEditable(int row, int column) {
                 return false;
