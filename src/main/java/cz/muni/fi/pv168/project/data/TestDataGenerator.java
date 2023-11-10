@@ -1,15 +1,10 @@
 package cz.muni.fi.pv168.project.data;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.model.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Stream;
 
 
@@ -36,6 +31,12 @@ public class TestDataGenerator {
                 randomGenerator.nextInt(-16581375, 16581375));
     }
 
+    private CurrencyConversion createTestCurrencyConversion(Currency currency) {
+        var curremcyConversion = new CurrencyConversion(currency, randomGenerator.nextDouble(0.1, 40), LocalDateTime.now(), currency.getConversions().size());
+        currency.getConversions().add(curremcyConversion);
+        return curremcyConversion;
+    }
+
     public Category createBlankCategory() {
         return createTestCategory(CATEGORIES.get(randomGenerator.nextInt(CATEGORIES.size())));
     }
@@ -51,11 +52,13 @@ public class TestDataGenerator {
         double commission = randomGenerator.nextInt(0, 100);
         Category category = categories.get(randomGenerator.nextInt(categories.size()));
         Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
-        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency);
+        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, Optional.empty());
     }
 
     private Currency createTestCurrency(Tuple curr) {
-        return new Currency(curr.name, curr.symbol, curr.conversionRate);
+        var currency = new Currency(curr.name, curr.symbol, curr.conversionRate, new LinkedList<>());
+        currency.getConversions().add(createTestCurrencyConversion(currency));
+        return currency;
     }
 
     public Template createBlankTemplate() {
@@ -68,7 +71,7 @@ public class TestDataGenerator {
         int numberOfPassengers = randomGenerator.nextInt(1, 10);
         double commission = randomGenerator.nextInt(0, 100);
         Category category = createTestCategory(CATEGORIES.get(randomGenerator.nextInt(CATEGORIES.size())));
-        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, null);
+        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, null, Optional.empty());
     }
 
     private CarRide createTestRide(List<Category> categories, List<Currency> currencies) {
@@ -88,7 +91,7 @@ public class TestDataGenerator {
                 randomGenerator.nextInt(0, 60));
         Category category = categories.get(randomGenerator.nextInt(categories.size()));
         Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
-        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, date, category, currency);
+        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, date, category, currency, Optional.empty());
     }
 
     public List<CarRide> createTestRides(int count, List<Category> categories, List<Currency> currencies) {

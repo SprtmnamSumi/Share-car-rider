@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.business.model;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class Template extends Entity {
     private Currency currency;
@@ -13,8 +14,11 @@ public class Template extends Entity {
     private double commission;
     private Category category;
 
-    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency) {
+    private Optional<CurrencyConversion> currencyConversion;
+
+    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, Optional<CurrencyConversion> currencyConversion) {
         super(guid);
+        this.currencyConversion = currencyConversion;
         this.currency = currency;
         setTitle(Title);
         setDescription(Description);
@@ -128,4 +132,11 @@ public class Template extends Entity {
     }
 
 
+    public Optional<CurrencyConversion> getCurrencyConversion() {
+        return currencyConversion;
+    }
+
+    public void setCurrencyConversion(Optional<CurrencyConversion> currencyConversion) {
+        this.currencyConversion = currencyConversion;
+    }
 }

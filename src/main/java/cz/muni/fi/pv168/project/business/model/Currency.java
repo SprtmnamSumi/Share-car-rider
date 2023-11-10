@@ -10,11 +10,11 @@ public class Currency extends Entity {
     private final Double rateToDollar;
     private final List<CurrencyConversion> conversions;
 
-    public Currency(String name, String symbol, Double rateToDollar) {
+    public Currency(String name, String symbol, Double rateToDollar, List<CurrencyConversion> conversions) {
         this.name = name;
         this.symbol = symbol;
         this.rateToDollar = rateToDollar;
-        this.conversions = null;
+        this.conversions = conversions;
     }
 
     public String getName() {
@@ -29,9 +29,12 @@ public class Currency extends Entity {
         return rateToDollar;
     }
 
-
     @Override
     public String toString() {
         return name;
+    }
+
+    public List<CurrencyConversion> getConversions() {
+        return conversions;
     }
 }

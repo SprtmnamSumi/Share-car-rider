@@ -5,6 +5,9 @@ import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 
+import java.util.LinkedList;
+
+
 public class AddCurrencyDialog extends EntityDialog<Currency> {
     private final ValidatedInputField nameTextField = new ValidatedInputField() {
         @Override
@@ -55,6 +58,6 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
 
     @Override
     Currency getEntity() {
-        return new Currency(nameTextField.getText(), symbolTextField.getText(), 1.0);
+        return new Currency(nameTextField.getText(), symbolTextField.getText(), 1.0, new LinkedList<>());
     }
 }
