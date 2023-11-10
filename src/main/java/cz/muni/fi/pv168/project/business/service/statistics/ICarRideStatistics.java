@@ -8,7 +8,7 @@ public interface ICarRideStatistics {
     Double getTotalDistance(List<CarRide> carRides);
 
     default Double getCarRideCost(CarRide carRide) {
-        return carRide.getDistance() * carRide.getFuelConsumption() / 100 * carRide.getCostOfFuelPerLitre();
+        return carRide.getDistance() * carRide.getFuelConsumption() / 100 * carRide.getCostOfFuelPerLitreInDollars();
     }
 
     Double getTotalExpenses(List<CarRide> carRides);

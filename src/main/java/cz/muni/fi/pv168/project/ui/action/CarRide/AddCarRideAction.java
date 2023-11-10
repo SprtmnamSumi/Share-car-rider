@@ -49,7 +49,7 @@ final class AddCarRideAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null);
+        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0));
         var dialog = new CarRideDialog(carRide, categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableMode, currencyConverter);
         dialog.show(carRidesTable, "Add Cat ride")
                 .ifPresent(carRidesTableModel::addRow);

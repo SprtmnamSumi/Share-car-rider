@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.business.model;
 import java.util.Objects;
 
 public class Template extends Entity {
+    private Currency currency;
     private String title;
     private String description;
     private double distance;
@@ -12,8 +13,9 @@ public class Template extends Entity {
     private double commission;
     private Category category;
 
-    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category) {
+    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency) {
         super(guid);
+        this.currency = currency;
         setTitle(Title);
         setDescription(Description);
         setDistance(Distance);
@@ -81,7 +83,7 @@ public class Template extends Entity {
         this.numberOfPassengers = numberOfPassengers;
     }
 
-    public double getCostOfFuelPerLitre() {
+    public double getCostOfFuelPerLitreInDollars() {
         return costOfFuelPerLitre;
     }
 
@@ -95,6 +97,14 @@ public class Template extends Entity {
 
     public void setFuelConsumption(double fuelConsumption) {
         this.fuelConsumption = fuelConsumption;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override
