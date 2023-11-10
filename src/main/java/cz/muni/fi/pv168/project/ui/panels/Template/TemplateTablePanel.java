@@ -1,12 +1,11 @@
 package cz.muni.fi.pv168.project.ui.panels.Template;
 
+import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
-import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideFilterPanel;
-import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideStatisticsPanel;
-import cz.muni.fi.pv168.project.ui.panels.TablePanel;
+import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTableCell;
+import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -16,7 +15,7 @@ import java.util.function.Consumer;
 /**
  * Panel with template records in a table.
  */
-public class TemplateTablePanel extends TablePanel<Template> {
+public class TemplateTablePanel extends AbstractTablePanel<Template> {
     private final Consumer<Integer> onSelectionChange;
     private Action addCarRideAction;
     private Action editCarRideAction;
@@ -25,9 +24,6 @@ public class TemplateTablePanel extends TablePanel<Template> {
     public TemplateTablePanel(TemplateTableModel templateTableModel, DefaultActionFactory<Template> actionFactory) {
         super(templateTableModel);
         setUpTable(actionFactory);
-        //CarRideFilterPanel filterBar = new CarRideFilterPanel(templateTableModel);
-
-        //add(filterBar, BorderLayout.PAGE_START);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         this.onSelectionChange = this::changeActionsState;
@@ -35,10 +31,12 @@ public class TemplateTablePanel extends TablePanel<Template> {
 
     private void setUpTable(DefaultActionFactory<Template> actionFactory) {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        table.setDefaultRenderer(Category.class, (table, value, isSelected, hasFocus, row, column) -> new CategoryTableCell((Category) value));
 
         addCarRideAction = actionFactory.getAddAction(table);
         editCarRideAction = actionFactory.getEditAction(table);
         deleteCarRideAction = actionFactory.getDeleteAction(table);
+        changeActionsState(0);
 
         table.setComponentPopupMenu(createCarRideTablePopUpMenu());
     }
