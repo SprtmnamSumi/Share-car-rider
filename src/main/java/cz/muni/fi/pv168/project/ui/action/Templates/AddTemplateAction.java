@@ -46,6 +46,6 @@ final class AddTemplateAction extends AbstractAction {
 
     private Template createPreffiledTemplate() {
         var testDataGenerator = new TestDataGenerator();
-        return testDataGenerator.createTestTemplate();
+        return testDataGenerator.createBlankTemplate();
     }
 }

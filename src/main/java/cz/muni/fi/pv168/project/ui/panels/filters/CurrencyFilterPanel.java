@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.ui.panels.filters;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.filters.Filters;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
 
 public class CurrencyFilterPanel extends FilterPanel {
@@ -11,9 +11,9 @@ public class CurrencyFilterPanel extends FilterPanel {
     private final ComboBoxPanel<Category> comboBoxPanel;
     private final CarRideTableFilter filter;
 
-    private final CategoryTableModel categories;
+    private final CurrencyTableModel categories;
 
-    public CurrencyFilterPanel(CarRideTableFilter filter, CategoryTableModel categories) {
+    public CurrencyFilterPanel(CarRideTableFilter filter, CurrencyTableModel categories) {
         super();
         this.comboBoxPanel = new ComboBoxPanel<>("Category");
         this.categories = categories;
@@ -30,7 +30,7 @@ public class CurrencyFilterPanel extends FilterPanel {
     @Override
     public void updateValues() {
         Object selection = comboBoxPanel.getComboBox().getSelectedItem();
-        comboBoxPanel.setComboBoxItems(categories.getAllEntities().stream().toList());
+//        comboBoxPanel.setComboBoxItems(categories.getAllEntities().stream().toList());
         comboBoxPanel.getComboBox().setSelectedItem(selection);
     }
 

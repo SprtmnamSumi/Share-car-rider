@@ -43,7 +43,7 @@ public class TemplateDialog extends EntityDialog<Template> {
                 this.template.setDescription(ntemplate.getDescription());
                 this.template.setDistance(ntemplate.getDistance());
                 this.template.setFuelConsumption(ntemplate.getFuelConsumption());
-                this.template.setCostOfFuelPerLitre(ntemplate.getCostOfFuelPerLitre());
+                this.template.setCostOfFuelPerLitre(ntemplate.getCostOfFuelPerLitreInDollars());
                 this.template.setNumberOfPassengers(ntemplate.getNumberOfPassengers());
                 this.template.setCommission(ntemplate.getCommission());
                 this.template.setCategory(ntemplate.getCategory());
@@ -58,7 +58,7 @@ public class TemplateDialog extends EntityDialog<Template> {
         descriptionField.setText(template.getDescription());
         distanceField.setValue(template.getDistance());
         fuelConsumption.setValue(template.getFuelConsumption());
-        costOfFuel.setValue(template.getCostOfFuelPerLitre());
+        costOfFuel.setValue(template.getCostOfFuelPerLitreInDollars());
         numberOfPassengers.setValue(template.getNumberOfPassengers());
         commission.setValue(template.getCommission());
         categoryJComboBox.setSelectedItem(template.getCategory());

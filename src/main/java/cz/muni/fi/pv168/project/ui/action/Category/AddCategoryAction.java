@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action.Category;
 
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
@@ -37,6 +37,6 @@ final class AddCategoryAction extends AbstractAction {
 
     private Category createPreffiledCateogory() {
         var testDataGenerator = new TestDataGenerator();
-        return testDataGenerator.createTestCategory();
+        return testDataGenerator.createBlankCategory();
     }
 }
