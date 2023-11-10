@@ -40,7 +40,7 @@ final class AddTemplateAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         var templateTableModel = (TemplateTableModel) templateTable.getModel();
         var dialog = new TemplateDialog(createPreffiledTemplate(), categoriestListModel, currencyListModel, carRideTemplateListModel, currencyConverter);
-        dialog.show(templateTable, "Add Cat ride")
+        dialog.show(templateTable, "Add Template")
                 .ifPresent(templateTableModel::addRow);
     }
 
