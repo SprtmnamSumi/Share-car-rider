@@ -15,13 +15,13 @@ import java.util.stream.Stream;
 
 public class TestDataGenerator {
     private final List<String> CATEGORIES = List.of(
-            "BMW", "Tesla", "Skoda", "Subaru", "Honda", "Bentley", "Autobus", "Helicopter helicopter", "Páracopter páracopter"
+            "BMW", "Tesla", "Skoda", "Subaru", "Honda", "Bentley", "Autobus", "Helicopter helicopter", "Páracopter páracopter", "Lamboghíni", "Motorka"
     );
     private final List<String> CARNAMES = List.of(
-            "Karmen", "Ferda", "Luigiano", "Beatle", "S3XY"
+            "Karmen", "Ferda", "Luigiano", "Beatle", "S3XY", "Herbie", "Dedoles", "Scooby-van", "Debbie", "Trump mobile"
     );
     private final List<String> DESCRIPTIONS = List.of(
-            "very bad car", "bad car", "3.6 car", "good car", "very good car", "awesome car"
+            "very bad car", "bad car", "pí car", "3.6 car", "good car", "very good car", "awesome car"
     );
     private final List<Tuple> CURRENCIES = List.of(
             new Tuple("USD", "US Dollar", 1.0),
