@@ -20,4 +20,6 @@ public interface ICurrencyConverter {
     double convertFromDolarsToDefaultCurrency(double amountInDolars);
 
     double convertFromDefaultCurrencyToDolars(double amountInDefaultCurrency);
+
+    void updateDefaultCurrency();
 }
