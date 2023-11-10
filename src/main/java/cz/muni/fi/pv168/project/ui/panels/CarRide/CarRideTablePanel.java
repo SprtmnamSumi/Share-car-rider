@@ -1,13 +1,18 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
+
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
+
+import cz.muni.fi.pv168.project.business.model.Category;
+
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import cz.muni.fi.pv168.project.ui.panels.TablePanel;
+import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTableCell;
+import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -18,7 +23,7 @@ import java.util.function.Consumer;
 /**
  * Panel with car ride records in a table.
  */
-public class CarRideTablePanel extends TablePanel<CarRide> {
+public class CarRideTablePanel extends AbstractTablePanel<CarRide> {
 
     private final Consumer<Integer> onSelectionChange;
 
@@ -53,11 +58,13 @@ public class CarRideTablePanel extends TablePanel<CarRide> {
 
     private void setUpTable(DefaultActionFactory<CarRide> carRideActionFactory) {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        table.setDefaultRenderer(Category.class, (table, value, isSelected, hasFocus, row, column) -> new CategoryTableCell((Category) value));
         table.getModel().addTableModelListener(e -> updateStats());
 
         addCarRideAction = carRideActionFactory.getAddAction(table);
         editCarRideAction = carRideActionFactory.getEditAction(table);
         deleteCarRideAction = carRideActionFactory.getDeleteAction(table);
+        changeActionsState(0);
 
         table.setComponentPopupMenu(createCarRideTablePopUpMenu());
     }
