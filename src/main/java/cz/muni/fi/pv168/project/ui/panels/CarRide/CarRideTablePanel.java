@@ -18,15 +18,13 @@ import java.util.function.Consumer;
 /**
  * Panel with car ride records in a table.
  */
+
 public class CarRideTablePanel extends JPanel {
 
-    private JTable table;
-
     private final Consumer<Integer> onSelectionChange;
-
     private final CarRideStatisticsPanel statsPanel;
-
     private final CarRideFilterPanel filterPanel;
+    private JTable table;
     private Action addCarRideAction;
     private Action editCarRideAction;
     private Action deleteCarRideAction;

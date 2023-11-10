@@ -14,21 +14,25 @@ import java.util.function.Consumer;
 /**
  * Panel with template records in a table.
  */
+
 public class TemplateTablePanel extends JPanel {
 
-    private JTable table;
     private final Consumer<Integer> onSelectionChange;
+    private JTable table;
     private Action addCarRideAction;
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
     public TemplateTablePanel(TemplateTableModel templateTableModel, DefaultActionFactory<Template> actionFactory) {
+
         setUpTable(templateTableModel, actionFactory);
         setLayout(new BorderLayout());
+
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         this.onSelectionChange = this::changeActionsState;
     }
+
     public JTable getTable() {
         return table;
     }

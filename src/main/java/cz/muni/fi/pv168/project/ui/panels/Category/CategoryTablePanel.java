@@ -13,11 +13,11 @@ import java.util.function.Consumer;
 /**
  * Panel with category records in a table.
  */
+
 public class CategoryTablePanel extends JPanel {
 
-    private JTable table;
-
     private final Consumer<Integer> onSelectionChange;
+    private JTable table;
     private Action addCategoryAction;
     private Action editCategoryAction;
     private Action deleteCategoryAction;

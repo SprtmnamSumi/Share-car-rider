@@ -6,11 +6,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 public class CategoryTableCell extends DefaultTableCellRenderer {
-    public CategoryTableCell(Category category){
+    public CategoryTableCell(Category category) {
         super();
-        if(category!=null){
+
+        if (category != null) {
             this.setText(category.getName());
             this.setBackground(new Color(category.getColour()));
         }
+
     }
 }
