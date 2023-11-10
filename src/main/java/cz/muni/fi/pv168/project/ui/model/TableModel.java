@@ -76,7 +76,7 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
                 .intoException();
         int newRowIndex = entities.size();
         entities.add(entity);
-        fireTableRowsInserted(0, newRowIndex);
+        fireTableRowsInserted(newRowIndex, newRowIndex);
     }
 
     public void updateRow(T entity) {
