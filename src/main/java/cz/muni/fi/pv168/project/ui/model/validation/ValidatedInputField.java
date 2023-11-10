@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.ui.model.validation;
 
+import org.h2.util.StringUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;

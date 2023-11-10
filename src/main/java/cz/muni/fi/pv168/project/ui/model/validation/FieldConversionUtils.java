@@ -13,6 +13,7 @@ public class FieldConversionUtils {
         }
     }
 
+
     public static boolean validateInteger(JTextField field){
         try{
             Integer.parseInt(field.getText());

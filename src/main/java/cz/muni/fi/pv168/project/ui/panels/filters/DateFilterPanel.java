@@ -31,8 +31,10 @@ public class DateFilterPanel extends FilterPanel {
 
     @Override
     public void reset() {
-        dateFromPanel.setSpinnerDate(Date.from(Instant.ofEpochSecond(0)));
-        dateToPanel.setSpinnerDate(Date.from(Instant.now().plusSeconds(TimeUnit.DAYS.toSeconds(1))));
+        dateFromPanel.setSpinnerDate(
+                Date.from(Instant.now().minusSeconds(TimeUnit.DAYS.toSeconds(30))));
+        dateToPanel.setSpinnerDate(
+                Date.from(Instant.now().plusSeconds(TimeUnit.DAYS.toSeconds(1))));
         refreshFilter();
     }
     private void refreshFilter() {
