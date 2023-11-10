@@ -2,7 +2,6 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.ui.model.validation.Validable;
 import cz.muni.fi.pv168.project.ui.model.validation.ValidatedInputField;
-import org.h2.util.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;

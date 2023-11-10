@@ -12,4 +12,14 @@ public class FieldConversionUtils {
             return false;
         }
     }
+
+    public static boolean validateInteger(JTextField field){
+        try{
+            Integer.parseInt(field.getText());
+            return true;
+        }
+        catch(IllegalArgumentException e){
+            return false;
+        }
+    }
 }
