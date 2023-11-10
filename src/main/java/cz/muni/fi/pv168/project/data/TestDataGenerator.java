@@ -17,9 +17,6 @@ public final class TestDataGenerator {
     private static final List<String> CARNAMES = List.of(
             "Karmen", "Ferda", "Luigiano", "Beatle", "S3XY"
     );
-    private static final List<String> COLORS = List.of(
-            "white", "black", "red", "blue", "green", "yellomello", "grey"
-    );
 
     private static final List<String> DESCRIPTIONS = List.of(
            "very bad car", "bad car", "3.6 car", "good car", "very good car", "awesome car"
@@ -28,7 +25,7 @@ public final class TestDataGenerator {
     public Category createTestCategory() {
         return new Category(UUID.randomUUID().toString(),
                 CATEGORIES.get(randomGenerator.nextInt(CATEGORIES.size())),
-                COLORS.get(randomGenerator.nextInt(COLORS.size())));
+                randomGenerator.nextInt(-16581375,16581375));
     }
 
     public Template createTestTemplate() {

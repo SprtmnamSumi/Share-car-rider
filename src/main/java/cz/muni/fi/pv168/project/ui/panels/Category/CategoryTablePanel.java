@@ -3,17 +3,18 @@ package cz.muni.fi.pv168.project.ui.panels.Category;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.panels.TablePanel;
+import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.function.Consumer;
 
 /**
  * Panel with category records in a table.
  */
-public class CategoryTablePanel extends TablePanel<Category> {
+public class CategoryTablePanel extends AbstractTablePanel<Category> {
 
     private final Consumer<Integer> onSelectionChange;
     private Action addCategoryAction;
@@ -24,16 +25,21 @@ public class CategoryTablePanel extends TablePanel<Category> {
         super(categoryTableModel);
         setUpTable(actionFactory);
         add(new JScrollPane(table), BorderLayout.CENTER);
-
         this.onSelectionChange = this::changeActionsState;
     }
 
     private void setUpTable(DefaultActionFactory<Category> actionFactory) {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        table.setDefaultRenderer(Integer.class, (table, value, isSelected, hasFocus, row, column) -> {
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setBackground(new Color((Integer) value));
+            return renderer;
+        });
 
         addCategoryAction = actionFactory.getAddAction(table);
         editCategoryAction = actionFactory.getEditAction(table);
         deleteCategoryAction = actionFactory.getDeleteAction(table);
+        changeActionsState(0);
 
         table.setComponentPopupMenu(createCategoryTablePopUpMenu());
     }
