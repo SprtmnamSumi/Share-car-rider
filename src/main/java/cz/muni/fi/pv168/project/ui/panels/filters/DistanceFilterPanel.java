@@ -1,11 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.filters;
 
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
-import cz.muni.fi.pv168.project.ui.panels.commonPanels.TextFieldPanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ValidatedTextFieldPanel;
-import org.h2.util.StringUtils;
 
-import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
