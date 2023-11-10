@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.business.service.currenies;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.service.properties.Config;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -9,19 +10,14 @@ import java.util.Properties;
 
 @Singleton
 public class CurrencyConverter implements ICurrencyConverter {
+    private final TableModel<Currency> currencyListModel;
     private Currency defaultCurrency;
 
     @Inject
-    // TODO
-//    TableModel<Currency> currencyListModel
-    public CurrencyConverter() {
-        Properties properties = Config.loadProperties();
-        var currency = properties.getProperty(Config.PropertiesEnum.COLOR_THEME_PROPERY.toString());
-//        var defaultCurrecy = currencyListModel.getAll().stream().filter(x -> x.getName().equals(currency)).findFirst().orElseThrow();
-//        this.defaultCurrency = defaultCurrecy;
-
-        this.defaultCurrency = new Currency("CZK", "Kč", 1.0);
+    public CurrencyConverter(TableModel<Currency> currencyListModel) {
+        this.currencyListModel = currencyListModel;
     }
+
 
     @Override
     public Currency getDefaultCurrency() {
@@ -69,6 +65,15 @@ public class CurrencyConverter implements ICurrencyConverter {
     @Override
     public double convertFromDefaultCurrencyToDolars(double amountInDefaultCurrency) {
         return convertFromCurrencyTOdollars(defaultCurrency, amountInDefaultCurrency);
+    }
+
+    @Override
+    public void updateDefaultCurrency() {
+        Properties properties = Config.loadProperties();
+        var currency = properties.getProperty(Config.PropertiesEnum.CURRENCY_PROPERY.toString());
+        var currencies = currencyListModel.getAll();
+        var defaultCurrecy = currencies.stream().filter(x -> x.getSymbol().equals(currency)).findFirst().orElseThrow();
+        this.defaultCurrency = defaultCurrecy;
     }
 }
 

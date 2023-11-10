@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.ui;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.service.currenies.ICurrencyConverter;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.data.Initializator;
 import cz.muni.fi.pv168.project.ui.action.*;
@@ -44,13 +45,19 @@ public class MainWindowImpl implements MainWindow {
                           CategoryTableModel categoryTableModel,
                           TemplateTableModel templateTableModel,
                           CurrencyTableModel currencyTableModel,
-                          ICarRideStatistics ICarRideStatistics) {
+                          ICarRideStatistics ICarRideStatistics,
+                          ICurrencyConverter currencyConversion) {
+
+        Initializator init = new Initializator(categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 10);
+        init.initialize();
+        currencyConversion.updateDefaultCurrency();
+
         frame = createFrame();
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
         TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
-
+        
         addCarRideAction = carActionFactory.getAddAction(carRideTablePanel.getTable());
         addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
         addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
@@ -73,8 +80,7 @@ public class MainWindowImpl implements MainWindow {
         frame.setJMenuBar(createMenuBar());
         frame.pack();
 
-        Initializator init = new Initializator(categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 10);
-        init.initialize();
+
     }
 
     @Override

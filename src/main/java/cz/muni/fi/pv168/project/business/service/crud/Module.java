@@ -9,5 +9,6 @@ public class Module extends AbstractModule {
         bind(ICarRideTempalteService.class).to(CarRideTemplateCrudService.class);
         bind(ICategoryCrudService.class).to(CategoryCrudService.class);
         bind(ICurrencyCrudService.class).to(CurrencyCrudService.class);
+        bind(IConversionCrudService.class).to(ConversionCrudService.class);
     }
 }
