@@ -8,7 +8,6 @@ import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTableCell;
-import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -19,7 +18,9 @@ import java.util.function.Consumer;
 /**
  * Panel with car ride records in a table.
  */
-public class CarRideTablePanel extends AbstractTablePanel<CarRide> {
+public class CarRideTablePanel extends JPanel {
+
+    private JTable table;
 
     private final Consumer<Integer> onSelectionChange;
 
@@ -33,11 +34,11 @@ public class CarRideTablePanel extends AbstractTablePanel<CarRide> {
     public CarRideTablePanel(CarRideTableModel carRideTableModel,
                              DefaultActionFactory<CarRide> actionFactory,
                              CategoryTableModel categoryTableModel,
-                             CurrencyTableModel currencyTableModel){
-        super(carRideTableModel);
+                             CurrencyTableModel currencyTableModel) {
+        setUpTable(carRideTableModel, actionFactory);
+        setLayout(new BorderLayout());
 
         var rowSorter = new TableRowSorter<>(carRideTableModel);
-        setUpTable(actionFactory);
         table.setRowSorter(rowSorter);
 
         filterPanel = new CarRideFilterPanel(new CarRideTableFilter(rowSorter), categoryTableModel, currencyTableModel);
@@ -51,7 +52,12 @@ public class CarRideTablePanel extends AbstractTablePanel<CarRide> {
         this.onSelectionChange = this::changeActionsState;
     }
 
-    private void setUpTable(DefaultActionFactory<CarRide> carRideActionFactory) {
+    public JTable getTable() {
+        return table;
+    }
+
+    private void setUpTable(CarRideTableModel carRideTableModel, DefaultActionFactory<CarRide> carRideActionFactory) {
+        table = new JTable(carRideTableModel);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setDefaultRenderer(Category.class, (table, value, isSelected, hasFocus, row, column) -> new CategoryTableCell((Category) value));
         table.getModel().addTableModelListener(e -> updateStats());
@@ -86,8 +92,10 @@ public class CarRideTablePanel extends AbstractTablePanel<CarRide> {
     }
 
     private void updateStats() {
-        statsPanel.updateFilteredStats();
-        statsPanel.updateTotalStats();
-        filterPanel.updateValues();
+        SwingUtilities.invokeLater(() -> {
+            statsPanel.updateFilteredStats();
+            statsPanel.updateTotalStats();
+            filterPanel.updateValues();
+        });
     }
 }

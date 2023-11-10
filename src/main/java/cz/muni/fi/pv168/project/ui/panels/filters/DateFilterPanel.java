@@ -5,7 +5,10 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.SpinnerDatePanel;
 
 import javax.swing.*;
 import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class DateFilterPanel extends FilterPanel {
 
@@ -29,7 +32,7 @@ public class DateFilterPanel extends FilterPanel {
     @Override
     public void reset() {
         dateFromPanel.setSpinnerDate(Date.from(Instant.ofEpochSecond(0)));
-        dateToPanel.setSpinnerDate(Date.from(Instant.now()));
+        dateToPanel.setSpinnerDate(Date.from(Instant.now().plusSeconds(TimeUnit.DAYS.toSeconds(1))));
         refreshFilter();
     }
 

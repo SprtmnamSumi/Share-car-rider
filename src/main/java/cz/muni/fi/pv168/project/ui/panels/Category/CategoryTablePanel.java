@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.ui.panels.Category;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -14,7 +13,9 @@ import java.util.function.Consumer;
 /**
  * Panel with category records in a table.
  */
-public class CategoryTablePanel extends AbstractTablePanel<Category> {
+public class CategoryTablePanel extends JPanel {
+
+    private JTable table;
 
     private final Consumer<Integer> onSelectionChange;
     private Action addCategoryAction;
@@ -22,13 +23,18 @@ public class CategoryTablePanel extends AbstractTablePanel<Category> {
     private Action deleteCategoryAction;
 
     public CategoryTablePanel(CategoryTableModel categoryTableModel, DefaultActionFactory<Category> actionFactory) {
-        super(categoryTableModel);
-        setUpTable(actionFactory);
+        setUpTable(categoryTableModel, actionFactory);
+        setLayout(new BorderLayout());
         add(new JScrollPane(table), BorderLayout.CENTER);
         this.onSelectionChange = this::changeActionsState;
     }
 
-    private void setUpTable(DefaultActionFactory<Category> actionFactory) {
+    public JTable getTable() {
+        return table;
+    }
+
+    private void setUpTable(CategoryTableModel categoryTableModel, DefaultActionFactory<Category> actionFactory) {
+        table = new JTable(categoryTableModel);
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setDefaultRenderer(Integer.class, (table, value, isSelected, hasFocus, row, column) -> {
             DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();

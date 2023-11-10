@@ -19,8 +19,8 @@ public class CategoryTableModel extends TableModel<Category> {
     @Inject
     public CategoryTableModel(ICategoryCrudService categoryCrudService) {
         super(categoryCrudService, List.of(
-                Column.editable("Name", String.class, Category::getName, Category::setName),
-                Column.editable("Colour", Integer.class, Category::getColour, Category::setColour)));
+                Column.readonly("Name", String.class, Category::getName),
+                Column.readonly("Colour", Integer.class, Category::getColour)));
     }
 
 }
