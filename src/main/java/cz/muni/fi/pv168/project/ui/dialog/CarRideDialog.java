@@ -42,7 +42,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
         this.carRide = carRide;
-        costBar = new CostBar(currencyModel);
+        costBar = new CostBar(currencyModel, carRide.getCostOfFuelPerLitreInDollars(), 1.0, carRide.getCurrency());
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         this.currencyConverter = currencyConverter;
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
@@ -63,7 +63,9 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         categoryBar.setSelectedItem(carRide.getCategory());
         dateBar.setDate(carRide.getDate());
         commission.setValue(carRide.getCommission());
-        double costOfFuelPerLitre = currencyConverter.convertFromDolarsToCurrency(carRide.getCurrency(), carRide.getCostOfFuelPerLitreInDollars());
+        costBar.setCostOfFuel(carRide.getCostOfFuelPerLitreInDollars());
+        costBar.setConversionRate(carRide.getCurrency().getRateToDollar());
+        costBar.setCurrency(carRide.getCurrency());
 
     }
 
@@ -111,7 +113,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     Template getAsTemplate() {
         var ride = getEntity();
-        Template template = new Template(UUID.randomUUID().toString(), ride.getTitle(), ride.getDescription(), ride.getDistance(), ride.getFuelConsumption(), ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(), ride.getCommission(), ride.getCategory(), ride.getCurrency());
+        Template template = new Template(UUID.randomUUID().toString(), ride.getTitle(), ride.getDescription(), ride.getDistance(), ride.getFuelConsumption(), ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(), ride.getCommission(), ride.getCategory(), ride.getCurrency(), ride.getCurrencyConversion());
         return template;
     }
 

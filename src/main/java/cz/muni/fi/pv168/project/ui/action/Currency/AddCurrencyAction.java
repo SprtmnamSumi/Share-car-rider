@@ -2,10 +2,7 @@ package cz.muni.fi.pv168.project.ui.action.Currency;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.dialog.AddCurrencyDialog;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public final class AddCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
@@ -28,7 +26,7 @@ public final class AddCurrencyAction extends AbstractAction {
             putValue(SMALL_ICON, customIcon);
         } catch (IOException ex) {
             ex.printStackTrace();
-        };
+        }
 
         this.currencyTable = currencyTable;
         putValue(SHORT_DESCRIPTION, "Adds new Currency");
@@ -39,7 +37,8 @@ public final class AddCurrencyAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
-        var dialog = new AddCurrencyDialog(new Currency("", "", 0.0));
+        var dialog = new AddCurrencyDialog(new Currency("", "", 0.0, new LinkedList<>() {
+        }));
         dialog.show(currencyTable, "Add Currency")
                 .ifPresent(currencyTableModel::addRow);
     }

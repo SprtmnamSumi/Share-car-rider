@@ -11,7 +11,6 @@ import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 final class AddCarRideAction extends AbstractAction {
 
@@ -45,7 +45,7 @@ final class AddCarRideAction extends AbstractAction {
             putValue(SMALL_ICON, customIcon);
         } catch (IOException ex) {
             ex.printStackTrace();
-        };
+        }
 
         this.carRidesTable = carRidesTable;
         this.currencyListModel = currencyListModel;
@@ -63,7 +63,7 @@ final class AddCarRideAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0));
+        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0), Optional.empty());
         var dialog = new CarRideDialog(carRide, categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableMode, currencyConverter);
         dialog.show(carRidesTable, "Add Cat ride")
                 .ifPresent(carRidesTableModel::addRow);

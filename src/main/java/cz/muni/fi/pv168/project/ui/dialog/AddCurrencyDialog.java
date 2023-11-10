@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.Currency;
 
 import javax.swing.*;
+import java.util.LinkedList;
 
 public class AddCurrencyDialog extends EntityDialog<Currency> {
     private final JTextField nameTextField = new JTextField();
@@ -29,6 +30,6 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
 
     @Override
     Currency getEntity() {
-        return new Currency(nameTextField.getText(), symbolTextField.getText(), 1.0);
+        return new Currency(nameTextField.getText(), symbolTextField.getText(), 1.0, new LinkedList<>());
     }
 }
