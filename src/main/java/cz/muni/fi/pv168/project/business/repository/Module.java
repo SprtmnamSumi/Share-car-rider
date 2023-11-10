@@ -15,9 +15,13 @@ public class Module extends AbstractModule {
     @Override
     protected void configure() {
         var testDataGenerator = new TestDataGenerator();
-        bind(new TypeLiteral<Repository<Template>>(){}).toInstance(new InMemoryRepository<>(testDataGenerator.createTestTemplates(10)));
-        bind(new TypeLiteral<Repository<CarRide>>(){}).toInstance(new InMemoryRepository<>(testDataGenerator.createTestRides(10)));
-        bind(new TypeLiteral<Repository<Category>>(){}).toInstance(new InMemoryRepository<>(testDataGenerator.createTestCategories(10)));
-        bind(new TypeLiteral<Repository<Currency>>(){}).toInstance(new InMemoryRepository<>(new ArrayList<Currency>()));
+        bind(new TypeLiteral<Repository<Template>>() {
+        }).toInstance(new InMemoryRepository<>(new ArrayList<Template>()));
+        bind(new TypeLiteral<Repository<CarRide>>() {
+        }).toInstance(new InMemoryRepository<>(new ArrayList<CarRide>()));
+        bind(new TypeLiteral<Repository<Category>>() {
+        }).toInstance(new InMemoryRepository<>(new ArrayList<Category>()));
+        bind(new TypeLiteral<Repository<Currency>>() {
+        }).toInstance(new InMemoryRepository<>(new ArrayList<Currency>()));
     }
 }

@@ -3,14 +3,10 @@ package cz.muni.fi.pv168.project.ui.panels.CarRide;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.filters.*;
-import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CarRideFilterPanel extends JPanel {
     private final FilterPanel distanceFilter;
@@ -48,7 +44,8 @@ public class CarRideFilterPanel extends JPanel {
     public void updateValues() {
         categoryPanel.updateValues();
     }
-    private void resetFilters(){
+
+    private void resetFilters() {
         dateFilter.reset();
         distanceFilter.reset();
         passengerFilter.reset();

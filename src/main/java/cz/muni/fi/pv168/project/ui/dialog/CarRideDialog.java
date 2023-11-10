@@ -24,12 +24,10 @@ import static javax.swing.JOptionPane.*;
 public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JTextField titleField = new JTextField();
     private final JTextField descriptionField = new JTextField();
-    private final JTextField templateField = new JTextField();
     private final JComboBox<Currency> currencyJComboBox;
     private final JComboBox<Template> templateComboBoxModel;
-
+    private final CurrencyConverter currencyConverter;
     private final CategoryBar categoryBar;
-
     private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
     private final JSpinner fuelConsumption = new JSpinner(new SpinnerNumberModel());
     private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
@@ -45,6 +43,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
         this.carRide = carRide;
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
+        this.currencyConverter = currencyConverter;
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         setValues(carRide);
@@ -55,7 +54,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 var template = (Template) e.getItem();
-                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitre(), template.getNumberOfPassengers(), template.getCommission(), LocalDateTime.now(), template.getCategory());
+                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), LocalDateTime.now(), template.getCategory(), currencyModel.getElementAt(0));
                 setValues(templateCarRide);
             }
         });
@@ -67,11 +66,13 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         descriptionField.setText(carRide.getDescription());
         distanceField.setValue(carRide.getDistance());
         fuelConsumption.setValue(carRide.getFuelConsumption());
-        costOfFuel.setValue(carRide.getCostOfFuelPerLitre());
         numberOfPassengers.setValue(carRide.getNumberOfPassengers());
-        commission.setValue(carRide.getCommission());
         categoryBar.setSelectedItem(carRide.getCategory());
         dateBar.setDate(carRide.getDate());
+        commission.setValue(carRide.getCommission());
+        currencyJComboBox.setSelectedItem(carRide.getCurrency());
+        double costOfFuelPerLitre = currencyConverter.convertFromDolarsToCurrency(carRide.getCurrency(), carRide.getCostOfFuelPerLitreInDollars());
+        costOfFuel.setValue(costOfFuelPerLitre);
     }
 
 
@@ -105,17 +106,21 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setDescription(descriptionField.getText());
         carRide.setDistance(Double.parseDouble(getSpinnerValue(distanceField)));
         carRide.setFuelConsumption(Double.parseDouble(getSpinnerValue(fuelConsumption)));
-        carRide.setCostOfFuelPerLitre(Double.parseDouble(getSpinnerValue(costOfFuel)));
         carRide.setNumberOfPassengers(Integer.parseInt(getSpinnerValue(numberOfPassengers)));
         carRide.setCommission(Double.parseDouble(getSpinnerValue(commission)));
         carRide.setCategory(categoryBar.getSelectedItem());
         carRide.setDate(dateBar.getDate());
+        carRide.setCurrency((Currency) currencyJComboBox.getSelectedItem());
+
+        var costInDefCurrency = Double.parseDouble(getSpinnerValue(costOfFuel));
+        var costInDollars = currencyConverter.convertFromCurrencyTOdollars(carRide.getCurrency(), costInDefCurrency);
+        carRide.setCostOfFuelPerLitre(costInDollars);
         return carRide;
     }
 
     Template getAsTemplate() {
         var ride = getEntity();
-        Template template = new Template(UUID.randomUUID().toString(), ride.getTitle(), ride.getDescription(), ride.getDistance(), ride.getFuelConsumption(), ride.getCostOfFuelPerLitre(), ride.getNumberOfPassengers(), ride.getCommission(), ride.getCategory());
+        Template template = new Template(UUID.randomUUID().toString(), ride.getTitle(), ride.getDescription(), ride.getDistance(), ride.getFuelConsumption(), ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(), ride.getCommission(), ride.getCategory(), currencyJComboBox.getItemAt(0));
         return template;
     }
 
