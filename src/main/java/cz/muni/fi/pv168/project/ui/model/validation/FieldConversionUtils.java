@@ -18,7 +18,7 @@ public class FieldConversionUtils {
             Integer.parseInt(field.getText());
             return true;
         }
-        catch(IllegalArgumentException e){
+        catch(NumberFormatException e){
             return false;
         }
     }
