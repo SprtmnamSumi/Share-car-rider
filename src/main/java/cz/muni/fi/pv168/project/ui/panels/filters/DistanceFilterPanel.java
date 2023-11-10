@@ -11,8 +11,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class DistanceFilterPanel extends FilterPanel {
-    private final ValidatedTextFieldPanel distanceFromPanel = new ValidatedTextFieldPanel("Distance from");
-    private final ValidatedTextFieldPanel distanceToPanel = new ValidatedTextFieldPanel("Distance to");
+    private final ValidatedTextFieldPanel distanceFromPanel = new ValidatedTextFieldPanel("Distance from") {
+        @Override
+        public boolean evaluate() {
+            return StringUtils.isNumber(distanceFromPanel.getTextField().getText());
+        }
+    };
+
+    private final ValidatedTextFieldPanel distanceToPanel = new ValidatedTextFieldPanel("Distance to") {
+        @Override
+        public boolean evaluate() {
+            return StringUtils.isNumber(distanceToPanel.getTextField().getText());
+        }
+    };
     private final CarRideTableFilter filter;
 
     private final KeyListener listener = new TypeListener();
