@@ -107,7 +107,7 @@ public class TemplateDialog extends EntityDialog<Template> {
         template.setDistance(Double.parseDouble(distanceField.getText()));
         template.setFuelConsumption(Double.parseDouble(fuelConsumption.getText()));
         template.setCostOfFuelPerLitre(Double.parseDouble(costOfFuel.getText()));
-        template.setNumberOfPassengers(Integer.parseInt(numberOfPassengers.toString()));
+        template.setNumberOfPassengers(Integer.parseInt(numberOfPassengers.getText()));
         template.setCommission(Double.parseDouble(commission.getText()));
         template.setCategory((Category) categoryJComboBox.getSelectedItem());
         return template;
