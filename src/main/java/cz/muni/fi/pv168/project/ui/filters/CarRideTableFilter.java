@@ -11,6 +11,7 @@ import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import javax.swing.table.TableRowSorter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static cz.muni.fi.pv168.project.ui.filters.Filters.*;
@@ -54,7 +55,11 @@ public final class CarRideTableFilter {
         rideCompoundMatcher.removeMatcher(filter);
     }
 
-    private static class RideCompoundMatcher extends EntityMatcher<CarRide> {
+    public RideCompoundMatcher getRideCompoundMatcher() {
+        return this.rideCompoundMatcher;
+    }
+
+    public static class RideCompoundMatcher extends EntityMatcher<CarRide> {
 
         private final TableRowSorter<CarRideTableModel> rowSorter;
 
@@ -74,6 +79,11 @@ public final class CarRideTableFilter {
             rowSorter.sort();
         }
 
+        public List<CarRide> getData() {
+            return rowSorter.getModel().getAll().stream()
+                    .filter(carRide -> entityMatchers.values().stream()
+                            .allMatch(match -> match.evaluate(carRide))).toList();
+        }
         @Override
         public boolean evaluate(CarRide carRide) {
             return entityMatchers.values().stream().allMatch(m -> m.evaluate(carRide));

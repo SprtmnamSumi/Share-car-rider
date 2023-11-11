@@ -41,9 +41,10 @@ public class CarRideTablePanel extends JPanel {
         var rowSorter = new TableRowSorter<>(carRideTableModel);
         table.setRowSorter(rowSorter);
 
-        filterPanel = new CarRideFilterPanel(new CarRideTableFilter(rowSorter), categoryTableModel, currencyTableModel);
+        var carRideTableFilter = new CarRideTableFilter(rowSorter);
+        filterPanel = new CarRideFilterPanel(carRideTableFilter, categoryTableModel, currencyTableModel);
         categoryTableModel.addTableModelListener(e -> updateStats());
-        statsPanel = new CarRideStatisticsPanel(carRideTableModel, ICarRideStatistics);
+        statsPanel = new CarRideStatisticsPanel(carRideTableModel, carRideTableFilter, ICarRideStatistics);
 
         add(filterPanel, BorderLayout.PAGE_START);
         add(new JScrollPane(table), BorderLayout.CENTER);
