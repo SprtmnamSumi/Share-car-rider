@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 
 import javax.swing.*;
 import java.awt.*;

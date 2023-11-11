@@ -1,9 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
-import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
+import cz.muni.fi.pv168.project.ui.action.CarRide.ICarRideActionFactory;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
@@ -30,8 +29,10 @@ public class CarRideTablePanel extends AbstractTablePanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
+    private Action saveAsTemplateAction;
+
     public CarRideTablePanel(CarRideTableModel carRideTableModel,
-                             DefaultActionFactory<CarRide> actionFactory,
+                             ICarRideActionFactory actionFactory,
                              CategoryTableModel categoryTableModel,
                              CurrencyTableModel currencyTableModel,
                              ICarRideStatistics ICarRideStatistics) {
@@ -60,6 +61,7 @@ public class CarRideTablePanel extends AbstractTablePanel {
         addCarRideAction = carRideActionFactory.getAddAction(table);
         editCarRideAction = carRideActionFactory.getEditAction(table);
         deleteCarRideAction = carRideActionFactory.getDeleteAction(table);
+
         changeActionsState(0);
 
         table.setComponentPopupMenu(createCarRideTablePopUpMenu());
@@ -70,6 +72,7 @@ public class CarRideTablePanel extends AbstractTablePanel {
         popupMenu.add(addCarRideAction);
         popupMenu.add(editCarRideAction);
         popupMenu.add(deleteCarRideAction);
+        popupMenu.add(saveAsTemplateAction);
         return popupMenu;
     }
 
