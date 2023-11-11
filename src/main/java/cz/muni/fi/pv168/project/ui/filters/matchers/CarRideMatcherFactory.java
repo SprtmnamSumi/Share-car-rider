@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.filters.matchers;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -44,6 +45,15 @@ public class CarRideMatcherFactory {
             @Override
             public boolean evaluate(CarRide entity) {
                 return category.equals(entity.getCategory());
+            }
+        };
+    }
+
+    public EntityMatcher<CarRide> getCurrencyMatcher(Currency currency) {
+        return new EntityMatcher<>() {
+            @Override
+            public boolean evaluate(CarRide entity) {
+                return currency.equals(entity.getCurrency());
             }
         };
     }

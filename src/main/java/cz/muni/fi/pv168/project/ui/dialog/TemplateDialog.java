@@ -5,8 +5,8 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
-import cz.muni.fi.pv168.project.ui.model.validation.FieldConversionUtils;
-import cz.muni.fi.pv168.project.ui.model.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -117,7 +117,8 @@ public class TemplateDialog extends EntityDialog<Template> {
         return new ValidatedInputField() {
             @Override
             public boolean evaluate() {
-                return FieldConversionUtils.validateDouble(this);
+                return FieldConversionUtils.validateDouble(this)
+                        && Double.parseDouble(this.getText()) >= 0.0f;
             }
         };
     }

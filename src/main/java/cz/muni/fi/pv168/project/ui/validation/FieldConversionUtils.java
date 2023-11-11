@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.model.validation;
+package cz.muni.fi.pv168.project.ui.validation;
 
 import javax.swing.*;
 

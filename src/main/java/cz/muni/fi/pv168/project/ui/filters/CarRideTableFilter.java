@@ -2,6 +2,8 @@ package cz.muni.fi.pv168.project.ui.filters;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.ui.filters.matchers.CarRideMatcherFactory;
 import cz.muni.fi.pv168.project.ui.filters.matchers.EntityMatcher;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
@@ -25,8 +27,15 @@ public final class CarRideTableFilter {
         rowSorter.setRowFilter(rideCompoundMatcher);
     }
 
-    public void filterByCategory(Category category) {
-        rideCompoundMatcher.addMatcher(CATEGORY_FILTER, matcherFactory.getCategoryMatcher(category));
+    public void filterByEntity(Entity value, Filters filter) {
+        switch (filter) {
+            case CATEGORY_FILTER ->
+                    rideCompoundMatcher.addMatcher(CATEGORY_FILTER, matcherFactory.getCategoryMatcher((Category) value));
+            case CURRENCY_FILTER ->
+                    rideCompoundMatcher.addMatcher(CURRENCY_FILTER, matcherFactory.getCurrencyMatcher((Currency) value));
+            default -> {
+            }
+        }
     }
 
     public void filterByDate(Date fromDate, Date toDate) {

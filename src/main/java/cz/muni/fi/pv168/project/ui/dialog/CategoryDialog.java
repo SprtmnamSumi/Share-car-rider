@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.ui.model.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
-import java.util.List;
 
 public final class CategoryDialog extends EntityDialog<Category> {
 
