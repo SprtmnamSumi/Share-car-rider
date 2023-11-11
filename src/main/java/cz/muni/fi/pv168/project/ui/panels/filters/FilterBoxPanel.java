@@ -6,6 +6,9 @@ import cz.muni.fi.pv168.project.ui.filters.Filters;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class FilterBoxPanel<T extends Entity> extends FilterPanel {
     private final ComboBoxPanel<T> comboBoxPanel;
     private final TableModel<T> currencyTableModel;
