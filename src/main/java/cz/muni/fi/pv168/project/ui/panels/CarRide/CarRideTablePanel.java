@@ -46,8 +46,6 @@ public class CarRideTablePanel extends JPanel {
         categoryTableModel.addTableModelListener(e -> updateStats());
         statsPanel = new CarRideStatisticsPanel(carRideTableModel, carRideTableFilter, ICarRideStatistics);
 
-        rowSorter.addRowSorterListener(e -> statsPanel.updateFilteredStats());
-
         add(filterPanel, BorderLayout.PAGE_START);
         add(new JScrollPane(table), BorderLayout.CENTER);
         add(statsPanel, BorderLayout.PAGE_END);

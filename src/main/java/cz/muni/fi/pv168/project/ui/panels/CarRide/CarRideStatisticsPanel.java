@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.NameValuePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class CarRideStatisticsPanel extends JPanel {
     private final TableModel<CarRide> model;
@@ -49,8 +50,12 @@ public class CarRideStatisticsPanel extends JPanel {
 
     public void updateFilteredStats() {
         var entities = carRideTableFilter.getRideCompoundMatcher().getData();
-        filteredDistance.setValue(String.format("%.2f", ICarRideStatistics.getTotalDistance(entities)));
-        filteredExpenses.setValue(String.format("%.2f", ICarRideStatistics.getTotalExpenses(entities)));
+        for (CarRide carRide : entities) {
+            System.out.println(carRide);
+        }
+        System.out.println("---END---\n\n\n\n\n\n\n\n");
+        filteredDistance.setValue(String.format("%.2f", ICarRideStatistics.getTotalDistance(entities))); //Set to only filtered CarRides after filtering is finished.
+        filteredExpenses.setValue(String.format("%.2f", ICarRideStatistics.getTotalExpenses(entities))); //Set to only filtered CarRides after filtering is finished.
     }
 
     public void updateTotalStats() {
