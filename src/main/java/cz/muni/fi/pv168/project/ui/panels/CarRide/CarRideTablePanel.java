@@ -1,12 +1,15 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.ui.action.CarRide.ICarRideActionFactory;
+import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
+import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTableCell;
 
 import javax.swing.*;
@@ -19,12 +22,11 @@ import java.util.function.Consumer;
  * Panel with car ride records in a table.
  */
 
-public class CarRideTablePanel extends JPanel {
+public class CarRideTablePanel extends AbstractTablePanel {
 
     private final Consumer<Integer> onSelectionChange;
     private final CarRideStatisticsPanel statsPanel;
     private final CarRideFilterPanel filterPanel;
-    private JTable table;
     private Action addCarRideAction;
     private Action editCarRideAction;
     private Action deleteCarRideAction;
@@ -36,18 +38,14 @@ public class CarRideTablePanel extends JPanel {
                              CategoryTableModel categoryTableModel,
                              CurrencyTableModel currencyTableModel,
                              ICarRideStatistics ICarRideStatistics) {
-        setUpTable(carRideTableModel, actionFactory);
-        setLayout(new BorderLayout());
+        super(carRideTableModel, new TableRowSorter<>(carRideTableModel));
+        setUpTable(actionFactory);
 
-        var rowSorter = new TableRowSorter<>(carRideTableModel);
-        table.setRowSorter(rowSorter);
-
-        var carRideTableFilter = new CarRideTableFilter(rowSorter);
+        var carRideTableFilter = new CarRideTableFilter((TableRowSorter<CarRideTableModel>) table.getRowSorter());
         filterPanel = new CarRideFilterPanel(carRideTableFilter, categoryTableModel, currencyTableModel);
-        categoryTableModel.addTableModelListener(e -> updateStats());
         statsPanel = new CarRideStatisticsPanel(carRideTableModel, carRideTableFilter, ICarRideStatistics);
-
-        rowSorter.addRowSorterListener(e -> statsPanel.updateFilteredStats());
+        table.getRowSorter().addRowSorterListener(e -> statsPanel.updateFilteredStats());
+        categoryTableModel.addTableModelListener(e -> updateStats());
 
         add(filterPanel, BorderLayout.PAGE_START);
         add(new JScrollPane(table), BorderLayout.CENTER);
@@ -56,14 +54,10 @@ public class CarRideTablePanel extends JPanel {
         this.onSelectionChange = this::changeActionsState;
     }
 
-    public JTable getTable() {
-        return table;
-    }
-
-    private void setUpTable(CarRideTableModel carRideTableModel, ICarRideActionFactory carRideActionFactory) {
-        table = new JTable(carRideTableModel);
+    private void setUpTable(DefaultActionFactory<CarRide> carRideActionFactory) {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setDefaultRenderer(Category.class, (table, value, isSelected, hasFocus, row, column) -> new CategoryTableCell((Category) value));
+
         table.getModel().addTableModelListener(e -> updateStats());
 
         addCarRideAction = carRideActionFactory.getAddAction(table);
