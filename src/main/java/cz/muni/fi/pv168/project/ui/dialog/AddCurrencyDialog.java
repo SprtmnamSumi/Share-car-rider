@@ -1,19 +1,45 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-
-import javax.swing.*;
+import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 
 public class AddCurrencyDialog extends EntityDialog<Currency> {
-    private final JTextField nameTextField = new JTextField();
-    private final JTextField symbolTextField = new JTextField();
-    private final JSpinner rateToDollar = new JSpinner(new SpinnerNumberModel());
+    private final ValidatedInputField nameTextField = new ValidatedInputField() {
+        @Override
+        public boolean evaluate() {
+            return !this.getText().isEmpty();
+        }
+    };
+    private final ValidatedInputField symbolTextField = new ValidatedInputField() {
+        @Override
+        public boolean evaluate() {
+            return this.getText().length() == 1;
+        }
+    };
+    private final ValidatedInputField rateToDollar = new ValidatedInputField() {
+        @Override
+        public boolean evaluate() {
+            return (FieldConversionUtils.validateDouble(this) && Double.parseDouble(this.getText()) > 0)
+                    || (FieldConversionUtils.validateInteger(this) && Integer.parseInt(this.getText()) > 0);
+        }
+    };
+
+    private final ValidationListener validationListener = new ValidationListener(nameTextField, symbolTextField, rateToDollar) {
+        @Override
+        protected void onChange(boolean isValid) {
+            AddCurrencyDialog.super.toggleOk(isValid);
+        }
+    };
     private final Currency currency;
 
     public AddCurrencyDialog(Currency currency) {
         this.currency = currency;
         //setValues();
+
         addFields();
+        validationListener.fireChange();
     }
 
     private void setValues() {

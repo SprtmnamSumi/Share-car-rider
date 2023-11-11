@@ -1,9 +1,6 @@
-package cz.muni.fi.pv168.project.ui.model.validation;
+package cz.muni.fi.pv168.project.ui.validation;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public interface Validable{
     public final static Color INVALID_COLOR = new Color(255,0,0,60);

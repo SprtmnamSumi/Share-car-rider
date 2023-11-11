@@ -1,6 +1,4 @@
-package cz.muni.fi.pv168.project.ui.model.validation;
-
-import org.h2.util.StringUtils;
+package cz.muni.fi.pv168.project.ui.validation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +22,7 @@ public class ValidatedInputField extends JTextField implements Validable {
 
     @Override
     public boolean evaluate() {
-        return FieldConversionUtils.validateInteger(this);
+        return FieldConversionUtils.validateInteger(this) && Integer.parseInt(this.getText()) >= 0;
     }
 
     @Override
