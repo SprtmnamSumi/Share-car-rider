@@ -1,10 +1,10 @@
 package cz.muni.fi.pv168.project.ui;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.data.Initializator;
+import cz.muni.fi.pv168.project.ui.action.CarRide.ICarRideActionFactory;
 import cz.muni.fi.pv168.project.ui.action.*;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
@@ -36,7 +36,7 @@ public class MainWindowImpl implements MainWindow {
     private final Action info;
 
     @Inject
-    public MainWindowImpl(DefaultActionFactory<CarRide> carActionFactory,
+    public MainWindowImpl(ICarRideActionFactory carActionFactory,
                           DefaultActionFactory<Category> categoryActionFactory,
                           DefaultActionFactory<Template> templateActionFactory,
                           CurrencyActionFactory currencyActionFactory,

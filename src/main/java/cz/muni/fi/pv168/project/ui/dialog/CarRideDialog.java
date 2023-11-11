@@ -13,9 +13,10 @@ import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
-import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
+import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -44,8 +45,10 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField commission = getDoubleField();
     private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
-
+    private final TemplateBar templateBar;
+    private final JButton saveAsTemplate = new JButton("Save as template");
     private final CostBar costBar;
+
 
     private final TableModel<Template> entityCrudService;
     private final ValidationListener validationListener;
@@ -58,7 +61,11 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         this.currencyConverter = currencyConverter;
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
+
+        templateBar = new TemplateBar(templateComboBoxModel, saveAsTemplate);
+
         this.costBar = new CostBar(currencyModel, currencyConverter);
+
         setValues(carRide);
         addFields();
 
@@ -67,6 +74,8 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
             @Override
             protected void onChange(boolean isValid) {
                 CarRideDialog.super.toggleOk(isValid);
+                if (isValid)
+                    saveAsTemplate.setEnabled(entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate())));
             }
         };
         validationListener.fireChange();
@@ -105,7 +114,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     }
 
     private void addFields() {
-        add("Template", templateComboBoxModel);
+        add("Template", templateBar);
         add("Title", titleField);
         add("Description", descriptionField);
         add("Distance", distanceField);
@@ -171,7 +180,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         return new ValidatedInputField() {
             @Override
             public boolean evaluate() {
-                return FieldConversionUtils.validateDouble(this)
+                return ValidationUtils.validateDouble(this)
                         && Double.parseDouble(this.getText()) >= 0.0f;
             }
         };

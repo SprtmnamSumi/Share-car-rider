@@ -1,12 +1,13 @@
 # PV168 Project: Share Car Rider
 
 Desktop application to track personal rides along with passengers, distance and money spent on fuel.
+Icons are used from [Flaticon](https://www.flaticon.com/).
 
 ## Team Information
 
 | Seminar Group | Team |
 |---------------|------|
-| PV168/01      | 01   | <!--- FIXME: fill in the seminar group and team identification -->
+| PV168/01      | 01   |
 
 ### Members
 
@@ -19,7 +20,7 @@ Desktop application to track personal rides along with passengers, distance and 
 
 ### Evaluators
 
-| Role            | Person                                                       |
-|-----------------|--------------------------------------------------------------|
-| PM              | [Šimon Peter Balčirák](https://is.muni.cz/auth/osoba/422570) |
-| Technical Coach | [Ing. Pavel Hrdina](https://is.muni.cz/auth/osoba/242617)    |
+| Role            | Person                                                        |
+|-----------------|---------------------------------------------------------------|
+| PM              | [Mgr. Šimon Mačejovský](https://is.muni.cz/auth/osoba/444140) |
+| Technical Coach | [Mgr.Peter Balčirák](https://is.muni.cz/auth/osoba/422570)    |
