@@ -1,17 +1,19 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.CurrencyConversion;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
+import java.time.LocalDateTime;
 
 
 public class CostBar extends JPanel {
-    private final String[] currencyModel = {"USD", "EUR", "GBP"};
     private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
     private final JComboBox<Currency> currencyJComboBox;
+    JSpinner rate = new JSpinner(new SpinnerNumberModel());
 
     public CostBar(ListModel<Currency> currencyModel, double costOfFuelval, double covertRateval, Currency currency) {
         super(new FlowLayout(FlowLayout.CENTER));
@@ -19,9 +21,9 @@ public class CostBar extends JPanel {
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         currencyJComboBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-//                var template = (Template) e.getItem();
-//                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), LocalDateTime.now(), template.getCategory(), currencyModel.getElementAt(0));
-////                setValues(templateCarRide);
+                var curr = (Currency) e.getItem();
+                var rate = curr.getRateToDollar();
+                setConversionRate(rate);
             }
         });
 
@@ -37,7 +39,6 @@ public class CostBar extends JPanel {
 
         JLabel rateLabel = new JLabel("Rate:");
         this.add(rateLabel);
-        JSpinner rate = new JSpinner(new SpinnerNumberModel());
         rate.setPreferredSize(new Dimension(150, 30));
         this.add(rate);
 
@@ -59,7 +60,11 @@ public class CostBar extends JPanel {
     }
 
     public void setConversionRate(double covertRate) {
-        this.costOfFuel.setValue(covertRate);
+        this.rate.setValue(covertRate);
+    }
+
+    public CurrencyConversion getobjectCOnversionRate() {
+        return new CurrencyConversion(getCurrency(), (double) rate.getValue(), LocalDateTime.now(), getCurrency().getConversions().size());
     }
 
     public Currency getCurrency() {
@@ -69,5 +74,4 @@ public class CostBar extends JPanel {
     public void setCurrency(Currency currency) {
         this.currencyJComboBox.setSelectedItem(currency);
     }
-    
-}
+

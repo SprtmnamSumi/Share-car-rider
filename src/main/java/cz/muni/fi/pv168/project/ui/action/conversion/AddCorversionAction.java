@@ -24,7 +24,7 @@ public final class AddCorversionAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) corversionTable.getModel();
-        var dialog = new AddCurrencyDialog(new Currency("", "", 0.0, new ArrayList<>()));
+        var dialog = new AddCurrencyDialog(new Currency("", "", new ArrayList<>()));
         dialog.show(corversionTable, "Add Currency")
                 .ifPresent(currencyTableModel::addRow);
     }

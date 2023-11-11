@@ -58,6 +58,6 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
 
     @Override
     Currency getEntity() {
-        return new Currency(nameTextField.getText(), symbolTextField.getText(), 1.0, new LinkedList<>());
+        return new Currency(nameTextField.getText(), symbolTextField.getText(), new LinkedList<>());
     }
 }

@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.business.model;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class Currency extends Entity {
@@ -7,13 +8,12 @@ public class Currency extends Entity {
 
     private final String symbol;
 
-    private final Double rateToDollar;
+
     private final List<CurrencyConversion> conversions;
 
-    public Currency(String name, String symbol, Double rateToDollar, List<CurrencyConversion> conversions) {
+    public Currency(String name, String symbol, List<CurrencyConversion> conversions) {
         this.name = name;
         this.symbol = symbol;
-        this.rateToDollar = rateToDollar;
         this.conversions = conversions;
     }
 
@@ -26,7 +26,7 @@ public class Currency extends Entity {
     }
 
     public Double getRateToDollar() {
-        return rateToDollar;
+        return conversions.stream().max(Comparator.comparingInt(CurrencyConversion::getOrder)).get().getConversionRate();
     }
 
     @Override

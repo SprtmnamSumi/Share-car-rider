@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.business.model;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public class Template extends Entity {
+    private final CurrencyConversion currencyConversion;
     private Currency currency;
     private String title;
     private String description;
@@ -14,9 +14,7 @@ public class Template extends Entity {
     private double commission;
     private Category category;
 
-    private Optional<CurrencyConversion> currencyConversion;
-
-    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, Optional<CurrencyConversion> currencyConversion) {
+    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, CurrencyConversion currencyConversion) {
         super(guid);
         this.currencyConversion = currencyConversion;
         this.currency = currency;
@@ -132,11 +130,20 @@ public class Template extends Entity {
     }
 
 
-    public Optional<CurrencyConversion> getCurrencyConversion() {
+    public CurrencyConversion getCurrencyConversion() {
         return currencyConversion;
     }
 
-    public void setCurrencyConversion(Optional<CurrencyConversion> currencyConversion) {
-        this.currencyConversion = currencyConversion;
+    public void setCurrencyConversion(CurrencyConversion cyrrencyt) {
+
+//        currency.getConversions().add(currencyConversion.get());
+
     }
+
+//    public double getRate() {
+////        if (currencyConversion.isEmpty()) {
+////            currency.getRateToDollar();
+////        }
+////        return currencyConversion.get().getConversionRate();
+//    }
 }

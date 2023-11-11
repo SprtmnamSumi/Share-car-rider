@@ -15,6 +15,8 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,6 +52,14 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         setValues(carRide);
         addFields();
 
+        templateComboBoxModel.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                var template = (Template) e.getItem();
+                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), LocalDateTime.now(), template.getCategory(), template.getCurrency(), template.getCurrencyConversion());
+                setValues(templateCarRide);
+            }
+        });
+
         this.entityCrudService = entityCrudService;
     }
 
@@ -66,7 +76,6 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         costBar.setCostOfFuel(carRide.getCostOfFuelPerLitreInDollars());
         costBar.setConversionRate(carRide.getCurrency().getRateToDollar());
         costBar.setCurrency(carRide.getCurrency());
-
     }
 
 
@@ -103,6 +112,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setCommission(Double.parseDouble(getSpinnerValue(commission)));
         carRide.setCategory(categoryBar.getSelectedItem());
         carRide.setDate(dateBar.getDate());
+        carRide.setCurrencyConversion(costBar.getobjectCOnversionRate());
 
 //        carRide.setCurrency((Currency) currencyJComboBox.getSelectedItem());
 //        var costInDefCurrency = Double.parseDouble(getSpinnerValue(costOfFuel));

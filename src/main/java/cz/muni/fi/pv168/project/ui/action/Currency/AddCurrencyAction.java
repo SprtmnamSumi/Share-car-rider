@@ -37,7 +37,7 @@ public final class AddCurrencyAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
-        var dialog = new AddCurrencyDialog(new Currency("", "", 0.0, new LinkedList<>() {
+        var dialog = new AddCurrencyDialog(new Currency("", "", new LinkedList<>() {
         }));
         dialog.show(currencyTable, "Add Currency")
                 .ifPresent(currencyTableModel::addRow);

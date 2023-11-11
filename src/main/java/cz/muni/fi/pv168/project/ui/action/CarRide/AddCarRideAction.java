@@ -20,7 +20,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 final class AddCarRideAction extends AbstractAction {
 
@@ -60,12 +59,16 @@ final class AddCarRideAction extends AbstractAction {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
     }
 
+    private void addEntity(CarRide carRide) {
+        carRide.setCurrencyConversion(carRide.getCurrencyConversion());
+        ((CarRideTableModel) carRidesTable.getModel()).addRow(carRide);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0), Optional.empty());
+        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0), currencyListModel.getElementAt(0).getConversions().get(0));
         var dialog = new CarRideDialog(carRide, categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableMode, currencyConverter);
         dialog.show(carRidesTable, "Add Cat ride")
-                .ifPresent(carRidesTableModel::addRow);
+                .ifPresent(this::addEntity);
     }
 }
