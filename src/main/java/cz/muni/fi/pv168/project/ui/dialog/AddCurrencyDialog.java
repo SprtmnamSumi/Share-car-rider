@@ -1,7 +1,8 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
+import cz.muni.fi.pv168.project.util.ConversionUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 
@@ -21,8 +22,8 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
     private final ValidatedInputField rateToDollar = new ValidatedInputField() {
         @Override
         public boolean evaluate() {
-            return (FieldConversionUtils.validateDouble(this) && Double.parseDouble(this.getText()) > 0)
-                    || (FieldConversionUtils.validateInteger(this) && Integer.parseInt(this.getText()) > 0);
+            return (ValidationUtils.validateDouble(this) && Double.parseDouble(this.getText()) > 0)
+                    || (ValidationUtils.validateInteger(this) && Integer.parseInt(this.getText()) > 0);
         }
     };
 
