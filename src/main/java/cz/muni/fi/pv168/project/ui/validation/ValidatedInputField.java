@@ -10,14 +10,15 @@ import java.awt.event.KeyListener;
 
 public class ValidatedInputField extends JTextField implements Validable {
 
-    private KeyListener listener = new TypeListener();
+    private final KeyListener listener = new TypeListener();
+
     public ValidatedInputField() {
         super();
         this.addKeyListener(listener);
     }
 
     @Override
-    public void setText(String text){
+    public void setText(String text) {
         super.setText(text);
         listener.keyReleased(null);
     }
@@ -28,7 +29,7 @@ public class ValidatedInputField extends JTextField implements Validable {
     }
 
     @Override
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this.getText().isEmpty();
     }
 
@@ -36,8 +37,8 @@ public class ValidatedInputField extends JTextField implements Validable {
         @Override
         public void keyReleased(KeyEvent e) {
             ValidatedInputField.this.setBackground(ValidatedInputField.this.isEmpty()
-                        ? Color.WHITE
-                        : ValidatedInputField.this.evaluate() ? Validable.VALID_COLOR : Validable.INVALID_COLOR);
+                    ? Color.WHITE
+                    : ValidatedInputField.this.evaluate() ? Color.WHITE : Validable.INVALID_COLOR);
         }
     }
 }

@@ -27,7 +27,8 @@ public class CarRideStatistics implements ICarRideStatistics {
         for (CarRide carRide : carRides) {
             totalExpenses += getCarRideCost(carRide);
         }
-        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(totalExpenses);
+        return totalExpenses;
+//        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(totalExpenses);
     }
 
     @Override
@@ -38,7 +39,8 @@ public class CarRideStatistics implements ICarRideStatistics {
                 todayExpenses += getCarRideCost(carRide);
             }
         }
-        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(todayExpenses);
+        return todayExpenses;
+//        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(todayExpenses);
     }
 
     @Override
@@ -47,7 +49,8 @@ public class CarRideStatistics implements ICarRideStatistics {
         for (CarRide carRide : carRides) {
             totalRevenues += getCarRideCost(carRide) * (1 + carRide.getCommission() / 100);
         }
-        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(totalRevenues);
+        return totalRevenues;
+//        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(totalRevenues);
     }
 
     @Override
