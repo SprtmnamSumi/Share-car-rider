@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
-import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
 
@@ -83,11 +83,10 @@ public class CostBar extends ValidatedJPanel {
         return new ValidatedInputField() {
             @Override
             public boolean evaluate() {
-                return FieldConversionUtils.validateDouble(this)
+                return ValidationUtils.validateDouble(this)
                         && Double.parseDouble(this.getText()) >= 0.0f;
             }
         };
     }
-
 }
 
