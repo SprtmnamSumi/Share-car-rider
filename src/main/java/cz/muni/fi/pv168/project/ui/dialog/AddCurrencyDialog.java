@@ -3,10 +3,7 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.List;
+import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 
 public class AddCurrencyDialog extends EntityDialog<Currency> {
     private final ValidatedInputField nameTextField = new ValidatedInputField() {
@@ -28,7 +25,13 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
                     || (FieldConversionUtils.validateInteger(this) && Integer.parseInt(this.getText()) > 0);
         }
     };
-    private final TypeListener validationListener = new TypeListener();
+
+    private final ValidationListener validationListener = new ValidationListener(nameTextField, symbolTextField, rateToDollar) {
+        @Override
+        protected void onChange(boolean isValid) {
+            AddCurrencyDialog.super.toggleOk(isValid);
+        }
+    };
     private final Currency currency;
 
     public AddCurrencyDialog(Currency currency) {
@@ -36,10 +39,7 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
         //setValues();
 
         addFields();
-        nameTextField.addKeyListener(validationListener);
-        symbolTextField.addKeyListener(validationListener);
-        rateToDollar.addKeyListener(validationListener);
-        toggleOk();
+        validationListener.fireChange();
     }
 
     private void setValues() {
@@ -56,18 +56,5 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
     @Override
     Currency getEntity() {
         return new Currency(nameTextField.getText(), symbolTextField.getText(), 1.0);
-    }
-
-    private void toggleOk() {
-        AddCurrencyDialog.super.toggleOk(
-                List.of(nameTextField, symbolTextField, rateToDollar)
-                        .parallelStream().allMatch(ValidatedInputField::evaluate));
-    }
-
-    private class TypeListener extends KeyAdapter {
-        @Override
-        public void keyReleased(KeyEvent e) {
-            toggleOk();
-        }
     }
 }

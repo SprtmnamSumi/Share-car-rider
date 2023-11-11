@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -36,7 +37,12 @@ public class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField commission = getDoubleField();
     private final JCheckBox isChecked = new JCheckBox();
     private final Template template;
-    private final KeyListener validationListener = new TypeListener();
+    private final ValidationListener validationListener = new ValidationListener(distanceField, fuelConsumption, costOfFuel, numberOfPassengers, commission) {
+        @Override
+        protected void onChange(boolean isValid) {
+            TemplateDialog.super.toggleOk(isValid);
+        }
+    };
 
     public TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter) {
         this.template = template;
@@ -47,8 +53,7 @@ public class TemplateDialog extends EntityDialog<Template> {
         this.currencyConverter = currencyConverter;
         addFields();
         setValues();
-        setListeners();
-        toggleOk();
+        validationListener.fireChange();
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -65,15 +70,6 @@ public class TemplateDialog extends EntityDialog<Template> {
             }
         });
 
-    }
-
-    private void setListeners(){
-        titleField.addKeyListener(validationListener);
-        distanceField.addKeyListener(validationListener);
-        fuelConsumption.addKeyListener(validationListener);
-        costOfFuel.addKeyListener(validationListener);
-        numberOfPassengers.addKeyListener(validationListener);
-        commission.addKeyListener(validationListener);
     }
 
     private void setValues() {
@@ -121,18 +117,5 @@ public class TemplateDialog extends EntityDialog<Template> {
                         && Double.parseDouble(this.getText()) >= 0.0f;
             }
         };
-    }
-
-    private void toggleOk(){
-        TemplateDialog.super.toggleOk(
-                List.of(titleField, distanceField, fuelConsumption, costOfFuel, numberOfPassengers, commission)
-                        .parallelStream().allMatch(ValidatedInputField::evaluate));
-    }
-
-    private class TypeListener extends KeyAdapter {
-        @Override
-        public void keyReleased(KeyEvent e) {
-            toggleOk();
-        }
     }
 }

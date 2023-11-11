@@ -17,8 +17,8 @@ abstract class EntityDialog<E> {
 
     private JDialog dialog;
 
-    private JButton okButton = new JButton("Add");
-    private JButton cancelButton = new JButton("Cancel");
+    private final JButton okButton = new JButton("Add");
+    private final JButton cancelButton = new JButton("Cancel");
 
     protected final JPanel panel = new JPanel();
 
@@ -43,7 +43,7 @@ abstract class EntityDialog<E> {
     abstract E getEntity();
 
     public Optional<E> show(JComponent parentComponent, String title) {
-        add("",getDialogControls());
+        addDialogControls();
         dialog = new JDialog(Frame.getFrames()[0], title, Dialog.ModalityType.APPLICATION_MODAL);
         panel.setBorder(BorderFactory.createEmptyBorder(25,25,25,25));
         dialog.setResizable(false);
@@ -53,12 +53,12 @@ abstract class EntityDialog<E> {
         return pressedOK ? Optional.of(getEntity()) : Optional.empty();
     }
 
-    private JPanel getDialogControls(){
+    private void addDialogControls(){
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(this.panel.getSize().width,5));
         panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         panel.add(okButton);
         panel.add(cancelButton);
-        return panel;
+        add("",panel);
     }
 }
