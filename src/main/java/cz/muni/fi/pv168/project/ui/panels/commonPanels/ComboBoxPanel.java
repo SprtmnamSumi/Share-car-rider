@@ -11,10 +11,10 @@ public class ComboBoxPanel<T> extends FilterComponentPanel {
         super(labelName);
         this.add(comboBox);
         comboBox.setRenderer((list, value, index, isSelected, cellHasFocus) ->
-                value == null
-                        ? new DefaultListCellRenderer().getListCellRendererComponent(list,"All",index, isSelected, cellHasFocus)
-                        : new DefaultListCellRenderer().getListCellRendererComponent(list,value,index, isSelected, cellHasFocus));
+                new DefaultListCellRenderer()
+                        .getListCellRendererComponent(list, value == null ? "All" : value, index, isSelected, cellHasFocus));
     }
+
 
     public void setComboBoxItems(List<T> comboBoxItems) {
         comboBox.removeAllItems();
