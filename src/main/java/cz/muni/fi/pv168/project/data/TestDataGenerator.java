@@ -25,7 +25,24 @@ public class TestDataGenerator {
     );
     private final List<Tuple> CURRENCIES = List.of(
             new Tuple("USD", "US Dollar", 1.0),
-            new Tuple("EUR", "Euro", 1.0)
+            new Tuple("EUR", "Euro", 0.85),
+            new Tuple("CZK", "Czech Koruna", 21.0),
+            new Tuple("GBP", "British Pound", 0.72),
+            new Tuple("JPY", "Japanese Yen", 109.0),
+            new Tuple("CHF", "Swiss Franc", 0.92),
+            new Tuple("CAD", "Canadian Dollar", 1.26),
+            new Tuple("AUD", "Australian Dollar", 1.29),
+            new Tuple("NZD", "New Zealand Dollar", 1.35),
+            new Tuple("RUB", "Russian Ruble", 73.0),
+            new Tuple("INR", "Indian Rupee", 73.0),
+            new Tuple("BRL", "Brazilian Real", 5.0),
+            new Tuple("CNY", "Chinese Yuan", 6.5),
+            new Tuple("MXN", "Mexican Peso", 20.0),
+            new Tuple("SGD", "Singapore Dollar", 1.35),
+            new Tuple("HKD", "Hong Kong Dollar", 7.8),
+            new Tuple("NOK", "Norwegian Krone", 8.5)
+
+
             // Add more currency tuples as needed
     );
     private final Random randomGenerator = new Random();
@@ -51,7 +68,7 @@ public class TestDataGenerator {
         double commission = randomGenerator.nextInt(0, 100);
         Category category = categories.get(randomGenerator.nextInt(categories.size()));
         Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
-        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency);
+        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, currency.getNewestRateToDollar());
     }
 
     private Currency createTestCurrency(Tuple curr) {
@@ -68,7 +85,8 @@ public class TestDataGenerator {
         int numberOfPassengers = randomGenerator.nextInt(1, 10);
         double commission = randomGenerator.nextInt(0, 100);
         Category category = createTestCategory(CATEGORIES.get(randomGenerator.nextInt(CATEGORIES.size())));
-        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, null);
+        Currency currency = createTestCurrency(CURRENCIES.get(randomGenerator.nextInt(CURRENCIES.size())));
+        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, currency.getNewestRateToDollar());
     }
 
     private CarRide createTestRide(List<Category> categories, List<Currency> currencies) {
@@ -88,7 +106,7 @@ public class TestDataGenerator {
                 randomGenerator.nextInt(0, 60));
         Category category = categories.get(randomGenerator.nextInt(categories.size()));
         Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
-        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, date, category, currency);
+        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, date, category, currency, currency.getNewestRateToDollar());
     }
 
     public List<CarRide> createTestRides(int count, List<Category> categories, List<Currency> currencies) {

@@ -1,7 +1,8 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.ui.model.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -9,7 +10,6 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
-import java.util.List;
 
 public final class CategoryDialog extends EntityDialog<Category> {
 
@@ -20,16 +20,19 @@ public final class CategoryDialog extends EntityDialog<Category> {
         }
     };
     private final JColorChooser colorChooser = new JColorChooser(Color.WHITE);
-
     private final Category category;
+    private final ValidationListener validationListener = new ValidationListener(nameField) {
+        @Override
+        protected void onChange(boolean isValid) {
+            CategoryDialog.super.toggleOk(isValid);
+        }
+    };
 
     public CategoryDialog(Category category, ListModel<Category> categoriestListModel) {
         this.category = category;
-        nameField.addKeyListener(new TypeListener());
-        toggleOk();
         setValues();
         addFields();
-        toggleOk();
+        validationListener.fireChange();
     }
 
     @Override
@@ -50,16 +53,5 @@ public final class CategoryDialog extends EntityDialog<Category> {
 
     private AbstractColorChooserPanel getBasicColorPicker(){
         return Arrays.stream(colorChooser.getChooserPanels()).toList().get(0);
-    }
-
-    private void toggleOk(){
-        toggleOk(nameField.evaluate());
-    }
-
-    private class TypeListener extends KeyAdapter {
-        @Override
-        public void keyReleased(KeyEvent e) {
-            toggleOk();
-        }
     }
 }

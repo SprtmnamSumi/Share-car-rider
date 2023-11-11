@@ -1,8 +1,8 @@
-package cz.muni.fi.pv168.project.ui.model.validation;
+package cz.muni.fi.pv168.project.ui.validation;
 
 import javax.swing.*;
 
-public class FieldConversionUtils {
+public class ValidationUtils {
     public static boolean validateDouble(JTextField field){
         try{
             Double.parseDouble(field.getText());
@@ -12,8 +12,6 @@ public class FieldConversionUtils {
             return false;
         }
     }
-
-
     public static boolean validateInteger(JTextField field){
         try{
             Integer.parseInt(field.getText());

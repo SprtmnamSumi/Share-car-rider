@@ -5,12 +5,12 @@ public class Currency extends Entity {
 
     private final String symbol;
 
-    private final Double rateToDollar;
-    
-    public Currency(String name, String symbol, Double rateToDollar) {
+    private Double newestRateToDollar;
+
+    public Currency(String name, String symbol, Double newestRateToDollar) {
         this.name = name;
         this.symbol = symbol;
-        this.rateToDollar = rateToDollar;
+        this.newestRateToDollar = newestRateToDollar;
     }
 
     public String getName() {
@@ -21,10 +21,13 @@ public class Currency extends Entity {
         return symbol;
     }
 
-    public Double getRateToDollar() {
-        return rateToDollar;
+    public Double getNewestRateToDollar() {
+        return newestRateToDollar;
     }
 
+    public void setNewestRateToDollar(double newestRateToDollar) {
+        this.newestRateToDollar = newestRateToDollar;
+    }
 
     @Override
     public String toString() {
