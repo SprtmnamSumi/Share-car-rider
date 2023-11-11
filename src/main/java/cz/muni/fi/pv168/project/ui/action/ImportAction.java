@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.gui.dialog.ImportDialog;
+import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

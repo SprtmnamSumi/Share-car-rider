@@ -1,4 +1,6 @@
-package cz.muni.fi.pv168.project.gui.dialog;
+package cz.muni.fi.pv168.project.ui.dialog;
+
+import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +22,10 @@ public class ExportDialog extends JDialog
     private final String title = "Export data";
     private final JOptionPane optionPane;
 
-    private String btnString1 = "Enter";
+    private String btnString1 = "Export";
     private String btnString2 = "Cancel";
+
+    private File selectedFile;
 
     public ExportDialog(Frame aFrame, String aWord) {
         super(aFrame, true);
@@ -32,18 +36,16 @@ public class ExportDialog extends JDialog
         fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    // Use the Desktop class to open the system's file explorer
-                    Desktop.getDesktop().open(new File("."));
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showOpenDialog(ExportDialog.this);
+
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    selectedFile = fileChooser.getSelectedFile();
                 }
             }
         });
         Object[] array = {msgString1, fileButton};
 
-        //Create an array specifying the number of dialog buttons
-        //and their text.
         Object[] options = {btnString1, btnString2};
 
         optionPane = new JOptionPane(array,
@@ -64,7 +66,6 @@ public class ExportDialog extends JDialog
         optionPane.addPropertyChangeListener(this);
     }
 
-    /** This method reacts to state changes in the option pane. */
     public void propertyChange(PropertyChangeEvent e) {
         clearAndHide();
     }
