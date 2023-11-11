@@ -5,16 +5,12 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
-import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.List;
 
 public class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField titleField = new ValidatedInputField(){
@@ -69,7 +65,6 @@ public class TemplateDialog extends EntityDialog<Template> {
                 setValues();
             }
         });
-
     }
 
     private void setValues() {
@@ -113,7 +108,7 @@ public class TemplateDialog extends EntityDialog<Template> {
         return new ValidatedInputField() {
             @Override
             public boolean evaluate() {
-                return FieldConversionUtils.validateDouble(this)
+                return ValidationUtils.validateDouble(this)
                         && Double.parseDouble(this.getText()) >= 0.0f;
             }
         };

@@ -23,8 +23,8 @@ public class CarRideFilterPanel extends JPanel {
 
         passengerFilter = new PassengersFilterPanel(filter);
         dateFilter = new DateFilterPanel(filter);
-        categoryPanel = new FilterBoxPanel<>(filter, categories, Filters.CATEGORY_FILTER);
-        currencyPanel = new FilterBoxPanel<>(filter, currencyTableModel, Filters.CURRENCY_FILTER);
+        categoryPanel = new FilterBoxPanel<>(filter, categories, Filters.CATEGORY_FILTER, "Category");
+        currencyPanel = new FilterBoxPanel<>(filter, currencyTableModel, Filters.CURRENCY_FILTER, "Currency");
         distanceFilter = new DistanceFilterPanel(filter);
 
         this.add(passengerFilter);

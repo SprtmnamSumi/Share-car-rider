@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.ui.panels.Category;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.util.ConversionUtils;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -38,7 +39,7 @@ public class CategoryTablePanel extends JPanel {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setDefaultRenderer(Integer.class, (table, value, isSelected, hasFocus, row, column) -> {
             DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-            renderer.setBackground(new Color((Integer) value));
+            renderer.setBackground(ConversionUtils.getDimColor((Integer)value));
             return renderer;
         });
 
