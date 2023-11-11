@@ -11,16 +11,12 @@ import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.List;
 
 public class TemplateDialog extends EntityDialog<Template> {
-    private final ValidatedInputField titleField = new ValidatedInputField(){
+    private final ValidatedInputField titleField = new ValidatedInputField() {
         @Override
-        public boolean evaluate(){
-            return this.getText().length()>=2;
+        public boolean evaluate() {
+            return this.getText().length() >= 2;
         }
     };
     private final JTextField descriptionField = new JTextField();
@@ -37,6 +33,7 @@ public class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField commission = getDoubleField();
     private final JCheckBox isChecked = new JCheckBox();
     private final Template template;
+
     private final ValidationListener validationListener = new ValidationListener(distanceField, fuelConsumption, costOfFuel, numberOfPassengers, commission) {
         @Override
         protected void onChange(boolean isValid) {
@@ -92,7 +89,7 @@ public class TemplateDialog extends EntityDialog<Template> {
         add("Cost of Fuel (1l)", costOfFuel);
         add("Number of Passengers", numberOfPassengers);
         add("Commission (%)", commission);
-        add("Category", categoryJComboBox);
+        add("Cat egory", categoryJComboBox);
         add("Count me in the calculation of per price person", isChecked);
     }
 
