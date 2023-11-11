@@ -12,6 +12,7 @@ import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
+import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -36,6 +37,9 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
 
+    private final TemplateBar templateBar;
+    private final JButton saveAsTemplate = new JButton("Save as template");
+
 
     private final TableModel<Template> entityCrudService;
     CarRide carRide;
@@ -46,6 +50,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         this.currencyConverter = currencyConverter;
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
+        templateBar = new TemplateBar(templateComboBoxModel, new JButton(""));
         setValues(carRide);
         addFields();
 

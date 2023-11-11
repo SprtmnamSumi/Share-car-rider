@@ -11,7 +11,6 @@ import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,7 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-final class EditCarRideAction extends AbstractAction {
+final class SaveCarRIdeAsTemplateAction extends AbstractAction {
 
     private final JTable carRidesTable;
     private final ListModel<Category> categoriestListModel;
@@ -34,16 +33,16 @@ final class EditCarRideAction extends AbstractAction {
     private BufferedImage editImage;
 
 
-    EditCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, EntityListModelAdapter<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
-        super("Edit");
+    SaveCarRIdeAsTemplateAction(JTable carRidesTable, ListModel<Category> categoriestListModel, EntityListModelAdapter<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
+        super("Save as template");
 
         try {
-            editImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/editing.png"));
+            editImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/write.png"));
             Icon customIcon = new ImageIcon(editImage);
             putValue(SMALL_ICON, customIcon);
         } catch (IOException ex) {
             ex.printStackTrace();
-        };
+        }
 
         this.carRidesTable = carRidesTable;
         this.currencyListModel = currencyListModel;
@@ -53,9 +52,9 @@ final class EditCarRideAction extends AbstractAction {
         this.categoryActionFactory = categoryActionFactory;
         this.categoryTableModel = categoryTableModel;
         this.currencyConverter = currencyConverter;
-        putValue(SHORT_DESCRIPTION, "Edits Car Ride");
+        putValue(SHORT_DESCRIPTION, "Save as a template");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl t"));
     }
 
     @Override
