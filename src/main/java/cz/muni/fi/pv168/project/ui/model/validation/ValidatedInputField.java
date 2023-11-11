@@ -24,7 +24,7 @@ public class ValidatedInputField extends JTextField implements Validable {
 
     @Override
     public boolean evaluate() {
-        return StringUtils.isNumber(this.getText());
+        return FieldConversionUtils.validateInteger(this);
     }
 
     @Override
