@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
+import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.NameValuePanel;
 
@@ -19,11 +20,13 @@ public class CarRideStatisticsPanel extends JPanel {
     private final NameValuePanel totalRevenues = new NameValuePanel("Total revenues:");
     private final NameValuePanel totalRides = new NameValuePanel("Total rides:");
     private final ICarRideStatistics ICarRideStatistics;
+    private final CarRideTableFilter carRideTableFilter;
 
-    public CarRideStatisticsPanel(TableModel<CarRide> model, ICarRideStatistics ICarRideStatistics1) {
+    public CarRideStatisticsPanel(TableModel<CarRide> model, CarRideTableFilter carRideTableFilter, ICarRideStatistics ICarRideStatistics1) {
         super(new BorderLayout());
         this.model = model;
         this.ICarRideStatistics = ICarRideStatistics1;
+        this.carRideTableFilter = carRideTableFilter;
 
         JPanel filteredRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         add(filteredRow, BorderLayout.PAGE_START);
@@ -45,9 +48,9 @@ public class CarRideStatisticsPanel extends JPanel {
     }
 
     public void updateFilteredStats() {
-        var entities = model.getAllEntities();
-        filteredDistance.setValue(String.format("%.2f", ICarRideStatistics.getTotalDistance(entities))); //Set to only filtered CarRides after filtering is finished.
-        filteredExpenses.setValue(String.format("%.2f", ICarRideStatistics.getTotalExpenses(entities))); //Set to only filtered CarRides after filtering is finished.
+        var entities = carRideTableFilter.getRideCompoundMatcher().getData();
+        filteredDistance.setValue(String.format("%.2f", ICarRideStatistics.getTotalDistance(entities)));
+        filteredExpenses.setValue(String.format("%.2f", ICarRideStatistics.getTotalExpenses(entities)));
     }
 
     public void updateTotalStats() {

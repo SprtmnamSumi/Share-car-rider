@@ -1,6 +1,9 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.filters.Filters;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.panels.filters.*;
@@ -12,25 +15,22 @@ public class CarRideFilterPanel extends JPanel {
     private final FilterPanel distanceFilter;
     private final FilterPanel dateFilter;
     private final FilterPanel passengerFilter;
-    private final CategoryFilterPanel categoryPanel;
-    //private final FilterPanel currencyPanel;
+    private final FilterBoxPanel<Category> categoryPanel;
+    private final FilterBoxPanel<Currency> currencyPanel;
 
     public CarRideFilterPanel(CarRideTableFilter filter, CategoryTableModel categories, CurrencyTableModel currencyTableModel) {
         super(new FlowLayout(FlowLayout.LEFT));
 
         passengerFilter = new PassengersFilterPanel(filter);
-        this.add(passengerFilter);
-
         dateFilter = new DateFilterPanel(filter);
-        this.add(dateFilter);
-
-        categoryPanel = new CategoryFilterPanel(filter, categories);
-        this.add(categoryPanel);
-
-        //currencyPanel = new CurrencyFilterPanel(filter, currencyTableModel);
-        //this.add(currencyPanel);
-
+        categoryPanel = new FilterBoxPanel<>(filter, categories, Filters.CATEGORY_FILTER, "Category");
+        currencyPanel = new FilterBoxPanel<>(filter, currencyTableModel, Filters.CURRENCY_FILTER, "Currency");
         distanceFilter = new DistanceFilterPanel(filter);
+
+        this.add(passengerFilter);
+        this.add(dateFilter);
+        this.add(categoryPanel);
+        this.add(currencyPanel);
         this.add(distanceFilter);
 
         JButton filterButton = new JButton("Reset Filter");
@@ -43,6 +43,7 @@ public class CarRideFilterPanel extends JPanel {
 
     public void updateValues() {
         categoryPanel.updateValues();
+        currencyPanel.updateValues();
     }
 
     private void resetFilters() {
@@ -50,6 +51,6 @@ public class CarRideFilterPanel extends JPanel {
         distanceFilter.reset();
         passengerFilter.reset();
         categoryPanel.reset();
-        //currencyPanel.getComboBox().setSelectedItem(null);
+        currencyPanel.reset();
     }
 }

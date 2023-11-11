@@ -1,18 +1,13 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
-import cz.muni.fi.pv168.project.ui.model.validation.Validable;
-import cz.muni.fi.pv168.project.ui.model.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.Validable;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class ValidatedTextFieldPanel extends JPanel implements Validable {
-    private final JTextField textField = new ValidatedInputField() {
-        @Override
-        public boolean evaluate() {
-            return ValidatedTextFieldPanel.this.evaluate();
-        }
-    };
+public class ValidatedTextFieldPanel extends JPanel implements Validable {
+    private final ValidatedInputField textField = new ValidatedInputField();
 
     public ValidatedTextFieldPanel(String LabelName) {
         super();
@@ -22,9 +17,18 @@ public abstract class ValidatedTextFieldPanel extends JPanel implements Validabl
         this.setLayout(new GridLayout(2, 1));
     }
 
+    @Override
+    public boolean isEmpty(){
+        return textField.isEmpty();
+    }
+
+    @Override
+    public boolean evaluate() {
+        return textField.evaluate();
+    }
+
     public void clear(){
         textField.setText("");
-        evaluate();
     }
 
     public JTextField getTextField() {

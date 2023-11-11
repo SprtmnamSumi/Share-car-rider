@@ -5,12 +5,20 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 
 public class TemplateDialog extends EntityDialog<Template> {
-    private final JTextField titleField = new JTextField();
+    private final ValidatedInputField titleField = new ValidatedInputField(){
+        @Override
+        public boolean evaluate(){
+            return this.getText().length()>=2;
+        }
+    };
     private final JTextField descriptionField = new JTextField();
 
     private final JComboBox<Currency> currencyJComboBox;
@@ -18,13 +26,19 @@ public class TemplateDialog extends EntityDialog<Template> {
     private final JComboBox<Template> templateComboBoxModel;
     private final JComboBox<Category> categoryJComboBox;
 
-    private final JSpinner distanceField = new JSpinner(new SpinnerNumberModel());
-    private final JSpinner fuelConsumption = new JSpinner(new SpinnerNumberModel());
-    private final JSpinner costOfFuel = new JSpinner(new SpinnerNumberModel());
-    private final JSpinner numberOfPassengers = new JSpinner(new SpinnerNumberModel());
-    private final JSpinner commission = new JSpinner(new SpinnerNumberModel());
+    private final ValidatedInputField distanceField = getDoubleField();
+    private final ValidatedInputField fuelConsumption = getDoubleField();
+    private final ValidatedInputField costOfFuel = getDoubleField();
+    private final ValidatedInputField numberOfPassengers = new ValidatedInputField();
+    private final ValidatedInputField commission = getDoubleField();
     private final JCheckBox isChecked = new JCheckBox();
     private final Template template;
+    private final ValidationListener validationListener = new ValidationListener(distanceField, fuelConsumption, costOfFuel, numberOfPassengers, commission) {
+        @Override
+        protected void onChange(boolean isValid) {
+            TemplateDialog.super.toggleOk(isValid);
+        }
+    };
 
     public TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter) {
         this.template = template;
@@ -33,8 +47,9 @@ public class TemplateDialog extends EntityDialog<Template> {
         categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         this.currencyConverter = currencyConverter;
-        setValues();
         addFields();
+        setValues();
+        validationListener.fireChange();
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -50,17 +65,16 @@ public class TemplateDialog extends EntityDialog<Template> {
                 setValues();
             }
         });
-
     }
 
     private void setValues() {
         titleField.setText(template.getTitle());
         descriptionField.setText(template.getDescription());
-        distanceField.setValue(template.getDistance());
-        fuelConsumption.setValue(template.getFuelConsumption());
-        costOfFuel.setValue(template.getCostOfFuelPerLitreInDollars());
-        numberOfPassengers.setValue(template.getNumberOfPassengers());
-        commission.setValue(template.getCommission());
+        distanceField.setText(template.getDistance().toString());
+        fuelConsumption.setText(String.valueOf(template.getFuelConsumption()));
+        costOfFuel.setText(String.valueOf(template.getCostOfFuelPerLitreInDollars()));
+        numberOfPassengers.setText(String.valueOf(template.getNumberOfPassengers()));
+        commission.setText(String.valueOf(template.getCommission()));
         categoryJComboBox.setSelectedItem(template.getCategory());
     }
 
@@ -77,25 +91,26 @@ public class TemplateDialog extends EntityDialog<Template> {
         add("Count me in the calculation of per price person", isChecked);
     }
 
-    private String getSpinnerValue(JSpinner spinner) {
-        try {
-            spinner.commitEdit();
-        } catch (java.text.ParseException e) {
-        }
-
-        return spinner.getValue().toString();
-    }
-
     @Override
     Template getEntity() {
         template.setTitle(titleField.getText());
         template.setDescription(descriptionField.getText());
-        template.setDistance(Double.parseDouble(getSpinnerValue(distanceField)));
-        template.setFuelConsumption(Double.parseDouble(getSpinnerValue(fuelConsumption)));
-        template.setCostOfFuelPerLitre(Double.parseDouble(getSpinnerValue(costOfFuel)));
-        template.setNumberOfPassengers(Integer.parseInt(getSpinnerValue(numberOfPassengers)));
-        template.setCommission(Double.parseDouble(getSpinnerValue(costOfFuel)));
+        template.setDistance(Double.parseDouble(distanceField.getText()));
+        template.setFuelConsumption(Double.parseDouble(fuelConsumption.getText()));
+        template.setCostOfFuelPerLitre(Double.parseDouble(costOfFuel.getText()));
+        template.setNumberOfPassengers(Integer.parseInt(numberOfPassengers.getText()));
+        template.setCommission(Double.parseDouble(commission.getText()));
         template.setCategory((Category) categoryJComboBox.getSelectedItem());
         return template;
+    }
+
+    private ValidatedInputField getDoubleField() {
+        return new ValidatedInputField() {
+            @Override
+            public boolean evaluate() {
+                return ValidationUtils.validateDouble(this)
+                        && Double.parseDouble(this.getText()) >= 0.0f;
+            }
+        };
     }
 }
