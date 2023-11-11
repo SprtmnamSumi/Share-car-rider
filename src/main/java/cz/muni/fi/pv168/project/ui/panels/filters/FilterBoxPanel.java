@@ -15,11 +15,11 @@ public class FilterBoxPanel<T extends Entity> extends FilterPanel {
     private final Filters filterType;
     private final CarRideTableFilter filter;
 
-    public FilterBoxPanel(CarRideTableFilter filter, TableModel<T>  currencyTableModel, Filters filterType) {
+    public FilterBoxPanel(CarRideTableFilter filter, TableModel<T>  currencyTableModel, Filters filterType, String name) {
         super();
         this.filter = filter;
         this.filterType = filterType;
-        this.comboBoxPanel = new ComboBoxPanel<>("Currency");
+        this.comboBoxPanel = new ComboBoxPanel<>(name);
         this.currencyTableModel = currencyTableModel;
         this.add(comboBoxPanel);
         comboBoxPanel.getComboBox().addItemListener((e) -> refreshFilter());
