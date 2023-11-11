@@ -74,4 +74,5 @@ public class CostBar extends JPanel {
     public void setCurrency(Currency currency) {
         this.currencyJComboBox.setSelectedItem(currency);
     }
+}
 
