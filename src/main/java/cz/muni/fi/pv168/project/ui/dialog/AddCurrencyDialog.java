@@ -44,8 +44,9 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
     }
 
     private void setValues() {
-        nameTextField.setText("X");
+        nameTextField.setText(currency.getName());
         symbolTextField.setText(currency.getSymbol());
+        rateToDollar.setText(String.valueOf(currency.getNewestRateToDollar()));
     }
 
     private void addFields() {
@@ -56,6 +57,6 @@ public class AddCurrencyDialog extends EntityDialog<Currency> {
 
     @Override
     Currency getEntity() {
-        return new Currency(nameTextField.getText(), symbolTextField.getText(), 1.0);
+        return new Currency(nameTextField.getText(), symbolTextField.getText(), Double.parseDouble(rateToDollar.getText()));
     }
 }

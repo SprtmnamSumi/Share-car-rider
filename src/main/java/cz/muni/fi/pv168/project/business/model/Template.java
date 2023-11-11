@@ -13,9 +13,12 @@ public class Template extends Entity {
     private double commission;
     private Category category;
 
-    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency) {
+    private double newestConversionRateToDollar;
+
+    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, double newestConversionRateToDollar) {
         super(guid);
         this.currency = currency;
+        this.newestConversionRateToDollar = newestConversionRateToDollar;
         setTitle(Title);
         setDescription(Description);
         setDistance(Distance);
@@ -128,4 +131,11 @@ public class Template extends Entity {
     }
 
 
+    public double getConversionToDollars() {
+        return newestConversionRateToDollar;
+    }
+
+    public void setConversionRateToDollar(double newestConversionRateToDollar) {
+        this.newestConversionRateToDollar = newestConversionRateToDollar;
+    }
 }

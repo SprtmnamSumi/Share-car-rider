@@ -11,7 +11,6 @@ import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -45,7 +44,7 @@ final class AddCarRideAction extends AbstractAction {
             putValue(SMALL_ICON, customIcon);
         } catch (IOException ex) {
             ex.printStackTrace();
-        };
+        }
 
         this.carRidesTable = carRidesTable;
         this.currencyListModel = currencyListModel;
@@ -60,12 +59,18 @@ final class AddCarRideAction extends AbstractAction {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
     }
 
+    private void UpdateFields(CarRide carRide) {
+        var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
+        carRidesTableModel.addRow(carRide);
+        carRide.getCurrency().setNewestRateToDollar(carRide.getConversionToDollars());
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var carRide = new CarRide(null, "", "", 0.0, 0, 0, 0, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0));
+
+        var carRide = new CarRide(null, "", "", 1.0, 1, 1, 1, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0), currencyListModel.getElementAt(0).getNewestRateToDollar());
         var dialog = new CarRideDialog(carRide, categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableMode, currencyConverter);
         dialog.show(carRidesTable, "Add Cat ride")
-                .ifPresent(carRidesTableModel::addRow);
+                .ifPresent(this::UpdateFields);
     }
 }
