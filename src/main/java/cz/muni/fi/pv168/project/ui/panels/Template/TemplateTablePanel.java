@@ -4,6 +4,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTableCell;
 
 import javax.swing.*;
@@ -15,30 +16,21 @@ import java.util.function.Consumer;
  * Panel with template records in a table.
  */
 
-public class TemplateTablePanel extends JPanel {
+public class TemplateTablePanel extends AbstractTablePanel {
 
     private final Consumer<Integer> onSelectionChange;
-    private JTable table;
     private Action addCarRideAction;
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
     public TemplateTablePanel(TemplateTableModel templateTableModel, DefaultActionFactory<Template> actionFactory) {
-
-        setUpTable(templateTableModel, actionFactory);
-        setLayout(new BorderLayout());
-
+        super(templateTableModel);
+        setUpTable(actionFactory);
         add(new JScrollPane(table), BorderLayout.CENTER);
-
         this.onSelectionChange = this::changeActionsState;
     }
 
-    public JTable getTable() {
-        return table;
-    }
-
-    private void setUpTable(TemplateTableModel templateTableModel, DefaultActionFactory<Template> actionFactory) {
-        table = new JTable(templateTableModel);
+    private void setUpTable(DefaultActionFactory<Template> actionFactory) {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setDefaultRenderer(Category.class, (table, value, isSelected, hasFocus, row, column) -> new CategoryTableCell((Category) value));
 
