@@ -121,8 +121,8 @@ public class Template extends Entity {
                 numberOfPassengers == template.numberOfPassengers &&
                 Double.compare(template.commission, commission) == 0 &&
                 Objects.equals(title, template.title) &&
-                Objects.equals(description, template.description) &&
-                Objects.equals(category, template.category);
+                Objects.equals(description, template.description);
+//                Objects.equals(category, template.category);
     }
 
     @Override
