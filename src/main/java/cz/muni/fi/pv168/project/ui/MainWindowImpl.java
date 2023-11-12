@@ -96,7 +96,9 @@ class MainWindowImpl implements MainWindow {
         editMenu.setMnemonic('f');
 
         JMenu settingsMenu = new JMenu("Settings");
+        ImageIcon settingsIcon = new ImageIcon("src/main/java/cz/muni/fi/pv168/project/ui/icons/settings.png");
         editMenu.add(settingsMenu);
+        settingsMenu.setIcon(settingsIcon);
         settingsMenu.add(colorThemeAction);
         editMenu.addSeparator();
 
