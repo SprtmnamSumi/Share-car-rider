@@ -27,7 +27,7 @@ import java.util.UUID;
 
 import static javax.swing.JOptionPane.OK_OPTION;
 
-public final class CarRideDialog extends EntityDialog<CarRide> {
+final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField titleField = new ValidatedInputField() {
         @Override
         public boolean evaluate() {
@@ -49,17 +49,15 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     private final TemplateBar templateBar;
     private final JButton saveAsTemplate = new JButton("Save as template");
     private final CostBar costBar;
-
-
     private final TableModel<Template> entityCrudService;
     private final ValidationListener validationListener;
-    CarRide carRide;
 
+    private final CarRide carRide;
 
-    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
-        this.carRide = carRide;
+    CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         this.currencyConverter = currencyConverter;
+        this.carRide = carRide;
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
 
@@ -91,7 +89,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
     }
 
 
-    private void setValues(CarRide carRide) {
+    public void setValues(CarRide carRide) {
         titleField.setText(carRide.getTitle());
         descriptionField.setText(carRide.getDescription());
         distanceField.setText(String.valueOf(carRide.getDistance()));
@@ -102,16 +100,6 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         commission.setText(String.valueOf(carRide.getCommission()));
         currencyJComboBox.setSelectedItem(carRide.getCurrency());
         costBar.SetValues(carRide.getCostOfFuelPerLitreInDollars(), carRide.getConversionToDollars(), carRide.getCurrency());
-    }
-
-
-    private String getSpinnerValue(JSpinner spinner) {
-        try {
-            spinner.commitEdit();
-        } catch (java.text.ParseException e) {
-        }
-
-        return spinner.getValue().toString();
     }
 
     private void addFields() {
@@ -160,7 +148,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     @Override
     public Optional<CarRide> show(JComponent parentComponent, String title) {
-        boolean isOk = isconfirmed(parentComponent, title);
+        boolean isOk = isconfirmed(title);
 
         if (!isOk) {
             return Optional.empty();

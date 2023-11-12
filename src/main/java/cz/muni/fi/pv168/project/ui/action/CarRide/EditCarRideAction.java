@@ -1,17 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
-import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
+import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.model.TableModel;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,18 +16,14 @@ import java.io.IOException;
 final class EditCarRideAction extends AbstractAction {
 
     private final JTable carRidesTable;
-    private final ListModel<Category> categoriestListModel;
-    private final ListModel<Currency> currencyListModel;
-    private final ListModel<Template> carRideTemplateListModel;
-    private final TableModel<Template> repository;
-    private final DefaultActionFactory<Category> categoryActionFactory;
-    private final CategoryTableModel categoryTableModel;
-    private final CurrencyConverter currencyConverter;
+    private final DialogFactory modalDialogFactory;
     private BufferedImage editImage;
 
 
-    EditCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, EntityListModelAdapter<Currency> currencyListModel, ListModel<Template> carRideTemplateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
+    EditCarRideAction(JTable carRidesTable, DialogFactory modalDialogFactory) {
         super("Edit");
+        this.modalDialogFactory = modalDialogFactory;
+        this.carRidesTable = carRidesTable;
 
         try {
             editImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/editing.png"));
@@ -45,14 +33,6 @@ final class EditCarRideAction extends AbstractAction {
             ex.printStackTrace();
         };
 
-        this.carRidesTable = carRidesTable;
-        this.currencyListModel = currencyListModel;
-        this.categoriestListModel = categoriestListModel;
-        this.carRideTemplateListModel = carRideTemplateListModel;
-        this.repository = repository;
-        this.categoryActionFactory = categoryActionFactory;
-        this.categoryTableModel = categoryTableModel;
-        this.currencyConverter = currencyConverter;
         putValue(SHORT_DESCRIPTION, "Edits Car Ride");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
@@ -71,9 +51,8 @@ final class EditCarRideAction extends AbstractAction {
         int modelRow = carRidesTable.convertRowIndexToModel(selectedRows[0]);
         CarRide carRide = carRideTableModel.getEntity(modelRow);
 
-        CarRideDialog CarRideDialog = new CarRideDialog(carRide, categoriestListModel, currencyListModel, carRideTemplateListModel, repository, categoryActionFactory, categoryTableModel, currencyConverter);
-
-        CarRideDialog.show(carRidesTable, "Edit Car Ride")
+        EntityDialog<CarRide> dialog = modalDialogFactory.getAddCarRideDialog(carRide);
+        dialog.show(carRidesTable, "Edit Car Ride")
                 .ifPresent(carRideTableModel::updateRow);
     }
 }

@@ -12,7 +12,7 @@ import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 
-public class TemplateDialog extends EntityDialog<Template> {
+class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField titleField = new ValidatedInputField() {
         @Override
         public boolean evaluate() {
@@ -41,7 +41,7 @@ public class TemplateDialog extends EntityDialog<Template> {
         }
     };
 
-    public TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter) {
+    TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter) {
         this.template = template;
 
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));

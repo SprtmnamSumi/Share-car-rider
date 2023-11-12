@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Optional;
 
-abstract class EntityDialog<E> {
+public abstract class EntityDialog<E> {
 
     protected final JPanel panel = new JPanel();
     private final JButton okButton = new JButton("Add");
@@ -36,7 +36,7 @@ abstract class EntityDialog<E> {
 
     abstract E getEntity();
 
-    public boolean isconfirmed(JComponent parentComponent, String title) {
+    public boolean isconfirmed(String title) {
         addDialogControls();
         dialog = new JDialog(Frame.getFrames()[0], title, Dialog.ModalityType.APPLICATION_MODAL);
         panel.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
@@ -48,7 +48,7 @@ abstract class EntityDialog<E> {
     }
 
     public Optional<E> show(JComponent parentComponent, String title) {
-        var pressedOK = isconfirmed(parentComponent, title);
+        var pressedOK = isconfirmed(title);
         return pressedOK ? Optional.of(getEntity()) : Optional.empty();
     }
 
