@@ -40,7 +40,7 @@ final class AddCurrencyAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
         dialogFactory.getAddCurrencyDialog(new Currency("", "", 0.0))
-                .show(currencyTable, "Add Currency")
+                .show(currencyTable, "Add Currency", "Add")
                 .ifPresent(currencyTableModel::addRow);
     }
 }
