@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.business.model;
 
+import java.util.Objects;
+
 public class Currency extends Entity {
     private final String name;
 
@@ -32,5 +34,20 @@ public class Currency extends Entity {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Currency currency)) return false;
+
+        if (!name.equals(currency.name)) return false;
+        if (!symbol.equals(currency.symbol)) return false;
+        return newestRateToDollar.equals(currency.newestRateToDollar);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, symbol, newestRateToDollar);
     }
 }
