@@ -1,7 +1,12 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.export.BatchExporterJSON;
 import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
+import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 
+import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,12 +17,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Sabrina Orálková, 525089
  */
-public class ExportDialog extends JDialog
-        implements PropertyChangeListener {
+public class ExportDialog extends JDialog implements PropertyChangeListener {
 
     private final String title = "Export data";
     private final JOptionPane optionPane;
@@ -27,8 +33,11 @@ public class ExportDialog extends JDialog
 
     private File selectedFile;
 
-    public ExportDialog(Frame aFrame, String aWord) {
+    private CarRideTableFilter carRideTableFilter;
+
+    public ExportDialog(Frame aFrame, String aWord, CarRideTableFilter carRideTableFilter) {
         super(aFrame, true);
+        this.carRideTableFilter = carRideTableFilter;
         setTitle(title);
 
         String msgString1 = "Select a file";
@@ -37,7 +46,7 @@ public class ExportDialog extends JDialog
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
-                int result = fileChooser.showOpenDialog(ExportDialog.this);
+                int result = fileChooser.showSaveDialog(ExportDialog.this);
 
                 if (result == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fileChooser.getSelectedFile();
@@ -67,7 +76,47 @@ public class ExportDialog extends JDialog
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        clearAndHide();
+        String prop = e.getPropertyName();
+
+        if (isVisible()
+                && (e.getSource() == optionPane)
+                && (JOptionPane.VALUE_PROPERTY.equals(prop)
+                || JOptionPane.INPUT_VALUE_PROPERTY.equals(prop))) {
+            Object value = optionPane.getValue();
+
+            if (value == JOptionPane.UNINITIALIZED_VALUE) {
+                // ignore reset
+                return;
+            }
+
+            // Reset the JOptionPane's value
+            optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
+
+            if (btnString1.equals(value)) {
+                if (selectedFile != null) {
+                    // Perform the export operation with the selected file
+                    performExport(selectedFile);
+                }
+            }
+
+            clearAndHide();
+        }
+    }
+
+
+
+    private void performExport(File file) {
+        System.out.println("Exporting data to file: " + file.getAbsolutePath());
+        //if (carRideTableFilter == null) {
+        //    throw new IllegalStateException("CarRideTableFilter not injected");
+        //}
+
+        System.out.println("Exporting data to file: " + selectedFile.getAbsolutePath());
+        List<CarRide> carRideList = new LinkedList<>();
+        carRideList =  carRideTableFilter.getRideCompoundMatcher().getData();
+
+        BatchExporterJSON batchExporterJSON = new BatchExporterJSON();
+        batchExporterJSON.exportData(carRideList, selectedFile.getAbsolutePath());
     }
 
     public void clearAndHide() {

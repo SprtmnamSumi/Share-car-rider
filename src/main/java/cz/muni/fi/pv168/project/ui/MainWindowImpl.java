@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.data.Initializator;
 import cz.muni.fi.pv168.project.ui.action.*;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
+import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
@@ -19,6 +20,7 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
 
 import javax.inject.Inject;
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 
 public class MainWindowImpl implements MainWindow {
@@ -44,7 +46,8 @@ public class MainWindowImpl implements MainWindow {
                           CategoryTableModel categoryTableModel,
                           TemplateTableModel templateTableModel,
                           CurrencyTableModel currencyTableModel,
-                          ICarRideStatistics ICarRideStatistics) {
+                          ICarRideStatistics ICarRideStatistics
+    ) {
         frame = createFrame();
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
@@ -59,7 +62,7 @@ public class MainWindowImpl implements MainWindow {
 
         settingsAction = new SettingsAction();
         importAction = new ImportAction();
-        exportAction = new ExportAction();
+        exportAction = new ExportAction(new CarRideTableFilter( new TableRowSorter<>(carRideTableModel)));
         colorThemeAction = new ColorThemeAction();
         info = new InfoAction();
 

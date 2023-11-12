@@ -99,7 +99,6 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
 
     private void performOverwrite() {
         System.out.println("Performing overwrite operation");
-
     }
 
     public void clearAndHide() {
