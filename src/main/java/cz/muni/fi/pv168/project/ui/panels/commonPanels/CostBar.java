@@ -61,8 +61,7 @@ public class CostBar extends ValidatedJPanel {
     }
 
     public void setCostOfFuelInDollars(double costOfFuel) {
-        currencyConverter.convertFromDoolarsToConvRate(Double.parseDouble(rate.getText()), costOfFuel);
-        this.costOfFuel.setText(String.valueOf(costOfFuel));
+        this.costOfFuel.setText(String.valueOf(currencyConverter.convertFromDoolarsToConvRate(Double.parseDouble(rate.getText()), costOfFuel)));
     }
 
     public double getConversionRateToDollars() {
