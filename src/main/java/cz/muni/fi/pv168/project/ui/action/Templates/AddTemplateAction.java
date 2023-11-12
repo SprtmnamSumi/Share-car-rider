@@ -41,7 +41,7 @@ final class AddTemplateAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         var templateTableModel = (TemplateTableModel) templateTable.getModel();
         var dialog = dialogFactory.getAddTemplateDialog(createPreffiledTemplate());
-        dialog.show(templateTable, "Add Template")
+        dialog.show(templateTable, "Add Template", "Add")
                 .ifPresent(templateTableModel::addRow);
     }
 

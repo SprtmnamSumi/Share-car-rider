@@ -44,7 +44,7 @@ final class AddCategoryAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         var categoryTableModel = (CategoryTableModel) categoryTable.getModel();
         EntityDialog<Category> dialog = dialogFactory.getAddCategoryDialog(createPreffiledCateogory());
-        dialog.show(categoryTable, "Add category")
+        dialog.show(categoryTable, "Add category", "Add")
                 .ifPresent(categoryTableModel::addRow);
     }
 
