@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.gui.dialog;
+package cz.muni.fi.pv168.project.ui.dialog;
 
 import javax.swing.*;
 import java.awt.*;

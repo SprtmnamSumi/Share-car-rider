@@ -2,10 +2,9 @@ package cz.muni.fi.pv168.project.ui.action.Category;
 
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
+import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,11 +18,11 @@ final class AddCategoryAction extends AbstractAction {
 
     private final JTable categoryTable;
 
-    private final ListModel<Category> categoryListModel;
+    private final DialogFactory dialogFactory;
     private BufferedImage addImage;
 
 
-    AddCategoryAction(JTable categoryTable, EntityListModelAdapter<Category> categoryListModel) {
+    AddCategoryAction(JTable categoryTable, DialogFactory dialogFactory) {
         super("Add");
 
         try {
@@ -35,7 +34,7 @@ final class AddCategoryAction extends AbstractAction {
         };
 
         this.categoryTable = categoryTable;
-        this.categoryListModel = categoryListModel;
+        this.dialogFactory = dialogFactory;
         putValue(SHORT_DESCRIPTION, "Adds new Category");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
@@ -44,7 +43,7 @@ final class AddCategoryAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var categoryTableModel = (CategoryTableModel) categoryTable.getModel();
-        var dialog = new CategoryDialog(createPreffiledCateogory(), categoryListModel);
+        EntityDialog<Category> dialog = dialogFactory.getAddCategoryDialog(createPreffiledCateogory());
         dialog.show(categoryTable, "Add category")
                 .ifPresent(categoryTableModel::addRow);
     }

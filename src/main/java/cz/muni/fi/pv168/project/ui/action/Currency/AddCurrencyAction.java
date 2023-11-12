@@ -1,11 +1,8 @@
 package cz.muni.fi.pv168.project.ui.action.Currency;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.ui.dialog.AddCurrencyDialog;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,11 +12,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public final class AddCurrencyAction extends AbstractAction {
+final class AddCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
+
+    private final DialogFactory dialogFactory;
     private BufferedImage addImage;
 
-    public AddCurrencyAction(JTable currencyTable) {
+    AddCurrencyAction(JTable currencyTable, DialogFactory dialogFactory) {
         super("Add");
 
         try {
@@ -28,8 +27,9 @@ public final class AddCurrencyAction extends AbstractAction {
             putValue(SMALL_ICON, customIcon);
         } catch (IOException ex) {
             ex.printStackTrace();
-        };
-
+        }
+        ;
+        this.dialogFactory = dialogFactory;
         this.currencyTable = currencyTable;
         putValue(SHORT_DESCRIPTION, "Adds new Currency");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
@@ -39,8 +39,8 @@ public final class AddCurrencyAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
-        var dialog = new AddCurrencyDialog(new Currency("", "", 0.0));
-        dialog.show(currencyTable, "Add Currency")
+        dialogFactory.getAddCurrencyDialog(new Currency("", "", 0.0))
+                .show(currencyTable, "Add Currency")
                 .ifPresent(currencyTableModel::addRow);
     }
 }

@@ -7,11 +7,9 @@ import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
-public final class CategoryDialog extends EntityDialog<Category> {
+final class CategoryDialog extends EntityDialog<Category> {
 
     private final ValidatedInputField nameField = new ValidatedInputField(){
         @Override
@@ -28,7 +26,7 @@ public final class CategoryDialog extends EntityDialog<Category> {
         }
     };
 
-    public CategoryDialog(Category category, ListModel<Category> categoriestListModel) {
+    CategoryDialog(Category category) {
         this.category = category;
         setValues();
         addFields();
