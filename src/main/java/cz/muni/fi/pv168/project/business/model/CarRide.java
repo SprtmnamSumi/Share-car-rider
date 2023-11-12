@@ -18,5 +18,4 @@ public class CarRide extends Template {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
-
 }

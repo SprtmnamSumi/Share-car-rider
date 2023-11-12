@@ -1,31 +1,22 @@
 package cz.muni.fi.pv168.project.ui.action.Templates;
 
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 
 import javax.inject.Inject;
 import javax.swing.*;
 
 public class TemplateActionFactory implements DefaultActionFactory<Template> {
-    private final EntityListModelAdapter<Category> categoryListModel;
-    private final EntityListModelAdapter<Currency> currencyListModel;
-    private final EntityListModelAdapter<Template> templateListModel;
-    private final CurrencyConverter currencyConverter;
+    private final DialogFactory dialogFactory;
 
     @Inject
-    public TemplateActionFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Currency> currencyListModel, EntityListModelAdapter<Template> carRideTemplateListModel, CurrencyConverter currencyConverter) {
-        this.categoryListModel = categoryListModel;
-        this.currencyListModel = currencyListModel;
-        this.templateListModel = carRideTemplateListModel;
-        this.currencyConverter = currencyConverter;
+    TemplateActionFactory(DialogFactory dialogFactory) {
+        this.dialogFactory = dialogFactory;
     }
 
     public Action getAddAction(JTable table) {
-        return new AddTemplateAction(table, categoryListModel, currencyListModel, templateListModel, currencyConverter);
+        return new AddTemplateAction(table, dialogFactory);
     }
 
     public Action getDeleteAction(JTable table) {
@@ -33,6 +24,6 @@ public class TemplateActionFactory implements DefaultActionFactory<Template> {
     }
 
     public Action getEditAction(JTable table) {
-        return new EditTemplateAction(table, categoryListModel, currencyListModel, templateListModel, currencyConverter);
+        return new EditTemplateAction(table, dialogFactory);
     }
 }

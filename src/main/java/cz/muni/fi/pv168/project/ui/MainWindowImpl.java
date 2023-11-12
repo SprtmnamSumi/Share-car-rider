@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainWindowImpl implements MainWindow {
+class MainWindowImpl implements MainWindow {
 
     private final JFrame frame;
     private final Action quitAction = new QuitAction();
@@ -36,7 +36,7 @@ public class MainWindowImpl implements MainWindow {
     private final Action info;
 
     @Inject
-    public MainWindowImpl(ICarRideActionFactory carActionFactory,
+    MainWindowImpl(ICarRideActionFactory carActionFactory,
                           DefaultActionFactory<Category> categoryActionFactory,
                           DefaultActionFactory<Template> templateActionFactory,
                           CurrencyActionFactory currencyActionFactory,

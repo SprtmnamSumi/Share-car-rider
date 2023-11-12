@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action.Category;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
+import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,10 +17,10 @@ final class EditCategoryAction extends AbstractAction {
 
     private final JTable categoryTable;
 
-    private final ListModel<Category> categoriestListModel;
+    private final DialogFactory dialogFactory;
     private BufferedImage editImage;
 
-    EditCategoryAction(JTable categoryTable, ListModel<Category> categoriestListModel) {
+    EditCategoryAction(JTable categoryTable, DialogFactory dialogFactory) {
         super("Edit");
 
         try {
@@ -32,7 +32,7 @@ final class EditCategoryAction extends AbstractAction {
         };
 
         this.categoryTable = categoryTable;
-        this.categoriestListModel = categoriestListModel;
+        this.dialogFactory = dialogFactory;
         putValue(SHORT_DESCRIPTION, "Edits Category");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
@@ -50,7 +50,8 @@ final class EditCategoryAction extends AbstractAction {
         CategoryTableModel categoryTableModel = (CategoryTableModel) categoryTable.getModel();
         int modelRow = categoryTable.convertRowIndexToModel(selectedRows[0]);
         Category category = categoryTableModel.getEntity(modelRow);
-        CategoryDialog categoryDialog = new CategoryDialog(category, categoriestListModel);
+
+        EntityDialog<Category> categoryDialog = dialogFactory.getAddCategoryDialog(category);
         categoryDialog.show(categoryTable, "Edit Category Ride")
                 .ifPresent(categoryTableModel::updateRow);
     }
