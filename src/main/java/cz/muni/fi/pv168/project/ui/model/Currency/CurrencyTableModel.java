@@ -14,7 +14,8 @@ import java.util.List;
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.
  */
 @Singleton
-public class CurrencyTableModel extends TableModel<Currency> {
+public class
+CurrencyTableModel extends TableModel<Currency> {
     @Inject
     public CurrencyTableModel(ICurrencyCrudService currencyCrudService) {
         super(currencyCrudService, List.of(
