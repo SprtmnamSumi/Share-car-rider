@@ -3,14 +3,13 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
-import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatorFactory;
 
 class AddCurrencyDialog extends EntityDialog<Currency> {
-    private final ValidatedInputField nameTextField = new ValidatedInputField((t)->!t.isEmpty());
-    private final ValidatedInputField symbolTextField = new ValidatedInputField((t)->t.length()==1);
+    private final ValidatedInputField nameTextField = new ValidatedInputField((t) -> !t.isEmpty());
+    private final ValidatedInputField symbolTextField = new ValidatedInputField((t) -> t.length() == 1);
     private final ValidatedInputField rateToDollar = new ValidatedInputField(ValidatorFactory
-            .combinedValidator(ValidatorFactory.doubleValidator(), ValidatorFactory.intValidator()));
+            .eitherValidator(ValidatorFactory.doubleValidator(), ValidatorFactory.intValidator()));
     private final Currency currency;
 
     private final ValidationListener validationListener = new ValidationListener() {
