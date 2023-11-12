@@ -29,7 +29,7 @@ public class BatchExporterJSON {
                 // Populate currencyObject
                 currencyObject.put("name", carRide.getCurrency().getName());
                 currencyObject.put("symbol", carRide.getCurrency().getSymbol());
-                currencyObject.put("rate_to_dollar", carRide.getCurrency().getRateToDollar());
+                currencyObject.put("rate_to_dollar", carRide.getCurrency().getNewestRateToDollar());
 
                 // Populate carRideObject
                 carRideObject.put("guid", carRide.getGuid());

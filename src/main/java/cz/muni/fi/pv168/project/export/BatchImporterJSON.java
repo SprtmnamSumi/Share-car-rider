@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class BatchImporterJSON {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
     public List<CarRide> importData(String filePath) {
         try {
             String jsonString = new String(Files.readAllBytes(Paths.get(filePath)));
@@ -39,24 +40,25 @@ public class BatchImporterJSON {
                 Category category;
 
                 category = new Category(categoryObject.getString("guid"),
-                                        categoryObject.getString("name"),
-                                        categoryObject.getInt("color"));
+                        categoryObject.getString("name"),
+                        categoryObject.getInt("color"));
 
                 currency = new Currency(categoryObject.getString("name"),
-                                        categoryObject.getString("symbol"),
-                                        categoryObject.getDouble("rate_to_dollar"));
+                        categoryObject.getString("symbol"),
+                        categoryObject.getDouble("rate_to_dollar"));
 
                 carRide = new CarRide(carRideObject.getString("guid"),
-                                            carRideObject.getString("title"),
-                                            carRideObject.getString("description"),
-                                            carRideObject.getDouble("distance"),
-                                            carRideObject.getDouble("fuel_consumption"),
-                                            carRideObject.getDouble("cost_of_fuel_per_litre"),
-                                            carRideObject.getInt("passengers"),
-                                            carRideObject.getDouble("commission"),
-                                            LocalDateTime.parse(carRideObject.getString("guid"),formatter),
-                                            category,
-                                            currency);
+                        carRideObject.getString("title"),
+                        carRideObject.getString("description"),
+                        carRideObject.getDouble("distance"),
+                        carRideObject.getDouble("fuel_consumption"),
+                        carRideObject.getDouble("cost_of_fuel_per_litre"),
+                        carRideObject.getInt("passengers"),
+                        carRideObject.getDouble("commission"),
+                        LocalDateTime.parse(carRideObject.getString("guid"), formatter),
+                        category,
+                        currency,
+                        currency.getNewestRateToDollar());
                 carRideList.add(carRide);
             }
 

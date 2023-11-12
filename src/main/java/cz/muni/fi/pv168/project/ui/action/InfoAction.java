@@ -1,9 +1,5 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
-import cz.muni.fi.pv168.project.ui.dialog.ChooseCurrencyDialog;
-import cz.muni.fi.pv168.project.ui.dialog.InfoDialog;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +27,7 @@ public final class InfoAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(null,
                 "This cover has been designed using images from Flaticon.com." + System.lineSeparator()
-                        + "" + System.lineSeparator()
+                        + System.lineSeparator()
                         + "This app is credited to these creators:" + System.lineSeparator()
                         + "Ondřej Man" + System.lineSeparator()
                         + "Marek Horský" + System.lineSeparator()
