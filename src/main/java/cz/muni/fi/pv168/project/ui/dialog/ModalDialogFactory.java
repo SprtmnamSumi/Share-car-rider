@@ -22,6 +22,7 @@ class ModalDialogFactory implements DialogFactory {
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CategoryTableModel categoryTableMode;
     private final CurrencyConverter currencyConverter;
+    
 
     @Inject
     ModalDialogFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Currency> currencyListModel, EntityListModelAdapter<Template> templateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableMode, CurrencyConverter currencyConverter) {
@@ -46,7 +47,7 @@ class ModalDialogFactory implements DialogFactory {
 
     @Override
     public EntityDialog<Template> getAddTemplateDialog(Template template) {
-        return new TemplateDialog(template, categoryListModel, currencyListModel, templateListModel, currencyConverter);
+        return new TemplateDialog(template, categoryListModel, currencyListModel, templateListModel, currencyConverter, categoryActionFactory, categoryTableMode);
     }
 
     @Override

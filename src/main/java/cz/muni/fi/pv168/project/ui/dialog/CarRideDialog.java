@@ -37,13 +37,10 @@ final class CarRideDialog extends EntityDialog<CarRide> {
             return true;
         }
     };
-    private final JComboBox<Currency> currencyJComboBox;
     private final JComboBox<Template> templateComboBoxModel;
-    private final CurrencyConverter currencyConverter;
     private final CategoryBar categoryBar;
     private final ValidatedInputField distanceField = getDoubleField();
     private final ValidatedInputField fuelConsumption = getDoubleField();
-
     private final ValidatedInputField numberOfPassengers = new ValidatedInputField();
     private final ValidatedInputField commission = getDoubleField();
     private final JCheckBox isChecked = new JCheckBox();
@@ -57,18 +54,10 @@ final class CarRideDialog extends EntityDialog<CarRide> {
     private final CarRide carRide;
 
     CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
-        templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
-        this.currencyConverter = currencyConverter;
         this.carRide = carRide;
-        categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
-        currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
-
-        templateBar = new TemplateBar(templateComboBoxModel, saveAsTemplate);
-
-        this.costBar = new CostBar(currencyModel, currencyConverter);
-
         this.entityCrudService = entityCrudService;
-        validationListener = new ValidationListener(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar) {
+
+        validationListener = new ValidationListener() {
             @Override
             protected void onChange(boolean isValid) {
                 CarRideDialog.super.toggleOk(isValid);
@@ -76,6 +65,13 @@ final class CarRideDialog extends EntityDialog<CarRide> {
                     saveAsTemplate.setEnabled(entityCrudService.getAllEntities().stream().noneMatch(template -> template.equals(getAsTemplate())));
             }
         };
+
+
+        templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
+        categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validationListener);
+        templateBar = new TemplateBar(templateComboBoxModel, saveAsTemplate);
+        this.costBar = new CostBar(currencyModel, currencyConverter, validationListener);
+        validationListener.setValidables(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar);
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -105,7 +101,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         categoryBar.setSelectedItem(carRide.getCategory());
         dateBar.setDate(carRide.getDate());
         commission.setText(String.valueOf(carRide.getCommission()));
-        currencyJComboBox.setSelectedItem(carRide.getCurrency());
         costBar.SetValues(carRide.getCostOfFuelPerLitreInDollars(), carRide.getConversionToDollars(), carRide.getCurrency());
         validationListener.fireChange();
     }
@@ -118,11 +113,10 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         add("Average Fuel Consumption (per 100km)", fuelConsumption);
         add("Number of Passengers", numberOfPassengers);
         add("Commission (%)", commission);
-        add("Date", dateBar);
         add("Category", categoryBar);
-        add("Currency", currencyJComboBox);
         add("Count me in the calculation of per price person", isChecked);
         add("Cost of Fuel", costBar);
+        add("Date", dateBar);
     }
 
     @Override
@@ -135,7 +129,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setCommission(Double.parseDouble(commission.getText()));
         carRide.setCategory(categoryBar.getSelectedItem());
         carRide.setDate(dateBar.getDate());
-        carRide.setCurrency((Currency) currencyJComboBox.getSelectedItem());
 
         carRide.setCurrency(costBar.getCurrency());
         carRide.setConversionRateToDollar(costBar.getConversionRateToDollars());
