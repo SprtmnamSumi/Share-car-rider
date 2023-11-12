@@ -39,14 +39,14 @@ class MainWindowImpl implements MainWindow {
 
     @Inject
     MainWindowImpl(ICarRideActionFactory carActionFactory,
-                          DefaultActionFactory<Category> categoryActionFactory,
-                          DefaultActionFactory<Template> templateActionFactory,
-                          CurrencyActionFactory currencyActionFactory,
-                          CarRideTableModel carRideTableModel,
-                          CategoryTableModel categoryTableModel,
-                          TemplateTableModel templateTableModel,
-                          CurrencyTableModel currencyTableModel,
-                          ICarRideStatistics ICarRideStatistics
+                   DefaultActionFactory<Category> categoryActionFactory,
+                   DefaultActionFactory<Template> templateActionFactory,
+                   CurrencyActionFactory currencyActionFactory,
+                   CarRideTableModel carRideTableModel,
+                   CategoryTableModel categoryTableModel,
+                   TemplateTableModel templateTableModel,
+                   CurrencyTableModel currencyTableModel,
+                   ICarRideStatistics ICarRideStatistics
     ) {
         frame = createFrame();
 
@@ -62,7 +62,7 @@ class MainWindowImpl implements MainWindow {
 
         settingsAction = new SettingsAction();
         importAction = new ImportAction();
-        exportAction = new ExportAction(new CarRideTableFilter( new TableRowSorter<>(carRideTableModel)));
+        exportAction = new ExportAction(new CarRideTableFilter(new TableRowSorter<>(carRideTableModel)));
         colorThemeAction = new ColorThemeAction();
         info = new InfoAction();
 
@@ -95,17 +95,18 @@ class MainWindowImpl implements MainWindow {
         var editMenu = new JMenu("File");
         editMenu.setMnemonic('f');
 
-        editMenu.add(settingsAction);
-        editMenu.addSeparator();
-
-        editMenu.add(chooseCurrencyAction);
+        JMenu settingsMenu = new JMenu("Settings");
+        ImageIcon settingsIcon = new ImageIcon("src/main/java/cz/muni/fi/pv168/project/ui/icons/settings.png");
+        editMenu.add(settingsMenu);
+        settingsMenu.setIcon(settingsIcon);
+        settingsMenu.add(colorThemeAction);
         editMenu.addSeparator();
 
         editMenu.add(importAction);
         editMenu.add(exportAction);
         editMenu.addSeparator();
 
-        editMenu.add(colorThemeAction);
+        editMenu.add(chooseCurrencyAction);
         editMenu.addSeparator();
 
         editMenu.add(quitAction);
