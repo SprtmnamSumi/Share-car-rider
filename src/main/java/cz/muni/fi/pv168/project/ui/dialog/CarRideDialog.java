@@ -95,6 +95,8 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
                 setValues(templateCarRide);
             }
         });
+
+        validationListener.fireChange();
     }
 
 
