@@ -3,6 +3,8 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
+import cz.muni.fi.pv168.project.ui.validation.Validator;
+import cz.muni.fi.pv168.project.ui.validation.ValidatorFactory;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
@@ -11,15 +13,10 @@ import java.util.Arrays;
 
 final class CategoryDialog extends EntityDialog<Category> {
 
-    private final ValidatedInputField nameField = new ValidatedInputField(){
-        @Override
-        public boolean evaluate(){
-            return this.getText().length()>=2;
-        }
-    };
+    private final ValidatedInputField nameField = new ValidatedInputField(ValidatorFactory.titleValidator());
     private final JColorChooser colorChooser = new JColorChooser();
     private final Category category;
-    private final ValidationListener validationListener = new ValidationListener(nameField) {
+    private final ValidationListener validationListener = new ValidationListener() {
         @Override
         protected void onChange(boolean isValid) {
             CategoryDialog.super.toggleOk(isValid);
@@ -31,6 +28,7 @@ final class CategoryDialog extends EntityDialog<Category> {
         this.category = category;
         setValues();
         addFields();
+        validationListener.setListeners(nameField);
         validationListener.fireChange();
     }
 
