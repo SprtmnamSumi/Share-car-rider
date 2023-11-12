@@ -24,8 +24,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import static javax.swing.JOptionPane.OK_OPTION;
-
 public final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField titleField = new ValidatedInputField() {
         @Override
@@ -74,10 +72,20 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
             @Override
             protected void onChange(boolean isValid) {
                 CarRideDialog.super.toggleOk(isValid);
-                if (isValid)
-                    saveAsTemplate.setEnabled(entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate())));
+                // TODO I do not work - I do not how to to fix equals
+                if (isValid) {
+                    var entities = entityCrudService.getAllEntities();
+                    var newTemplate = getAsTemplate();
+                    var value = entities.stream().anyMatch(template -> template.equals(newTemplate));
+                    saveAsTemplate.setEnabled(!value);
+                }
             }
         };
+        saveAsTemplate.addActionListener(e -> {
+            var template = getAsTemplate();
+            addTemplate(template);
+            templateComboBoxModel.setSelectedItem(template);
+        });
         validationListener.fireChange();
 
         templateComboBoxModel.addItemListener(e -> {
@@ -103,15 +111,6 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         costBar.SetValues(carRide.getCostOfFuelPerLitreInDollars(), carRide.getConversionToDollars(), carRide.getCurrency());
     }
 
-
-    private String getSpinnerValue(JSpinner spinner) {
-        try {
-            spinner.commitEdit();
-        } catch (java.text.ParseException e) {
-        }
-
-        return spinner.getValue().toString();
-    }
 
     private void addFields() {
         add("Template", templateBar);
@@ -165,14 +164,14 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
             return Optional.empty();
         }
 
-        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
-            return Optional.of(getEntity());
-        }
-
-        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
-        if (res == OK_OPTION) {
-            addTemplate(getAsTemplate());
-        }
+//        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
+//            return Optional.of(getEntity());
+//        }
+//
+//        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
+//        if (res == OK_OPTION) {
+//            addTemplate(getAsTemplate());
+//        }
         return Optional.of(getEntity());
     }
 

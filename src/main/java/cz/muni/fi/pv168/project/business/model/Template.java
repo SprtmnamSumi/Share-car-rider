@@ -115,14 +115,7 @@ public class Template extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Template template = (Template) o;
-        return Double.compare(template.distance, distance) == 0 &&
-                Double.compare(template.fuelConsumption, fuelConsumption) == 0 &&
-                Double.compare(template.costOfFuelPerLitre, costOfFuelPerLitre) == 0 &&
-                numberOfPassengers == template.numberOfPassengers &&
-                Double.compare(template.commission, commission) == 0 &&
-                Objects.equals(title, template.title) &&
-                Objects.equals(description, template.description) &&
-                Objects.equals(category, template.category);
+        return false;
     }
 
     @Override

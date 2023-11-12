@@ -10,7 +10,6 @@ public class CurrencyConverter implements ICurrencyConverter {
 //    private Currency defaultCurrency;
 
     @Inject
-    // TODO
 //    TableModel<Currency> currencyListModel
     public CurrencyConverter() {
 //        Properties properties = Config.loadProperties();
