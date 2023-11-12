@@ -2,8 +2,8 @@ package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.filters.Filters;
+import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.panels.filters.*;
@@ -18,7 +18,7 @@ public class CarRideFilterPanel extends JPanel {
     private final FilterBoxPanel<Category> categoryPanel;
     private final FilterBoxPanel<Currency> currencyPanel;
 
-    public CarRideFilterPanel(CarRideTableFilter filter, CategoryTableModel categories, CurrencyTableModel currencyTableModel) {
+    public CarRideFilterPanel(ICarRideTableFilter filter, CategoryTableModel categories, CurrencyTableModel currencyTableModel) {
         super(new FlowLayout(FlowLayout.LEFT));
 
         passengerFilter = new PassengersFilterPanel(filter);
