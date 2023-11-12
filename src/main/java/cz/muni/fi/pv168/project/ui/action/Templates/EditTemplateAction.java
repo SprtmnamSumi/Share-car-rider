@@ -49,7 +49,7 @@ final class EditTemplateAction extends AbstractAction {
         int modelRow = templateTable.convertRowIndexToModel(selectedRows[0]);
         Template template = templateListModel.getEntity(modelRow);
         var dialog = dialogFactory.getAddTemplateDialog(template);
-        dialog.show(templateTable, "Edit Template")
+        dialog.show(templateTable, "Edit Template", "Save")
                 .ifPresent(templateListModel::updateRow);
     }
 }

@@ -9,7 +9,7 @@ import java.util.Optional;
 public abstract class EntityDialog<E> {
 
     protected final JPanel panel = new JPanel();
-    private final JButton okButton = new JButton("Add");
+    private final JButton okButton = new JButton();
     private final JButton cancelButton = new JButton("Cancel");
     private boolean pressedOK = false;
     private JDialog dialog;
@@ -24,6 +24,12 @@ public abstract class EntityDialog<E> {
         cancelButton.addActionListener((a) -> dialog.setVisible(false));
     }
 
+    public Optional<E> show(JComponent parentComponent, String title, String okText) {
+        okButton.setText(okText);
+        var pressedOK = isconfirmed(title);
+        return pressedOK ? Optional.of(getEntity()) : Optional.empty();
+    }
+
     void add(String labelText, JComponent component) {
         var label = new JLabel(labelText);
         panel.add(label);
@@ -36,7 +42,7 @@ public abstract class EntityDialog<E> {
 
     abstract E getEntity();
 
-    public boolean isconfirmed(String title) {
+    boolean isconfirmed(String title) {
         addDialogControls();
         dialog = new JDialog(Frame.getFrames()[0], title, Dialog.ModalityType.APPLICATION_MODAL);
         panel.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
@@ -45,11 +51,6 @@ public abstract class EntityDialog<E> {
         dialog.pack();
         dialog.setVisible(true);
         return pressedOK;
-    }
-
-    public Optional<E> show(JComponent parentComponent, String title) {
-        var pressedOK = isconfirmed(title);
-        return pressedOK ? Optional.of(getEntity()) : Optional.empty();
     }
 
     private void addDialogControls() {

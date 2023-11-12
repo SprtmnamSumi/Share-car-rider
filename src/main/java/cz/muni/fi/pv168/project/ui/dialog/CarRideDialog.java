@@ -14,9 +14,7 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
-import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
-import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
+import cz.muni.fi.pv168.project.ui.validation.*;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -25,24 +23,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 final class CarRideDialog extends EntityDialog<CarRide> {
-    private final ValidatedInputField titleField = new ValidatedInputField() {
-        @Override
-        public boolean evaluate() {
-            return this.getText().length() >= 2;
-        }
-    };
-    private final ValidatedInputField descriptionField = new ValidatedInputField() {
-        @Override
-        public boolean evaluate() {
-            return true;
-        }
-    };
+    private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.titleValidator());
+    private final ValidatedInputField descriptionField = new ValidatedInputField((t) -> true);
     private final JComboBox<Template> templateComboBoxModel;
     private final CategoryBar categoryBar;
-    private final ValidatedInputField distanceField = getDoubleField();
-    private final ValidatedInputField fuelConsumption = getDoubleField();
-    private final ValidatedInputField numberOfPassengers = new ValidatedInputField();
-    private final ValidatedInputField commission = getDoubleField();
+    private final ValidatedInputField distanceField = new ValidatedInputField(ValidatorFactory.doubleValidator());
+    private final ValidatedInputField fuelConsumption = new ValidatedInputField(ValidatorFactory.doubleValidator());
+    private final ValidatedInputField numberOfPassengers = new ValidatedInputField(ValidatorFactory.intValidator());
+    private final ValidatedInputField commission = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
     private final TemplateBar templateBar;
@@ -71,7 +59,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validationListener);
         templateBar = new TemplateBar(templateComboBoxModel, saveAsTemplate);
         this.costBar = new CostBar(currencyModel, currencyConverter, validationListener);
-        validationListener.setValidables(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar);
+        validationListener.setListeners(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar);
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -146,33 +134,5 @@ final class CarRideDialog extends EntityDialog<CarRide> {
     private void addTemplate(Template templateToBeAdded) {
         entityCrudService.addRow(templateToBeAdded);
     }
-
-    @Override
-    public Optional<CarRide> show(JComponent parentComponent, String title) {
-        boolean isOk = isconfirmed(title);
-
-        if (!isOk) {
-            return Optional.empty();
-        }
-
-//        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
-//            return Optional.of(getEntity());
-//        }
-//
-//        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
-//        if (res == OK_OPTION) {
-//            addTemplate(getAsTemplate());
-//        }
-        return Optional.of(getEntity());
-    }
-
-    private ValidatedInputField getDoubleField() {
-        return new ValidatedInputField() {
-            @Override
-            public boolean evaluate() {
-                return ValidationUtils.validateDouble(this)
-                        && Double.parseDouble(this.getText()) >= 0.0f;
-            }
-        };
-    }
 }
+

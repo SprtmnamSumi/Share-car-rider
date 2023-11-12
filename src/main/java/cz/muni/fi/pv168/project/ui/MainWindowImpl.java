@@ -93,17 +93,18 @@ class MainWindowImpl implements MainWindow {
         var editMenu = new JMenu("File");
         editMenu.setMnemonic('f');
 
-        editMenu.add(settingsAction);
-        editMenu.addSeparator();
-
-        editMenu.add(chooseCurrencyAction);
+        JMenu settingsMenu = new JMenu("Settings");
+        ImageIcon settingsIcon = new ImageIcon("src/main/java/cz/muni/fi/pv168/project/ui/icons/settings.png");
+        editMenu.add(settingsMenu);
+        settingsMenu.setIcon(settingsIcon);
+        settingsMenu.add(colorThemeAction);
         editMenu.addSeparator();
 
         editMenu.add(importAction);
         editMenu.add(exportAction);
         editMenu.addSeparator();
 
-        editMenu.add(colorThemeAction);
+        editMenu.add(chooseCurrencyAction);
         editMenu.addSeparator();
 
         editMenu.add(quitAction);

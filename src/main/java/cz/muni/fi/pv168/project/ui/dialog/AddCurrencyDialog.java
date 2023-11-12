@@ -3,36 +3,21 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
-import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
+import cz.muni.fi.pv168.project.ui.validation.ValidatorFactory;
 
 class AddCurrencyDialog extends EntityDialog<Currency> {
-    private final ValidatedInputField nameTextField = new ValidatedInputField() {
-        @Override
-        public boolean evaluate() {
-            return !this.getText().isEmpty();
-        }
-    };
-    private final ValidatedInputField symbolTextField = new ValidatedInputField() {
-        @Override
-        public boolean evaluate() {
-            return this.getText().length() == 1;
-        }
-    };
-    private final ValidatedInputField rateToDollar = new ValidatedInputField() {
-        @Override
-        public boolean evaluate() {
-            return (ValidationUtils.validateDouble(this) && Double.parseDouble(this.getText()) > 0)
-                    || (ValidationUtils.validateInteger(this) && Integer.parseInt(this.getText()) > 0);
-        }
-    };
+    private final ValidatedInputField nameTextField = new ValidatedInputField((t) -> !t.isEmpty());
+    private final ValidatedInputField symbolTextField = new ValidatedInputField((t) -> t.length() == 1);
+    private final ValidatedInputField rateToDollar = new ValidatedInputField(ValidatorFactory
+            .eitherValidator(ValidatorFactory.doubleValidator(), ValidatorFactory.intValidator()));
+    private final Currency currency;
 
-    private final ValidationListener validationListener = new ValidationListener(nameTextField, symbolTextField, rateToDollar) {
+    private final ValidationListener validationListener = new ValidationListener() {
         @Override
         protected void onChange(boolean isValid) {
             AddCurrencyDialog.super.toggleOk(isValid);
         }
     };
-    private final Currency currency;
 
     public AddCurrencyDialog(Currency currency) {
         this.currency = currency;
@@ -40,6 +25,7 @@ class AddCurrencyDialog extends EntityDialog<Currency> {
 
         addFields();
         validationListener.fireChange();
+        validationListener.setListeners(nameTextField, symbolTextField, rateToDollar);
     }
 
     private void setValues() {

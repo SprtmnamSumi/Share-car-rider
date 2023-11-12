@@ -53,7 +53,7 @@ final class AddCarRideAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         CarRide carRide = new CarRide(null, "", "", 1.0, 1, 1, 1, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0),currencyListModel.getElementAt(0).getNewestRateToDollar());
         EntityDialog<CarRide> dialog = modalDialogFactory.getAddCarRideDialog(carRide);
-        dialog.show(carRidesTable, "Add Cat ride")
+        dialog.show(carRidesTable, "Add Cat ride", "Add")
                 .ifPresent(this::updateFields);
     }
 }
