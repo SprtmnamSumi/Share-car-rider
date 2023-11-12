@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.panels.filters;
 
-import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ValidatedTextFieldPanel;
 
 import java.awt.event.KeyAdapter;
@@ -10,11 +10,11 @@ import java.awt.event.KeyListener;
 public class DistanceFilterPanel extends FilterPanel {
     private final ValidatedTextFieldPanel distanceFromPanel = new ValidatedTextFieldPanel("Distance from");
     private final ValidatedTextFieldPanel distanceToPanel = new ValidatedTextFieldPanel("Distance to");
-    private final CarRideTableFilter filter;
+    private final ICarRideTableFilter filter;
 
     private final KeyListener listener = new TypeListener();
 
-    public DistanceFilterPanel(CarRideTableFilter filter) {
+    public DistanceFilterPanel(ICarRideTableFilter filter) {
         super();
         this.filter = filter;
 

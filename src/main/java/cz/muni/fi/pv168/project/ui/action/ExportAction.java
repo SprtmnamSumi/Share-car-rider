@@ -1,8 +1,11 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.dialog.ExportDialog;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,12 +17,18 @@ import java.io.IOException;
 
 public final class ExportAction extends AbstractAction {
 
-    private BufferedImage exportPicture;
     private final CarRideTableFilter carRideTableFilter;
+    private final TableModel<Template> templates;
+    private final TableModel<Currency> currencies;
+    private final TableModel<Category> categories;
+    private BufferedImage exportPicture;
 
-    public ExportAction(CarRideTableFilter carRideTableFilte) {
+    public ExportAction(CarRideTableFilter carRideTableFilte, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories) {
         super("Export");
         this.carRideTableFilter = carRideTableFilte;
+        this.templates = templates;
+        this.currencies = currencies;
+        this.categories = categories;
         try {
             exportPicture = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/export.png"));
             Icon customIcon = new ImageIcon(exportPicture);
@@ -35,7 +44,7 @@ public final class ExportAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ExportDialog popupDialog = new ExportDialog(new JFrame("Popup"), "str", carRideTableFilter);
+        ExportDialog popupDialog = new ExportDialog(new JFrame("Popup"), "str", carRideTableFilter, templates, currencies, categories);
         popupDialog.setSize(400, 200);
 
         popupDialog.setLocationRelativeTo(null);

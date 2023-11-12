@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class BatchExporterJSON {
+public class BatchExporterCarRideJSON{
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     public void exportData(List<CarRide> carRides, String filePath) {
@@ -40,9 +40,10 @@ public class BatchExporterJSON {
                 carRideObject.put("cost_of_fuel_per_litre", carRide.getCostOfFuelPerLitreInDollars());
                 carRideObject.put("passengers", carRide.getNumberOfPassengers());
                 carRideObject.put("commission", carRide.getCommission());
-                carRideObject.put("rideDateTime", carRide.getDate().format(formatter));
+                carRideObject.put("date", carRide.getDate().format(formatter));
                 carRideObject.put("category", categoryObject);
                 carRideObject.put("currency", currencyObject);
+                carRideObject.put("newest_conversion_rate", carRide.getConversionToDollars());
 
                 carRidesArray.put(carRideObject);
             }
