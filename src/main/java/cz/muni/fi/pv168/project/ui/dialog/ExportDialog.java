@@ -124,15 +124,11 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
 
 
     private void performExport(File file) {
-        //if (carRideTableFilter == null) {
-        //    throw new IllegalStateException("CarRideTableFilter not injected");
-        //}
 
         switch (selectedExportOption) {
             case "Car Rides":
                 List<CarRide> carRideList = new LinkedList<>();
                 carRideList = carRideTableFilter.getRideCompoundMatcher().getData();
-                // TODO
 
                 BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
                 batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
@@ -140,7 +136,6 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
             case "Currency":
                 List<Currency> currencyList = new LinkedList<>();
                 currencyList = currencies.getAll();
-                // TODO
 
                 BatchExporterCurrencyJSON batchExporterCurrencyJSON = new BatchExporterCurrencyJSON();
                 batchExporterCurrencyJSON.exportData(currencyList, selectedFile.getAbsolutePath());
@@ -148,7 +143,6 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
             case "Category":
                 List<Category> categoryList = new LinkedList<>();
                 categoryList = categories.getAll();
-                // TODO
 
                 BatchExporterCategoryJSON batchExporterCategoryJSON = new BatchExporterCategoryJSON();
                 batchExporterCategoryJSON.exportData(categoryList, selectedFile.getAbsolutePath());
@@ -156,7 +150,6 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
             case "Template":
                 List<Template> templateList = new LinkedList<>();
                 templateList = templates.getAll();
-                // TODO
 
                 BatchExporterTemplateJSON batchExporterTemplateJSON = new BatchExporterTemplateJSON();
                 batchExporterTemplateJSON.exportData(templateList, selectedFile.getAbsolutePath());
@@ -164,11 +157,6 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
             default:
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
         }
-        List<CarRide> carRideList = new LinkedList<>();
-        carRideList = carRideTableFilter.getRideCompoundMatcher().getData();
-
-        BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
-        batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
     }
 
     public void clearAndHide() {
