@@ -14,6 +14,7 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
