@@ -2,12 +2,13 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.ui.validation.Validable;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.ValidatorFactory;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ValidatedTextFieldPanel extends JPanel implements Validable {
-    private final ValidatedInputField textField = new ValidatedInputField();
+    private final ValidatedInputField textField = new ValidatedInputField(ValidatorFactory.intValidator());
 
     public ValidatedTextFieldPanel(String LabelName) {
         super();

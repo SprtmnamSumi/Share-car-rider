@@ -45,8 +45,8 @@ public class CurrencyConverter implements ICurrencyConverter {
 
 
     @Override
-    public double ConvertFromConversionRateTODollars(double conversionRateToGivenCurrewncy, double amountInDolars) {
-        return amountInDolars / conversionRateToGivenCurrewncy;
+    public double ConvertFromConversionRateTODollars(double conversionRateToGivenCurrewncy, double amountInCurrency) {
+        return amountInCurrency / conversionRateToGivenCurrewncy;
     }
 
     @Override

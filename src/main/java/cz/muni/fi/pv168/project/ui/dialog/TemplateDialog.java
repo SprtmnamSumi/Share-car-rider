@@ -11,13 +11,13 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
-import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
+import cz.muni.fi.pv168.project.ui.validation.ValidatorFactory;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 
 class TemplateDialog extends EntityDialog<Template> {
-    private final ValidatedInputField titleField = new ValidatedInputField() {
+    private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.titleValidator()) {
         @Override
         public boolean evaluate() {
             return this.getText().length() >= 2;
@@ -31,11 +31,11 @@ class TemplateDialog extends EntityDialog<Template> {
     //    private final JComboBox<Category> categoryJComboBox;
     private final CategoryBar categoryBar;
 
-    private final ValidatedInputField distanceField = getDoubleField();
-    private final ValidatedInputField fuelConsumption = getDoubleField();
+    private final ValidatedInputField distanceField = new ValidatedInputField(ValidatorFactory.doubleValidator());
+    private final ValidatedInputField fuelConsumption = new ValidatedInputField(ValidatorFactory.doubleValidator());
 
-    private final ValidatedInputField numberOfPassengers = new ValidatedInputField();
-    private final ValidatedInputField commission = getDoubleField();
+    private final ValidatedInputField numberOfPassengers = new ValidatedInputField(ValidatorFactory.intValidator());
+    private final ValidatedInputField commission = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final JCheckBox isChecked = new JCheckBox();
     private final Template template;
     private final CostBar costBar;
@@ -50,14 +50,13 @@ class TemplateDialog extends EntityDialog<Template> {
             }
         };
 
-
         this.template = template;
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validationListener);
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         this.currencyConverter = currencyConverter;
         this.costBar = new CostBar(currencyModel, currencyConverter, validationListener);
-        this.validationListener.setValidables(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, costBar);
+        this.validationListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, costBar);
         addFields();
         setValues();
         validationListener.fireChange();
@@ -98,7 +97,7 @@ class TemplateDialog extends EntityDialog<Template> {
         add("Cost of Fuel (1l)", costBar);
         add("Number of Passengers", numberOfPassengers);
         add("Commission (%)", commission);
-        add("Cat egory", categoryBar);
+        add("Category", categoryBar);
         add("Count me in the calculation of per price person", isChecked);
     }
 
@@ -115,15 +114,5 @@ class TemplateDialog extends EntityDialog<Template> {
         template.setCommission(Double.parseDouble(commission.getText()));
         template.setCategory(categoryBar.getSelectedItem());
         return template;
-    }
-
-    private ValidatedInputField getDoubleField() {
-        return new ValidatedInputField() {
-            @Override
-            public boolean evaluate() {
-                return ValidationUtils.validateDouble(this)
-                        && Double.parseDouble(this.getText()) >= 0.0f;
-            }
-        };
     }
 }
