@@ -3,10 +3,7 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
-import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
-import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
-import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
+import cz.muni.fi.pv168.project.ui.validation.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,10 +11,10 @@ import java.awt.event.ItemEvent;
 
 
 public class CostBar extends ValidatedJPanel {
-    private final ValidatedInputField costOfFuel = getDoubleField();
+    private final ValidatedInputField costOfFuel = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final JComboBox<Currency> currencyJComboBox;
     private final CurrencyConverter currencyConverter;
-    private final ValidatedInputField rate = getDoubleField();
+    private final ValidatedInputField rate = new ValidatedInputField(ValidatorFactory.doubleValidator());
 
     public CostBar(ListModel<Currency> currencyModel, CurrencyConverter currencyConverter, ValidationListener validationListener) {
         super();
@@ -78,16 +75,6 @@ public class CostBar extends ValidatedJPanel {
 
     public void setCurrency(Currency currency) {
         this.currencyJComboBox.setSelectedItem(currency);
-    }
-
-    private ValidatedInputField getDoubleField() {
-        return new ValidatedInputField() {
-            @Override
-            public boolean evaluate() {
-                return ValidationUtils.validateDouble(this)
-                        && Double.parseDouble(this.getText()) >= 0.0f;
-            }
-        };
     }
 }
 

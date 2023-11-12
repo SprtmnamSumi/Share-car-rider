@@ -1,7 +1,5 @@
 package cz.muni.fi.pv168.project.ui.validation;
 
-import cz.muni.fi.pv168.project.util.ConversionUtils;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -12,9 +10,12 @@ public class ValidatedInputField extends JTextField implements Validable {
 
     private final KeyListener listener = new TypeListener();
 
-    public ValidatedInputField() {
+    private final Validator<String> validator;
+
+    public ValidatedInputField(Validator<String> validator) {
         super();
         this.addKeyListener(listener);
+        this.validator = validator;
     }
 
     @Override
@@ -25,7 +26,7 @@ public class ValidatedInputField extends JTextField implements Validable {
 
     @Override
     public boolean evaluate() {
-        return ValidationUtils.validateInteger(this) && Integer.parseInt(this.getText()) >= 0;
+        return validator.evaluate(this.getText());
     }
 
     @Override

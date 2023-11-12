@@ -6,32 +6,22 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class ValidationListener {
+public abstract class ValidationListener extends KeyAdapter {
+    private final List<Validable> validables = new LinkedList<>();
 
-    private final KeyListener listener = new KeyListener();
-    private final List<Validable> validables;
-
-    public ValidationListener(Validable... validables) {
-        this.validables = new LinkedList<>();
-        this.validables.addAll(Arrays.stream(validables).toList());
-        this.validables.forEach(v -> v.addKeyListener(listener));
-    }
-
-    public void setValidables(Validable... validables) {
+    public void setListeners(Validable ... validables){
+        Arrays.stream(validables).toList().forEach(v -> v.addKeyListener(this));
         this.validables.addAll(Arrays.asList(validables));
-        this.validables.forEach(v -> v.addKeyListener(listener));
     }
 
     public void fireChange() {
-        listener.keyReleased(null);
+        this.keyReleased(null);
     }
 
     protected abstract void onChange(boolean isValid);
 
-    private class KeyListener extends KeyAdapter {
-        @Override
-        public void keyReleased(KeyEvent e) {
+    @Override
+    public void keyReleased(KeyEvent e) {
             onChange(validables.parallelStream().allMatch(Validable::evaluate));
         }
-    }
 }
