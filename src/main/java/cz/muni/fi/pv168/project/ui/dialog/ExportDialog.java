@@ -1,12 +1,9 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.export.BatchExporterJSON;
-import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
+import cz.muni.fi.pv168.project.export.BatchExporterCarRideJSON;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 
-import javax.inject.Inject;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +13,6 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -115,8 +111,8 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
         List<CarRide> carRideList = new LinkedList<>();
         carRideList =  carRideTableFilter.getRideCompoundMatcher().getData();
 
-        BatchExporterJSON batchExporterJSON = new BatchExporterJSON();
-        batchExporterJSON.exportData(carRideList, selectedFile.getAbsolutePath());
+        BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
+        batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
     }
 
     public void clearAndHide() {

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Sabrina Orálková, 525089
  */
-public class BatchImporterJSON {
+public class BatchImporterCarRideJSON {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     public List<CarRide> importData(String filePath) {
