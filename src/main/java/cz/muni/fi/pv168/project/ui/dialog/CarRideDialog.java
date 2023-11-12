@@ -14,7 +14,6 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
-import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
@@ -25,8 +24,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import static javax.swing.JOptionPane.OK_OPTION;
-
 final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField titleField = new ValidatedInputField() {
         @Override
@@ -34,7 +31,12 @@ final class CarRideDialog extends EntityDialog<CarRide> {
             return this.getText().length() >= 2;
         }
     };
-    private final JTextField descriptionField = new JTextField();
+    private final ValidatedInputField descriptionField = new ValidatedInputField() {
+        @Override
+        public boolean evaluate() {
+            return true;
+        }
+    };
     private final JComboBox<Currency> currencyJComboBox;
     private final JComboBox<Template> templateComboBoxModel;
     private final CurrencyConverter currencyConverter;
@@ -65,19 +67,15 @@ final class CarRideDialog extends EntityDialog<CarRide> {
 
         this.costBar = new CostBar(currencyModel, currencyConverter);
 
-        setValues(carRide);
-        addFields();
-
         this.entityCrudService = entityCrudService;
-        validationListener = new ValidationListener(distanceField, fuelConsumption, numberOfPassengers, commission, costBar) {
+        validationListener = new ValidationListener(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar) {
             @Override
             protected void onChange(boolean isValid) {
                 CarRideDialog.super.toggleOk(isValid);
                 if (isValid)
-                    saveAsTemplate.setEnabled(entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate())));
+                    saveAsTemplate.setEnabled(entityCrudService.getAllEntities().stream().noneMatch(template -> template.equals(getAsTemplate())));
             }
         };
-        validationListener.fireChange();
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -86,6 +84,15 @@ final class CarRideDialog extends EntityDialog<CarRide> {
                 setValues(templateCarRide);
             }
         });
+
+        saveAsTemplate.addActionListener(e -> {
+            addTemplate(getAsTemplate());
+            templateComboBoxModel.setSelectedItem(getAsTemplate());
+            validationListener.fireChange();
+        });
+
+        setValues(carRide);
+        addFields();
     }
 
 
@@ -100,6 +107,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         commission.setText(String.valueOf(carRide.getCommission()));
         currencyJComboBox.setSelectedItem(carRide.getCurrency());
         costBar.SetValues(carRide.getCostOfFuelPerLitreInDollars(), carRide.getConversionToDollars(), carRide.getCurrency());
+        validationListener.fireChange();
     }
 
     private void addFields() {
@@ -154,14 +162,14 @@ final class CarRideDialog extends EntityDialog<CarRide> {
             return Optional.empty();
         }
 
-        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
-            return Optional.of(getEntity());
-        }
-
-        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
-        if (res == OK_OPTION) {
-            addTemplate(getAsTemplate());
-        }
+//        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
+//            return Optional.of(getEntity());
+//        }
+//
+//        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
+//        if (res == OK_OPTION) {
+//            addTemplate(getAsTemplate());
+//        }
         return Optional.of(getEntity());
     }
 
