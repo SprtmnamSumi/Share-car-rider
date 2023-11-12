@@ -11,7 +11,6 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
-import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatorFactory;
 
 import javax.swing.*;
@@ -98,7 +97,7 @@ class TemplateDialog extends EntityDialog<Template> {
         add("Cost of Fuel (1l)", costBar);
         add("Number of Passengers", numberOfPassengers);
         add("Commission (%)", commission);
-        add("Cat egory", categoryBar);
+        add("Category", categoryBar);
         add("Count me in the calculation of per price person", isChecked);
     }
 
