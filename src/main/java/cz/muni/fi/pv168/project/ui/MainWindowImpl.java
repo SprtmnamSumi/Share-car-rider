@@ -39,14 +39,14 @@ class MainWindowImpl implements MainWindow {
 
     @Inject
     MainWindowImpl(ICarRideActionFactory carActionFactory,
-                          DefaultActionFactory<Category> categoryActionFactory,
-                          DefaultActionFactory<Template> templateActionFactory,
-                          CurrencyActionFactory currencyActionFactory,
-                          CarRideTableModel carRideTableModel,
-                          CategoryTableModel categoryTableModel,
-                          TemplateTableModel templateTableModel,
-                          CurrencyTableModel currencyTableModel,
-                          ICarRideStatistics ICarRideStatistics
+                   DefaultActionFactory<Category> categoryActionFactory,
+                   DefaultActionFactory<Template> templateActionFactory,
+                   CurrencyActionFactory currencyActionFactory,
+                   CarRideTableModel carRideTableModel,
+                   CategoryTableModel categoryTableModel,
+                   TemplateTableModel templateTableModel,
+                   CurrencyTableModel currencyTableModel,
+                   ICarRideStatistics ICarRideStatistics
     ) {
         frame = createFrame();
 
@@ -62,7 +62,7 @@ class MainWindowImpl implements MainWindow {
 
         settingsAction = new SettingsAction();
         importAction = new ImportAction();
-        exportAction = new ExportAction(new CarRideTableFilter( new TableRowSorter<>(carRideTableModel)));
+        exportAction = new ExportAction(new CarRideTableFilter(new TableRowSorter<>(carRideTableModel)), templateTableModel, currencyTableModel, categoryTableModel);
         colorThemeAction = new ColorThemeAction();
         info = new InfoAction();
 

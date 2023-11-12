@@ -2,13 +2,14 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.export.BatchExporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchExporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchExporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchExporterTemplateJSON;
-import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,6 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.util.Currency;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,20 +30,22 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
 
     private final String title = "Export data";
     private final JOptionPane optionPane;
-
-    private String btnString1 = "Export";
-    private String btnString2 = "Cancel";
-
+    private final TableModel<Template> templates;
+    private final TableModel<cz.muni.fi.pv168.project.business.model.Currency> currencies;
+    private final TableModel<Category> categories;
+    private final String btnString1 = "Export";
+    private final String btnString2 = "Cancel";
+    private final ICarRideTableFilter carRideTableFilter;
+    private final JComboBox<String> exportOptionsComboBox;
     private File selectedFile;
-
-    private ICarRideTableFilter carRideTableFilter;
-
-    private JComboBox<String> exportOptionsComboBox;
     private String selectedExportOption;
 
-    public ExportDialog(Frame aFrame, String aWord, ICarRideTableFilter carRideTableFilter) {
+    public ExportDialog(Frame aFrame, String aWord, ICarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories) {
         super(aFrame, true);
         this.carRideTableFilter = carRideTableFilter;
+        this.templates = templates;
+        this.currencies = currencies;
+        this.categories = categories;
         setTitle(title);
 
         String msgString1 = "Select a file";
@@ -109,8 +111,8 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
 
                     selectedExportOption = (String) exportOptionsComboBox.getSelectedItem();
                     //if (selectedExportOption == null || selectedExportOption.isEmpty()) {
-                        //JOptionPane.showMessageDialog(this, "Please select an export option.", "Warning", JOptionPane.WARNING_MESSAGE);
-                        //return;
+                    //JOptionPane.showMessageDialog(this, "Please select an export option.", "Warning", JOptionPane.WARNING_MESSAGE);
+                    //return;
                     //}
                     performExport(selectedFile);
                 }
@@ -121,16 +123,15 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
     }
 
 
-
     private void performExport(File file) {
         //if (carRideTableFilter == null) {
         //    throw new IllegalStateException("CarRideTableFilter not injected");
         //}
 
-        switch (selectedExportOption){
-            case "CarRide":
+        switch (selectedExportOption) {
+            case "Car Rides":
                 List<CarRide> carRideList = new LinkedList<>();
-                carRideList =  carRideTableFilter.getRideCompoundMatcher().getData();
+                carRideList = carRideTableFilter.getRideCompoundMatcher().getData();
                 // TODO
 
                 BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
@@ -138,7 +139,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
                 break;
             case "Currency":
                 List<Currency> currencyList = new LinkedList<>();
-                currencyList =  carRideTableFilter.getRideCompoundMatcher().getData();
+                currencyList = currencies.getAll();
                 // TODO
 
                 BatchExporterCurrencyJSON batchExporterCurrencyJSON = new BatchExporterCurrencyJSON();
@@ -146,7 +147,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
                 break;
             case "Category":
                 List<Category> categoryList = new LinkedList<>();
-                categoryList =  carRideTableFilter.getRideCompoundMatcher().getData();
+                categoryList = categories.getAll();
                 // TODO
 
                 BatchExporterCategoryJSON batchExporterCategoryJSON = new BatchExporterCategoryJSON();
@@ -154,26 +155,17 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
                 break;
             case "Template":
                 List<Template> templateList = new LinkedList<>();
-                templateList =  carRideTableFilter.getRideCompoundMatcher().getData();
+                templateList = templates.getAll();
                 // TODO
 
                 BatchExporterTemplateJSON batchExporterTemplateJSON = new BatchExporterTemplateJSON();
                 batchExporterTemplateJSON.exportData(templateList, selectedFile.getAbsolutePath());
                 break;
-            case "All":
-                List<CarRide> carRideList = new LinkedList<>();
-                carRideList =  carRideTableFilter.getRideCompoundMatcher().getData();
-                // TODO for me - nevím zda se soubor overwritne nebo ne
-
-                BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
-                batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
-
-                break;
             default:
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
         }
         List<CarRide> carRideList = new LinkedList<>();
-        carRideList =  carRideTableFilter.getRideCompoundMatcher().getData();
+        carRideList = carRideTableFilter.getRideCompoundMatcher().getData();
 
         BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
         batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
