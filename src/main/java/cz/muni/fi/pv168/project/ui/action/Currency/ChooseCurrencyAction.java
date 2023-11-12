@@ -2,8 +2,7 @@ package cz.muni.fi.pv168.project.ui.action.Currency;
 
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.ui.dialog.ChooseCurrencyDialog;
-import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,10 +13,10 @@ import java.io.IOException;
 
 public final class ChooseCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
-    private final EntityListModelAdapter<Currency> currencyListModel;
+    private final DialogFactory dialogFactory;
     private BufferedImage coinImage;
 
-    public ChooseCurrencyAction(JTable currencyTable, EntityListModelAdapter<Currency> currencyListModel) {
+    public ChooseCurrencyAction(JTable currencyTable, DialogFactory dialogFactory) {
         super("Choose currency");
 
         try {
@@ -28,7 +27,7 @@ public final class ChooseCurrencyAction extends AbstractAction {
             ex.printStackTrace();
         };
         this.currencyTable = currencyTable;
-        this.currencyListModel = currencyListModel;
+        this.dialogFactory = dialogFactory;
         putValue(SHORT_DESCRIPTION, "Choose Currency");
     }
 
@@ -39,8 +38,7 @@ public final class ChooseCurrencyAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var dialog = new ChooseCurrencyDialog(currencyTable, currencyListModel);
-        dialog.show(currencyTable, "Choose Currency")
+        dialogFactory.getChooseCurrencyDialog(currencyTable, new CurrencyActionFactory(dialogFactory)).show(currencyTable, "Choose Currency")
                 .ifPresent(this::addRow);
     }
 }

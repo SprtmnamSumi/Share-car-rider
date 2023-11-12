@@ -13,9 +13,10 @@ import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
-import cz.muni.fi.pv168.project.ui.validation.FieldConversionUtils;
+import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -23,53 +24,54 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import static javax.swing.JOptionPane.OK_OPTION;
-
-public final class CarRideDialog extends EntityDialog<CarRide> {
+final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField titleField = new ValidatedInputField() {
         @Override
         public boolean evaluate() {
             return this.getText().length() >= 2;
         }
     };
-    private final JTextField descriptionField = new JTextField();
-    private final JComboBox<Currency> currencyJComboBox;
+    private final ValidatedInputField descriptionField = new ValidatedInputField() {
+        @Override
+        public boolean evaluate() {
+            return true;
+        }
+    };
     private final JComboBox<Template> templateComboBoxModel;
-    private final CurrencyConverter currencyConverter;
     private final CategoryBar categoryBar;
     private final ValidatedInputField distanceField = getDoubleField();
     private final ValidatedInputField fuelConsumption = getDoubleField();
-
     private final ValidatedInputField numberOfPassengers = new ValidatedInputField();
     private final ValidatedInputField commission = getDoubleField();
     private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
-
+    private final TemplateBar templateBar;
+    private final JButton saveAsTemplate = new JButton("Save as template");
     private final CostBar costBar;
-
     private final TableModel<Template> entityCrudService;
     private final ValidationListener validationListener;
-    CarRide carRide;
 
+    private final CarRide carRide;
 
-    public CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
+    CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
         this.carRide = carRide;
-        templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
-        this.currencyConverter = currencyConverter;
-        categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel);
-        currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
-        this.costBar = new CostBar(currencyModel, currencyConverter);
-        setValues(carRide);
-        addFields();
-
         this.entityCrudService = entityCrudService;
-        validationListener = new ValidationListener(distanceField, fuelConsumption, numberOfPassengers, commission, costBar) {
+
+        validationListener = new ValidationListener() {
             @Override
             protected void onChange(boolean isValid) {
                 CarRideDialog.super.toggleOk(isValid);
+                if (isValid)
+                    saveAsTemplate.setEnabled(entityCrudService.getAllEntities().stream().noneMatch(template -> template.equals(getAsTemplate())));
             }
         };
-        validationListener.fireChange();
+
+
+        templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
+        categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validationListener);
+        templateBar = new TemplateBar(templateComboBoxModel, saveAsTemplate);
+        this.costBar = new CostBar(currencyModel, currencyConverter, validationListener);
+        validationListener.setValidables(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar);
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -78,10 +80,19 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
                 setValues(templateCarRide);
             }
         });
+
+        saveAsTemplate.addActionListener(e -> {
+            addTemplate(getAsTemplate());
+            templateComboBoxModel.setSelectedItem(getAsTemplate());
+            validationListener.fireChange();
+        });
+
+        setValues(carRide);
+        addFields();
     }
 
 
-    private void setValues(CarRide carRide) {
+    public void setValues(CarRide carRide) {
         titleField.setText(carRide.getTitle());
         descriptionField.setText(carRide.getDescription());
         distanceField.setText(String.valueOf(carRide.getDistance()));
@@ -90,33 +101,22 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         categoryBar.setSelectedItem(carRide.getCategory());
         dateBar.setDate(carRide.getDate());
         commission.setText(String.valueOf(carRide.getCommission()));
-        currencyJComboBox.setSelectedItem(carRide.getCurrency());
         costBar.SetValues(carRide.getCostOfFuelPerLitreInDollars(), carRide.getConversionToDollars(), carRide.getCurrency());
-    }
-
-
-    private String getSpinnerValue(JSpinner spinner) {
-        try {
-            spinner.commitEdit();
-        } catch (java.text.ParseException e) {
-        }
-
-        return spinner.getValue().toString();
+        validationListener.fireChange();
     }
 
     private void addFields() {
-        add("Template", templateComboBoxModel);
+        add("Template", templateBar);
         add("Title", titleField);
         add("Description", descriptionField);
         add("Distance", distanceField);
         add("Average Fuel Consumption (per 100km)", fuelConsumption);
         add("Number of Passengers", numberOfPassengers);
         add("Commission (%)", commission);
-        add("Date", dateBar);
         add("Category", categoryBar);
-        add("Currency", currencyJComboBox);
         add("Count me in the calculation of per price person", isChecked);
         add("Cost of Fuel", costBar);
+        add("Date", dateBar);
     }
 
     @Override
@@ -129,7 +129,6 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setCommission(Double.parseDouble(commission.getText()));
         carRide.setCategory(categoryBar.getSelectedItem());
         carRide.setDate(dateBar.getDate());
-        carRide.setCurrency((Currency) currencyJComboBox.getSelectedItem());
 
         carRide.setCurrency(costBar.getCurrency());
         carRide.setConversionRateToDollar(costBar.getConversionRateToDollars());
@@ -150,20 +149,20 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
 
     @Override
     public Optional<CarRide> show(JComponent parentComponent, String title) {
-        boolean isOk = isconfirmed(parentComponent, title);
+        boolean isOk = isconfirmed(title);
 
         if (!isOk) {
             return Optional.empty();
         }
 
-        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
-            return Optional.of(getEntity());
-        }
-
-        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
-        if (res == OK_OPTION) {
-            addTemplate(getAsTemplate());
-        }
+//        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
+//            return Optional.of(getEntity());
+//        }
+//
+//        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
+//        if (res == OK_OPTION) {
+//            addTemplate(getAsTemplate());
+//        }
         return Optional.of(getEntity());
     }
 
@@ -171,7 +170,7 @@ public final class CarRideDialog extends EntityDialog<CarRide> {
         return new ValidatedInputField() {
             @Override
             public boolean evaluate() {
-                return FieldConversionUtils.validateDouble(this)
+                return ValidationUtils.validateDouble(this)
                         && Double.parseDouble(this.getText()) >= 0.0f;
             }
         };

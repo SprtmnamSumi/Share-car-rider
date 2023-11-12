@@ -1,37 +1,35 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.ui.action.Currency.AddCurrencyAction;
+import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 
 import javax.swing.*;
 
 
-public class ChooseCurrencyDialog extends EntityDialog<Currency> {
-    private final EntityListModelAdapter<Currency> currencyListModel;
-    private final JComboBox<Currency> currencyCombo;
+class ChooseCurrencyDialog extends EntityDialog<Currency> {
+    private final JComboBox<Currency> currencyCombox;
     private final JButton addCurrencyButton;
 
-    public ChooseCurrencyDialog(JTable currencyTable, EntityListModelAdapter<Currency> currencyListModel) {
+    ChooseCurrencyDialog(JTable currencyTable, EntityListModelAdapter<Currency> currencyListModel, CurrencyActionFactory actionFactory) {
 
-        this.currencyListModel = currencyListModel;
-        this.currencyCombo = new JComboBox<>(new ComboBoxModelAdapter<>(currencyListModel));
+        this.currencyCombox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyListModel));
 
         addCurrencyButton = new JButton("Add new currency");
-        addCurrencyButton.addActionListener(new AddCurrencyAction(currencyTable));
+        addCurrencyButton.addActionListener(actionFactory.getAddAction(currencyTable));
 
         addFields();
     }
 
     private void addFields() {
-        add("Currency", currencyCombo);
+        add("Currency", currencyCombox);
         add("", addCurrencyButton);
     }
 
     @Override
     Currency getEntity() {
-        Currency currency = (Currency) currencyCombo.getSelectedItem();
+        Currency currency = (Currency) currencyCombox.getSelectedItem();
         return currency;
     }
 }

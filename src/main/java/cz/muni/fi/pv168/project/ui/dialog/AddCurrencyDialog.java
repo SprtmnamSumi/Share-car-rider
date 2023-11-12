@@ -1,12 +1,11 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
-import cz.muni.fi.pv168.project.util.ConversionUtils;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
+import cz.muni.fi.pv168.project.ui.validation.ValidationUtils;
 
-public class AddCurrencyDialog extends EntityDialog<Currency> {
+class AddCurrencyDialog extends EntityDialog<Currency> {
     private final ValidatedInputField nameTextField = new ValidatedInputField() {
         @Override
         public boolean evaluate() {

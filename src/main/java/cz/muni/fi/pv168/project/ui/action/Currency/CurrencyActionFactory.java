@@ -2,21 +2,22 @@ package cz.muni.fi.pv168.project.ui.action.Currency;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 
 import javax.inject.Inject;
 import javax.swing.*;
 
 public class CurrencyActionFactory implements DefaultActionFactory<Currency> {
-    private final EntityListModelAdapter<Currency> currencyListModel;
+    private final DialogFactory dialogFactory;
 
     @Inject
-    public CurrencyActionFactory(EntityListModelAdapter<Currency> currencyListModel) {
-        this.currencyListModel = currencyListModel;
+    CurrencyActionFactory(DialogFactory dialogFactory) {
+        this.dialogFactory = dialogFactory;
     }
 
     public Action getAddAction(JTable table) {
-        return new AddCurrencyAction(table);
+        return new AddCurrencyAction(table, dialogFactory);
     }
 
     @Override
@@ -30,6 +31,6 @@ public class CurrencyActionFactory implements DefaultActionFactory<Currency> {
     }
 
     public Action getChooseAction(JTable table) {
-        return new ChooseCurrencyAction(table, currencyListModel);
+        return new ChooseCurrencyAction(table, dialogFactory);
     }
 }
