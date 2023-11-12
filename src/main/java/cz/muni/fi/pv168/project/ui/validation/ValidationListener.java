@@ -1,24 +1,28 @@
 package cz.muni.fi.pv168.project.ui.validation;
 
-import cz.muni.fi.pv168.project.ui.dialog.TemplateDialog;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class ValidationListener {
 
-    private final List<ValidatedInputField> validables;
-
     private final KeyListener listener = new KeyListener();
+    private final List<Validable> validables;
 
-    public ValidationListener(ValidatedInputField... validables) {
-        this.validables = Arrays.stream(validables).toList();
+    public ValidationListener(Validable... validables) {
+        this.validables = new LinkedList<>();
+        this.validables.addAll(Arrays.stream(validables).toList());
         this.validables.forEach(v -> v.addKeyListener(listener));
     }
 
-    public void fireChange(){
+    public void setValidables(Validable... validables) {
+        this.validables.addAll(Arrays.asList(validables));
+        this.validables.forEach(v -> v.addKeyListener(listener));
+    }
+
+    public void fireChange() {
         listener.keyReleased(null);
     }
 
