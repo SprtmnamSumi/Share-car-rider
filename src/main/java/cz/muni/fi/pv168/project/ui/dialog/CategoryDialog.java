@@ -17,7 +17,7 @@ final class CategoryDialog extends EntityDialog<Category> {
             return this.getText().length()>=2;
         }
     };
-    private final JColorChooser colorChooser = new JColorChooser(Color.WHITE);
+    private final JColorChooser colorChooser = new JColorChooser();
     private final Category category;
     private final ValidationListener validationListener = new ValidationListener(nameField) {
         @Override
@@ -27,6 +27,7 @@ final class CategoryDialog extends EntityDialog<Category> {
     };
 
     CategoryDialog(Category category) {
+        colorChooser.setColor(new Color(category.getColour()));
         this.category = category;
         setValues();
         addFields();
