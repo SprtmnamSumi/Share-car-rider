@@ -31,6 +31,6 @@ public class CurrencyActionFactory implements DefaultActionFactory<Currency> {
     }
 
     public Action getChooseAction(JTable table) {
-        return new ChooseCurrencyAction(table, dialogFactory);
+        return new ChooseCurrencyAction(table, dialogFactory, this);
     }
 }

@@ -15,9 +15,10 @@ import java.io.IOException;
 public final class ChooseCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
     private final DialogFactory dialogFactory;
+    private final CurrencyActionFactory currencyActionFactory;
     private BufferedImage coinImage;
 
-    public ChooseCurrencyAction(JTable currencyTable, DialogFactory dialogFactory) {
+    public ChooseCurrencyAction(JTable currencyTable, DialogFactory dialogFactory, CurrencyActionFactory currencyActionFactory) {
         super("Choose currency");
 
         try {
@@ -29,13 +30,14 @@ public final class ChooseCurrencyAction extends AbstractAction {
         }
         this.currencyTable = currencyTable;
         this.dialogFactory = dialogFactory;
+        this.currencyActionFactory = currencyActionFactory;
         putValue(SHORT_DESCRIPTION, "Choose Currency");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
-        dialogFactory.getAddCurrencyDialog(new Currency("", "", 0.0))
+        dialogFactory.getChooseCurrencyDialog(currencyTable, currencyActionFactory)
                 .show(currencyTable, "Choose Currency", "Choose")
                 .ifPresent(currencyTableModel::addRow);
     }
