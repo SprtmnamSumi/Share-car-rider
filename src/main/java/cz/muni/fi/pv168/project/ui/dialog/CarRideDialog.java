@@ -24,7 +24,7 @@ import java.util.UUID;
 
 final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.titleValidator());
-    private final ValidatedInputField descriptionField = new ValidatedInputField((t)->true);
+    private final ValidatedInputField descriptionField = new ValidatedInputField((t) -> true);
     private final JComboBox<Template> templateComboBoxModel;
     private final CategoryBar categoryBar;
     private final ValidatedInputField distanceField = new ValidatedInputField(ValidatorFactory.doubleValidator());
@@ -134,23 +134,5 @@ final class CarRideDialog extends EntityDialog<CarRide> {
     private void addTemplate(Template templateToBeAdded) {
         entityCrudService.addRow(templateToBeAdded);
     }
-
-    @Override
-    public Optional<CarRide> show(JComponent parentComponent, String title) {
-        boolean isOk = isconfirmed(title);
-
-        if (!isOk) {
-            return Optional.empty();
-        }
-
-//        if (entityCrudService.getAllEntities().stream().anyMatch(template -> template.equals(getAsTemplate()))) {
-//            return Optional.of(getEntity());
-//        }
-//
-//        int res = JOptionPane.showConfirmDialog(null, "Do you want to save this as template?", "Save as a template?", JOptionPane.YES_NO_OPTION);
-//        if (res == OK_OPTION) {
-//            addTemplate(getAsTemplate());
-//        }
-        return Optional.of(getEntity());
-    }
 }
+

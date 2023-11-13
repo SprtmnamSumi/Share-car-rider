@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
-import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.NameValuePanel;
 
@@ -20,9 +20,9 @@ public class CarRideStatisticsPanel extends JPanel {
     private final NameValuePanel totalRevenues = new NameValuePanel("Total revenues:");
     private final NameValuePanel totalRides = new NameValuePanel("Total rides:");
     private final ICarRideStatistics ICarRideStatistics;
-    private final CarRideTableFilter carRideTableFilter;
+    private final ICarRideTableFilter carRideTableFilter;
 
-    public CarRideStatisticsPanel(TableModel<CarRide> model, CarRideTableFilter carRideTableFilter, ICarRideStatistics ICarRideStatistics1) {
+    public CarRideStatisticsPanel(TableModel<CarRide> model, ICarRideTableFilter carRideTableFilter, ICarRideStatistics ICarRideStatistics1) {
         super(new BorderLayout());
         this.model = model;
         this.ICarRideStatistics = ICarRideStatistics1;

@@ -33,17 +33,20 @@ public class CarRideTablePanel extends AbstractTablePanel {
 
     private Action saveAsTemplateAction;
 
+    private final CarRideTableFilter filter;
+
     public CarRideTablePanel(CarRideTableModel carRideTableModel,
                              ICarRideActionFactory actionFactory,
                              CategoryTableModel categoryTableModel,
                              CurrencyTableModel currencyTableModel,
-                             ICarRideStatistics ICarRideStatistics) {
+                             ICarRideStatistics ICarRideStatistics
+    ) {
         super(carRideTableModel, new TableRowSorter<>(carRideTableModel));
         setUpTable(actionFactory);
 
-        var carRideTableFilter = new CarRideTableFilter((TableRowSorter<CarRideTableModel>) table.getRowSorter());
-        filterPanel = new CarRideFilterPanel(carRideTableFilter, categoryTableModel, currencyTableModel);
-        statsPanel = new CarRideStatisticsPanel(carRideTableModel, carRideTableFilter, ICarRideStatistics);
+        filter = new CarRideTableFilter((TableRowSorter<CarRideTableModel>) table.getRowSorter());
+        filterPanel = new CarRideFilterPanel(filter, categoryTableModel, currencyTableModel);
+        statsPanel = new CarRideStatisticsPanel(carRideTableModel, filter, ICarRideStatistics);
         table.getRowSorter().addRowSorterListener(e -> statsPanel.updateFilteredStats());
         categoryTableModel.addTableModelListener(e -> updateStats());
 
@@ -53,6 +56,11 @@ public class CarRideTablePanel extends AbstractTablePanel {
 
         this.onSelectionChange = this::changeActionsState;
     }
+
+    public CarRideTableFilter getFilter() {
+        return filter;
+    }
+
 
     private void setUpTable(DefaultActionFactory<CarRide> carRideActionFactory) {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);

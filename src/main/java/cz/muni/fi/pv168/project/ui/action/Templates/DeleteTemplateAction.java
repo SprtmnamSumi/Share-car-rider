@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.ui.action.Templates;
 
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

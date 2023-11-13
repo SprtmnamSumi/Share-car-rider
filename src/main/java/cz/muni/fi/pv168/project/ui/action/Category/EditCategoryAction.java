@@ -52,7 +52,7 @@ final class EditCategoryAction extends AbstractAction {
         Category category = categoryTableModel.getEntity(modelRow);
 
         EntityDialog<Category> categoryDialog = dialogFactory.getAddCategoryDialog(category);
-        categoryDialog.show(categoryTable, "Edit Category Ride")
+        categoryDialog.show(categoryTable, "Edit Category Ride", "Edit")
                 .ifPresent(categoryTableModel::updateRow);
     }
 }
