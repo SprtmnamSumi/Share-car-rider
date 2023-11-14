@@ -5,7 +5,7 @@ import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
-import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
+import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,14 +16,14 @@ public class CategoryBar extends JPanel {
     private final JButton addCategoryButton;
 
 
-    public CategoryBar(ListModel<Category> categoryModel, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, ValidationListener validationListener) {
+    public CategoryBar(ListModel<Category> categoryModel, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, ValidableListener validableListener) {
         super(new FlowLayout(FlowLayout.CENTER));
 
         this.categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));
         this.categoryJComboBox.setPreferredSize(new Dimension(400, 30));
         this.categoryJComboBox.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                validationListener.fireChange();
+                validableListener.fireChange();
             }
         });
 
