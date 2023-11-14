@@ -17,22 +17,13 @@ final class EditCarRideAction extends AbstractAction {
 
     private final JTable carRidesTable;
     private final DialogFactory modalDialogFactory;
-    private BufferedImage editImage;
 
-
-    EditCarRideAction(JTable carRidesTable, DialogFactory modalDialogFactory) {
+    EditCarRideAction(JTable carRidesTable, DialogFactory modalDialogFactory, Icon icon) {
         super("Edit");
         this.modalDialogFactory = modalDialogFactory;
         this.carRidesTable = carRidesTable;
 
-        try {
-            editImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/editing.png"));
-            Icon customIcon = new ImageIcon(editImage);
-            putValue(SMALL_ICON, customIcon);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        };
-
+        putValue(SMALL_ICON, icon);
         putValue(SHORT_DESCRIPTION, "Edits Car Ride");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
