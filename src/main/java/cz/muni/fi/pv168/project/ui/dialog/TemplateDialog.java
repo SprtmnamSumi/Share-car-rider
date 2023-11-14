@@ -10,19 +10,14 @@ import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
-import cz.muni.fi.pv168.project.ui.validation.ValidatorFactory;
+import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
+import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 
 class TemplateDialog extends EntityDialog<Template> {
-    private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.titleValidator()) {
-        @Override
-        public boolean evaluate() {
-            return this.getText().length() >= 2;
-        }
-    };
+    private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2,150));
     private final JTextField descriptionField = new JTextField();
 
     private final JComboBox<Currency> currencyJComboBox;
@@ -40,10 +35,10 @@ class TemplateDialog extends EntityDialog<Template> {
     private final Template template;
     private final CostBar costBar;
 
-    private final ValidationListener validationListener;
+    private final ValidableListener validableListener;
 
     TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel) {
-        validationListener = new ValidationListener() {
+        validableListener = new ValidableListener() {
             @Override
             protected void onChange(boolean isValid) {
                 TemplateDialog.super.toggleOk(isValid);
@@ -51,15 +46,15 @@ class TemplateDialog extends EntityDialog<Template> {
         };
 
         this.template = template;
-        categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validationListener);
+        categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validableListener);
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         currencyJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(currencyModel));
         this.currencyConverter = currencyConverter;
-        this.costBar = new CostBar(currencyModel, currencyConverter, validationListener);
-        this.validationListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, costBar);
+        this.costBar = new CostBar(currencyModel, currencyConverter, validableListener);
+        this.validableListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, costBar);
         addFields();
         setValues();
-        validationListener.fireChange();
+        validableListener.fireChange();
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
