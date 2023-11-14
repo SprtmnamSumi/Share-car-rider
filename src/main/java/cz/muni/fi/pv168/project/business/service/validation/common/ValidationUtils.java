@@ -1,7 +1,7 @@
-package cz.muni.fi.pv168.project.ui.validation;
+package cz.muni.fi.pv168.project.business.service.validation.common;
 
-public class ValidationUtils {
-    public static boolean validateDouble(String text){
+class ValidationUtils {
+    static boolean validateDouble(String text){
         try{
             Double.parseDouble(text);
             return true;
@@ -10,7 +10,7 @@ public class ValidationUtils {
             return false;
         }
     }
-    public static boolean validateInteger(String text){
+    static boolean validateInteger(String text){
         try{
             Integer.parseInt(text);
             return true;

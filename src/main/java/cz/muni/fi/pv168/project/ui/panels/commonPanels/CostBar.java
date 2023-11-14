@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
+import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.validation.*;
 
@@ -16,7 +17,7 @@ public class CostBar extends ValidatedJPanel {
     private final CurrencyConverter currencyConverter;
     private final ValidatedInputField rate = new ValidatedInputField(ValidatorFactory.doubleValidator());
 
-    public CostBar(ListModel<Currency> currencyModel, CurrencyConverter currencyConverter, ValidationListener validationListener) {
+    public CostBar(ListModel<Currency> currencyModel, CurrencyConverter currencyConverter, ValidableListener validableListener) {
         super();
         setValidables(costOfFuel, rate);
 
@@ -27,7 +28,7 @@ public class CostBar extends ValidatedJPanel {
                 var curr = (Currency) e.getItem();
                 var rate = curr.getNewestRateToDollar();
                 setConversionRateToDollars(rate);
-                validationListener.fireChange();
+                validableListener.fireChange();
             }
         });
 

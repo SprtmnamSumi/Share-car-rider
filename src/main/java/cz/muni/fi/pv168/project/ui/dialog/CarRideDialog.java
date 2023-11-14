@@ -6,6 +6,8 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
+import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
+import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
@@ -19,12 +21,11 @@ import cz.muni.fi.pv168.project.ui.validation.*;
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 final class CarRideDialog extends EntityDialog<CarRide> {
-    private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.titleValidator());
-    private final ValidatedInputField descriptionField = new ValidatedInputField((t) -> true);
+    private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2,150));
+    private final ValidatedInputField descriptionField = new ValidatedInputField((t) -> ValidationResult.success());
     private final JComboBox<Template> templateComboBoxModel;
     private final CategoryBar categoryBar;
     private final ValidatedInputField distanceField = new ValidatedInputField(ValidatorFactory.doubleValidator());
@@ -37,7 +38,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
     private final JButton saveAsTemplate = new JButton("Save as template");
     private final CostBar costBar;
     private final TableModel<Template> entityCrudService;
-    private final ValidationListener validationListener;
+    private final ValidableListener validableListener;
 
     private final CarRide carRide;
 
@@ -45,7 +46,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         this.carRide = carRide;
         this.entityCrudService = entityCrudService;
 
-        validationListener = new ValidationListener() {
+        validableListener = new ValidableListener() {
             @Override
             protected void onChange(boolean isValid) {
                 CarRideDialog.super.toggleOk(isValid);
@@ -56,10 +57,10 @@ final class CarRideDialog extends EntityDialog<CarRide> {
 
 
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
-        categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validationListener);
+        categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validableListener);
         templateBar = new TemplateBar(templateComboBoxModel, saveAsTemplate);
-        this.costBar = new CostBar(currencyModel, currencyConverter, validationListener);
-        validationListener.setListeners(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar);
+        this.costBar = new CostBar(currencyModel, currencyConverter, validableListener);
+        validableListener.setListeners(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar);
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -72,7 +73,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         saveAsTemplate.addActionListener(e -> {
             addTemplate(getAsTemplate());
             templateComboBoxModel.setSelectedItem(getAsTemplate());
-            validationListener.fireChange();
+            validableListener.fireChange();
         });
 
         setValues(carRide);
@@ -90,7 +91,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         dateBar.setDate(carRide.getDate());
         commission.setText(String.valueOf(carRide.getCommission()));
         costBar.SetValues(carRide.getCostOfFuelPerLitreInDollars(), carRide.getConversionToDollars(), carRide.getCurrency());
-        validationListener.fireChange();
+        validableListener.fireChange();
     }
 
     private void addFields() {

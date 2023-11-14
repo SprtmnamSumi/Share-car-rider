@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.ui.validation;
 
+import cz.muni.fi.pv168.project.business.service.validation.Validator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -26,7 +28,7 @@ public class ValidatedInputField extends JTextField implements Validable {
 
     @Override
     public boolean evaluate() {
-        return validator.evaluate(this.getText());
+        return validator.validate(this.getText()).isValid();
     }
 
     @Override

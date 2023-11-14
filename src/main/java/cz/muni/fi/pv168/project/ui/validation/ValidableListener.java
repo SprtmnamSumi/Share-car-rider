@@ -1,12 +1,14 @@
 package cz.muni.fi.pv168.project.ui.validation;
 
+import cz.muni.fi.pv168.project.business.service.validation.Validator;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class ValidationListener extends KeyAdapter {
+public abstract class ValidableListener extends KeyAdapter {
     private final List<Validable> validables = new LinkedList<>();
 
     public void setListeners(Validable ... validables){
