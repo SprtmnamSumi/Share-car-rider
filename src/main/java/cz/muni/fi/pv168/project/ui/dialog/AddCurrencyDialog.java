@@ -2,17 +2,17 @@ package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import cz.muni.fi.pv168.project.ui.validation.ValidationListener;
-import cz.muni.fi.pv168.project.ui.validation.ValidatorFactory;
+import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
+import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 
 class AddCurrencyDialog extends EntityDialog<Currency> {
-    private final ValidatedInputField nameTextField = new ValidatedInputField((t) -> !t.isEmpty());
-    private final ValidatedInputField symbolTextField = new ValidatedInputField((t) -> t.length() == 1);
+    private final ValidatedInputField nameTextField = new ValidatedInputField(ValidatorFactory.stringValidator(1, 150));
+    private final ValidatedInputField symbolTextField = new ValidatedInputField(ValidatorFactory.stringValidator(1, 1));
     private final ValidatedInputField rateToDollar = new ValidatedInputField(ValidatorFactory
             .eitherValidator(ValidatorFactory.doubleValidator(), ValidatorFactory.intValidator()));
     private final Currency currency;
 
-    private final ValidationListener validationListener = new ValidationListener() {
+    private final ValidableListener validableListener = new ValidableListener() {
         @Override
         protected void onChange(boolean isValid) {
             AddCurrencyDialog.super.toggleOk(isValid);
@@ -24,8 +24,8 @@ class AddCurrencyDialog extends EntityDialog<Currency> {
         //setValues();
 
         addFields();
-        validationListener.fireChange();
-        validationListener.setListeners(nameTextField, symbolTextField, rateToDollar);
+        validableListener.fireChange();
+        validableListener.setListeners(nameTextField, symbolTextField, rateToDollar);
     }
 
     private void setValues() {
