@@ -4,33 +4,21 @@ import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 final class EditTemplateAction extends AbstractAction {
 
     private final JTable templateTable;
     private final DialogFactory dialogFactory;
-    private BufferedImage editImage;
 
-    EditTemplateAction(JTable templateTable, DialogFactory dialogFactory) {
+    EditTemplateAction(JTable templateTable, DialogFactory dialogFactory, Icon icon) {
         super("Edit");
-
-        try {
-            editImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/editing.png"));
-            Icon customIcon = new ImageIcon(editImage);
-            putValue(SMALL_ICON, customIcon);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        };
 
         this.templateTable = templateTable;
         this.dialogFactory = dialogFactory;
+        putValue(SMALL_ICON, icon);
         putValue(SHORT_DESCRIPTION, "Edits Car Ride");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
