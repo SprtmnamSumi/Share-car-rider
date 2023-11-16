@@ -7,7 +7,6 @@ import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 
 public final class ChooseCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
@@ -15,20 +14,20 @@ public final class ChooseCurrencyAction extends AbstractAction {
     private final CurrencyActionFactory currencyActionFactory;
 
     public ChooseCurrencyAction(JTable currencyTable, DialogFactory dialogFactory, CurrencyActionFactory currencyActionFactory, Icon icon) {
-        super("Choose currency");
+        super("Add currency");
 
         this.currencyTable = currencyTable;
         this.dialogFactory = dialogFactory;
         this.currencyActionFactory = currencyActionFactory;
         putValue(SMALL_ICON, icon);
-        putValue(SHORT_DESCRIPTION, "Choose Currency");
+        putValue(SHORT_DESCRIPTION, "Add Currency");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
-        dialogFactory.getChooseCurrencyDialog(currencyTable, currencyActionFactory)
-                .show(currencyTable, "Choose Currency", "Choose")
+        dialogFactory.getAddCurrencyDialog(new Currency("", "", 1.0))
+                .show(currencyTable, "Add Currency", "Add")
                 .ifPresent(currencyTableModel::addRow);
     }
 }
