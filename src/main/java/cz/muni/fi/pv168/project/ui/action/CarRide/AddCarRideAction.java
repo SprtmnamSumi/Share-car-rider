@@ -8,36 +8,22 @@ import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 final class AddCarRideAction extends AbstractAction {
     private final JTable carRidesTable;
-
     private final EntityListModelAdapter<Currency> currencyListModel;
-    private BufferedImage addImage;
     private final DialogFactory modalDialogFactory;
 
-    AddCarRideAction(JTable carRidesTable, DialogFactory modalDialogFactory, EntityListModelAdapter<Currency> currencyListModel) {
+    AddCarRideAction(JTable carRidesTable, DialogFactory modalDialogFactory, EntityListModelAdapter<Currency> currencyListModel, Icon icon) {
         super("Add");
         this.modalDialogFactory = modalDialogFactory;
         this.currencyListModel = currencyListModel;
-
-        try {
-            addImage = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/add.png"));
-            Icon customIcon = new ImageIcon(addImage);
-            putValue(SMALL_ICON, customIcon);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
         this.carRidesTable = carRidesTable;
+        putValue(SMALL_ICON, icon);
         putValue(SHORT_DESCRIPTION, "Adds new Ride");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
