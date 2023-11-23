@@ -4,9 +4,9 @@ import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.icons.IconLoader;
-
 import javax.inject.Inject;
-import javax.swing.*;
+import javax.swing.Action;
+import javax.swing.JTable;
 
 public class TemplateActionFactory implements DefaultActionFactory<Template> {
     private final DialogFactory dialogFactory;

@@ -7,16 +7,20 @@ import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 final class AddCarRideAction extends AbstractAction {
     private final JTable carRidesTable;
     private final EntityListModelAdapter<Currency> currencyListModel;
     private final DialogFactory modalDialogFactory;
+    private BufferedImage addImage;
 
     AddCarRideAction(JTable carRidesTable, DialogFactory modalDialogFactory, EntityListModelAdapter<Currency> currencyListModel, Icon icon) {
         super("Add");
@@ -37,7 +41,7 @@ final class AddCarRideAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CarRide carRide = new CarRide(null, "", "", 1.0, 1, 1, 1, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0),currencyListModel.getElementAt(0).getNewestRateToDollar());
+        CarRide carRide = new CarRide(null, "", "", 1.0, 1, 1, 1, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0), currencyListModel.getElementAt(0).getNewestRateToDollar());
         EntityDialog<CarRide> dialog = modalDialogFactory.getAddCarRideDialog(carRide);
         dialog.show(carRidesTable, "Add Cat ride", "Add")
                 .ifPresent(this::updateFields);

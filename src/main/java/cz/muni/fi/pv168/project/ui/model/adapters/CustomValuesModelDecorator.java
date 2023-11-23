@@ -1,12 +1,12 @@
 package cz.muni.fi.pv168.project.ui.model.adapters;
 
 import cz.muni.fi.pv168.project.util.Either;
-
-import javax.swing.*;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
 import java.util.IdentityHashMap;
 import java.util.Map;
+import javax.swing.ComboBoxModel;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 /**
  * This class decorates existing {@link ListModel} or {@link ComboBoxModel} to contain also

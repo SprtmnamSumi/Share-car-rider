@@ -6,10 +6,14 @@ import cz.muni.fi.pv168.project.ui.filters.Filters;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import cz.muni.fi.pv168.project.ui.panels.filters.*;
-
-import javax.swing.*;
-import java.awt.*;
+import cz.muni.fi.pv168.project.ui.panels.filters.DateFilterPanel;
+import cz.muni.fi.pv168.project.ui.panels.filters.DistanceFilterPanel;
+import cz.muni.fi.pv168.project.ui.panels.filters.FilterBoxPanel;
+import cz.muni.fi.pv168.project.ui.panels.filters.FilterPanel;
+import cz.muni.fi.pv168.project.ui.panels.filters.PassengersFilterPanel;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 public class CarRideFilterPanel extends JPanel {
     private final FilterPanel distanceFilter;

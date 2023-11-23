@@ -1,12 +1,11 @@
 package cz.muni.fi.pv168.project.ui.model.adapters;
 
 import cz.muni.fi.pv168.project.ui.model.EntityTableModel;
-
-import javax.inject.Inject;
-import javax.swing.*;
-import javax.swing.event.TableModelEvent;
 import java.util.Collections;
 import java.util.List;
+import javax.inject.Inject;
+import javax.swing.AbstractListModel;
+import javax.swing.event.TableModelEvent;
 
 /**
  * The {@link EntityListModelAdapter} is an adaptation for table, so it can be used as a list.

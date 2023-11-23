@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.List;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComboBox;
 
 public class ComboBoxPanel<T> extends FilterComponentPanel {
     private final JComboBox<T> comboBox = new JComboBox<>();

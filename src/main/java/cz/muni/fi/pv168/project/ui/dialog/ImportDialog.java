@@ -1,10 +1,6 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.business.model.Entity;
-import cz.muni.fi.pv168.project.storage.InMemoryRepository;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -12,17 +8,19 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.IOException;
-import java.util.Map;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class ImportDialog extends JDialog implements PropertyChangeListener {
 
     private final String title = "Import data";
     private final JOptionPane optionPane;
 
-    private String btnString1 = "Import";
-    private String btnString2 = "Cancel";
-    private String btnString3 = "Overwrite";
+    private final String btnString1 = "Import";
+    private final String btnString2 = "Cancel";
+    private final String btnString3 = "Overwrite";
 
     private File selectedFile;
 

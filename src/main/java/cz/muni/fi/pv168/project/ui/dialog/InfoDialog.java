@@ -1,9 +1,12 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 /**
  * @author Sabrina Orálková, 525089
@@ -11,7 +14,7 @@ import java.awt.event.ActionListener;
 public class InfoDialog extends JDialog {
     private final String title = "Info";
 
-    private String btnString1 = "Hmm, interesting";
+    private final String btnString1 = "Hmm, interesting";
 
     public InfoDialog(Frame aFrame, String aWord) {
         super(aFrame, true);
@@ -28,7 +31,7 @@ public class InfoDialog extends JDialog {
                 dispose();
             }
         });
-        okButton.setBounds(120,150,60,30);
+        okButton.setBounds(120, 150, 60, 30);
 
         //add(messageLabel, BorderLayout.CENTER);
         //add(okButton);
