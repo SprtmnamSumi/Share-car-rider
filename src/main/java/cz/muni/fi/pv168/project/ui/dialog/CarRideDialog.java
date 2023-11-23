@@ -22,7 +22,6 @@ import java.awt.event.ItemEvent;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.ListModel;
 
@@ -35,7 +34,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField fuelConsumption = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final ValidatedInputField numberOfPassengers = new ValidatedInputField(ValidatorFactory.intValidator());
     private final ValidatedInputField commission = new ValidatedInputField(ValidatorFactory.doubleValidator());
-    private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
     private final TemplateBar templateBar;
     private final JButton saveAsTemplate = new JButton("Save as template");
@@ -106,7 +104,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         add("Number of Passengers", numberOfPassengers);
         add("Commission (%)", commission);
         add("Category", categoryBar);
-        add("Count me in the calculation of per price person", isChecked);
         add("Cost of Fuel", costBar);
         add("Date", dateBar);
     }
