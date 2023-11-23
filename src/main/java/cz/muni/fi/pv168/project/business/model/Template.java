@@ -3,17 +3,17 @@ package cz.muni.fi.pv168.project.business.model;
 import java.util.Objects;
 
 public class Template extends Entity {
-    private Currency currency;
-    private String title;
-    private String description;
-    private double distance;
-    private double fuelConsumption;
-    private double costOfFuelPerLitre;
-    private int numberOfPassengers;
-    private double commission;
-    private Category category;
+    protected Currency currency;
+    protected String title;
+    protected String description;
+    protected double distance;
+    protected double fuelConsumption;
+    protected double costOfFuelPerLitre;
+    protected int numberOfPassengers;
+    protected double commission;
+    protected Category category;
 
-    private double newestConversionRateToDollar;
+    protected double newestConversionRateToDollar;
 
     public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, double newestConversionRateToDollar) {
         super(guid);
