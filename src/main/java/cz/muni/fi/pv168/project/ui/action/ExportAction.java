@@ -46,7 +46,7 @@ public final class ExportAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ExportDialog popupDialog = new ExportDialog(new JFrame("Popup"), "str", carRideTableFilter, templates, currencies, categories);
+        ExportDialog popupDialog = new ExportDialog(new JFrame("Popup"), carRideTableFilter, templates, currencies, categories);
         popupDialog.setSize(400, 200);
 
         popupDialog.setLocationRelativeTo(null);

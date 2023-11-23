@@ -36,22 +36,21 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
     private final TableModel<Template> templates;
     private final TableModel<cz.muni.fi.pv168.project.business.model.Currency> currencies;
     private final TableModel<Category> categories;
-    private final String btnString1 = "Export";
-    private final String btnString2 = "Cancel";
+    private final String btnExportTitle = "Export";
+    private final String btnCancelTitle = "Cancel";
     private final ICarRideTableFilter carRideTableFilter;
     private final JComboBox<String> exportOptionsComboBox;
     private File selectedFile;
     private String selectedExportOption;
 
-    public ExportDialog(Frame aFrame, String aWord, ICarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories) {
-        super(aFrame, true);
+    public ExportDialog(Frame frame, ICarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories) {
+        super(frame, true);
         this.carRideTableFilter = carRideTableFilter;
         this.templates = templates;
         this.currencies = currencies;
         this.categories = categories;
         setTitle(title);
 
-        String msgString1 = "Select a file";
 
         // Create a combo box for export options
         exportOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
@@ -70,9 +69,9 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
             }
         });
 
-        Object[] array = {msgString1, fileButton, "Select data to export:", exportOptionsComboBox};
+        Object[] array = {"Select a file", fileButton, "Select data to export:", exportOptionsComboBox};
 
-        Object[] options = {btnString1, btnString2};
+        Object[] options = {btnExportTitle, btnCancelTitle};
 
         optionPane = new JOptionPane(array,
                 JOptionPane.PLAIN_MESSAGE,
@@ -109,7 +108,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
             // Reset the JOptionPane's value
             optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
 
-            if (btnString1.equals(value)) {
+            if (btnExportTitle.equals(value)) {
                 if (selectedFile != null) {
 
                     selectedExportOption = (String) exportOptionsComboBox.getSelectedItem();
