@@ -4,14 +4,12 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 final class EditCarRideAction extends AbstractAction {
 
@@ -22,8 +20,6 @@ final class EditCarRideAction extends AbstractAction {
         super("Edit");
         this.modalDialogFactory = modalDialogFactory;
         this.carRidesTable = carRidesTable;
-
-        putValue(SMALL_ICON, icon);
         putValue(SHORT_DESCRIPTION, "Edits Car Ride");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));

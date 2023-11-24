@@ -6,11 +6,13 @@ import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTableCell;
-
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.util.function.Consumer;
+import javax.swing.Action;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  * Panel with template records in a table.

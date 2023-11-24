@@ -10,10 +10,8 @@ import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-
 import javax.inject.Inject;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JTable;
 
 class ModalDialogFactory implements DialogFactory {
     private final EntityListModelAdapter<Category> categoryListModel;
@@ -23,6 +21,7 @@ class ModalDialogFactory implements DialogFactory {
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CategoryTableModel categoryTableMode;
     private final CurrencyConverter currencyConverter;
+
     @Inject
     ModalDialogFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Currency> currencyListModel, EntityListModelAdapter<Template> templateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableMode, CurrencyConverter currencyConverter) {
         this.categoryListModel = categoryListModel;

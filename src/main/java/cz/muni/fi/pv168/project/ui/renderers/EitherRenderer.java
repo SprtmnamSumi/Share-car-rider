@@ -1,8 +1,7 @@
 package cz.muni.fi.pv168.project.ui.renderers;
 
 import cz.muni.fi.pv168.project.util.Either;
-
-import javax.swing.*;
+import javax.swing.JLabel;
 
 public class EitherRenderer<L, R> extends AbstractRenderer<Either<L, R>> {
 

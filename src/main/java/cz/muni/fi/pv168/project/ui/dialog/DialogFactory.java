@@ -5,8 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
-
-import javax.swing.*;
+import javax.swing.JTable;
 
 public interface DialogFactory {
 

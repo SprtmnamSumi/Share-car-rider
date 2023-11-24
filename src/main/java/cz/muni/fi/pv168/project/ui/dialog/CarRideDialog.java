@@ -16,15 +16,17 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
-import cz.muni.fi.pv168.project.ui.validation.*;
-
-import javax.swing.*;
+import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import java.awt.event.ItemEvent;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.ListModel;
 
 final class CarRideDialog extends EntityDialog<CarRide> {
-    private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2,150));
+    private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2, 150));
     private final ValidatedInputField descriptionField = new ValidatedInputField((t) -> ValidationResult.success());
     private final JComboBox<Template> templateComboBoxModel;
     private final CategoryBar categoryBar;
@@ -32,7 +34,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField fuelConsumption = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final ValidatedInputField numberOfPassengers = new ValidatedInputField(ValidatorFactory.intValidator());
     private final ValidatedInputField commission = new ValidatedInputField(ValidatorFactory.doubleValidator());
-    private final JCheckBox isChecked = new JCheckBox();
     private final DateBar dateBar = new DateBar();
     private final TemplateBar templateBar;
     private final JButton saveAsTemplate = new JButton("Save as template");
@@ -103,7 +104,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         add("Number of Passengers", numberOfPassengers);
         add("Commission (%)", commission);
         add("Category", categoryBar);
-        add("Count me in the calculation of per price person", isChecked);
         add("Cost of Fuel", costBar);
         add("Date", dateBar);
     }

@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 public class TabPanel extends JTabbedPane {
     private int index = 0;

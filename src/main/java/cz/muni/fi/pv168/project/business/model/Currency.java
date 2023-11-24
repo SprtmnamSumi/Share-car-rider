@@ -10,6 +10,7 @@ public class Currency extends Entity {
     private Double newestRateToDollar;
 
     public Currency(String name, String symbol, Double newestRateToDollar) {
+        super();
         this.name = name;
         this.symbol = symbol;
         this.newestRateToDollar = newestRateToDollar;

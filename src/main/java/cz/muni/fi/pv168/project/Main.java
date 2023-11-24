@@ -5,13 +5,12 @@ import com.google.inject.Injector;
 import cz.muni.fi.pv168.project.business.service.properties.Config;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.theme.ColorTheme;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.EventQueue;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager;
 
 public class Main {
 

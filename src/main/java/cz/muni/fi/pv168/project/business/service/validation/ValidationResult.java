@@ -1,6 +1,10 @@
 package cz.muni.fi.pv168.project.business.service.validation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Validation result stores the list of validation errors
