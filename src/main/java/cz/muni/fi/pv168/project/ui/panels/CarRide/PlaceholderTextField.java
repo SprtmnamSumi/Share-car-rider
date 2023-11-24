@@ -1,8 +1,10 @@
 package cz.muni.fi.pv168.project.ui.panels.CarRide;
 
-import javax.swing.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import javax.swing.JTextField;
 import javax.swing.text.Document;
-import java.awt.*;
 
 
 public class PlaceholderTextField extends JTextField {

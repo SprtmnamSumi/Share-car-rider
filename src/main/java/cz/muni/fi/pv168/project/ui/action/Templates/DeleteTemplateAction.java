@@ -1,13 +1,14 @@
 package cz.muni.fi.pv168.project.ui.action.Templates;
 
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.Comparator;
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 final class DeleteTemplateAction extends AbstractAction {
 

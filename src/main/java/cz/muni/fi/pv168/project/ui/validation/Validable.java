@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.validation;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.KeyListener;
 
 public interface Validable {

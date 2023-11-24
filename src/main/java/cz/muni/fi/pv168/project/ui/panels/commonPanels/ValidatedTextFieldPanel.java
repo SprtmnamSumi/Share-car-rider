@@ -1,11 +1,13 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
+import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.validation.Validable;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class ValidatedTextFieldPanel extends JPanel implements Validable {
     private final ValidatedInputField textField = new ValidatedInputField(ValidatorFactory.intValidator());
@@ -19,7 +21,7 @@ public class ValidatedTextFieldPanel extends JPanel implements Validable {
     }
 
     @Override
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return textField.isEmpty();
     }
 
@@ -28,7 +30,7 @@ public class ValidatedTextFieldPanel extends JPanel implements Validable {
         return textField.evaluate();
     }
 
-    public void clear(){
+    public void clear() {
         textField.setText("");
     }
 

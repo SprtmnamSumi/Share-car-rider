@@ -1,8 +1,7 @@
 package cz.muni.fi.pv168.project.ui.filters.matchers;
 
 import cz.muni.fi.pv168.project.ui.model.EntityTableModel;
-
-import javax.swing.*;
+import javax.swing.RowFilter;
 
 /**
  * General entity matcher which can be extended by implementing the {@link EntityMatcher#evaluate(Object)}

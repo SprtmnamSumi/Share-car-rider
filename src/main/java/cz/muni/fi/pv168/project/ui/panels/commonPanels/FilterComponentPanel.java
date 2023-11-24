@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class FilterComponentPanel extends JPanel {
     public FilterComponentPanel(String labelName) {

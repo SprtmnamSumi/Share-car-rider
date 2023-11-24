@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.renderers;
 
 
-import javax.swing.*;
 import java.util.Currency;
+import javax.swing.JLabel;
 
 public final class CurrencyRenderer extends AbstractRenderer<Currency> {
 

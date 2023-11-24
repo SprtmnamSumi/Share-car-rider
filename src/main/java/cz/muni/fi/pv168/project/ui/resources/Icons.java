@@ -1,11 +1,12 @@
 package cz.muni.fi.pv168.project.ui.resources;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public final class Icons {
 

@@ -1,9 +1,13 @@
 package cz.muni.fi.pv168.project.ui.renderers;
 
-import javax.swing.*;
+import java.awt.Component;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTable;
+import javax.swing.ListCellRenderer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import java.awt.*;
 
 /**
  * The {@link AbstractRenderer} abstract class provides the ability of specifying custom rendering of certain type.
