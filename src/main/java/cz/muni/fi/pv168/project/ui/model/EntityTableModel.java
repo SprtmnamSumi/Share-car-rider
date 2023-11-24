@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.model;
 
 import javax.swing.table.TableModel;
+import java.util.List;
 
 /**
  * The {@link EntityTableModel} interface provides an ability to get the actual entity at a certain index.
@@ -15,6 +16,8 @@ public interface EntityTableModel<E> extends TableModel {
      * @param rowIndex The index of the requested entity
      * @throws IndexOutOfBoundsException in case the rowIndex is less than zero or greater or equal
      *                                   than number of items in the table
-     * */
+     */
     E getEntity(int rowIndex);
+
+    List<E> getAll();
 }

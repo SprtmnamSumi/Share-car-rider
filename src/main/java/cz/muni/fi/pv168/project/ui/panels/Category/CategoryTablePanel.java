@@ -1,53 +1,51 @@
 package cz.muni.fi.pv168.project.ui.panels.Category;
 
-import cz.muni.fi.pv168.project.ui.action.Category.AddCategoryAction;
-import cz.muni.fi.pv168.project.ui.action.Category.DeleteCategoryAction;
-import cz.muni.fi.pv168.project.ui.action.Category.EditCategoryAction;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryListModel;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import java.awt.*;
+import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
+import cz.muni.fi.pv168.project.util.ConversionUtils;
+import java.awt.BorderLayout;
 import java.util.function.Consumer;
+import javax.swing.Action;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * Panel with category records in a table.
  */
-public class CategoryTablePanel extends JPanel {
 
-    private final JTable table;
+public class CategoryTablePanel extends AbstractTablePanel {
+
     private final Consumer<Integer> onSelectionChange;
     private Action addCategoryAction;
     private Action editCategoryAction;
     private Action deleteCategoryAction;
 
-    public CategoryTablePanel(CategoryTableModel categoryTableModel, CategoryListModel categoryListModel) {
-        setLayout(new BorderLayout());
-        table = setUpTable(categoryTableModel, categoryListModel);
+    public CategoryTablePanel(CategoryTableModel categoryTableModel, DefaultActionFactory<Category> actionFactory) {
+        super(categoryTableModel);
+        setUpTable(actionFactory);
         add(new JScrollPane(table), BorderLayout.CENTER);
-
         this.onSelectionChange = this::changeActionsState;
     }
 
-    public JTable getTable() {
-        return table;
-    }
-
-    private JTable setUpTable(CategoryTableModel categoryTableModel, CategoryListModel categoryListModel) {
-        var table = new JTable(categoryTableModel);
-
-        table.setAutoCreateRowSorter(true);
+    private void setUpTable(DefaultActionFactory<Category> actionFactory) {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
+        table.setDefaultRenderer(Integer.class, (table, value, isSelected, hasFocus, row, column) -> {
+            DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setBackground(ConversionUtils.getDimColor((Integer) value));
+            return renderer;
+        });
 
-        addCategoryAction = new AddCategoryAction(table, categoryListModel);
-        editCategoryAction = new EditCategoryAction(table, categoryListModel);
-        deleteCategoryAction = new DeleteCategoryAction(table);
+        addCategoryAction = actionFactory.getAddAction(table);
+        editCategoryAction = actionFactory.getEditAction(table);
+        deleteCategoryAction = actionFactory.getDeleteAction(table);
+        changeActionsState(0);
 
         table.setComponentPopupMenu(createCategoryTablePopUpMenu());
-
-
-        return table;
     }
 
     private JPopupMenu createCategoryTablePopUpMenu() {

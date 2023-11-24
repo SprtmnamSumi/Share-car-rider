@@ -1,44 +1,49 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
-import cz.muni.fi.pv168.project.data.TestDataGenerator;
-import cz.muni.fi.pv168.project.bussiness.model.CarRide;
-import cz.muni.fi.pv168.project.bussiness.model.Category;
-import cz.muni.fi.pv168.project.bussiness.model.Template;
-import cz.muni.fi.pv168.project.ui.dialog.CarRideDialog;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
 
-import javax.swing.*;
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
+import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
+import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
+import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.time.LocalDateTime;
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
-public final class AddCarRideAction extends AbstractAction {
-
+final class AddCarRideAction extends AbstractAction {
     private final JTable carRidesTable;
+    private final EntityListModelAdapter<Currency> currencyListModel;
+    private final DialogFactory modalDialogFactory;
+    private BufferedImage addImage;
 
-    private final ListModel<Category> categoriestListModel;
-    private final ListModel<Template> carRideTemplateListModel;
-
-    public AddCarRideAction(JTable carRidesTable, ListModel<Category> categoriestListModel, ListModel<Template> carRideTemplateListModel) {
-        super("Add", Icons.ADD_ICON);
+    AddCarRideAction(JTable carRidesTable, DialogFactory modalDialogFactory, EntityListModelAdapter<Currency> currencyListModel, Icon icon) {
+        super("Add");
+        this.modalDialogFactory = modalDialogFactory;
+        this.currencyListModel = currencyListModel;
         this.carRidesTable = carRidesTable;
-        this.categoriestListModel = categoriestListModel;
-        this.carRideTemplateListModel = carRideTemplateListModel;
+        putValue(SMALL_ICON, icon);
         putValue(SHORT_DESCRIPTION, "Adds new Ride");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private void updateFields(CarRide carRide) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
-        var dialog = new CarRideDialog(createPrefilledCarAction(), categoriestListModel, carRideTemplateListModel);
-        dialog.show(carRidesTable, "Add Cat ride")
-                .ifPresent(carRidesTableModel::addRow);
+        carRidesTableModel.addRow(carRide);
+        carRide.getCurrency().setNewestRateToDollar(carRide.getConversionToDollars());
     }
 
-    private CarRide createPrefilledCarAction() {
-        var testDataGenerator = new TestDataGenerator();
-        return testDataGenerator.createTestRide();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        CarRide carRide = new CarRide(null, "", "", 1.0, 1, 1, 1, 0, LocalDateTime.now(), null, currencyListModel.getElementAt(0), currencyListModel.getElementAt(0).getNewestRateToDollar());
+        EntityDialog<CarRide> dialog = modalDialogFactory.getAddCarRideDialog(carRide);
+        dialog.show(carRidesTable, "Add Cat ride", "Add")
+                .ifPresent(this::updateFields);
     }
 }

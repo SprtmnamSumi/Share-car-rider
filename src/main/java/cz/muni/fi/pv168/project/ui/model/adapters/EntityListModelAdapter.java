@@ -1,8 +1,10 @@
 package cz.muni.fi.pv168.project.ui.model.adapters;
 
 import cz.muni.fi.pv168.project.ui.model.EntityTableModel;
-
-import javax.swing.*;
+import java.util.Collections;
+import java.util.List;
+import javax.inject.Inject;
+import javax.swing.AbstractListModel;
 import javax.swing.event.TableModelEvent;
 
 /**
@@ -14,6 +16,7 @@ public class EntityListModelAdapter<E> extends AbstractListModel<E> {
 
     private final EntityTableModel<E> entityTableModel;
 
+    @Inject
     public EntityListModelAdapter(EntityTableModel<E> entityTableModel) {
         this.entityTableModel = entityTableModel;
         entityTableModel.addTableModelListener(this::handleTableModelEvent);
@@ -37,5 +40,9 @@ public class EntityListModelAdapter<E> extends AbstractListModel<E> {
             default -> {
             }
         }
+    }
+
+    public List<E> getAll() {
+        return Collections.unmodifiableList(entityTableModel.getAll());
     }
 }

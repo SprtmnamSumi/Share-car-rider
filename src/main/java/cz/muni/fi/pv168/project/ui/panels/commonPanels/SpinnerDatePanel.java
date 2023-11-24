@@ -1,6 +1,8 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
-import javax.swing.*;
+import java.util.Date;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
 
 public class SpinnerDatePanel extends FilterComponentPanel {
     private final JSpinner spinnerDate = new JSpinner(new SpinnerDateModel());
@@ -12,5 +14,9 @@ public class SpinnerDatePanel extends FilterComponentPanel {
 
     public JSpinner getSpinnerDate() {
         return spinnerDate;
+    }
+
+    public void setSpinnerDate(Date date) {
+        spinnerDate.setValue(date);
     }
 }

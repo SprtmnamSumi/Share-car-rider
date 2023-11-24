@@ -1,7 +1,8 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import javax.swing.*;
+import java.util.Collections;
 import java.util.List;
+import javax.swing.AbstractListModel;
 
 public abstract class ListModel<T> extends AbstractListModel<T> {
 
@@ -9,6 +10,10 @@ public abstract class ListModel<T> extends AbstractListModel<T> {
 
     public ListModel(List<T> Items) {
         this.items = Items;
+    }
+
+    public void addElem(T elem) {
+        items.add(elem);
     }
 
     @Override
@@ -19,5 +24,9 @@ public abstract class ListModel<T> extends AbstractListModel<T> {
     @Override
     public T getElementAt(int index) {
         return items.get(index);
+    }
+
+    public List<T> getAll() {
+        return Collections.unmodifiableList(items);
     }
 }

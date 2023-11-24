@@ -1,108 +1,150 @@
 package cz.muni.fi.pv168.project.data;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.Template;
 
-import cz.muni.fi.pv168.project.bussiness.model.CarRide;
-import cz.muni.fi.pv168.project.bussiness.model.Category;
-import cz.muni.fi.pv168.project.bussiness.model.Template;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static java.time.Month.DECEMBER;
-import static java.time.Month.JANUARY;
-import static java.time.temporal.ChronoUnit.DAYS;
 
-public final class TestDataGenerator {
-
-
-    private static final Map<List<String>, List<String>> NAMES = Map.of(
-            List.of("Jiří", "Jan", "Petr", "Josef", "Pavel", "Martin", "Tomáš", "Jaroslav", "Miroslav", "Zdeněk",
-                    "Jana", "Marie", "Eva", "Hana", "Anna", "Lenka", "Kateřina", "Lucie", "Věra", "Alena"),
-            List.of("Novák", "Novotný", "Dvořák", "Černý", "Procházka", "Šťastný", "Veselý", "Horák", "Němec", "Pokorný",
-                    "Nováková", "Novotná", "Dvořáková", "Černá", "Procházková", "Šťastná", "Veselá", "Horáková", "Němcová", "Pokorná")
+public class TestDataGenerator {
+    private final List<String> CATEGORIES = List.of(
+            "BMW", "Tesla", "Skoda", "Subaru", "Honda", "Bentley", "Autobus", "Helicopter helicopter", "Páracopter páracopter", "Lamboghíni", "Motorka"
     );
-    private static final List<String> CATEGORY = List.of(
-            "BMW", "Tesla", "Skoda", "Subaru", "Honda", "Bentley", "Autobus", "Helicopter helicopter", "Páracopter páracopter"
+    private final List<String> CARNAMES = List.of(
+            "Karmen", "Ferda", "Luigiano", "Beatle", "S3XY", "Herbie", "Dedoles", "Scooby-van", "Debbie", "Trump mobile"
     );
-    private static final List<String> CARNAME = List.of(
-            "Karmen", "Ferda", "Luigiano", "Beatle", "S3XY"
+    private final List<String> DESCRIPTIONS = List.of(
+            "very bad car", "bad car", "pí car", "3.6 car", "good car", "very good car", "awesome car"
     );
-    private static final List<String> COLOR = List.of(
-            "white", "black", "red", "blue", "green", "yellomello", "grey"
-    );
-    private static final LocalDate MIN_BIRTH_DATE = LocalDate.of(1950, JANUARY, 1);
-    private static final LocalDate MAX_BIRTH_DATE = LocalDate.of(2002, DECEMBER, 31);
-    private static final int upperbound = 1000000;
-    private final Random random = new Random(2L);
-    Random rand = new Random();
-    private final int DISTANCE = rand.nextInt(upperbound);
-    private final double DISTANCEDOUBLE = rand.nextDouble();
-    //private static final LocalDate RANDOMDATE = new SimpleDateFormat("yyyyMMdd").format(new LocalDate[]);
+    private final List<Tuple> CURRENCIES = List.of(
+            new Tuple("USD", "US Dollar", 1.0),
+            new Tuple("EUR", "Euro", 0.85),
+            new Tuple("CZK", "Czech Koruna", 21.0),
+            new Tuple("GBP", "British Pound", 0.72),
+            new Tuple("JPY", "Japanese Yen", 109.0),
+            new Tuple("CHF", "Swiss Franc", 0.92),
+            new Tuple("CAD", "Canadian Dollar", 1.26),
+            new Tuple("AUD", "Australian Dollar", 1.29),
+            new Tuple("NZD", "New Zealand Dollar", 1.35),
+            new Tuple("RUB", "Russian Ruble", 73.0),
+            new Tuple("INR", "Indian Rupee", 73.0),
+            new Tuple("BRL", "Brazilian Real", 5.0),
+            new Tuple("CNY", "Chinese Yuan", 6.5),
+            new Tuple("MXN", "Mexican Peso", 20.0),
+            new Tuple("SGD", "Singapore Dollar", 1.35),
+            new Tuple("HKD", "Hong Kong Dollar", 7.8),
+            new Tuple("NOK", "Norwegian Krone", 8.5)
 
 
-    public Template createTestTemplate() {
-        String title = "Test";
-        String description = "Test";
-        double distance = 100;
-        int costOfFuelPerLitre = 100;
-        int numberOfPassengers = 1;
-        LocalDateTime date = LocalDateTime.of(2021, JANUARY, 1, 0, 0);
-        Category category = crateTestCategory();
-        return new Template(UUID.randomUUID().toString(), title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, category);
+            // Add more currency tuples as needed
+    );
+    private final Random randomGenerator = new Random();
+
+    private Category createTestCategory(String name) {
+        return new Category(UUID.randomUUID().toString(),
+                name,
+                randomGenerator.nextInt(-16581375, 16581375));
     }
 
-
-    public Category crateTestCategory() {
-        var category = new Category(UUID.randomUUID().toString(), "df", "fd");
-        return category;
+    public Category createBlankCategory() {
+        return createTestCategory(CATEGORIES.get(randomGenerator.nextInt(CATEGORIES.size())));
     }
 
-
-    public CarRide createTestRide() {
-        String title = "Test";
-        String description = "Test";
-        double distance = 100;
-        int costOfFuelPerLitre = 100;
-        int numberOfPassengers = 1;
-        LocalDateTime date = LocalDateTime.of(2021, JANUARY, 1, 0, 0);
-        Category category = crateTestCategory();
-        return new CarRide(UUID.randomUUID().toString(), title, description, distance, DISTANCEDOUBLE, DISTANCE, costOfFuelPerLitre, numberOfPassengers, date, category);
+    private Template createTestTemplate(List<Category> categories, List<Currency> currencies) {
+        String guid = UUID.randomUUID().toString();
+        String name = CARNAMES.get(randomGenerator.nextInt(CARNAMES.size()));
+        String description = DESCRIPTIONS.get(randomGenerator.nextInt(DESCRIPTIONS.size()));
+        Double distance = randomGenerator.nextDouble(0, 1000);
+        double fuelConsumption = randomGenerator.nextDouble(20, 40);
+        int costOfFuelPerLitre = randomGenerator.nextInt(3, 15);
+        int numberOfPassengers = randomGenerator.nextInt(1, 10);
+        double commission = randomGenerator.nextInt(0, 100);
+        Category category = categories.get(randomGenerator.nextInt(categories.size()));
+        Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
+        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, currency.getNewestRateToDollar());
     }
 
-    public List<CarRide> createTestRides(int count) {
+    private Currency createTestCurrency(Tuple curr) {
+        return new Currency(curr.name, curr.symbol, curr.conversionRate);
+    }
+
+    public Template createBlankTemplate() {
+        String guid = UUID.randomUUID().toString();
+        String name = CARNAMES.get(randomGenerator.nextInt(CARNAMES.size()));
+        String description = DESCRIPTIONS.get(randomGenerator.nextInt(DESCRIPTIONS.size()));
+        Double distance = randomGenerator.nextDouble(0, 1000);
+        double fuelConsumption = randomGenerator.nextDouble(20, 40);
+        int costOfFuelPerLitre = randomGenerator.nextInt(3, 15);
+        int numberOfPassengers = randomGenerator.nextInt(1, 10);
+        double commission = randomGenerator.nextInt(0, 100);
+        Category category = createTestCategory(CATEGORIES.get(randomGenerator.nextInt(CATEGORIES.size())));
+        Currency currency = createTestCurrency(CURRENCIES.get(randomGenerator.nextInt(CURRENCIES.size())));
+        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, currency.getNewestRateToDollar());
+    }
+
+    private CarRide createTestRide(List<Category> categories, List<Currency> currencies) {
+        String guid = UUID.randomUUID().toString();
+        String name = CARNAMES.get(randomGenerator.nextInt(CARNAMES.size()));
+        String description = DESCRIPTIONS.get(randomGenerator.nextInt(DESCRIPTIONS.size()));
+        Double distance = randomGenerator.nextDouble(0, 1000);
+        double fuelConsumption = randomGenerator.nextDouble(20, 40);
+        int costOfFuelPerLitre = randomGenerator.nextInt(3, 15);
+        int numberOfPassengers = randomGenerator.nextInt(1, 10);
+        double commission = randomGenerator.nextInt(0, 100);
+        LocalDateTime date = LocalDateTime.of(
+                randomGenerator.nextInt(2023, 2024),
+                randomGenerator.nextInt(10, 12),
+                randomGenerator.nextInt(1, 29),
+                randomGenerator.nextInt(0, 24),
+                randomGenerator.nextInt(0, 60));
+        Category category = categories.get(randomGenerator.nextInt(categories.size()));
+        Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
+        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, date, category, currency, currency.getNewestRateToDollar());
+    }
+
+    public List<CarRide> createTestRides(int count, List<Category> categories, List<Currency> currencies) {
         return Stream
-                .generate(this::createTestRide)
+                .generate(() -> createTestRide(categories, currencies))
                 .limit(count)
                 .toList();
     }
 
-    public List<Template> createTestTemplates(int count) {
+    public List<Template> createTestTemplates(int count, List<Category> categories, List<Currency> currencies) {
         return Stream
-                .generate(this::createTestTemplate)
+                .generate(() -> createTestTemplate(categories, currencies))
                 .limit(count)
                 .toList();
     }
 
     public List<Category> createTestCategories(int count) {
-        return Stream
-                .generate(this::crateTestCategory)
+        List<Category> categories = new ArrayList<>();
+
+        for (String cat : CATEGORIES) {
+            categories.add(createTestCategory(cat));
+        }
+        return categories.stream()
                 .limit(count)
                 .toList();
     }
 
-    private <T> T selectRandom(List<T> data) {
-        int index = random.nextInt(data.size());
-        return data.get(index);
+    public List<Currency> createTestCurrencie(int count) {
+        List<Currency> currencies = new ArrayList<>();
+
+        for (Tuple curr : CURRENCIES) {
+            currencies.add(createTestCurrency(curr));
+        }
+        return currencies.stream()
+                .limit(count)
+                .toList();
     }
 
-    private LocalDate selectRandomLocalDate(LocalDate min, LocalDate max) {
-        int maxDays = Math.toIntExact(DAYS.between(min, max) + 1);
-        int days = random.nextInt(maxDays);
-        return min.plusDays(days);
+    public record Tuple(String symbol, String name, Double conversionRate) {
     }
 }

@@ -1,11 +1,12 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import cz.muni.fi.pv168.project.bussiness.model.CarRide;
-import cz.muni.fi.pv168.project.bussiness.model.Entity;
-import cz.muni.fi.pv168.project.bussiness.service.crud.ICrudService;
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -90,8 +91,16 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
         fireTableDataChanged();
     }
 
+    public List<T> getAllEntities() {
+        return List.copyOf(entities);
+    }
+
     @Override
     public T getEntity(int rowIndex) {
         return entities.get(rowIndex);
+    }
+
+    public List<T> getAll() {
+        return Collections.unmodifiableList(entities);
     }
 }

@@ -1,24 +1,25 @@
 package cz.muni.fi.pv168.project.ui.action.Category;
 
-import cz.muni.fi.pv168.project.bussiness.model.Category;
-import cz.muni.fi.pv168.project.ui.dialog.CategoryDialog;
+import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
+import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.resources.Icons;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
-public final class EditCategoryAction extends AbstractAction {
-
+final class EditCategoryAction extends AbstractAction {
     private final JTable categoryTable;
+    private final DialogFactory dialogFactory;
 
-    private final ListModel<Category> categoriestListModel;
-
-    public EditCategoryAction(JTable categoryTable, ListModel<Category> categoriestListModel) {
-        super("Edit", Icons.EDIT_ICON);
+    EditCategoryAction(JTable categoryTable, DialogFactory dialogFactory, Icon icon) {
+        super("Edit");
         this.categoryTable = categoryTable;
-        this.categoriestListModel = categoriestListModel;
+        this.dialogFactory = dialogFactory;
+        putValue(SMALL_ICON, icon);
         putValue(SHORT_DESCRIPTION, "Edits Category");
         putValue(MNEMONIC_KEY, KeyEvent.VK_E);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl E"));
@@ -36,8 +37,9 @@ public final class EditCategoryAction extends AbstractAction {
         CategoryTableModel categoryTableModel = (CategoryTableModel) categoryTable.getModel();
         int modelRow = categoryTable.convertRowIndexToModel(selectedRows[0]);
         Category category = categoryTableModel.getEntity(modelRow);
-        CategoryDialog categoryDialog = new CategoryDialog(category, categoriestListModel);
-        categoryDialog.show(categoryTable, "Edit Category Ride")
+
+        EntityDialog<Category> categoryDialog = dialogFactory.getAddCategoryDialog(category);
+        categoryDialog.show(categoryTable, "Edit Category Ride", "Edit")
                 .ifPresent(categoryTableModel::updateRow);
     }
 }
