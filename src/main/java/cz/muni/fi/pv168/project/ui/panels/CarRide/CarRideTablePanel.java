@@ -11,12 +11,15 @@ import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTableCell;
-
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.util.function.Consumer;
+import javax.swing.Action;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableRowSorter;
-import java.awt.*;
-import java.util.function.Consumer;
 
 /**
  * Panel with car ride records in a table.
@@ -27,13 +30,11 @@ public class CarRideTablePanel extends AbstractTablePanel {
     private final Consumer<Integer> onSelectionChange;
     private final CarRideStatisticsPanel statsPanel;
     private final CarRideFilterPanel filterPanel;
+    private final CarRideTableFilter filter;
     private Action addCarRideAction;
     private Action editCarRideAction;
     private Action deleteCarRideAction;
-
     private Action saveAsTemplateAction;
-
-    private final CarRideTableFilter filter;
 
     public CarRideTablePanel(CarRideTableModel carRideTableModel,
                              ICarRideActionFactory actionFactory,

@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.ui.model;
 
-import javax.swing.*;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.AbstractListModel;
 
 public abstract class ListModel<T> extends AbstractListModel<T> {
 

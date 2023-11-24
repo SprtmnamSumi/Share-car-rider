@@ -4,9 +4,9 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.icons.IconLoader;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-
 import javax.inject.Inject;
-import javax.swing.*;
+import javax.swing.Action;
+import javax.swing.JTable;
 
 public class CarRideActionFactory implements ICarRideActionFactory {
     private final DialogFactory modalDialogFactory;

@@ -3,9 +3,6 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,6 +10,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 /**
@@ -23,7 +22,7 @@ public class BatchImporterCarRideJSON {
 
     public List<CarRide> importData(String filePath) {
         try {
-            String jsonString = new String(Files.readAllBytes(Paths.get(filePath)));
+            String jsonString = new String(Files.readAllBytes(Paths.get(filePath))); // TODO choose a different method
 
             JSONObject jsonObject = new JSONObject(jsonString);
             JSONArray carRidesArray = jsonObject.getJSONArray("carrides");

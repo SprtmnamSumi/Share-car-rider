@@ -5,10 +5,13 @@ import cz.muni.fi.pv168.project.data.TestDataGenerator;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
+
 
 final class AddCategoryAction extends AbstractAction {
 

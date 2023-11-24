@@ -1,9 +1,11 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.business.model.Template;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
 
 public class TemplateBar extends JPanel {
 

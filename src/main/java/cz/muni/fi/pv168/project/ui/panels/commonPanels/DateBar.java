@@ -2,13 +2,13 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.PlaceholderTextField;
-import org.jdatepicker.DateModel;
-import org.jdatepicker.JDatePicker;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javax.swing.JPanel;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDatePicker;
 
 public class DateBar extends JPanel {
     JDatePicker tf;

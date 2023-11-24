@@ -1,12 +1,14 @@
 package cz.muni.fi.pv168.project.ui.action.CarRide;
 
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Comparator;
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 final class DeleteCarRideAction extends AbstractAction {
 
@@ -14,7 +16,6 @@ final class DeleteCarRideAction extends AbstractAction {
 
     DeleteCarRideAction(JTable templateTable, Icon icon) {
         super("Delete");
-
         this.templateTable = templateTable;
         putValue(SMALL_ICON, icon);
         putValue(SHORT_DESCRIPTION, "Deletes Car Ride");

@@ -1,12 +1,11 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Sabrina Orálková, 525089
@@ -28,7 +27,7 @@ public class BatchExporterCurrencyJSON {
             }
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("carrides", currencyArray);
+            jsonObject.put("currencies", currencyArray);
 
             fileWriter.write(jsonObject.toString(2));
         } catch (IOException e) {
