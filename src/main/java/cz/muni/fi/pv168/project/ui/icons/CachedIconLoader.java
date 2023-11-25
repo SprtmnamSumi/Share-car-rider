@@ -25,4 +25,17 @@ public class CachedIconLoader implements IconLoader {
         }
         return cachedIcons.get(iconName);
     }
+
+    public Icon getIcon(String iconName, int width, int height){
+        if(!cachedIcons.containsKey(iconName)){
+            try {
+                Image image = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/"+iconName))
+                        .getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                cachedIcons.put(iconName,new ImageIcon(image));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            };
+        }
+        return cachedIcons.get(iconName);
+    }
 }

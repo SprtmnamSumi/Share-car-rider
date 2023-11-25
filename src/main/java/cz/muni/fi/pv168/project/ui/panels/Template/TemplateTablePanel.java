@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.panels.Template;
 
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.ui.NotificationController;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
@@ -25,7 +26,8 @@ public class TemplateTablePanel extends AbstractTablePanel {
     private Action editCarRideAction;
     private Action deleteCarRideAction;
 
-    public TemplateTablePanel(TemplateTableModel templateTableModel, DefaultActionFactory<Template> actionFactory) {
+    public TemplateTablePanel(TemplateTableModel templateTableModel,
+                              DefaultActionFactory<Template> actionFactory) {
         super(templateTableModel);
         setUpTable(actionFactory);
         add(new JScrollPane(table), BorderLayout.CENTER);

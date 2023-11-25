@@ -81,7 +81,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         addFields();
     }
 
-
     public void setValues(CarRide carRide) {
         titleField.setText(carRide.getTitle());
         descriptionField.setText(carRide.getDescription());
