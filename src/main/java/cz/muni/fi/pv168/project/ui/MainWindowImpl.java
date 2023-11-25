@@ -35,6 +35,8 @@ import javax.swing.WindowConstants;
 class MainWindowImpl implements MainWindow {
 
     private final JFrame frame;
+
+    private final NotificationController notificationController;
     private final Action quitAction = new QuitAction();
     private final Action addCarRideAction;
     private final Action addCategory;
@@ -59,6 +61,9 @@ class MainWindowImpl implements MainWindow {
     ) {
         frame = createFrame();
 
+        Initializator init = new Initializator(categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 150);
+        init.initialize();
+
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
         TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
@@ -81,12 +86,14 @@ class MainWindowImpl implements MainWindow {
         tabbedPane.addSpecialTab("Categories", categoryTablePanel, new ButtonTabComponent(tabbedPane, addCategory, "Add new category"));
         tabbedPane.addSpecialTab("Templates", templateTablePanel, new ButtonTabComponent(tabbedPane, addTemplate, "Add new template"));
 
+        notificationController = new NotificationController(frame);
+        carRideTableModel.addTableModelListener((e)->notificationController.showTableNotification(carRideTablePanel.getTable(), e));
+        categoryTableModel.addTableModelListener((e)->notificationController.showTableNotification(categoryTablePanel.getTable(), e));
+        templateTableModel.addTableModelListener((e) ->notificationController.showTableNotification(templateTablePanel.getTable(), e));
+
         frame.add(tabbedPane, BorderLayout.CENTER);
         frame.setJMenuBar(createMenuBar());
         frame.pack();
-
-        Initializator init = new Initializator(categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 10);
-        init.initialize();
     }
 
     @Override
