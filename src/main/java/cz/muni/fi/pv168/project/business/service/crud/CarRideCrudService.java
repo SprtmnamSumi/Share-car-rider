@@ -13,6 +13,5 @@ class CarRideCrudService extends ICrudServiceImpl<CarRide> implements ICarRideIC
     @Inject
     CarRideCrudService(Repository<CarRide> entityRepository, Validator<CarRide> entityValidator, GuidProvider guidProvider) {
         super(entityRepository, entityValidator, guidProvider);
-
     }
 }
