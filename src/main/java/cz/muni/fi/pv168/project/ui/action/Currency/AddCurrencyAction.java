@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action.Currency;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.data.EntityProvider;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import java.awt.event.ActionEvent;
@@ -13,12 +14,13 @@ import javax.swing.KeyStroke;
 
 final class AddCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
-
+    private final EntityProvider entityProvider;
     private final DialogFactory dialogFactory;
 
-    AddCurrencyAction(JTable currencyTable, DialogFactory dialogFactory, Icon icon) {
+    AddCurrencyAction(JTable currencyTable, DialogFactory dialogFactory, EntityProvider entityProvider, Icon icon) {
         super("Add");
         this.dialogFactory = dialogFactory;
+        this.entityProvider = entityProvider;
         this.currencyTable = currencyTable;
         putValue(SMALL_ICON, icon);
         putValue(SHORT_DESCRIPTION, "Adds new Currency");
@@ -29,7 +31,7 @@ final class AddCurrencyAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
-        dialogFactory.getAddCurrencyDialog(new Currency("", "", 0.0))
+        dialogFactory.getAddCurrencyDialog(entityProvider.getCurrency())
                 .show(currencyTable, "Add Currency", "Add")
                 .ifPresent(currencyTableModel::addRow);
     }

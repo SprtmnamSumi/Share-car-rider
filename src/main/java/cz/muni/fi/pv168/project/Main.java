@@ -35,7 +35,8 @@ public class Main {
                 new cz.muni.fi.pv168.project.business.service.currenies.Module(),
                 new cz.muni.fi.pv168.project.business.service.statistics.Module(),
                 new cz.muni.fi.pv168.project.ui.dialog.Module(),
-                new cz.muni.fi.pv168.project.ui.icons.Module()
+                new cz.muni.fi.pv168.project.ui.icons.Module(),
+                new cz.muni.fi.pv168.project.data.Module()
         ));
     }
 
