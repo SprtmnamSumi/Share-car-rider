@@ -53,10 +53,6 @@ public class TestDataGenerator {
                 randomGenerator.nextInt(-16581375, 16581375));
     }
 
-    public Category createBlankCategory() {
-        return createTestCategory(CATEGORIES.get(randomGenerator.nextInt(CATEGORIES.size())));
-    }
-
     private Template createTestTemplate(List<Category> categories, List<Currency> currencies) {
         String guid = UUID.randomUUID().toString();
         String name = CARNAMES.get(randomGenerator.nextInt(CARNAMES.size()));
@@ -73,20 +69,6 @@ public class TestDataGenerator {
 
     private Currency createTestCurrency(Tuple curr) {
         return new Currency(curr.name, curr.symbol, curr.conversionRate);
-    }
-
-    public Template createBlankTemplate() {
-        String guid = UUID.randomUUID().toString();
-        String name = CARNAMES.get(randomGenerator.nextInt(CARNAMES.size()));
-        String description = DESCRIPTIONS.get(randomGenerator.nextInt(DESCRIPTIONS.size()));
-        Double distance = randomGenerator.nextDouble(0, 1000);
-        double fuelConsumption = randomGenerator.nextDouble(20, 40);
-        int costOfFuelPerLitre = randomGenerator.nextInt(3, 15);
-        int numberOfPassengers = randomGenerator.nextInt(1, 10);
-        double commission = randomGenerator.nextInt(0, 100);
-        Category category = createTestCategory(CATEGORIES.get(randomGenerator.nextInt(CATEGORIES.size())));
-        Currency currency = createTestCurrency(CURRENCIES.get(randomGenerator.nextInt(CURRENCIES.size())));
-        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, currency.getNewestRateToDollar());
     }
 
     private CarRide createTestRide(List<Category> categories, List<Currency> currencies) {
