@@ -127,8 +127,12 @@ final class CarRideDialog extends EntityDialog<CarRide> {
 
     Template getAsTemplate() {
         var ride = getEntity();
-        Template template = new Template(UUID.randomUUID().toString(), ride.getTitle(), ride.getDescription(), ride.getDistance(), ride.getFuelConsumption(), ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(), ride.getCommission(), ride.getCategory(), ride.getCurrency(), ride.getConversionToDollars());
-        return template;
+        return new Template(UUID.randomUUID().toString(),
+                ride.getTitle(), ride.getDescription(),
+                ride.getDistance(), ride.getFuelConsumption(),
+                ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(),
+                ride.getCommission(), ride.getCategory(),
+                ride.getCurrency(), ride.getConversionToDollars());
     }
 
     private void addTemplate(Template templateToBeAdded) {

@@ -12,18 +12,16 @@ class AddCurrencyDialog extends EntityDialog<Currency> {
             .eitherValidator(ValidatorFactory.doubleValidator(), ValidatorFactory.intValidator()));
     private final Currency currency;
 
-    private final ValidableListener validableListener = new ValidableListener() {
-        @Override
-        protected void onChange(boolean isValid) {
-            AddCurrencyDialog.super.toggleOk(isValid);
-        }
-    };
-
     public AddCurrencyDialog(Currency currency) {
         this.currency = currency;
-        //setValues();
-
+        setValues();
         addFields();
+        ValidableListener validableListener = new ValidableListener() {
+            @Override
+            protected void onChange(boolean isValid) {
+                AddCurrencyDialog.super.toggleOk(isValid);
+            }
+        };
         validableListener.fireChange();
         validableListener.setListeners(nameTextField, symbolTextField, rateToDollar);
     }

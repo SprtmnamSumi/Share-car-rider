@@ -52,9 +52,4 @@ class ModalDialogFactory implements DialogFactory {
     public EntityDialog<Currency> getAddCurrencyDialog(Currency currency) {
         return new AddCurrencyDialog(currency);
     }
-
-    @Override
-    public EntityDialog<Currency> getChooseCurrencyDialog(JTable currencyTable, CurrencyActionFactory currencyActionFactory) {
-        return new ChooseCurrencyDialog(currencyTable, currencyListModel, currencyActionFactory);
-    }
 }
