@@ -8,7 +8,7 @@ import cz.muni.fi.pv168.project.storage.InMemoryRepository;
 
 import javax.inject.Inject;
 
-class CarRideCrudService extends ICrudServiceImpl<CarRide> implements ICarRideICrudService {
+class CarRideCrudService extends ICrudServiceImpl<CarRide>{
 
     @Inject
     CarRideCrudService(Repository<CarRide> entityRepository, Validator<CarRide> entityValidator, GuidProvider guidProvider) {
