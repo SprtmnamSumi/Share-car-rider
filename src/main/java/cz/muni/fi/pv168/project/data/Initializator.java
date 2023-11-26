@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.data;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
@@ -19,14 +20,13 @@ public class Initializator {
     private final int count;
     TestDataGenerator generator;
 
-    @Inject
-    public Initializator(TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates, int count) {
+    public Initializator(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates, int count) {
         this.categories = categories;
         this.rides = rides;
         this.currencies = currencies;
         this.templates = templates;
         this.count = count;
-        generator = new TestDataGenerator();
+        generator = new TestDataGenerator(guidProvider);
     }
 
     public void initialize() {

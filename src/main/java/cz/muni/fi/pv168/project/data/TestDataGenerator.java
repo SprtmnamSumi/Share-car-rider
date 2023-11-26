@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.data;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 
 import java.time.LocalDateTime;
@@ -46,15 +47,20 @@ public class TestDataGenerator {
             // Add more currency tuples as needed
     );
     private final Random randomGenerator = new Random();
+    private final GuidProvider guidProvider;
+
+    public TestDataGenerator(GuidProvider guidProvider) {
+        this.guidProvider = guidProvider;
+    }
 
     private Category createTestCategory(String name) {
-        return new Category(UUID.randomUUID().toString(),
+        return new Category(guidProvider.newGuid(),
                 name,
                 randomGenerator.nextInt(-16581375, 16581375));
     }
 
     private Template createTestTemplate(List<Category> categories, List<Currency> currencies) {
-        String guid = UUID.randomUUID().toString();
+        String guid = guidProvider.newGuid();
         String name = CARNAMES.get(randomGenerator.nextInt(CARNAMES.size()));
         String description = DESCRIPTIONS.get(randomGenerator.nextInt(DESCRIPTIONS.size()));
         Double distance = randomGenerator.nextDouble(0, 1000);
@@ -72,7 +78,7 @@ public class TestDataGenerator {
     }
 
     private CarRide createTestRide(List<Category> categories, List<Currency> currencies) {
-        String guid = UUID.randomUUID().toString();
+        String guid = guidProvider.newGuid();
         String name = CARNAMES.get(randomGenerator.nextInt(CARNAMES.size()));
         String description = DESCRIPTIONS.get(randomGenerator.nextInt(DESCRIPTIONS.size()));
         Double distance = randomGenerator.nextDouble(0, 1000);
