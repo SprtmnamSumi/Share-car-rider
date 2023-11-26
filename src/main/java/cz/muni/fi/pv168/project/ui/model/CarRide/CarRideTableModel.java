@@ -3,12 +3,12 @@ package cz.muni.fi.pv168.project.ui.model.CarRide;
 import com.google.inject.Singleton;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.service.crud.ICarRideICrudService;
+import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 import cz.muni.fi.pv168.project.ui.model.Column;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.inject.Inject;
-import java.util.List;
+import java.util.*;
 
 /**
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.
@@ -17,7 +17,7 @@ import java.util.List;
 public class CarRideTableModel extends TableModel<CarRide> {
 
     @Inject
-    public CarRideTableModel(ICarRideICrudService crudService) {
+    CarRideTableModel(ICrudService<CarRide> crudService) {
         super(crudService, List.of(
                 Column.readonly("Date", String.class, carRide -> carRide.getDate().toLocalDate().toString()),
                 Column.readonly("Name", String.class, CarRide::getTitle),
