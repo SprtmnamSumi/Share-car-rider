@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.business.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class CarRide extends Template {

@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.business.model.Category;
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.data.Initializator;
@@ -57,11 +58,12 @@ class MainWindowImpl implements MainWindow {
                    CategoryTableModel categoryTableModel,
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
-                   ICarRideStatistics ICarRideStatistics
+                   ICarRideStatistics ICarRideStatistics,
+                   GuidProvider guidProvider
     ) {
         frame = createFrame();
 
-        Initializator init = new Initializator(categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 150);
+        Initializator init = new Initializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 150);
         init.initialize();
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
