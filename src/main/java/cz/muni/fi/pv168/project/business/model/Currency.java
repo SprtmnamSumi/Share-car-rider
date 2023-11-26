@@ -4,9 +4,7 @@ import java.util.Objects;
 
 public class Currency extends Entity {
     private final String name;
-
     private final String symbol;
-
     private Double newestRateToDollar;
 
     public Currency(String name, String symbol, Double newestRateToDollar) {

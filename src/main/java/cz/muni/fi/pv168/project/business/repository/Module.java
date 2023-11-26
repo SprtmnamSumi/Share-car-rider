@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class Module extends AbstractModule {
     @Override
     protected void configure() {
-        var testDataGenerator = new TestDataGenerator();
         bind(new TypeLiteral<Repository<Template>>() {
         }).toInstance(new InMemoryRepository<>(new ArrayList<Template>()));
         bind(new TypeLiteral<Repository<CarRide>>() {
