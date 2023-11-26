@@ -53,8 +53,9 @@ class ICrudServiceImpl<T extends Entity> implements ICrudService<T> {
     }
 
     @Override
-    public void deleteByGuid(String guid) {
+    public ValidationResult deleteByGuid(String guid) {
         entityRepository.deleteByGuid(guid);
+        return ValidationResult.success();
     }
 
     @Override

@@ -4,8 +4,7 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.business.service.crud.ICategoryCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.ICurrencyCrudService;
+import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
@@ -15,12 +14,12 @@ import java.util.UUID;
 
 public class PrefilledEntityProvider implements EntityProvider{
     private final Random randomGenerator = new Random();
-    private final ICategoryCrudService categoryCrudService;
-    private final ICurrencyCrudService currencyCrudService;
+    private final ICrudService<Category> categoryCrudService;
+    private final ICrudService<Currency> currencyCrudService;
 
     @Inject
-    public PrefilledEntityProvider(ICategoryCrudService categoryCrudService,
-                                   ICurrencyCrudService templateCrudService1) {
+    public PrefilledEntityProvider(ICrudService<Category> categoryCrudService,
+                                   ICrudService<Currency> templateCrudService1) {
         this.categoryCrudService = categoryCrudService;
         this.currencyCrudService = templateCrudService1;
     }
