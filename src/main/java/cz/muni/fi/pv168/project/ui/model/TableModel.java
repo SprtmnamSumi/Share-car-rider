@@ -1,22 +1,20 @@
 package cz.muni.fi.pv168.project.ui.model;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
-
-import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
 import java.awt.Frame;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 
 /**
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.
  */
-public abstract class TableModel<T extends Entity> extends AbstractTableModel implements EntityTableModel<T> {
+public abstract class TableModel<T extends Model> extends AbstractTableModel implements EntityTableModel<T> {
 
     private final List<Column<T, ?>> columns;
     private final ICrudService<T> entityCrudService;
@@ -71,11 +69,10 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
     public void deleteRow(int rowIndex) {
         T entityToBeDeleted = getEntity(rowIndex);
         ValidationResult result = entityCrudService.deleteByGuid(entityToBeDeleted.getGuid());
-        if(result.getValidationErrors().isEmpty()){
+        if (result.getValidationErrors().isEmpty()) {
             entities.remove(rowIndex);
             fireTableRowsDeleted(rowIndex, rowIndex);
-        }
-        else{
+        } else {
             showDeleteAlert(rowIndex, result.getValidationErrors());
         }
     }
@@ -113,10 +110,10 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
         return Collections.unmodifiableList(entities);
     }
 
-    private void showDeleteAlert(int row, List<String> errors){
+    private void showDeleteAlert(int row, List<String> errors) {
         StringBuilder message = new StringBuilder()
                 .append(String.format("Data item at %d row could not be deleted. Reason: ", row));
-        for(String error : errors){
+        for (String error : errors) {
             message.append(error).append(System.lineSeparator());
         }
         JOptionPane.showMessageDialog(Frame.getFrames()[0], message.toString());

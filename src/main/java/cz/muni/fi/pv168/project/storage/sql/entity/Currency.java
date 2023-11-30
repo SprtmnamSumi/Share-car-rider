@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
-import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Model;
 import java.util.Objects;
 
-public class Currency extends Entity {
+public class Currency extends Model {
     private final String name;
     private final String symbol;
     private Double newestRateToDollar;

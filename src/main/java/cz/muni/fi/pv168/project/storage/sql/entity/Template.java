@@ -1,10 +1,10 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Model;
 import java.util.Objects;
 
-public class Template extends Entity {
+public class Template extends Model {
     protected Currency currency;
     protected String title;
     protected String description;
@@ -118,15 +118,15 @@ public class Template extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         Template template = (Template) o;
         return Objects.equals(title, template.title) &&
-                Objects.equals(description, template.description)
-                && Objects.equals(category, template.category)
-                && Objects.equals(distance, template.distance)
-                && Objects.equals(fuelConsumption, template.fuelConsumption)
-                && Objects.equals(costOfFuelPerLitre, template.costOfFuelPerLitre)
-                && Objects.equals(numberOfPassengers, template.numberOfPassengers)
-                && Objects.equals(commission, template.commission)
-                && Objects.equals(currency, template.currency)
-                && Objects.equals(newestConversionRateToDollar, template.newestConversionRateToDollar);
+               Objects.equals(description, template.description)
+               && Objects.equals(category, template.category)
+               && Objects.equals(distance, template.distance)
+               && Objects.equals(fuelConsumption, template.fuelConsumption)
+               && Objects.equals(costOfFuelPerLitre, template.costOfFuelPerLitre)
+               && Objects.equals(numberOfPassengers, template.numberOfPassengers)
+               && Objects.equals(commission, template.commission)
+               && Objects.equals(currency, template.currency)
+               && Objects.equals(newestConversionRateToDollar, template.newestConversionRateToDollar);
     }
 
     @Override
