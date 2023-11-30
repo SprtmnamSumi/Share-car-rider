@@ -4,7 +4,7 @@ import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 
 import java.util.Objects;
 
-public class Category extends Entity {
+public class Category extends Model {
 
     private String name;
     private int colour;

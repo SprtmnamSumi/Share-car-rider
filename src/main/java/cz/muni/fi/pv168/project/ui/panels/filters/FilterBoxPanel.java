@@ -1,12 +1,12 @@
 package cz.muni.fi.pv168.project.ui.panels.filters;
 
-import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.ui.filters.Filters;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.ComboBoxPanel;
 
-public class FilterBoxPanel<T extends Entity> extends FilterPanel {
+public class FilterBoxPanel<T extends Model> extends FilterPanel {
     private final ComboBoxPanel<T> comboBoxPanel;
     private final TableModel<T> currencyTableModel;
     private final Filters filterType;

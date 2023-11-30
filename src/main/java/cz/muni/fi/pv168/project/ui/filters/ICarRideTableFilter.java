@@ -1,19 +1,18 @@
 package cz.muni.fi.pv168.project.ui.filters;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.ui.filters.matchers.EntityMatcher;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-
-import javax.swing.table.TableRowSorter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.table.TableRowSorter;
 
 
 public interface ICarRideTableFilter {
-    void filterByEntity(Entity value, Filters filter);
+    void filterByEntity(Model value, Filters filter);
 
     void filterByDate(Date fromDate, Date toDate);
 
@@ -25,7 +24,7 @@ public interface ICarRideTableFilter {
 
     RideCompoundMatcher getRideCompoundMatcher();
 
-    public static class RideCompoundMatcher extends EntityMatcher<CarRide> {
+    class RideCompoundMatcher extends EntityMatcher<CarRide> {
 
         private final TableRowSorter<CarRideTableModel> rowSorter;
 

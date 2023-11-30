@@ -15,7 +15,7 @@ public interface DataAccessObject<E> {
      * Creates a new entity using the underlying data source.
      *
      * @param entity entity to be persisted
-     * @return Entity instance with set id
+     * @return Model instance with set id
      * @throws IllegalArgumentException when the entity has already been persisted
      * @throws DataStorageException     when anything goes wrong with the underlying data source
      */

@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.business.model;
 
 import java.util.Objects;
 
-public class Currency extends Entity {
+public class Currency extends Model {
     private final String name;
     private final String symbol;
     private Double newestRateToDollar;
