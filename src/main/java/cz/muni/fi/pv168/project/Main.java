@@ -4,12 +4,16 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import cz.muni.fi.pv168.project.business.service.properties.Config;
 import cz.muni.fi.pv168.project.ui.MainWindow;
+import cz.muni.fi.pv168.project.ui.action.NuclearQuitAction;
+import cz.muni.fi.pv168.project.ui.action.QuitAction;
 import cz.muni.fi.pv168.project.ui.theme.ColorTheme;
 import java.awt.EventQueue;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class Main {
@@ -52,5 +56,25 @@ public class Main {
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeelsClassName + " layout initialization failed", ex);
         }
+    }
+
+    private static void showInitializationFailedDialog(Exception ex) {
+        EventQueue.invokeLater(() -> {
+            ex.printStackTrace();
+            Object[] options = {
+                    new JButton(new QuitAction()),
+                    new JButton(new NuclearQuitAction())
+            };
+            JOptionPane.showOptionDialog(
+                    null,
+                    "Application initialization failed.\nWhat do you want to do?",
+                    "Initialization Error",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
+        });
     }
 }
