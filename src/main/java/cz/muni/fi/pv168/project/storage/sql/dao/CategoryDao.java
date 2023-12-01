@@ -73,6 +73,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
 
     @Override
     public Collection<CategoryEntity> findAll() {
+//        return new ArrayList<>();
         var sql = """
                 SELECT id,
                        guid,
@@ -87,8 +88,8 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
             List<CategoryEntity> departments = new ArrayList<>();
             try (var resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    var department = categoriesFromResultSet(resultSet);
-                    departments.add(department);
+                    var Category = categoriesFromResultSet(resultSet);
+                    departments.add(Category);
                 }
             }
 
@@ -105,7 +106,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                        guid,
                        name,
                        colour
-                FROM Department
+                FROM Category
                 WHERE id = ?
                 """;
         try (
@@ -117,11 +118,11 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
             if (resultSet.next()) {
                 return Optional.of(categoriesFromResultSet(resultSet));
             } else {
-                // department not found
+                // Category not found
                 return Optional.empty();
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load department by id: " + id, ex);
+            throw new DataStorageException("Failed to load Category by id: " + id, ex);
         }
     }
 
@@ -144,11 +145,11 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
             if (resultSet.next()) {
                 return Optional.of(categoriesFromResultSet(resultSet));
             } else {
-                // department not found
+                // Category not found
                 return Optional.empty();
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load department by guid: " + guid, ex);
+            throw new DataStorageException("Failed to load Category by guid: " + guid, ex);
         }
     }
 
@@ -169,15 +170,15 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
             statement.setLong(3, entity.getId());
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated == 0) {
-                throw new DataStorageException("Department not found, id: " + entity.getId());
+                throw new DataStorageException("Category not found, id: " + entity.getId());
             }
             if (rowsUpdated > 1) {
-                throw new DataStorageException("More then 1 department (rows=%d) has been updated: %s"
+                throw new DataStorageException("More then 1 Category (rows=%d) has been updated: %s"
                         .formatted(rowsUpdated, entity));
             }
             return entity;
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to update department: " + entity, ex);
+            throw new DataStorageException("Failed to update Category: " + entity, ex);
         }
     }
 
@@ -194,14 +195,14 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
             statement.setString(1, guid);
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated == 0) {
-                throw new DataStorageException("Department not found, guid: " + guid);
+                throw new DataStorageException("Category not found, guid: " + guid);
             }
             if (rowsUpdated > 1) {
-                throw new DataStorageException("More then 1 department (rows=%d) has been deleted: %s"
+                throw new DataStorageException("More then 1 Category (rows=%d) has been deleted: %s"
                         .formatted(rowsUpdated, guid));
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to delete department, guid: " + guid, ex);
+            throw new DataStorageException("Failed to delete Category, guid: " + guid, ex);
         }
     }
 
@@ -234,7 +235,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                 return resultSet.next();
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to check if department exists, guid: " + guid, ex);
+            throw new DataStorageException("Failed to check if Category exists, guid: " + guid, ex);
         }
     }
 
