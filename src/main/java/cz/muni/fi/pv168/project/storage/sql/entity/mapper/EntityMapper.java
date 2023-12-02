@@ -1,5 +1,8 @@
 package cz.muni.fi.pv168.project.storage.sql.entity.mapper;
 
+import cz.muni.fi.pv168.project.business.model.Model;
+import cz.muni.fi.pv168.project.storage.sql.entity.Entity;
+
 /**
  * Map from one entity to another
  * We are using this mappers map between the business models and database entities
@@ -7,7 +10,7 @@ package cz.muni.fi.pv168.project.storage.sql.entity.mapper;
  * @param <E> database type
  * @param <M> business entity type
  */
-public interface EntityMapper<E, M> {
+public interface EntityMapper<E extends Entity, M extends Model> {
 
     /**
      * Map database entity to business entity

@@ -6,11 +6,10 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
-
-import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
+import javax.inject.Inject;
 
 public class PrefilledEntityProvider implements EntityProvider {
     private final Random randomGenerator = new Random();
@@ -73,6 +72,6 @@ public class PrefilledEntityProvider implements EntityProvider {
     public Currency getCurrency() {
         List<Currency> currencies = currencyCrudService.findAll();
         Currency currency = currencies.get(randomGenerator.nextInt(0, currencies.size()));
-        return new Currency("New Currency", currency.getSymbol(), currency.getNewestRateToDollar());
+        return new Currency(guidProvider.newGuid(), "New CurrencyEntity", currency.getSymbol(), currency.getNewestRateToDollar());
     }
 }
