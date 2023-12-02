@@ -4,27 +4,24 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
  * DAO for {@link Category} entity.
  */
-public final class CategoryDao implements DataAccessObject<CategoryEntity> {
-
-    private final Supplier<ConnectionHandler> connections;
+public final class CategoryDao extends Dao<CategoryEntity> implements DataAccessObject<CategoryEntity> {
 
     public CategoryDao(Supplier<ConnectionHandler> connections) {
-        this.connections = connections;
+        super(connections);
+        super.setdataAccess(this);
     }
 
-    private static CategoryEntity categoriesFromResultSet(ResultSet resultSet) throws SQLException {
+    public CategoryEntity entityFromResult(ResultSet resultSet) throws SQLException {
         return new CategoryEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
@@ -43,32 +40,15 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                 )
                 VALUES (?, ?, ?);
                 """;
-        try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-        ) {
+
+        panda<PreparedStatement, Void, SQLException> sayHello = (PreparedStatement statement) -> {
             statement.setString(1, newCategory.getGuid());
             statement.setString(2, newCategory.getName());
             statement.setInt(3, newCategory.getColour());
-            statement.executeUpdate();
+            return null;
+        };
 
-            try (var keyResultSet = statement.getGeneratedKeys()) {
-                long employeeId;
-
-                if (keyResultSet.next()) {
-                    employeeId = keyResultSet.getLong(1);
-                } else {
-                    throw new DataStorageException("Failed to fetch generated key for: " + newCategory);
-                }
-                if (keyResultSet.next()) {
-                    throw new DataStorageException("Multiple keys returned for: " + newCategory);
-                }
-
-                return findById(employeeId).orElseThrow();
-            }
-        } catch (SQLException ex) {
-            throw new DataStorageException("Failed to store: " + newCategory, ex);
-        }
+        return super.create(newCategory, sql, sayHello);
     }
 
     @Override
@@ -80,22 +60,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                        colour
                 FROM Category
                 """;
-        try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-        ) {
-            List<CategoryEntity> departments = new ArrayList<>();
-            try (var resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    var Category = categoriesFromResultSet(resultSet);
-                    departments.add(Category);
-                }
-            }
-
-            return departments;
-        } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load all departments", ex);
-        }
+        return super.findAll(sql);
     }
 
     @Override
@@ -108,21 +73,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                 FROM Category
                 WHERE id = ?
                 """;
-        try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-        ) {
-            statement.setLong(1, id);
-            var resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return Optional.of(categoriesFromResultSet(resultSet));
-            } else {
-                // Category not found
-                return Optional.empty();
-            }
-        } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load Category by id: " + id, ex);
-        }
+        return super.findById(id, sql);
     }
 
     @Override
@@ -135,21 +86,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                 FROM Category
                 WHERE guid = ?
                 """;
-        try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-        ) {
-            statement.setString(1, guid);
-            var resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return Optional.of(categoriesFromResultSet(resultSet));
-            } else {
-                // Category not found
-                return Optional.empty();
-            }
-        } catch (SQLException ex) {
-            throw new DataStorageException("Failed to load Category by guid: " + guid, ex);
-        }
+        return super.findByGuid(guid, sql);
     }
 
     @Override
@@ -160,25 +97,14 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                     colour = ?
                 WHERE id = ?
                 """;
-        try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-        ) {
+
+        panda<PreparedStatement, Void, SQLException> sayHello = (PreparedStatement statement) -> {
             statement.setString(1, entity.getName());
             statement.setInt(2, entity.getColour());
             statement.setLong(3, entity.getId());
-            int rowsUpdated = statement.executeUpdate();
-            if (rowsUpdated == 0) {
-                throw new DataStorageException("Category not found, id: " + entity.getId());
-            }
-            if (rowsUpdated > 1) {
-                throw new DataStorageException("More then 1 Category (rows=%d) has been updated: %s"
-                        .formatted(rowsUpdated, entity));
-            }
-            return entity;
-        } catch (SQLException ex) {
-            throw new DataStorageException("Failed to update Category: " + entity, ex);
-        }
+            return null;
+        };
+        return super.update(entity, sql, sayHello);
     }
 
     @Override
@@ -187,35 +113,13 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                 DELETE FROM Category
                 WHERE guid = ?
                 """;
-        try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-        ) {
-            statement.setString(1, guid);
-            int rowsUpdated = statement.executeUpdate();
-            if (rowsUpdated == 0) {
-                throw new DataStorageException("Category not found, guid: " + guid);
-            }
-            if (rowsUpdated > 1) {
-                throw new DataStorageException("More then 1 Category (rows=%d) has been deleted: %s"
-                        .formatted(rowsUpdated, guid));
-            }
-        } catch (SQLException ex) {
-            throw new DataStorageException("Failed to delete Category, guid: " + guid, ex);
-        }
+        super.deleteByGuid(guid, sql);
     }
 
     @Override
     public void deleteAll() {
         var sql = "DELETE FROM Category";
-        try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-        ) {
-            statement.executeUpdate();
-        } catch (SQLException ex) {
-            throw new DataStorageException("Failed to delete all departments", ex);
-        }
+        super.deleteAll(sql);
     }
 
     @Override
@@ -225,17 +129,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                 FROM Category
                 WHERE guid = ?
                 """;
-        try (
-                var connection = connections.get();
-                var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
-        ) {
-            statement.setString(1, guid);
-            try (var resultSet = statement.executeQuery()) {
-                return resultSet.next();
-            }
-        } catch (SQLException ex) {
-            throw new DataStorageException("Failed to check if Category exists, guid: " + guid, ex);
-        }
+        return super.existsByGuid(guid, sql);
     }
 
 }
