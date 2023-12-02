@@ -21,14 +21,14 @@ public final class ChooseCurrencyAction extends AbstractAction {
         this.dialogFactory = dialogFactory;
         this.currencyActionFactory = currencyActionFactory;
         putValue(SMALL_ICON, icon);
-        putValue(SHORT_DESCRIPTION, "Add Currency");
+        putValue(SHORT_DESCRIPTION, "Add CurrencyEntity");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
-        dialogFactory.getAddCurrencyDialog(new Currency("", "", 1.0))
-                .show(currencyTable, "Add Currency", "Add")
+        dialogFactory.getAddCurrencyDialog(new Currency("", "", "", 1.0))
+                .show(currencyTable, "Add CurrencyEntity", "Add")
                 .ifPresent(currencyTableModel::addRow);
     }
 }

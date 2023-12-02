@@ -5,7 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Model;
 import java.util.Objects;
 
 public class Template extends Model {
-    protected Currency currency;
+    protected CurrencyEntity currency;
     protected String title;
     protected String description;
     protected double distance;
@@ -17,7 +17,7 @@ public class Template extends Model {
 
     protected double newestConversionRateToDollar;
 
-    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, double newestConversionRateToDollar) {
+    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, CurrencyEntity currency, double newestConversionRateToDollar) {
         super(guid);
         this.currency = currency;
         this.newestConversionRateToDollar = newestConversionRateToDollar;
@@ -104,11 +104,11 @@ public class Template extends Model {
         this.fuelConsumption = fuelConsumption;
     }
 
-    public Currency getCurrency() {
+    public CurrencyEntity getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    public void setCurrency(CurrencyEntity currency) {
         this.currency = currency;
     }
 
@@ -118,15 +118,15 @@ public class Template extends Model {
         if (o == null || getClass() != o.getClass()) return false;
         Template template = (Template) o;
         return Objects.equals(title, template.title) &&
-               Objects.equals(description, template.description)
-               && Objects.equals(category, template.category)
-               && Objects.equals(distance, template.distance)
-               && Objects.equals(fuelConsumption, template.fuelConsumption)
-               && Objects.equals(costOfFuelPerLitre, template.costOfFuelPerLitre)
-               && Objects.equals(numberOfPassengers, template.numberOfPassengers)
-               && Objects.equals(commission, template.commission)
-               && Objects.equals(currency, template.currency)
-               && Objects.equals(newestConversionRateToDollar, template.newestConversionRateToDollar);
+                Objects.equals(description, template.description)
+                && Objects.equals(category, template.category)
+                && Objects.equals(distance, template.distance)
+                && Objects.equals(fuelConsumption, template.fuelConsumption)
+                && Objects.equals(costOfFuelPerLitre, template.costOfFuelPerLitre)
+                && Objects.equals(numberOfPassengers, template.numberOfPassengers)
+                && Objects.equals(commission, template.commission)
+                && Objects.equals(currency, template.currency)
+                && Objects.equals(newestConversionRateToDollar, template.newestConversionRateToDollar);
     }
 
     @Override

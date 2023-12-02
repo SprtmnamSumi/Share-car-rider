@@ -1,9 +1,6 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,6 +8,8 @@ import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class BatchImporterCurrencyJSON {
@@ -36,7 +35,8 @@ public class BatchImporterCurrencyJSON {
 
                 Currency currency;
 
-                currency = new Currency(currencyObject.getString("name"),
+                currency = new Currency(currencyObject.getString("guid"),
+                        currencyObject.getString("name"),
                         currencyObject.getString("symbol"),
                         currencyObject.getDouble("rate_to_dollar"));
 

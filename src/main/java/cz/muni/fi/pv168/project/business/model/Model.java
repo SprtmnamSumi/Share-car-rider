@@ -10,9 +10,6 @@ public abstract class Model {
         this.guid = guid;
     }
 
-    protected Model() {
-    }
-
     /**
      * Returns globally unique identifier of the given entity.
      */

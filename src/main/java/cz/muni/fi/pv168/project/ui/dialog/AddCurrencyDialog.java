@@ -1,9 +1,10 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
+import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 
 class AddCurrencyDialog extends EntityDialog<Currency> {
     private final ValidatedInputField nameTextField = new ValidatedInputField(ValidatorFactory.stringValidator(1, 150));
@@ -11,9 +12,11 @@ class AddCurrencyDialog extends EntityDialog<Currency> {
     private final ValidatedInputField rateToDollar = new ValidatedInputField(ValidatorFactory
             .eitherValidator(ValidatorFactory.doubleValidator(), ValidatorFactory.intValidator()));
     private final Currency currency;
+    private final GuidProvider guidProvider;
 
-    public AddCurrencyDialog(Currency currency) {
+    public AddCurrencyDialog(GuidProvider guidProvider, Currency currency) {
         this.currency = currency;
+        this.guidProvider = guidProvider;
         setValues();
         addFields();
         ValidableListener validableListener = new ValidableListener() {
@@ -33,13 +36,13 @@ class AddCurrencyDialog extends EntityDialog<Currency> {
     }
 
     private void addFields() {
-        add("Currency name", nameTextField);
-        add("Currency symbol", symbolTextField);
-        add("Currency rate to dollar", rateToDollar);
+        add("CurrencyEntity name", nameTextField);
+        add("CurrencyEntity symbol", symbolTextField);
+        add("CurrencyEntity rate to dollar", rateToDollar);
     }
 
     @Override
     Currency getEntity() {
-        return new Currency(nameTextField.getText(), symbolTextField.getText(), Double.parseDouble(rateToDollar.getText()));
+        return new Currency(guidProvider.newGuid(), nameTextField.getText(), symbolTextField.getText(), Double.parseDouble(rateToDollar.getText()));
     }
 }

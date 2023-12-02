@@ -5,7 +5,6 @@ import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.data.ImportInitializator;
-import cz.muni.fi.pv168.project.data.Initializator;
 import cz.muni.fi.pv168.project.ui.action.CarRide.ICarRideActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
@@ -64,8 +63,7 @@ class MainWindowImpl implements MainWindow {
     ) {
         frame = createFrame();
 
-        Initializator init = new Initializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 150);
-        //init.initialize();
+
         ImportInitializator importInit = new ImportInitializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
@@ -91,9 +89,9 @@ class MainWindowImpl implements MainWindow {
         tabbedPane.addSpecialTab("Templates", templateTablePanel, new ButtonTabComponent(tabbedPane, addTemplate, "Add new template"));
 
         notificationController = new NotificationController(frame);
-        carRideTableModel.addTableModelListener((e)->notificationController.showTableNotification(carRideTablePanel.getTable(), e));
-        categoryTableModel.addTableModelListener((e)->notificationController.showTableNotification(categoryTablePanel.getTable(), e));
-        templateTableModel.addTableModelListener((e) ->notificationController.showTableNotification(templateTablePanel.getTable(), e));
+        carRideTableModel.addTableModelListener((e) -> notificationController.showTableNotification(carRideTablePanel.getTable(), e));
+        categoryTableModel.addTableModelListener((e) -> notificationController.showTableNotification(categoryTablePanel.getTable(), e));
+        templateTableModel.addTableModelListener((e) -> notificationController.showTableNotification(templateTablePanel.getTable(), e));
 
         frame.add(tabbedPane, BorderLayout.CENTER);
         frame.setJMenuBar(createMenuBar());

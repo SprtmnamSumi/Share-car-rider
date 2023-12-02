@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.storage.sql.dao;
 
 
-import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
-import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,42 +14,45 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * DAO for {@link Category} entity.
+ * DAO for {@link TemplateEntity} entity.
  */
-public final class CategoryDao implements DataAccessObject<CategoryEntity> {
+public final class CurrencyDao implements DataAccessObject<CurrencyEntity> {
 
     private final Supplier<ConnectionHandler> connections;
 
-    public CategoryDao(Supplier<ConnectionHandler> connections) {
+    public CurrencyDao(Supplier<ConnectionHandler> connections) {
         this.connections = connections;
     }
 
-    private static CategoryEntity categoriesFromResultSet(ResultSet resultSet) throws SQLException {
-        return new CategoryEntity(
+    private static CurrencyEntity currenciesFromResultSet(ResultSet resultSet) throws SQLException {
+        return new CurrencyEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("name"),
-                resultSet.getInt("colour")
+                resultSet.getString("symbol"),
+                resultSet.getDouble("newestRateToDollar")
         );
     }
 
     @Override
-    public CategoryEntity create(CategoryEntity newCategory) {
+    public CurrencyEntity create(CurrencyEntity newTemplate) {
         var sql = """
-                INSERT INTO Category(
+                INSERT INTO Currency(
                     guid,
                     name,
-                    colour
+                    symbol,
+                    newestRateToDollar
                 )
-                VALUES (?, ?, ?);
+                VALUES (?, ?, ?, ?);
                 """;
         try (
                 var connection = connections.get();
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
-            statement.setString(1, newCategory.getGuid());
-            statement.setString(2, newCategory.getName());
-            statement.setInt(3, newCategory.getColour());
+            statement.setString(1, newTemplate.getGuid());
+            statement.setString(2, newTemplate.getName());
+            statement.setString(3, newTemplate.getSymbol());
+            statement.setDouble(4, newTemplate.getNewestRateToDollar());
             statement.executeUpdate();
 
             try (var keyResultSet = statement.getGeneratedKeys()) {
@@ -58,36 +61,37 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
                 if (keyResultSet.next()) {
                     employeeId = keyResultSet.getLong(1);
                 } else {
-                    throw new DataStorageException("Failed to fetch generated key for: " + newCategory);
+                    throw new DataStorageException("Failed to fetch generated key for: " + newTemplate);
                 }
                 if (keyResultSet.next()) {
-                    throw new DataStorageException("Multiple keys returned for: " + newCategory);
+                    throw new DataStorageException("Multiple keys returned for: " + newTemplate);
                 }
 
                 return findById(employeeId).orElseThrow();
             }
         } catch (SQLException ex) {
-            throw new DataStorageException("Failed to store: " + newCategory, ex);
+            throw new DataStorageException("Failed to store: " + newTemplate, ex);
         }
     }
 
     @Override
-    public Collection<CategoryEntity> findAll() {
+    public Collection<CurrencyEntity> findAll() {
         var sql = """
-                SELECT id,
-                       guid,
+                SELECT id, 
+                guid,
                        name,
-                       colour
-                FROM Category
+                       symbol,
+                       newestRateToDollar
+                FROM Currency
                 """;
         try (
                 var connection = connections.get();
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
-            List<CategoryEntity> departments = new ArrayList<>();
+            List<CurrencyEntity> departments = new ArrayList<>();
             try (var resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    var Category = categoriesFromResultSet(resultSet);
+                    var Category = currenciesFromResultSet(resultSet);
                     departments.add(Category);
                 }
             }
@@ -99,13 +103,14 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
     }
 
     @Override
-    public Optional<CategoryEntity> findById(long id) {
+    public Optional<CurrencyEntity> findById(long id) {
         var sql = """
-                SELECT id,
-                       guid,
+                SELECT id, 
+                guid,
                        name,
-                       colour
-                FROM Category
+                       symbol,
+                       newestRateToDollar
+                FROM Currency
                 WHERE id = ?
                 """;
         try (
@@ -115,7 +120,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
             statement.setLong(1, id);
             var resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(categoriesFromResultSet(resultSet));
+                return Optional.of(currenciesFromResultSet(resultSet));
             } else {
                 // Category not found
                 return Optional.empty();
@@ -126,12 +131,13 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
     }
 
     @Override
-    public Optional<CategoryEntity> findByGuid(String guid) {
+    public Optional<CurrencyEntity> findByGuid(String guid) {
         var sql = """
                 SELECT id,
-                       guid,
+                guid,
                        name,
-                       colour
+                       symbol,
+                       newestRateToDollar
                 FROM Category
                 WHERE guid = ?
                 """;
@@ -142,7 +148,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
             statement.setString(1, guid);
             var resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(categoriesFromResultSet(resultSet));
+                return Optional.of(currenciesFromResultSet(resultSet));
             } else {
                 // Category not found
                 return Optional.empty();
@@ -153,20 +159,23 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
     }
 
     @Override
-    public CategoryEntity update(CategoryEntity entity) {
+    public CurrencyEntity update(CurrencyEntity entity) {
         var sql = """
-                UPDATE Category
-                SET name = ?,
-                    colour = ?
+                UPDATE Currency
+                SET guid = ?,
+                    name = ?,
+                    symbol  = ?,
+                    newestRateToDollar = ?,
                 WHERE id = ?
                 """;
         try (
                 var connection = connections.get();
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
-            statement.setString(1, entity.getName());
-            statement.setInt(2, entity.getColour());
-            statement.setLong(3, entity.getId());
+            statement.setString(1, entity.getGuid());
+            statement.setString(2, entity.getName());
+            statement.setString(3, entity.getSymbol());
+            statement.setDouble(4, entity.getNewestRateToDollar());
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated == 0) {
                 throw new DataStorageException("Category not found, id: " + entity.getId());
@@ -184,7 +193,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
     @Override
     public void deleteByGuid(String guid) {
         var sql = """
-                DELETE FROM Category
+                DELETE FROM Currency
                 WHERE guid = ?
                 """;
         try (
@@ -207,7 +216,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
 
     @Override
     public void deleteAll() {
-        var sql = "DELETE FROM Category";
+        var sql = "DELETE FROM Currency";
         try (
                 var connection = connections.get();
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -222,7 +231,7 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
     public boolean existsByGuid(String guid) {
         var sql = """
                 SELECT id
-                FROM Category
+                FROM Currency
                 WHERE guid = ?
                 """;
         try (
@@ -237,5 +246,4 @@ public final class CategoryDao implements DataAccessObject<CategoryEntity> {
             throw new DataStorageException("Failed to check if Category exists, guid: " + guid, ex);
         }
     }
-
 }

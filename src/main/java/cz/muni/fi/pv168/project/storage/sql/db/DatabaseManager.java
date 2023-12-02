@@ -1,10 +1,16 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
+import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
+import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
+import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import org.h2.jdbcx.JdbcConnectionPool;
 import org.tinylog.Logger;
@@ -17,6 +23,11 @@ public final class DatabaseManager {
 
     private static final String PROJECT_NAME = "share-car-rider";
     private static final String DB_PROPERTIES_STRING = "DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false";
+    private static CarRideTableModel carRideTableModel;
+    private static CategoryTableModel categoryTableModel;
+    private static TemplateTableModel templateTableModel;
+    private static CurrencyTableModel currencyTableModel;
+    private static GuidProvider guidProvider;
 
     private final DataSource dataSource;
     private final SqlFileExecutor sqlFileExecutor;
@@ -30,7 +41,23 @@ public final class DatabaseManager {
         this.sqlFileExecutor = new SqlFileExecutor(this::getTransactionHandler, DatabaseManager.class);
     }
 
+
+//    @Inject
+//    private DatabaseManager(CarRideTableModel carRideTableModel,
+//                            CategoryTableModel categoryTableModel,
+//                            TemplateTableModel templateTableModel,
+//                            CurrencyTableModel currencyTableModel,
+//                            GuidProvider guidProvider
+//    ) {
+//        DatabaseManager.carRideTableModel = carRideTableModel;
+//        DatabaseManager.categoryTableModel = categoryTableModel;
+//        DatabaseManager.templateTableModel = templateTableModel;
+//        DatabaseManager.currencyTableModel = currencyTableModel;
+//    }
+
+    @Inject
     public static DatabaseManager createProductionInstance() {
+
         String connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
         return new DatabaseManager(connectionString);
     }
@@ -43,6 +70,8 @@ public final class DatabaseManager {
 
         if (parentDir.mkdirs()) {
             Logger.debug("Created a new root directory for the database: {}", projectDbPath.getParent());
+//            Initializator init = new Initializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 150);
+//            init.initialize();
         } else {
             Logger.debug("Root directory for the database already exists: {}", projectDbPath.getParent());
         }

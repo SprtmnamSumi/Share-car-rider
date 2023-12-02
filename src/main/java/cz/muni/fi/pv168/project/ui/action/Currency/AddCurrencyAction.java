@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.ui.action.Currency;
 
-import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.data.EntityProvider;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
@@ -23,7 +22,7 @@ final class AddCurrencyAction extends AbstractAction {
         this.entityProvider = entityProvider;
         this.currencyTable = currencyTable;
         putValue(SMALL_ICON, icon);
-        putValue(SHORT_DESCRIPTION, "Adds new Currency");
+        putValue(SHORT_DESCRIPTION, "Adds new CurrencyEntity");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
     }
@@ -32,7 +31,7 @@ final class AddCurrencyAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
         dialogFactory.getAddCurrencyDialog(entityProvider.getCurrency())
-                .show(currencyTable, "Add Currency", "Add")
+                .show(currencyTable, "Add CurrencyEntity", "Add")
                 .ifPresent(currencyTableModel::addRow);
     }
 }
