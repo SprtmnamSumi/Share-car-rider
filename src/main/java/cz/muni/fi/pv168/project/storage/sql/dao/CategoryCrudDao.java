@@ -14,14 +14,14 @@ import java.util.function.Supplier;
 /**
  * DAO for {@link Category} entity.
  */
-public final class CategoryDao extends Dao<CategoryEntity> implements DataAccessObject<CategoryEntity> {
+public final class CategoryCrudDao extends CrudDao<CategoryEntity> implements DataAccessObject<CategoryEntity> {
 
-    public CategoryDao(Supplier<ConnectionHandler> connections) {
+    public CategoryCrudDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
     }
 
-    public CategoryEntity entityFromResult(ResultSet resultSet) throws SQLException {
+    protected CategoryEntity entityFromResult(ResultSet resultSet) throws SQLException {
         return new CategoryEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
@@ -41,11 +41,10 @@ public final class CategoryDao extends Dao<CategoryEntity> implements DataAccess
                 VALUES (?, ?, ?);
                 """;
 
-        panda<PreparedStatement, Void, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
             statement.setString(1, newCategory.getGuid());
             statement.setString(2, newCategory.getName());
             statement.setInt(3, newCategory.getColour());
-            return null;
         };
 
         return super.create(newCategory, sql, sayHello);
@@ -98,11 +97,10 @@ public final class CategoryDao extends Dao<CategoryEntity> implements DataAccess
                 WHERE id = ?
                 """;
 
-        panda<PreparedStatement, Void, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
             statement.setString(1, entity.getName());
             statement.setInt(2, entity.getColour());
             statement.setLong(3, entity.getId());
-            return null;
         };
         return super.update(entity, sql, sayHello);
     }
