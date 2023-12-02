@@ -29,16 +29,16 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
     @Override
     public Template mapToBusiness(TemplateEntity entity) {
         var category = departmentDao
-                .findByGuid(entity.getCategoryGuid())
+                .findById(entity.getCategoryId())
                 .map(departmentMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Department not found, id: " +
-                        entity.getCategoryGuid()));
+                        entity.getCategoryId()));
 
         var currency = currencyDao
-                .findByGuid(entity.getCategoryGuid())
+                .findById(entity.getCategoryId())
                 .map(currencyMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Department not found, id: " +
-                        entity.getCategoryGuid()));
+                        entity.getCategoryId()));
 
 
         return new Template(
@@ -58,6 +58,17 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
 
     @Override
     protected TemplateEntity getEntity(Template entity, Long dbID) {
+
+        var categoryEntity = departmentDao
+                .findByGuid(entity.getCategory().getGuid())
+                .orElseThrow(() -> new DataStorageException("Department not found, guid: " +
+                        entity.getCategory().getGuid()));
+
+        var currencyEntity = currencyDao
+                .findByGuid(entity.getCurrency().getGuid())
+                .orElseThrow(() -> new DataStorageException("Department not found, guid: " +
+                        entity.getCategory().getGuid()));
+
         return new TemplateEntity(
                 dbID,
                 entity.getGuid(),
@@ -68,8 +79,8 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
                 entity.getCostOfFuelPerLitreInDollars(),
                 entity.getNumberOfPassengers(),
                 entity.getCommission(),
-                entity.getCategory().getGuid(),
-                entity.getCurrency().getGuid(),
+                categoryEntity.getId(),
+                currencyEntity.getId(),
                 entity.getConversionToDollars());
     }
 }
