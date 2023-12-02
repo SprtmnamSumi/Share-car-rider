@@ -1,9 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.entity;
 
-import java.util.Currency;
-
 public class TemplateEntity extends Entity {
- 
+
     private String title;
     private String description;
     private Double distance;
@@ -12,13 +10,13 @@ public class TemplateEntity extends Entity {
     private int numberOfPassengers;
     private double commission;
 
-    private int category;
-    private Currency currency;
+    private String categoryGuid;
+    private String currencyGuid;
     private double newestConversionRate;
 
     public TemplateEntity(Long id, String guid, String title, String description, Double distance, double fuelConsumption,
                           double costOfFuelPerLitre, int numberOfPassengers, double commission,
-                          int category, Currency currency, double newestConversionRate) {
+                          String categoryGuid, String currencyID, double newestConversionRate) {
         super(id, guid);
 
         this.title = title;
@@ -29,8 +27,8 @@ public class TemplateEntity extends Entity {
         this.numberOfPassengers = numberOfPassengers;
         this.commission = commission;
 
-        this.category = category;
-        this.currency = currency;
+        this.categoryGuid = categoryGuid;
+        this.currencyGuid = currencyID;
         this.newestConversionRate = newestConversionRate;
     }
 
@@ -93,20 +91,20 @@ public class TemplateEntity extends Entity {
         this.commission = commission;
     }
 
-    public int getCategory() {
-        return category;
+    public String getCategoryGuid() {
+        return categoryGuid;
     }
 
-    public void setCategory(int category) {
-        this.category = category;
+    public void setCategoryGuid(String categoryGuid) {
+        this.categoryGuid = categoryGuid;
     }
 
-    public Currency getCurrency() {
-        return currency;
+    public String getCurrencyGuid() {
+        return currencyGuid;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public void setCurrencyGuid(String currencyGuid) {
+        this.currencyGuid = currencyGuid;
     }
 
     public double getNewestConversionRate() {

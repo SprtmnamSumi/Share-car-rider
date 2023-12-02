@@ -18,7 +18,7 @@ public final class CategoryMapper extends Mapper<CategoryEntity, Category> imple
     }
 
     @Override
-    CategoryEntity getEntity(Category entity, Long dbID) {
+    protected CategoryEntity getEntity(Category entity, Long dbID) {
         return new CategoryEntity(
                 dbID,
                 entity.getGuid(),
