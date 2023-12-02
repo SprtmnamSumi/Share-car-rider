@@ -10,7 +10,7 @@ import javax.inject.Inject;
 public class CarRideTemplateCrudService extends ICrudServiceImpl<Template>{
 
     @Inject
-    CarRideTemplateCrudService(Repository<Template> entityRepository, Validator<Template> entityValidator, GuidProvider guidProvider) {
+    public CarRideTemplateCrudService(Repository<Template> entityRepository, Validator<Template> entityValidator, GuidProvider guidProvider) {
         super(entityRepository, entityValidator, guidProvider);
     }
 }

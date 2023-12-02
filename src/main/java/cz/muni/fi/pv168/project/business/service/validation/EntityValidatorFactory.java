@@ -8,9 +8,9 @@ import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFact
 
 import java.util.List;
 
-class EntityValidatorFactory {
+public class EntityValidatorFactory {
 
-    static Validator<CarRide> getCarRideValidator() {
+    public static Validator<CarRide> getCarRideValidator() {
         return (carRide) -> {
             var validators = List.of(
                     Validator.extracting(CarRide::getTitle, ValidatorFactory.stringValidator(2, 150))
