@@ -10,12 +10,14 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
+import javax.inject.Inject;
 
 /**
  * DAO for {@link Category} entity.
  */
 public final class CategoryCrudDao extends CrudDao<CategoryEntity> implements DataAccessObject<CategoryEntity> {
 
+    @Inject
     public CategoryCrudDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);

@@ -10,13 +10,14 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
+import javax.inject.Inject;
 
 /**
  * DAO for {@link TemplateEntity} entity.
  */
 public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAccessObject<CurrencyEntity> {
 
-
+    @Inject
     public CurrencyDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
@@ -90,7 +91,7 @@ public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAc
                        name,
                        symbol,
                        newestRateToDollar
-                FROM Category
+                FROM Currency
                 WHERE guid = ?
                 """;
         return super.findByGuid(guid, sql);

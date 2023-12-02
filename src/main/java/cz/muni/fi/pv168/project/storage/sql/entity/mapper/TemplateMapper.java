@@ -8,6 +8,7 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
+import javax.inject.Inject;
 
 public class TemplateMapper extends Mapper<TemplateEntity, Template> implements EntityMapper<TemplateEntity, Template> {
 
@@ -17,6 +18,7 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
     private final DataAccessObject<CurrencyEntity> currencyDao;
     private final EntityMapper<CurrencyEntity, Currency> currencyMapper;
 
+    @Inject
     public TemplateMapper(DataAccessObject<CategoryEntity> categoryDao, EntityMapper<CategoryEntity, Category> categoryMapper,
                           DataAccessObject<CurrencyEntity> currencyDao, EntityMapper<CurrencyEntity, Currency> currencyMapper) {
 
