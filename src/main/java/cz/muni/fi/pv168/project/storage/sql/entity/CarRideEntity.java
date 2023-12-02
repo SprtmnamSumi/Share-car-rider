@@ -8,7 +8,7 @@ public class CarRideEntity extends TemplateEntity {
 
     public CarRideEntity(Long id, String guid, String title, String description, Double distance, double fuelConsumption,
                          double costOfFuelPerLitre, int numberOfPassengers, double commission, LocalDateTime date,
-                         String category, String currency, double newestConversionRate) {
+                         Long category, Long currency, double newestConversionRate) {
         super(id, guid, title, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, newestConversionRate);
         this.date = date;
     }

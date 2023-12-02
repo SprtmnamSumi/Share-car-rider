@@ -10,13 +10,13 @@ public class TemplateEntity extends Entity {
     private int numberOfPassengers;
     private double commission;
 
-    private String categoryGuid;
-    private String currencyGuid;
+    private Long categoryId;
+    private Long currencyId;
     private double newestConversionRate;
 
     public TemplateEntity(Long id, String guid, String title, String description, Double distance, double fuelConsumption,
                           double costOfFuelPerLitre, int numberOfPassengers, double commission,
-                          String categoryGuid, String currencyID, double newestConversionRate) {
+                          Long categoryGuid, Long currencyID, double newestConversionRate) {
         super(id, guid);
 
         this.title = title;
@@ -27,8 +27,8 @@ public class TemplateEntity extends Entity {
         this.numberOfPassengers = numberOfPassengers;
         this.commission = commission;
 
-        this.categoryGuid = categoryGuid;
-        this.currencyGuid = currencyID;
+        this.categoryId = categoryGuid;
+        this.currencyId = currencyID;
         this.newestConversionRate = newestConversionRate;
     }
 
@@ -91,20 +91,20 @@ public class TemplateEntity extends Entity {
         this.commission = commission;
     }
 
-    public String getCategoryGuid() {
-        return categoryGuid;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryGuid(String categoryGuid) {
-        this.categoryGuid = categoryGuid;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public String getCurrencyGuid() {
-        return currencyGuid;
+    public Long getCurrencyId() {
+        return currencyId;
     }
 
-    public void setCurrencyGuid(String currencyGuid) {
-        this.currencyGuid = currencyGuid;
+    public void setCurrencyId(Long currencyId) {
+        this.currencyId = currencyId;
     }
 
     public double getNewestConversionRate() {
