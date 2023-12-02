@@ -16,7 +16,7 @@ public class TemplateEntity extends Entity {
 
     public TemplateEntity(Long id, String guid, String title, String description, Double distance, double fuelConsumption,
                           double costOfFuelPerLitre, int numberOfPassengers, double commission,
-                          Long categoryGuid, Long currencyID, double newestConversionRate) {
+                          Long categoryId, Long currencyID, double newestConversionRate) {
         super(id, guid);
 
         this.title = title;
@@ -27,7 +27,7 @@ public class TemplateEntity extends Entity {
         this.numberOfPassengers = numberOfPassengers;
         this.commission = commission;
 
-        this.categoryId = categoryGuid;
+        this.categoryId = categoryId;
         this.currencyId = currencyID;
         this.newestConversionRate = newestConversionRate;
     }

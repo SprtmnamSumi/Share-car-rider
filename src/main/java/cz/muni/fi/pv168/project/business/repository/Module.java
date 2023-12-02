@@ -10,10 +10,12 @@ import cz.muni.fi.pv168.project.storage.memory.InMemoryRepository;
 import cz.muni.fi.pv168.project.storage.sql.SqlRepository;
 import cz.muni.fi.pv168.project.storage.sql.dao.CategoryCrudDao;
 import cz.muni.fi.pv168.project.storage.sql.dao.CurrencyDao;
+import cz.muni.fi.pv168.project.storage.sql.dao.TemplateDao;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionConnectionSupplier;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionManagerImpl;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CategoryMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CurrencyMapper;
+import cz.muni.fi.pv168.project.storage.sql.entity.mapper.TemplateMapper;
 import cz.muni.fi.pv168.project.wiring.ProductionDatabaseProvider;
 import java.util.ArrayList;
 
@@ -25,22 +27,29 @@ public class Module extends AbstractModule {
         var transactionManager = new TransactionManagerImpl(databaseManager);
         var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
 
-        var departmentMapper = new CategoryMapper();
-        var departmentDao = new CategoryCrudDao(transactionConnectionSupplier);
+        var categoryMapper = new CategoryMapper();
+        var categoryCrudDao = new CategoryCrudDao(transactionConnectionSupplier);
 
         var currencyMapper = new CurrencyMapper();
         var currencyDao = new CurrencyDao(transactionConnectionSupplier);
 
+        var templateMapper = new TemplateMapper(categoryCrudDao, categoryMapper, currencyDao, currencyMapper);
+        var tamplateDao = new TemplateDao(transactionConnectionSupplier);
 
-        bind(new TypeLiteral<Repository<Template>>() {
-        }).toInstance(new InMemoryRepository<>(new ArrayList<Template>()));
+
         bind(new TypeLiteral<Repository<CarRide>>() {
         }).toInstance(new InMemoryRepository<>(new ArrayList<CarRide>()));
+
+        bind(new TypeLiteral<Repository<Template>>() {
+        })
+                .toInstance(
+                        new SqlRepository<>(tamplateDao, templateMapper)
+                );
 
         bind(new TypeLiteral<Repository<Category>>() {
         })
                 .toInstance(
-                        new SqlRepository<>(departmentDao, departmentMapper)
+                        new SqlRepository<>(categoryCrudDao, categoryMapper)
                 );
 
         bind(new TypeLiteral<Repository<Currency>>() {
