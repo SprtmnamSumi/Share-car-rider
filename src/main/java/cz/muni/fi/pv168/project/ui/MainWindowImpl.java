@@ -62,8 +62,6 @@ class MainWindowImpl implements MainWindow {
                    GuidProvider guidProvider
     ) {
         frame = createFrame();
-
-
         ImportInitializator importInit = new ImportInitializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);

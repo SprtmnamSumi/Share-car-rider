@@ -8,54 +8,27 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.storage.memory.InMemoryRepository;
 import cz.muni.fi.pv168.project.storage.sql.SqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.dao.CategoryCrudDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.CurrencyDao;
-import cz.muni.fi.pv168.project.storage.sql.dao.TemplateDao;
-import cz.muni.fi.pv168.project.storage.sql.db.TransactionConnectionSupplier;
-import cz.muni.fi.pv168.project.storage.sql.db.TransactionManagerImpl;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CategoryMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CurrencyMapper;
-import cz.muni.fi.pv168.project.storage.sql.entity.mapper.TemplateMapper;
-import cz.muni.fi.pv168.project.wiring.ProductionDatabaseProvider;
+import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
+import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
 import java.util.ArrayList;
 
 public class Module extends AbstractModule {
     @Override
     protected void configure() {
 
-        var databaseManager = ProductionDatabaseProvider.getDatabaseManager();
-        var transactionManager = new TransactionManagerImpl(databaseManager);
-        var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
-
-        var categoryMapper = new CategoryMapper();
-        var categoryCrudDao = new CategoryCrudDao(transactionConnectionSupplier);
-
-        var currencyMapper = new CurrencyMapper();
-        var currencyDao = new CurrencyDao(transactionConnectionSupplier);
-
-        var templateMapper = new TemplateMapper(categoryCrudDao, categoryMapper, currencyDao, currencyMapper);
-        var tamplateDao = new TemplateDao(transactionConnectionSupplier);
-
 
         bind(new TypeLiteral<Repository<CarRide>>() {
         }).toInstance(new InMemoryRepository<>(new ArrayList<CarRide>()));
 
         bind(new TypeLiteral<Repository<Template>>() {
-        })
-                .toInstance(
-                        new SqlRepository<>(tamplateDao, templateMapper)
-                );
-
+        }).to(new TypeLiteral<SqlRepository<Template, TemplateEntity>>() {
+        });
         bind(new TypeLiteral<Repository<Category>>() {
-        })
-                .toInstance(
-                        new SqlRepository<>(categoryCrudDao, categoryMapper)
-                );
-
+        }).to(new TypeLiteral<SqlRepository<Category, CategoryEntity>>() {
+        });
         bind(new TypeLiteral<Repository<Currency>>() {
-        })
-                .toInstance(
-                        new SqlRepository<>(currencyDao, currencyMapper)
-                );
+        }).to(new TypeLiteral<SqlRepository<Currency, CurrencyEntity>>() {
+        });
     }
 }

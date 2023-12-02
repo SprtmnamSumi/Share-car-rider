@@ -2,11 +2,13 @@ package cz.muni.fi.pv168.project.storage.sql.db;
 
 import java.util.Objects;
 import java.util.function.Supplier;
+import javax.inject.Inject;
 
 public class TransactionConnectionSupplier implements Supplier<ConnectionHandler> {
     private final TransactionManager transactionManager;
     private final DatabaseManager databaseManager;
 
+    @Inject
     public TransactionConnectionSupplier(TransactionManager transactionManager, DatabaseManager databaseManager) {
         this.transactionManager = Objects.requireNonNull(transactionManager);
         this.databaseManager = Objects.requireNonNull(databaseManager);

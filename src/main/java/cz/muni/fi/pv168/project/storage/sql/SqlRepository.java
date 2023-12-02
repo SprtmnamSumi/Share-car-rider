@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.project.storage.sql.entity.Entity;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
 import java.util.List;
 import java.util.Optional;
+import javax.inject.Inject;
 
 /**
  * Implementation of {@link Repository} for {@link T} entity using SQL database.
@@ -20,6 +21,7 @@ public class SqlRepository<T extends Model, K extends Entity> implements Reposit
     private final DataAccessObject<K> EntityDao;
     private final EntityMapper<K, T> EntityMapper;
 
+    @Inject
     public SqlRepository(
             DataAccessObject<K> EntityDao,
             EntityMapper<K, T> EntityMapper) {

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
+import javax.inject.Inject;
 
 /**
  * DAO for {@link TemplateEntity} entity.
@@ -16,6 +17,7 @@ import java.util.function.Supplier;
 public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAccessObject<TemplateEntity> {
 
 
+    @Inject
     public TemplateDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
@@ -34,7 +36,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                 resultSet.getDouble("commission"),
                 resultSet.getLong("categoryId"),
                 resultSet.getLong("currencyId"),
-                resultSet.getDouble("newestConversionRate")
+                resultSet.getDouble("newestConversionRateToDollar")
         );
     }
 
@@ -89,6 +91,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  numberOfPassengers,
                  commission,
                  categoryId,
+                 newestConversionRateToDollar
                 FROM Template
                 """;
         return super.findAll(sql);
@@ -108,6 +111,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                   numberOfPassengers,
                   commission,
                   categoryId,
+                 newestConversionRateToDollar
                  FROM Template
                  WHERE id = ?
                  """;
@@ -128,6 +132,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  numberOfPassengers,
                  commission,
                  categoryId,
+                 newestConversionRateToDollar
                 FROM Template
                 WHERE guid = ?
                 """;
@@ -148,6 +153,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  numberOfPassengers = ?,
                  commission = ?,
                  categoryId = ?,
+                 newestConversionRateToDollar = ?
                 WHERE id = ?
                 """;
 
