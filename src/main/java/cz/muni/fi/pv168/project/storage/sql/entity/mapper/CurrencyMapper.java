@@ -9,30 +9,23 @@ import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
 /**
  * Mapper from the {@link CategoryEntity} to {@link Category}.
  */
-public final class CurrencyMapper implements EntityMapper<CurrencyEntity, Currency> {
+public final class CurrencyMapper extends Mapper<CurrencyEntity, Currency> implements EntityMapper<CurrencyEntity, Currency> {
 
-    private static CurrencyEntity getCurrencyEntity(Currency entity, Long dbId) {
-        return new CurrencyEntity(
-                dbId,
-                entity.getGuid(),
-                entity.getName(),
-                entity.getSymbol(),
-                entity.getNewestRateToDollar()
-        );
-    }
 
     @Override
     public Currency mapToBusiness(CurrencyEntity entity) {
         return new Currency(entity.getGuid(), entity.getName(), entity.getSymbol(), entity.getNewestRateToDollar());
     }
 
-    @Override
-    public CurrencyEntity mapNewEntityToDatabase(Currency entity) {
-        return getCurrencyEntity(entity, null);
-    }
 
     @Override
-    public CurrencyEntity mapExistingEntityToDatabase(Currency entity, Long dbId) {
-        return getCurrencyEntity(entity, dbId);
+    CurrencyEntity getEntity(Currency entity, Long dbID) {
+        return new CurrencyEntity(
+                dbID,
+                entity.getGuid(),
+                entity.getName(),
+                entity.getSymbol(),
+                entity.getNewestRateToDollar()
+        );
     }
 }
