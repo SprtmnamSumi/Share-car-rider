@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public abstract class Dao<T extends Entity> {
+public abstract class CrudDao<T extends Entity> {
 
     protected final Supplier<ConnectionHandler> connections;
     private DataAccessObject<T> dataAccess;
 
-    public Dao(Supplier<ConnectionHandler> connections) {
+    public CrudDao(Supplier<ConnectionHandler> connections) {
         this.connections = connections;
     }
 
@@ -27,7 +27,7 @@ public abstract class Dao<T extends Entity> {
 
     abstract T entityFromResult(ResultSet resultSet) throws SQLException;
 
-    public T create(T entity, String sql, panda<PreparedStatement, Void, SQLException> setUp) {
+    public T create(T entity, String sql, ISetUp<PreparedStatement, SQLException> setUp) {
         try (
                 var connection = connections.get();
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
@@ -114,7 +114,7 @@ public abstract class Dao<T extends Entity> {
     }
 
 
-    public T update(T entity, String sql, panda<PreparedStatement, Void, SQLException> setUp) {
+    public T update(T entity, String sql, ISetUp<PreparedStatement, SQLException> setUp) {
         try (
                 var connection = connections.get();
                 var statement = connection.use().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)

@@ -8,7 +8,7 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.storage.memory.InMemoryRepository;
 import cz.muni.fi.pv168.project.storage.sql.SqlRepository;
-import cz.muni.fi.pv168.project.storage.sql.dao.CategoryDao;
+import cz.muni.fi.pv168.project.storage.sql.dao.CategoryCrudDao;
 import cz.muni.fi.pv168.project.storage.sql.dao.CurrencyDao;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionConnectionSupplier;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionManagerImpl;
@@ -26,7 +26,7 @@ public class Module extends AbstractModule {
         var transactionConnectionSupplier = new TransactionConnectionSupplier(transactionManager, databaseManager);
 
         var departmentMapper = new CategoryMapper();
-        var departmentDao = new CategoryDao(transactionConnectionSupplier);
+        var departmentDao = new CategoryCrudDao(transactionConnectionSupplier);
 
         var currencyMapper = new CurrencyMapper();
         var currencyDao = new CurrencyDao(transactionConnectionSupplier);
