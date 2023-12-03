@@ -21,12 +21,9 @@ class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2, 150));
     private final JTextField descriptionField = new JTextField();
     private final JComboBox<Template> templateComboBoxModel;
-
     private final CategoryBar categoryBar;
-
     private final ValidatedInputField distanceField = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final ValidatedInputField fuelConsumption = new ValidatedInputField(ValidatorFactory.doubleValidator());
-
     private final ValidatedInputField numberOfPassengers = new ValidatedInputField(ValidatorFactory.intValidator());
     private final ValidatedInputField commission = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final Template template;
@@ -46,7 +43,7 @@ class TemplateDialog extends EntityDialog<Template> {
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validableListener);
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         this.costBar = new CostBar(currencyModel, currencyConverter, validableListener);
-        this.validableListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, costBar);
+        this.validableListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, categoryBar);
         addFields();
         setValues();
         validableListener.fireChange();
