@@ -91,7 +91,7 @@ public class TestDataGenerator {
                 randomGenerator.nextInt(0, 60));
         Category category = categories.get(randomGenerator.nextInt(categories.size()));
         Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
-        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, date, category, currency, currency.getNewestRateToDollar());
+        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, currency.getNewestRateToDollar(), date);
     }
 
     public List<CarRide> createTestRides(int count, List<Category> categories, List<Currency> currencies) {

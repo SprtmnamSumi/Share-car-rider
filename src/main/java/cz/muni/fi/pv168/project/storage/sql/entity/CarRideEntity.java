@@ -7,8 +7,8 @@ public class CarRideEntity extends TemplateEntity {
     private LocalDateTime date;
 
     public CarRideEntity(Long id, String guid, String title, String description, Double distance, double fuelConsumption,
-                         double costOfFuelPerLitre, int numberOfPassengers, double commission, LocalDateTime date,
-                         Long category, Long currency, double newestConversionRate) {
+                         double costOfFuelPerLitre, int numberOfPassengers, double commission,
+                         Long category, Long currency, double newestConversionRate, LocalDateTime date) {
         super(id, guid, title, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, newestConversionRate);
         this.date = date;
     }

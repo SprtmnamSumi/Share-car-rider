@@ -66,7 +66,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 var template = (Template) e.getItem();
-                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), LocalDateTime.now(), template.getCategory(), template.getCurrency(), template.getConversionToDollars());
+                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), template.getCategory(), template.getCurrency(), template.getConversionToDollars(), LocalDateTime.now());
                 setValues(templateCarRide);
             }
         });
