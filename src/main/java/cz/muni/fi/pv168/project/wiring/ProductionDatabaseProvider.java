@@ -23,7 +23,12 @@ public final class ProductionDatabaseProvider implements IproductionDatabaseProv
 
     private static void createDatabaseManager() {
         DatabaseManager databaseManager = DatabaseManager.createProductionInstance();
-        databaseManager.initSchema(); //TODO
+        try {
+            databaseManager.initSchema(); //TODO
+        } catch (Exception e) {
+            return;
+        }
+        
         ProductionDatabaseProvider.databaseManager = databaseManager;
     }
 }
