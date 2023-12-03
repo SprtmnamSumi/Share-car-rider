@@ -4,6 +4,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
+import cz.muni.fi.pv168.project.data.IInitializator;
 import cz.muni.fi.pv168.project.data.ImportInitializator;
 import cz.muni.fi.pv168.project.ui.action.CarRide.ICarRideActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
@@ -59,7 +60,8 @@ class MainWindowImpl implements MainWindow {
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
                    ICarRideStatistics ICarRideStatistics,
-                   GuidProvider guidProvider
+                   GuidProvider guidProvider,
+                   IInitializator initializator
     ) {
         frame = createFrame();
         ImportInitializator importInit = new ImportInitializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
