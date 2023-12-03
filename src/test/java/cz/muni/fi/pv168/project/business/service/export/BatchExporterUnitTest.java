@@ -11,17 +11,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cz.muni.fi.pv168.project.business.service.statistics.CarRideStatisticsUnitTests.createCarRideOne;
 import static cz.muni.fi.pv168.project.business.service.statistics.CarRideStatisticsUnitTests.createCarRideThree;
 import static cz.muni.fi.pv168.project.business.service.statistics.CarRideStatisticsUnitTests.createCarRideTwo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-class GenericExportIntegrationTest {
+class BatchExporterUnitTest {
     private final BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
 
     private static final Path PROJECT_ROOT = Paths.get(System.getProperty("project.basedir", "")).toAbsolutePath();
