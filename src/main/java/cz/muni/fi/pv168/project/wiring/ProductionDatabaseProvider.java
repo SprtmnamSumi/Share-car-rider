@@ -11,9 +11,6 @@ import javax.inject.Singleton;
 public final class ProductionDatabaseProvider implements IproductionDatabaseProvider {
     private static DatabaseManager databaseManager = null;
 
-    private ProductionDatabaseProvider() {
-    }
-
     public static DatabaseManager getDatabaseManager() {
         if (databaseManager == null) {
             createDatabaseManager();
@@ -26,7 +23,7 @@ public final class ProductionDatabaseProvider implements IproductionDatabaseProv
 
     private static void createDatabaseManager() {
         DatabaseManager databaseManager = DatabaseManager.createProductionInstance();
-        databaseManager.initSchema();
+        databaseManager.initSchema(); //TODO
         ProductionDatabaseProvider.databaseManager = databaseManager;
     }
 }

@@ -74,6 +74,8 @@ class MainWindowImpl implements MainWindow {
 
         chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
 
+//        initializator.initialize(150); // TODO 
+
         settingsAction = new SettingsAction();
         importAction = new ImportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel, importInit);
         exportAction = new ExportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel);
