@@ -59,10 +59,11 @@ public class BatchImporterCarRideJSON {
                         carRideObject.getDouble("cost_of_fuel_per_litre"),
                         carRideObject.getInt("passengers"),
                         carRideObject.getDouble("commission"),
-                        LocalDateTime.parse(carRideObject.getString("date"), formatter),
+
                         category,
                         currency,
-                        currency.getNewestRateToDollar());
+                        currency.getNewestRateToDollar(),
+                        LocalDateTime.parse(carRideObject.getString("date"), formatter));
                 carRideList.add(carRide);
             }
 
