@@ -65,7 +65,7 @@ class MainWindowImpl implements MainWindow {
         frame = createFrame();
 
         Initializator init = new Initializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 150);
-        init.initialize();
+        //init.initialize();
         ImportInitializator importInit = new ImportInitializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
