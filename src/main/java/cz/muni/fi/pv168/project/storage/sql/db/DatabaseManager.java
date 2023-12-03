@@ -41,20 +41,6 @@ public final class DatabaseManager {
         this.sqlFileExecutor = new SqlFileExecutor(this::getTransactionHandler, DatabaseManager.class);
     }
 
-
-//    @Inject
-//    private DatabaseManager(CarRideTableModel carRideTableModel,
-//                            CategoryTableModel categoryTableModel,
-//                            TemplateTableModel templateTableModel,
-//                            CurrencyTableModel currencyTableModel,
-//                            GuidProvider guidProvider
-//    ) {
-//        DatabaseManager.carRideTableModel = carRideTableModel;
-//        DatabaseManager.categoryTableModel = categoryTableModel;
-//        DatabaseManager.templateTableModel = templateTableModel;
-//        DatabaseManager.currencyTableModel = currencyTableModel;
-//    }
-
     @Inject
     public static DatabaseManager createProductionInstance() {
 

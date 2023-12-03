@@ -24,9 +24,15 @@ public class Main {
         _injector = getInjector();
         Config.tryCreateProperties();
         initLookAndFeel();
-        EventQueue.invokeLater(() -> _injector.getInstance(MainWindow.class).show());
-    }
 
+        EventQueue.invokeLater(() -> {
+            try {
+                EventQueue.invokeLater(() -> _injector.getInstance(MainWindow.class).show());
+            } catch (Exception ex) { // TODO injector throws exception than is not catched
+                showInitializationFailedDialog(ex);
+            }
+        });
+    }
 
     public static void initLookAndFeel() {
         Properties properties = Config.loadProperties();
