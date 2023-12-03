@@ -30,20 +30,20 @@ CREATE TABLE IF NOT EXISTS "Template"
     `categoryId`                   BIGINT REFERENCES "Category" (`id`),
     `newestConversionRateToDollar` DOUBLE PRECISION NOT NULL
 );
--- 
--- CREATE TABLE IF NOT EXISTS "CarRide"
--- (
---     `id`                           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
---     `guid`                         VARCHAR          NOT NULL UNIQUE,
---     `currencyId`                   BIGINT REFERENCES "CurrencyEntity" (`id`),
---     `title`                        VARCHAR          NOT NULL,
---     `description`                  VARCHAR          NOT NULL,
---     `distance`                     DOUBLE PRECISION NOT NULL,
---     `fuelConsumption`              DOUBLE PRECISION NOT NULL,
---     `costOfFuelPerLitre`           DOUBLE PRECISION NOT NULL,
---     `numberOfPassengers`           integer          NOT NULL,
---     `commission`                   DOUBLE PRECISION NOT NULL,
---     `categoryId`                   BIGINT REFERENCES "Category" (`id`),
---     `newestConversionRateToDollar` DOUBLE PRECISION NOT NULL,
---     `date`                         datetime         NOT NULL,
--- );
+
+CREATE TABLE IF NOT EXISTS "CarRide"
+(
+    `id`                           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    `guid`                         VARCHAR                  NOT NULL UNIQUE,
+    `currencyId`                   BIGINT REFERENCES "Currency" (`id`),
+    `title`                        VARCHAR                  NOT NULL,
+    `description`                  VARCHAR                  NOT NULL,
+    `distance`                     DOUBLE PRECISION         NOT NULL,
+    `fuelConsumption`              DOUBLE PRECISION         NOT NULL,
+    `costOfFuelPerLitre`           DOUBLE PRECISION         NOT NULL,
+    `numberOfPassengers`           integer                  NOT NULL,
+    `commission`                   DOUBLE PRECISION         NOT NULL,
+    `categoryId`                   BIGINT REFERENCES "Category" (`id`),
+    `newestConversionRateToDollar` DOUBLE PRECISION         NOT NULL,
+    `date`                         TIMESTAMP WITH TIME ZONE NOT NULL
+);

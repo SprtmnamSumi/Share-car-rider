@@ -58,8 +58,8 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                  numberOfPassengers,
                  commission,
                  categoryId,
-                 date
-                 newestConversionRateToDollar
+                 newestConversionRateToDollar,
+                                  date
                              )
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                              """;
