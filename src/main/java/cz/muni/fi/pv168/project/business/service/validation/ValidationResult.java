@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Validation result stores the list of validation errors
@@ -60,5 +61,13 @@ public final class ValidationResult {
         if (!isValid()) {
             throw new ValidationException(toString(), validationErrors);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ValidationResult that = (ValidationResult) o;
+        return Objects.equals(validationErrors, that.validationErrors);
     }
 }
