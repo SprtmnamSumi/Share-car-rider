@@ -26,15 +26,13 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-/**
- * @author Sabrina Orálková, 525089
- */
+
 public class ExportDialog extends JDialog implements PropertyChangeListener {
 
     private final String title = "Export data";
     private final JOptionPane optionPane;
     private final TableModel<Template> templates;
-    private final TableModel<cz.muni.fi.pv168.project.business.model.Currency> currencies;
+    private final TableModel<Currency> currencies;
     private final TableModel<Category> categories;
     private final String btnExportTitle = "Export";
     private final String btnCancelTitle = "Cancel";

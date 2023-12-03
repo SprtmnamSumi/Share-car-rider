@@ -7,9 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * @author Sabrina Orálková, 525089
- */
+
 public class BatchExporterCurrencyJSON {
     public void exportData(List<Currency> currencies, String filePath) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {

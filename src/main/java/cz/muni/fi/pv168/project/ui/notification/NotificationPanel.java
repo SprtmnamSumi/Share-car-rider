@@ -37,6 +37,8 @@ public class NotificationPanel extends JInternalFrame {
         }
         this.notification = notification;
         message.setText(notification.getMessage());
+        this.revalidate();
+        this.repaint();
     }
 
     private JButton getCloseButton() {
