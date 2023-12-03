@@ -33,13 +33,13 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
         var category = departmentDao
                 .findById(entity.getCategoryId())
                 .map(departmentMapper::mapToBusiness)
-                .orElseThrow(() -> new DataStorageException("Department not found, id: " +
+                .orElseThrow(() -> new DataStorageException("Entity not found, id: " +
                         entity.getCategoryId()));
 
         var currency = currencyDao
                 .findById(entity.getCategoryId())
                 .map(currencyMapper::mapToBusiness)
-                .orElseThrow(() -> new DataStorageException("Department not found, id: " +
+                .orElseThrow(() -> new DataStorageException("Entity not found, id: " +
                         entity.getCategoryId()));
 
 
@@ -63,12 +63,12 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
 
         var categoryEntity = departmentDao
                 .findByGuid(entity.getCategory().getGuid())
-                .orElseThrow(() -> new DataStorageException("Department not found, guid: " +
+                .orElseThrow(() -> new DataStorageException("Entity not found, guid: " +
                         entity.getCategory().getGuid()));
 
         var currencyEntity = currencyDao
                 .findByGuid(entity.getCurrency().getGuid())
-                .orElseThrow(() -> new DataStorageException("Department not found, guid: " +
+                .orElseThrow(() -> new DataStorageException("Entity not found, guid: " +
                         entity.getCategory().getGuid()));
 
         return new TemplateEntity(
