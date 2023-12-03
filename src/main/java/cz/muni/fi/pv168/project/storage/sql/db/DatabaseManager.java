@@ -45,7 +45,10 @@ public final class DatabaseManager {
     public static DatabaseManager createProductionInstance() {
 
         String connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
-        return new DatabaseManager(connectionString);
+        var dbManager = new DatabaseManager(connectionString);
+        System.out.println("Database created...");
+        System.out.println("Database connection string: " + dbManager.getDatabaseConnectionString());
+        return dbManager;
     }
 
     private static Path createDbFileSystemPath() {
