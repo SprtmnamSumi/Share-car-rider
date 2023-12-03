@@ -70,8 +70,6 @@ public final class DatabaseManager {
 
         if (parentDir.mkdirs()) {
             Logger.debug("Created a new root directory for the database: {}", projectDbPath.getParent());
-//            Initializator init = new Initializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 150);
-//            init.initialize();
         } else {
             Logger.debug("Root directory for the database already exists: {}", projectDbPath.getParent());
         }
