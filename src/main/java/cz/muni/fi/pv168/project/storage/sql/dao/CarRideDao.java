@@ -2,10 +2,13 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 
 
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
+import cz.muni.fi.pv168.project.storage.sql.entity.CarRideEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -14,17 +17,17 @@ import javax.inject.Inject;
 /**
  * DAO for {@link TemplateEntity} entity.
  */
-public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAccessObject<TemplateEntity> {
+public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAccessObject<CarRideEntity> {
 
 
     @Inject
-    public TemplateDao(Supplier<ConnectionHandler> connections) {
+    public CarRideDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
     }
 
-    protected TemplateEntity entityFromResult(ResultSet resultSet) throws SQLException {
-        return new TemplateEntity(
+    protected CarRideEntity entityFromResult(ResultSet resultSet) throws SQLException {
+        return new CarRideEntity(
                 resultSet.getLong("id"),
                 resultSet.getString("guid"),
                 resultSet.getString("title"),
@@ -36,14 +39,15 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                 resultSet.getDouble("commission"),
                 resultSet.getLong("categoryId"),
                 resultSet.getLong("currencyId"),
-                resultSet.getDouble("newestConversionRateToDollar")
+                resultSet.getDouble("newestConversionRateToDollar"),
+                ((OffsetDateTime) resultSet.getObject("date")).toLocalDateTime()
         );
     }
 
     @Override
-    public TemplateEntity create(TemplateEntity newTemplate) {
+    public CarRideEntity create(CarRideEntity newTemplate) {
         var sql = """
-                INSERT INTO Template(
+                INSERT INTO CarRide(
                  guid,
                  currencyId,
                  title,
@@ -54,9 +58,10 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  numberOfPassengers,
                  commission,
                  categoryId,
+                 date
                  newestConversionRateToDollar
                              )
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                              """;
 
         ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
@@ -71,6 +76,10 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
             statement.setDouble(9, newTemplate.getCommission());
             statement.setLong(10, newTemplate.getCategoryId());
             statement.setDouble(11, newTemplate.getNewestConversionRate());
+
+            ZoneId zone = ZoneId.of("Europe/Prague");
+            OffsetDateTime odt = newTemplate.getDate().atZone(zone).toOffsetDateTime();
+            statement.setObject(12, odt);
         };
 
         return super.create(newTemplate, sql, sayHello);
@@ -78,7 +87,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
     }
 
     @Override
-    public Collection<TemplateEntity> findAll() {
+    public Collection<CarRideEntity> findAll() {
         var sql = """
                 SELECT id,
                    guid,
@@ -91,14 +100,15 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  numberOfPassengers,
                  commission,
                  categoryId,
-                 newestConversionRateToDollar
-                FROM Template
+                 newestConversionRateToDollar,
+                 date
+                FROM CarRide
                 """;
         return super.findAll(sql);
     }
 
     @Override
-    public Optional<TemplateEntity> findById(long id) {
+    public Optional<CarRideEntity> findById(long id) {
         var sql = """
                  SELECT id,
                 guid,
@@ -111,15 +121,16 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                   numberOfPassengers,
                   commission,
                   categoryId,
-                 newestConversionRateToDollar
-                 FROM Template
+                 newestConversionRateToDollar,
+                 date
+                 FROM CarRide
                  WHERE id = ?
                  """;
         return super.findById(id, sql);
     }
 
     @Override
-    public Optional<TemplateEntity> findByGuid(String guid) {
+    public Optional<CarRideEntity> findByGuid(String guid) {
         var sql = """
                 SELECT id,
                   guid,
@@ -132,17 +143,18 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  numberOfPassengers,
                  commission,
                  categoryId,
-                 newestConversionRateToDollar
-                FROM Template
+                 newestConversionRateToDollar,
+                 date
+                FROM CarRide
                 WHERE guid = ?
                 """;
         return super.findByGuid(guid, sql);
     }
 
     @Override
-    public TemplateEntity update(TemplateEntity entity) {
+    public CarRideEntity update(CarRideEntity entity) {
         var sql = """
-                UPDATE Template
+                UPDATE CarRide
                 SET    guid = ?,
                  currencyId = ?,
                  title = ?,
@@ -153,7 +165,8 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  numberOfPassengers = ?,
                  commission = ?,
                  categoryId = ?,
-                 newestConversionRateToDollar = ?
+                 newestConversionRateToDollar = ?,
+                 date = ?
                 WHERE id = ?
                 """;
 
@@ -169,6 +182,10 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
             statement.setDouble(9, entity.getCommission());
             statement.setLong(10, entity.getCategoryId());
             statement.setDouble(11, entity.getNewestConversionRate());
+
+            ZoneId zone = ZoneId.of("Europe/Prague");
+            OffsetDateTime odt = entity.getDate().atZone(zone).toOffsetDateTime();
+            statement.setObject(12, odt);
         };
         return super.update(entity, sql, sayHello);
     }
@@ -176,7 +193,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
     @Override
     public void deleteByGuid(String guid) {
         var sql = """
-                DELETE FROM Template
+                DELETE FROM CarRide
                 WHERE guid = ?
                 """;
         super.deleteByGuid(guid, sql);
@@ -184,7 +201,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
 
     @Override
     public void deleteAll() {
-        var sql = "DELETE FROM Template";
+        var sql = "DELETE FROM CarRide";
         super.deleteAll(sql);
     }
 
@@ -192,7 +209,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
     public boolean existsByGuid(String guid) {
         var sql = """
                 SELECT id
-                FROM Template
+                FROM CarRide
                 WHERE guid = ?
                 """;
         return super.existsByGuid(guid, sql);
