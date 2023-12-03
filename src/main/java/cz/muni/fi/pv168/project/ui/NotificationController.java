@@ -15,7 +15,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class NotificationController {
-    private final static int TIME_LIMIT = 50;
+    private final static int TIME_LIMIT = 5;
     private final NotificationPanel notificationPanel = new NotificationPanel();
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private final Window window;
