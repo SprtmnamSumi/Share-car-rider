@@ -9,7 +9,7 @@ import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import javax.inject.Inject;
 import java.util.List;
 
-public class ICrudServiceImpl<T extends Entity> implements ICrudService<T> {
+class ICrudServiceImpl<T extends Entity> implements ICrudService<T> {
     private final Repository<T> entityRepository;
     private final Validator<T> entityValidator;
     private final GuidProvider guidProvider;

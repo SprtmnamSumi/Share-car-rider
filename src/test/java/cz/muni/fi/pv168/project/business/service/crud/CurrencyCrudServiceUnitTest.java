@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.business.service.crud.Currency;
+package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;

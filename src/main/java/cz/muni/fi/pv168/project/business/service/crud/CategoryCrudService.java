@@ -9,10 +9,10 @@ import cz.muni.fi.pv168.project.business.service.validation.Validator;
 
 import javax.inject.Inject;
 
-public class CategoryCrudService extends ICrudServiceImpl<Category>{
+class CategoryCrudService extends ICrudServiceImpl<Category>{
     private final Validator<String> deleteValidator;
     @Inject
-    public CategoryCrudService(ICrudServiceImpl<CarRide> carRideCrudService, Repository<Category> entityRepository, Validator<Category> entityValidator, GuidProvider guidProvider) {
+    CategoryCrudService(ICrudServiceImpl<CarRide> carRideCrudService, Repository<Category> entityRepository, Validator<Category> entityValidator, GuidProvider guidProvider) {
         super(entityRepository, entityValidator, guidProvider);
         this.deleteValidator = model -> carRideCrudService.findAll().stream().noneMatch(carRide -> carRide.getCategory().getGuid().matches(model))
                 ? ValidationResult.success()

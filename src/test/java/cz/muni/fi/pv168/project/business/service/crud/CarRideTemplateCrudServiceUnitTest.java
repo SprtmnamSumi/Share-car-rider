@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.business.service.crud.Template;
+package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;

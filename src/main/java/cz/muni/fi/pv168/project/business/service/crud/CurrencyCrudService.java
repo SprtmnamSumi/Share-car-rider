@@ -7,9 +7,9 @@ import cz.muni.fi.pv168.project.business.service.validation.Validator;
 
 import javax.inject.Inject;
 
-public class CurrencyCrudService extends ICrudServiceImpl<Currency> {
+class CurrencyCrudService extends ICrudServiceImpl<Currency> {
     @Inject
-    public CurrencyCrudService(Repository<Currency> entityRepository, Validator<Currency> entityValidator, GuidProvider guidProvider) {
+    CurrencyCrudService(Repository<Currency> entityRepository, Validator<Currency> entityValidator, GuidProvider guidProvider) {
         super(entityRepository, entityValidator, guidProvider);
     }
 }
