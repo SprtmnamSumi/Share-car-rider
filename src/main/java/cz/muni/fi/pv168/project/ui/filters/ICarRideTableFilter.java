@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author Sabrina Orálková, 525089
- */
+
 public interface ICarRideTableFilter {
     void filterByEntity(Entity value, Filters filter);
 
