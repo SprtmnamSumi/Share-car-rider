@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.storage.memory;
+package memory;
 
 
 import cz.muni.fi.pv168.project.business.model.Model;

@@ -5,16 +5,13 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.business.service.crud.CarRideCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.EntityAlreadyExistsException;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -27,6 +24,23 @@ public class CarRideCrudServiceUnitTest {
     private CarRideCrudService carRideCrudService;
     private Repository<CarRide> carRideRepository;
     private Validator<CarRide> carRideValidator;
+
+    public static CarRide createCarRideInstance(String guid) {
+        return new CarRide(
+                guid,
+                "Porsak",
+                "skvela jizda",
+                5.0,
+                15.0,
+                40.0,
+                2,
+                0.05,
+                new Category("1", "Blue", 7),
+                new Currency("2", "Czech crown", "Kc", 22.3),
+                22.3,
+                LocalDateTime.now()
+        );
+    }
 
     @BeforeEach
     @SuppressWarnings("unchecked")
@@ -132,22 +146,5 @@ public class CarRideCrudServiceUnitTest {
 
         verify(carRideRepository, times(1))
                 .deleteAll();
-    }
-
-    public static CarRide createCarRideInstance(String guid) {
-        return new CarRide(
-                guid,
-                "Porsak",
-                "skvela jizda",
-                5.0,
-                15.0,
-                40.0,
-                2,
-                0.05,
-                LocalDateTime.now(),
-                new Category("1", "Blue", 7),
-                new Currency("Czech crown", "Kc", 22.3),
-                22.3
-        );
     }
 }
