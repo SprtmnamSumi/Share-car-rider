@@ -6,10 +6,12 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
+
+import javax.inject.Inject;
+import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import javax.inject.Inject;
 
 public class PrefilledEntityProvider implements EntityProvider {
     private final Random randomGenerator = new Random();
@@ -38,17 +40,15 @@ public class PrefilledEntityProvider implements EntityProvider {
         int numberOfPassengers = randomGenerator.nextInt(1, 10);
         double commission = randomGenerator.nextInt(0, 100);
         LocalDateTime dateTime = LocalDateTime.now();
-        Category category = categories.get(randomGenerator.nextInt(0, categories.size()));
-        Currency currency = currencies.get(randomGenerator.nextInt(0, currencies.size()));
+        Category category = categories.isEmpty() ? null : categories.get(randomGenerator.nextInt(0, categories.size()));
+        Currency currency = categories.isEmpty() ? null : currencies.get(randomGenerator.nextInt(0, currencies.size()));
         return new CarRide(guidProvider.newGuid(), name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers,
-                commission, category, currency, currency.getNewestRateToDollar(), dateTime);
+                commission, dateTime, category, currency, currency != null ? currency.getNewestRateToDollar() : 0.0f);
     }
 
     @Override
     public Category getCategory() {
-        List<Category> categories = categoryCrudService.findAll();
-        Category category = categories.get(randomGenerator.nextInt(0, categories.size()));
-        return new Category(guidProvider.newGuid(), "New Category", category.getColour());
+        return new Category(guidProvider.newGuid(), "New Category", getRandomColor().getRGB());
     }
 
     @Override
@@ -62,16 +62,20 @@ public class PrefilledEntityProvider implements EntityProvider {
         int costOfFuelPerLitre = randomGenerator.nextInt(3, 15);
         int numberOfPassengers = randomGenerator.nextInt(1, 10);
         double commission = randomGenerator.nextInt(0, 100);
-        Category category = categories.get(randomGenerator.nextInt(0, categories.size()));
-        Currency currency = currencies.get(randomGenerator.nextInt(0, currencies.size()));
+        Category category = categories.isEmpty() ? null : categories.get(randomGenerator.nextInt(0, categories.size()));
+        Currency currency = currencies.isEmpty() ? null : currencies.get(randomGenerator.nextInt(0, currencies.size()));
         return new Template(guidProvider.newGuid(), name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers,
-                commission, category, currency, currency.getNewestRateToDollar());
+                commission, category, currency, currency != null ? currency.getNewestRateToDollar() : 0.0);
     }
 
     @Override
     public Currency getCurrency() {
-        List<Currency> currencies = currencyCrudService.findAll();
-        Currency currency = currencies.get(randomGenerator.nextInt(0, currencies.size()));
-        return new Currency(guidProvider.newGuid(), "New CurrencyEntity", currency.getSymbol(), currency.getNewestRateToDollar());
+        return new Currency("New Currency", "$", 1.0);
+    }
+
+    private Color getRandomColor(){
+        return new Color(randomGenerator.nextInt(0,255),
+                randomGenerator.nextInt(0,255),
+                randomGenerator.nextInt(0,255));
     }
 }
