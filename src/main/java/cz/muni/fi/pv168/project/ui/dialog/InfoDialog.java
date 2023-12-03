@@ -8,9 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-/**
- * @author Sabrina Orálková, 525089
- */
 public class InfoDialog extends JDialog {
     private final String title = "Info";
 

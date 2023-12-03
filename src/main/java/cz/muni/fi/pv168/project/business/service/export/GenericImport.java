@@ -11,9 +11,7 @@ import cz.muni.fi.pv168.project.business.service.export.batch.BatchImporter;
 
 import java.util.Collection;
 
-/**
- * @author Sabrina Orálková, 525089
- */
+
 public class GenericImport implements Import{
     private final ICrudService<CarRide> carRideICrudService;
     private final ICrudService<Category> categoryICrudService;

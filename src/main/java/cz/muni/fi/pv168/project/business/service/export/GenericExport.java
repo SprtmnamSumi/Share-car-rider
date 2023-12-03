@@ -13,9 +13,7 @@ import cz.muni.fi.pv168.project.business.service.export.format.FormatMapping;
 
 import java.util.Collection;
 
-/**
- * @author Sabrina Orálková, 525089
- */
+
 public class GenericExport implements Export{
 
     private final ICrudService<CarRide> carRideICrudService;
