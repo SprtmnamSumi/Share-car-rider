@@ -3,9 +3,11 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -14,17 +16,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-/**
- * @author Sabrina Orálková, 525089
- */
 public class BatchImporterCarRideJSON {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-    public List<CarRide> importData(String filePath) {
-        try {
-            String jsonString = new String(Files.readAllBytes(Paths.get(filePath))); // TODO choose a different method
+    public List<CarRide> importData(Path filePath) {
+        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(filePath))) {
+            byte[] buffer = new byte[4096];
+            StringBuilder content = new StringBuilder();
 
-            JSONObject jsonObject = new JSONObject(jsonString);
+            int bytesRead;
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                content.append(new String(buffer, 0, bytesRead));
+            }
+
+            JSONObject jsonObject = new JSONObject(content.toString());
             JSONArray carRidesArray = jsonObject.getJSONArray("carrides");
 
             List<CarRide> carRideList = new LinkedList<>();
@@ -42,9 +47,9 @@ public class BatchImporterCarRideJSON {
                         categoryObject.getString("name"),
                         categoryObject.getInt("color"));
 
-                currency = new Currency(categoryObject.getString("name"),
-                        categoryObject.getString("symbol"),
-                        categoryObject.getDouble("rate_to_dollar"));
+                currency = new Currency(currencyObject.getString("symbol"),
+                        currencyObject.getString("name"),
+                        currencyObject.getDouble("rate_to_dollar"));
 
                 carRide = new CarRide(carRideObject.getString("guid"),
                         carRideObject.getString("title"),
@@ -54,7 +59,7 @@ public class BatchImporterCarRideJSON {
                         carRideObject.getDouble("cost_of_fuel_per_litre"),
                         carRideObject.getInt("passengers"),
                         carRideObject.getDouble("commission"),
-                        LocalDateTime.parse(carRideObject.getString("guid"), formatter),
+                        LocalDateTime.parse(carRideObject.getString("date"), formatter),
                         category,
                         currency,
                         currency.getNewestRateToDollar());

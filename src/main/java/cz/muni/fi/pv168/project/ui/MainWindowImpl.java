@@ -4,6 +4,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
+import cz.muni.fi.pv168.project.data.ImportInitializator;
 import cz.muni.fi.pv168.project.data.Initializator;
 import cz.muni.fi.pv168.project.ui.action.CarRide.ICarRideActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
@@ -65,6 +66,7 @@ class MainWindowImpl implements MainWindow {
 
         Initializator init = new Initializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel, 150);
         init.initialize();
+        ImportInitializator importInit = new ImportInitializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
@@ -77,7 +79,7 @@ class MainWindowImpl implements MainWindow {
         chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
 
         settingsAction = new SettingsAction();
-        importAction = new ImportAction();
+        importAction = new ImportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel, importInit);
         exportAction = new ExportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel);
         colorThemeAction = new ColorThemeAction();
         info = new InfoAction();

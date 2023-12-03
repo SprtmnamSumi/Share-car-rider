@@ -7,9 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * @author Sabrina Orálková, 525089
- */
+
 public class BatchExporterTemplateJSON {
     public void exportData(List<Template> templates, String filePath) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
