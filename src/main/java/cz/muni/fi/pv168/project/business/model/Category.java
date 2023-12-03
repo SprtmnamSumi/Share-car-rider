@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.business.model;
 
+import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
+
 import java.util.Objects;
 
 public class Category extends Entity {
@@ -32,5 +34,18 @@ public class Category extends Entity {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category category)) return false;
+
+        return name.equals(category.name) && colour == category.colour;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, colour);
     }
 }
