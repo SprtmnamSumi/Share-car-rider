@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
+import java.util.Arrays;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.ListModel;
@@ -49,6 +50,16 @@ public class CostBar extends ValidatedJPanel {
         this.add(rateLabel);
         rate.setPreferredSize(new Dimension(150, 30));
         this.add(rate);
+    }
+
+    @Override
+    public boolean evaluate() {
+        return !isEmpty() && super.evaluate();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return currencyJComboBox.getSelectedItem()==null;
     }
 
     public void SetValues(double costOfFuelval, double covertRateval, Currency currency) {
