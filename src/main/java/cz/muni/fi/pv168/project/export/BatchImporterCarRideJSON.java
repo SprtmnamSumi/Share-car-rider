@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -59,7 +60,6 @@ public class BatchImporterCarRideJSON {
                         carRideObject.getDouble("cost_of_fuel_per_litre"),
                         carRideObject.getInt("passengers"),
                         carRideObject.getDouble("commission"),
-
                         category,
                         currency,
                         currency.getNewestRateToDollar(),

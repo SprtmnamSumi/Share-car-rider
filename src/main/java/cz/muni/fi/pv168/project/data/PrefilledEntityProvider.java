@@ -69,7 +69,7 @@ public class PrefilledEntityProvider implements EntityProvider {
 
     @Override
     public Currency getCurrency() {
-        return new Currency("New Currency", "$", 1.0);
+        return new Currency("dfdfd", "New Currency", "$", 1.0);
     }
 
     private Color getRandomColor(){
