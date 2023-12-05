@@ -47,8 +47,8 @@ public class BatchImporterCarRideJSON {
                         categoryObject.getString("name"),
                         categoryObject.getInt("color"));
 
-                currency = new Currency(currencyObject.getString("symbol"),
-                        currencyObject.getString("name"),
+                currency = new Currency(currencyObject.getString("name"),
+                        currencyObject.getString("symbol"),
                         currencyObject.getDouble("rate_to_dollar"));
 
                 carRide = new CarRide(carRideObject.getString("guid"),
