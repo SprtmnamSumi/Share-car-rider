@@ -46,6 +46,7 @@ public class BatchImporterCarRideJSON {
                         categoryObject.getString("name"),
                         categoryObject.getInt("color"));
 
+
                 currency = new Currency(currencyObject.getString("guid"),
                         currencyObject.getString("name"),
                         currencyObject.getString("symbol"),
@@ -59,7 +60,6 @@ public class BatchImporterCarRideJSON {
                         carRideObject.getDouble("cost_of_fuel_per_litre"),
                         carRideObject.getInt("passengers"),
                         carRideObject.getDouble("commission"),
-
                         category,
                         currency,
                         currency.getNewestRateToDollar(),
