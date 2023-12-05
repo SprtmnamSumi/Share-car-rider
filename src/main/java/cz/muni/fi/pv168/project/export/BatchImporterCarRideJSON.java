@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -46,9 +47,8 @@ public class BatchImporterCarRideJSON {
                         categoryObject.getString("name"),
                         categoryObject.getInt("color"));
 
-                currency = new Currency(currencyObject.getString("guid"),
+                currency = new Currency(currencyObject.getString("name"),
                         currencyObject.getString("symbol"),
-                        currencyObject.getString("name"),
                         currencyObject.getDouble("rate_to_dollar"));
 
                 carRide = new CarRide(carRideObject.getString("guid"),
@@ -59,11 +59,10 @@ public class BatchImporterCarRideJSON {
                         carRideObject.getDouble("cost_of_fuel_per_litre"),
                         carRideObject.getInt("passengers"),
                         carRideObject.getDouble("commission"),
-
+                        LocalDateTime.parse(carRideObject.getString("date"), formatter),
                         category,
                         currency,
-                        currency.getNewestRateToDollar(),
-                        LocalDateTime.parse(carRideObject.getString("date"), formatter));
+                        currency.getNewestRateToDollar());
                 carRideList.add(carRide);
             }
 
