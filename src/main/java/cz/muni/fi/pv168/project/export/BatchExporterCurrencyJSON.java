@@ -17,6 +17,7 @@ public class BatchExporterCurrencyJSON {
                 JSONObject currencyObject = new JSONObject();
 
                 // Populate currencyObject
+                currencyObject.put("guid", currency.getGuid());
                 currencyObject.put("name", currency.getName());
                 currencyObject.put("symbol", currency.getSymbol());
                 currencyObject.put("rate_to_dollar", currency.getNewestRateToDollar());
