@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.ui.filters.matchers;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -20,7 +19,7 @@ public class CarRideMatcherFactory {
         };
     }
 
-    public EntityMatcher<CarRide> getDistanceMatcher(int fromDistance, int toDistance) {
+    public EntityMatcher<CarRide> getDistanceMatcher(double fromDistance, double toDistance) {
         return new EntityMatcher<>() {
             @Override
             public boolean evaluate(CarRide entity) {

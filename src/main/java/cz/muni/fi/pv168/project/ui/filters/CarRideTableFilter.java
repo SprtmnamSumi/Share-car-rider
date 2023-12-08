@@ -5,9 +5,8 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.ui.filters.matchers.CarRideMatcherFactory;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-
-import javax.swing.table.TableRowSorter;
 import java.util.Date;
+import javax.swing.table.TableRowSorter;
 
 
 public final class CarRideTableFilter implements ICarRideTableFilter {
@@ -39,7 +38,7 @@ public final class CarRideTableFilter implements ICarRideTableFilter {
     }
 
     @Override
-    public void filterByDistance(int fromDistance, int toDistance) {
+    public void filterByDistance(double fromDistance, double toDistance) {
         rideCompoundMatcher.addMatcher(Filters.DISTANCE_FILTER, matcherFactory.getDistanceMatcher(fromDistance, toDistance));
     }
 
