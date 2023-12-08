@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.data.ImportInitializer;
+import cz.muni.fi.pv168.project.data.Initializer;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
@@ -21,7 +22,7 @@ import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
-
+import java.awt.BorderLayout;
 import javax.inject.Inject;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -30,7 +31,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
-import java.awt.BorderLayout;
 
 class MainWindowImpl implements MainWindow {
     private final JFrame frame;
@@ -52,7 +52,8 @@ class MainWindowImpl implements MainWindow {
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
                    ICarRideStatistics ICarRideStatistics,
-                   ImportInitializer importInit
+                   ImportInitializer importInit,
+                   Initializer initializer
     ) {
         frame = createFrame();
 
@@ -63,6 +64,8 @@ class MainWindowImpl implements MainWindow {
         Action addCarRideAction = carActionFactory.getAddAction(carRideTablePanel.getTable());
         Action addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
         Action addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
+
+//        initializer.initialize(150);
 
         chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
 
@@ -91,6 +94,7 @@ class MainWindowImpl implements MainWindow {
     public void show() {
         frame.setVisible(true);
     }
+
     private JFrame createFrame() {
         var frame = new JFrame("Share Car Ride");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
