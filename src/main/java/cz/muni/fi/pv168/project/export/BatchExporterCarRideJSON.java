@@ -1,15 +1,14 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class BatchExporterCarRideJSON{
+public class BatchExporterCarRideJSON {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     public void exportData(List<CarRide> carRides, String filePath) {
@@ -27,6 +26,7 @@ public class BatchExporterCarRideJSON{
                 categoryObject.put("color", carRide.getCategory().getColour());
 
                 // Populate currencyObject
+                currencyObject.put("guid", carRide.getCurrency().getGuid());
                 currencyObject.put("name", carRide.getCurrency().getName());
                 currencyObject.put("symbol", carRide.getCurrency().getSymbol());
                 currencyObject.put("rate_to_dollar", carRide.getCurrency().getNewestRateToDollar());

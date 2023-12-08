@@ -2,15 +2,12 @@ package cz.muni.fi.pv168.project.business.model;
 
 import java.util.Objects;
 
-public abstract class Entity {
+public abstract class Model {
 
     protected String guid;
 
-    protected Entity(String guid) {
+    protected Model(String guid) {
         this.guid = guid;
-    }
-
-    protected Entity() {
     }
 
     /**
@@ -28,8 +25,8 @@ public abstract class Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Entity entity = (Entity) o;
-        return Objects.equals(guid, entity.guid);
+        Model model = (Model) o;
+        return Objects.equals(guid, model.guid);
     }
 
     @Override

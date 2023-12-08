@@ -51,7 +51,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
 
 
         // Create a combo box for export options
-        exportOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
+        exportOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "CurrencyEntity", "Category", "Template"});
         exportOptionsComboBox.setSelectedIndex(0); // Default selection
 
         JButton fileButton = new JButton("Select a file");
@@ -133,7 +133,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
                 BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
                 batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
                 break;
-            case "Currency":
+            case "CurrencyEntity":
                 List<Currency> currencyList = new LinkedList<>();
                 currencyList = currencies.getAll();
 

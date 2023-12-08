@@ -41,7 +41,7 @@ public class CostBar extends ValidatedJPanel {
         costOfFuel.setPreferredSize(new Dimension(150, 30));
         this.add(costOfFuel);
 
-        JLabel currencyLabel = new JLabel("Currency:");
+        JLabel currencyLabel = new JLabel("CurrencyEntity:");
         this.add(currencyLabel);
         currencyJComboBox.setPreferredSize(new Dimension(150, 30));
         this.add(currencyJComboBox);

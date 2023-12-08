@@ -2,13 +2,13 @@ package cz.muni.fi.pv168.project.business.model;
 
 import java.util.Objects;
 
-public class Currency extends Entity {
+public class Currency extends Model {
     private final String name;
     private final String symbol;
     private Double newestRateToDollar;
 
-    public Currency(String name, String symbol, Double newestRateToDollar) {
-        super();
+    public Currency(String guid, String name, String symbol, Double newestRateToDollar) {
+        super(guid);
         this.name = name;
         this.symbol = symbol;
         this.newestRateToDollar = newestRateToDollar;
