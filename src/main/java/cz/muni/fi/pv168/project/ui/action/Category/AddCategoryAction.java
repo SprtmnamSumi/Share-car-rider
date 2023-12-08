@@ -16,7 +16,7 @@ import java.awt.event.KeyEvent;
 
 final class AddCategoryAction extends AbstractAction {
     private final JTable categoryTable;
-    private EntityProvider entityProvider;
+    private final EntityProvider entityProvider;
     private final DialogFactory dialogFactory;
 
     AddCategoryAction(JTable categoryTable, DialogFactory dialogFactory, EntityProvider entityProvider, Icon icon) {

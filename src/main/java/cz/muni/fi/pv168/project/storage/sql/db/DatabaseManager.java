@@ -20,7 +20,6 @@ import org.tinylog.Logger;
  * The class is responsible for managing H2 database connection and schemas
  */
 public final class DatabaseManager {
-
     private static final String PROJECT_NAME = "share-car-rider";
     private static final String DB_PROPERTIES_STRING = "DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false";
     private static CarRideTableModel carRideTableModel;
@@ -41,9 +40,7 @@ public final class DatabaseManager {
         this.sqlFileExecutor = new SqlFileExecutor(this::getTransactionHandler, DatabaseManager.class);
     }
 
-    @Inject
     public static DatabaseManager createProductionInstance() {
-
         String connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
         var dbManager = new DatabaseManager(connectionString);
         System.out.println("Database created...");
