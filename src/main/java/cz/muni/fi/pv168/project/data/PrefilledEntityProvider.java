@@ -41,7 +41,7 @@ public class PrefilledEntityProvider implements EntityProvider {
         double commission = randomGenerator.nextInt(0, 100);
         LocalDateTime dateTime = LocalDateTime.now();
         Category category = categories.isEmpty() ? null : categories.get(randomGenerator.nextInt(0, categories.size()));
-        Currency currency = categories.isEmpty() ? null : currencies.get(randomGenerator.nextInt(0, currencies.size()));
+        Currency currency = currencies.isEmpty() ? null : currencies.get(randomGenerator.nextInt(0, currencies.size()));
         return new CarRide(guidProvider.newGuid(), name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers,
                 commission, category, currency, currency != null ? currency.getNewestRateToDollar() : 0.0f, dateTime);
     }
@@ -70,10 +70,7 @@ public class PrefilledEntityProvider implements EntityProvider {
 
     @Override
     public Currency getCurrency() {
-
-        List<Currency> currencies = currencyCrudService.findAll();
-        Currency currency = currencies.get(randomGenerator.nextInt(0, currencies.size()));
-        return new Currency(guidProvider.newGuid(), "New CurrencyEntity", currency.getSymbol(), currency.getNewestRateToDollar());
+        return new Currency(guidProvider.newGuid(), "New CurrencyEntity", "$", 1.0);
     }
 
     private Color getRandomColor() {
