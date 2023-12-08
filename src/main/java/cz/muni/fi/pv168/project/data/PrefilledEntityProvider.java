@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
+import javax.inject.Inject;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -69,6 +70,7 @@ public class PrefilledEntityProvider implements EntityProvider {
 
     @Override
     public Currency getCurrency() {
+
         List<Currency> currencies = currencyCrudService.findAll();
         Currency currency = currencies.get(randomGenerator.nextInt(0, currencies.size()));
         return new Currency(guidProvider.newGuid(), "New CurrencyEntity", currency.getSymbol(), currency.getNewestRateToDollar());

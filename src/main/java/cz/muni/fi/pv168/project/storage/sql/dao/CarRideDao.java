@@ -4,6 +4,8 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.CarRideEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
+
+import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +14,6 @@ import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
-import javax.inject.Inject;
 
 /**
  * DAO for {@link TemplateEntity} entity.
@@ -21,7 +22,7 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
 
 
     @Inject
-    public CarRideDao(Supplier<ConnectionHandler> connections) {
+    CarRideDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
     }

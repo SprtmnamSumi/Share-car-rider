@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.renderers;
 
+import javax.swing.JLabel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import javax.swing.JLabel;
 
 public class LocalDateRenderer extends AbstractRenderer<LocalDate> {
 

@@ -59,7 +59,6 @@ public class BatchImporterCarRideJSON {
                         carRideObject.getDouble("cost_of_fuel_per_litre"),
                         carRideObject.getInt("passengers"),
                         carRideObject.getDouble("commission"),
-
                         category,
                         currency,
                         currency.getNewestRateToDollar(),

@@ -3,21 +3,16 @@ package cz.muni.fi.pv168.project.ui.action;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.data.ImportInitializator;
+import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.icons.CachedIconLoader;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
+import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
 public final class ImportAction extends AbstractAction {
 
@@ -25,23 +20,16 @@ public final class ImportAction extends AbstractAction {
     private final TableModel<Template> templates;
     private final TableModel<Currency> currencies;
     private final TableModel<Category> categories;
-    private BufferedImage importPicture;
-    private ImportInitializator im;
+    private final ImportInitializer im;
 
-    public ImportAction(CarRideTableFilter carRideTableFilte, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ImportInitializator importInitializator) {
+    public ImportAction(CarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ImportInitializer importInitializator) {
         super("Import");
-        this.carRideTableFilter = carRideTableFilte;
+        this.carRideTableFilter = carRideTableFilter;
         this.templates = templates;
         this.currencies = currencies;
         this.categories = categories;
         this.im = importInitializator;
-        try {
-            importPicture = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/import.png"));
-            Icon customIcon = new ImageIcon(importPicture);
-            putValue(SMALL_ICON, customIcon);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        putValue(SMALL_ICON, new CachedIconLoader().getIcon("import.png"));
         putValue(SHORT_DESCRIPTION, "Imports data");
         putValue(MNEMONIC_KEY, KeyEvent.VK_I);
     }

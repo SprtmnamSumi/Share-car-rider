@@ -4,13 +4,14 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
+
+import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
-import javax.inject.Inject;
 
 /**
  * DAO for {@link TemplateEntity} entity.
@@ -18,7 +19,7 @@ import javax.inject.Inject;
 public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAccessObject<CurrencyEntity> {
 
     @Inject
-    public CurrencyDao(Supplier<ConnectionHandler> connections) {
+    CurrencyDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
     }

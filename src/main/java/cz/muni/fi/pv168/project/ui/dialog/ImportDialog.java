@@ -4,7 +4,7 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.data.ImportInitializator;
+import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCurrencyJSON;
@@ -12,6 +12,11 @@ import cz.muni.fi.pv168.project.export.BatchImporterTemplateJSON;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,8 +26,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
-import javax.swing.*;
-import javax.swing.JComboBox;
 
 public class ImportDialog extends JDialog implements PropertyChangeListener {
 
@@ -42,9 +45,9 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
 
     private File selectedFile;
     private String selectedImportOption;
-    private ImportInitializator importInitializator;
+    private ImportInitializer importInitializator;
 
-    public ImportDialog(Frame aFrame, String aWord, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ICarRideTableFilter carRideTableFilter, ImportInitializator importInitializator) {
+    public ImportDialog(Frame aFrame, String aWord, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ICarRideTableFilter carRideTableFilter, ImportInitializer importInitializator) {
         super(aFrame, true);
         this.templates = templates;
         this.currencies = currencies;
@@ -131,7 +134,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
             case "Car Rides":
                 BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
                 List<CarRide> carRideList =  batchImporterCarRideJSON.importData(file.toPath());
-                importInitializator.initializeeCarRide(carRideList);
+                importInitializator.initializeCarRide(carRideList);
                 break;
             case "Currency":
                 BatchImporterCurrencyJSON batchImporterCurrencyJSON = new BatchImporterCurrencyJSON();

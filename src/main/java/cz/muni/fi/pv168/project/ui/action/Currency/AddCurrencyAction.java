@@ -3,19 +3,19 @@ package cz.muni.fi.pv168.project.ui.action.Currency;
 import cz.muni.fi.pv168.project.data.EntityProvider;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 
 final class AddCurrencyAction extends AbstractAction {
     private final JTable currencyTable;
     private final EntityProvider entityProvider;
     private final DialogFactory dialogFactory;
-
     AddCurrencyAction(JTable currencyTable, DialogFactory dialogFactory, EntityProvider entityProvider, Icon icon) {
         super("Add");
         this.dialogFactory = dialogFactory;

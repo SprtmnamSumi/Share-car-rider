@@ -9,7 +9,6 @@ public final class DestroyDatabase {
     public static void main(String[] args) {
         var injector = getInjector();
         var dbManager = injector.getInstance(DatabaseManager.class);
-
         dbManager.destroySchema();
     }
 }

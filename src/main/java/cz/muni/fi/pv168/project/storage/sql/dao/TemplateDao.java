@@ -3,13 +3,14 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
+
+import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
-import javax.inject.Inject;
 
 /**
  * DAO for {@link TemplateEntity} entity.
@@ -18,7 +19,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
 
 
     @Inject
-    public TemplateDao(Supplier<ConnectionHandler> connections) {
+    TemplateDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
     }
