@@ -10,6 +10,7 @@ class UuidGuidProvider implements GuidProvider {
     private final static AtomicInteger guidCounter = new AtomicInteger();
     @Override
     public String newGuid() {
+        System.out.println(guidCounter.get());
         return String.valueOf(UUID.nameUUIDFromBytes(
                         Integer.toHexString(guidCounter.getAndIncrement()).getBytes()));
     }

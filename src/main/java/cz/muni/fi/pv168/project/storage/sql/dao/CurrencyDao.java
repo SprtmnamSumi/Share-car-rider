@@ -18,7 +18,7 @@ import javax.inject.Inject;
 public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAccessObject<CurrencyEntity> {
 
     @Inject
-    public CurrencyDao(Supplier<ConnectionHandler> connections) {
+    CurrencyDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
     }

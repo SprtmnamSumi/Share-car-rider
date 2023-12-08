@@ -22,7 +22,7 @@ public class SqlRepository<T extends Model, K extends Entity> implements Reposit
     private final EntityMapper<K, T> EntityMapper;
 
     @Inject
-    public SqlRepository(
+    SqlRepository(
             DataAccessObject<K> EntityDao,
             EntityMapper<K, T> EntityMapper) {
         this.EntityDao = EntityDao;

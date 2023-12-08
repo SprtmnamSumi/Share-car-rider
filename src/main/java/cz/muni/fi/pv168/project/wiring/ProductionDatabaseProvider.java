@@ -2,6 +2,8 @@ package cz.muni.fi.pv168.project.wiring;
 
 
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
+import org.tinylog.Logger;
+
 import javax.inject.Singleton;
 
 /**
@@ -22,13 +24,13 @@ public final class ProductionDatabaseProvider implements IproductionDatabaseProv
 
 
     private static void createDatabaseManager() {
-        DatabaseManager databaseManager = DatabaseManager.createProductionInstance();
         try {
-            databaseManager.initSchema(); //TODO
+            DatabaseManager databaseManager = DatabaseManager.createProductionInstance();
+            databaseManager.initSchema();
+            ProductionDatabaseProvider.databaseManager = databaseManager;
         } catch (Exception e) {
-            return;
+            Logger.error("Database schema initialization failed. Reason: " + e);
         }
-        
-        ProductionDatabaseProvider.databaseManager = databaseManager;
+
     }
 }
