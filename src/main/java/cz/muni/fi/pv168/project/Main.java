@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project;
 import com.google.inject.Injector;
 import cz.muni.fi.pv168.project.business.service.properties.Config;
 import cz.muni.fi.pv168.project.data.Initializer;
-import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.action.NuclearQuitAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
@@ -25,7 +24,7 @@ public class Main {
         _injector = getInjector();
         Config.tryCreateProperties();
         initLookAndFeel();
-        initDataStructures(_injector.getInstance(Initializer.class));
+        //fillDatabaseWithTestData();
 
         EventQueue.invokeLater(() -> {
             try {
@@ -49,11 +48,11 @@ public class Main {
         }
     }
 
-    private static void initDataStructures(Initializer initializer) {
+    private static void fillDatabaseWithTestData() {
         try {
-            initializer.initialize(150);
+            _injector.getInstance(Initializer.class).initialize(150);
         } catch (Exception ex) {
-            Logger.warn("Data structures initialization failed. Reason: " + ex);
+            Logger.warn("Database filling failed. Reason: " + ex);
         }
     }
 

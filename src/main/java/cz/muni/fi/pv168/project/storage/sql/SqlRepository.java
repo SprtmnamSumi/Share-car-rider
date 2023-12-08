@@ -7,9 +7,10 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataAccessObject;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.Entity;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
+
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
-import javax.inject.Inject;
 
 /**
  * Implementation of {@link Repository} for {@link T} entity using SQL database.

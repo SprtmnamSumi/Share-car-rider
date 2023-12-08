@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.Objects;
-import javax.inject.Inject;
 
 public final class TransactionManagerImpl implements TransactionManager {
 

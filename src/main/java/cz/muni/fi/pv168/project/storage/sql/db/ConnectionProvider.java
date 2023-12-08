@@ -2,9 +2,10 @@ package cz.muni.fi.pv168.project.storage.sql.db;
 
 
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import javax.sql.DataSource;
 
 /**
  * Execute the statements/operation in the transaction
