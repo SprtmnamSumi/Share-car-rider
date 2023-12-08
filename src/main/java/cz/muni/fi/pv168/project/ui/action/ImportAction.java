@@ -8,11 +8,10 @@ import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.icons.CachedIconLoader;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-
-import javax.swing.AbstractAction;
-import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 
 public final class ImportAction extends AbstractAction {
 
@@ -37,7 +36,7 @@ public final class ImportAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        ImportDialog popupDialog = new ImportDialog(new JFrame("Popup"), "str", templates, currencies, categories, carRideTableFilter, im);
+        ImportDialog popupDialog = new ImportDialog(new JFrame("Popup"), im);
         popupDialog.setSize(300, 200);
 
         // Center the custom dialog on the screen

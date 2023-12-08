@@ -4,11 +4,10 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -110,7 +109,7 @@ public class CarRideStatisticsUnitTests {
         assertThat(iCarRideStatistics.getTotalExpenses(oneCarRideList)).isEqualTo(carRideOne.getDistance() * carRideOne.getFuelConsumption() / 100 * carRideOne.getCostOfFuelPerLitreInDollars());
     }
 
-    // May unexpectedly fail if tested exactly at midnight.
+    // TODO May unexpectedly fail if tested exactly at midnight.
     @Test
     void oneCarRideTodayExpenses() {
         assertThat(iCarRideStatistics.getTodayExpenses(oneCarRideList)).isEqualTo(carRideOne.getDistance() * carRideOne.getFuelConsumption() / 100 * carRideOne.getCostOfFuelPerLitreInDollars());
@@ -139,7 +138,7 @@ public class CarRideStatisticsUnitTests {
                         + carRideThree.getDistance() * carRideThree.getFuelConsumption() / 100 * carRideThree.getCostOfFuelPerLitreInDollars());
     }
 
-    // May unexpectedly fail if tested exactly at midnight.
+    // TODO May unexpectedly fail if tested exactly at midnight.
     @Test
     void multipleCarRideTodayExpenses() {
         assertThat(iCarRideStatistics.getTodayExpenses(multipleCarRidesList)).isEqualTo(carRideOne.getDistance() * carRideOne.getFuelConsumption() / 100 * carRideOne.getCostOfFuelPerLitreInDollars());

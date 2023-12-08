@@ -6,13 +6,12 @@ import cz.muni.fi.pv168.project.data.EntityProvider;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 final class AddCarRideAction extends AbstractAction {
     private final JTable carRidesTable;
@@ -30,7 +29,7 @@ final class AddCarRideAction extends AbstractAction {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
     }
 
-    private void updateFields(CarRide carRide) {
+    private void addCarRide(CarRide carRide) {
         var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
         carRidesTableModel.addRow(carRide);
         carRide.getCurrency().setNewestRateToDollar(carRide.getConversionToDollars());
@@ -40,6 +39,6 @@ final class AddCarRideAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         EntityDialog<CarRide> dialog = modalDialogFactory.getAddCarRideDialog(entityProvider.getCarRide());
         dialog.show(carRidesTable, "Add Car ride", "Add")
-                .ifPresent(this::updateFields);
+                .ifPresent(this::addCarRide);
     }
 }
