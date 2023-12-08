@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
+import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
@@ -19,7 +20,9 @@ public class CostBar extends ValidatedJPanel {
     private final ValidatedInputField costOfFuel = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final JComboBox<Currency> currencyJComboBox;
     private final CurrencyConverter currencyConverter;
-    private final ValidatedInputField rate = new ValidatedInputField(ValidatorFactory.doubleValidator());
+    private final ValidatedInputField rate = new ValidatedInputField(ValidatorFactory.doubleValidator().and(
+            (rate) -> Double.parseDouble(rate) > 0.0f ? ValidationResult.success()
+                    : ValidationResult.failed("rate cannot be lower or equal to zero")));
 
     public CostBar(ListModel<Currency> currencyModel, CurrencyConverter currencyConverter, ValidableListener validableListener) {
         super();
@@ -59,7 +62,7 @@ public class CostBar extends ValidatedJPanel {
 
     @Override
     public boolean isEmpty() {
-        return currencyJComboBox.getSelectedItem()==null;
+        return currencyJComboBox.getSelectedItem() == null;
     }
 
     public void SetValues(double costOfFuelval, double covertRateval, Currency currency) {
