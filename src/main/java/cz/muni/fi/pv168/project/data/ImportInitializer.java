@@ -9,7 +9,6 @@ import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import java.util.List;
-
 public class ImportInitializer {
     private final TableModel<Category> categories;
     private final TableModel<CarRide> rides;

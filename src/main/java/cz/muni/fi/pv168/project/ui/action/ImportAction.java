@@ -20,11 +20,11 @@ public final class ImportAction extends AbstractAction {
     private final TableModel<Template> templates;
     private final TableModel<Currency> currencies;
     private final TableModel<Category> categories;
-    private ImportInitializer im;
+    private final ImportInitializer im;
 
-    public ImportAction(CarRideTableFilter carRideTableFilte, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ImportInitializer importInitializator) {
+    public ImportAction(CarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ImportInitializer importInitializator) {
         super("Import");
-        this.carRideTableFilter = carRideTableFilte;
+        this.carRideTableFilter = carRideTableFilter;
         this.templates = templates;
         this.currencies = currencies;
         this.categories = categories;

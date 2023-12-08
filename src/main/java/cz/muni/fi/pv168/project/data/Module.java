@@ -8,7 +8,6 @@ public class Module extends AbstractModule {
     protected void configure() {
         bind(ImportInitializer.class);
         bind(EntityProvider.class).to(PrefilledEntityProvider.class);
-        bind(new TypeLiteral<Initializer>() {
-        }).to(DataInitializer.class);
+        bind(Initializer.class).to(DataInitializer.class);
     }
 }

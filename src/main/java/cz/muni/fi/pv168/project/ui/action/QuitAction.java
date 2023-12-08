@@ -8,9 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public final class QuitAction extends AbstractAction {
-
-    private BufferedImage quitPicture;
-
     public QuitAction() {
         super("Quit");
         putValue(SMALL_ICON, new CachedIconLoader().getIcon("cross.png"));
