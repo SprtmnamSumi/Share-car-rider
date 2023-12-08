@@ -1,12 +1,12 @@
 package cz.muni.fi.pv168.project.ui;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
-import cz.muni.fi.pv168.project.data.IInitializator;
-import cz.muni.fi.pv168.project.data.ImportInitializator;
-import cz.muni.fi.pv168.project.ui.action.CarRide.ICarRideActionFactory;
+import cz.muni.fi.pv168.project.data.Initializer;
+import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
@@ -24,7 +24,7 @@ import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
-import java.awt.BorderLayout;
+
 import javax.inject.Inject;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -33,11 +33,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
+import java.awt.BorderLayout;
 
 class MainWindowImpl implements MainWindow {
-
     private final JFrame frame;
-
     private final NotificationController notificationController;
     private final Action quitAction = new QuitAction();
     private final Action addCarRideAction;
@@ -51,7 +50,7 @@ class MainWindowImpl implements MainWindow {
     private final Action info;
 
     @Inject
-    MainWindowImpl(ICarRideActionFactory carActionFactory,
+    MainWindowImpl(DefaultActionFactory<CarRide> carActionFactory,
                    DefaultActionFactory<Category> categoryActionFactory,
                    DefaultActionFactory<Template> templateActionFactory,
                    CurrencyActionFactory currencyActionFactory,
@@ -60,11 +59,10 @@ class MainWindowImpl implements MainWindow {
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
                    ICarRideStatistics ICarRideStatistics,
-                   GuidProvider guidProvider,
-                   IInitializator initializator
+                   GuidProvider guidProvider
     ) {
         frame = createFrame();
-        ImportInitializator importInit = new ImportInitializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
+        ImportInitializer importInit = new ImportInitializer(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
@@ -75,11 +73,6 @@ class MainWindowImpl implements MainWindow {
         addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
 
         chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
-
-        try { // TODO 
-            initializator.initialize(150); // TODO 
-        } catch (Exception e) { // TODO 
-        } // TODO
 
         settingsAction = new SettingsAction();
         importAction = new ImportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel, importInit);
@@ -106,6 +99,13 @@ class MainWindowImpl implements MainWindow {
     @Override
     public void show() {
         frame.setVisible(true);
+    }
+
+    private void initialize(Initializer initializator){
+        try { // TODO
+            initializator.initialize(150); // TODO
+        } catch (Exception e) { // TODO
+        } // TODO
     }
 
     private JFrame createFrame() {

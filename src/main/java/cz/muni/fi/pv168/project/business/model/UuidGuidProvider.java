@@ -7,9 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Singleton
 class UuidGuidProvider implements GuidProvider {
-
     private final static AtomicInteger guidCounter = new AtomicInteger();
-
     @Override
     public String newGuid() {
         return String.valueOf(UUID.nameUUIDFromBytes(

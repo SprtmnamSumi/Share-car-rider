@@ -4,7 +4,7 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.data.ImportInitializator;
+import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCurrencyJSON;
@@ -42,9 +42,9 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
 
     private File selectedFile;
     private String selectedImportOption;
-    private ImportInitializator importInitializator;
+    private ImportInitializer importInitializator;
 
-    public ImportDialog(Frame aFrame, String aWord, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ICarRideTableFilter carRideTableFilter, ImportInitializator importInitializator) {
+    public ImportDialog(Frame aFrame, String aWord, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ICarRideTableFilter carRideTableFilter, ImportInitializer importInitializator) {
         super(aFrame, true);
         this.templates = templates;
         this.currencies = currencies;

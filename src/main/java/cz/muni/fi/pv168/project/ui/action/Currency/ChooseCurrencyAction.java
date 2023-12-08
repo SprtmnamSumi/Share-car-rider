@@ -4,10 +4,11 @@ package cz.muni.fi.pv168.project.ui.action.Currency;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JTable;
+import java.awt.event.ActionEvent;
 
 public final class ChooseCurrencyAction extends AbstractAction {
     private final JTable currencyTable;

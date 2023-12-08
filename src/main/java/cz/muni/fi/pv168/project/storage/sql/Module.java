@@ -6,8 +6,6 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.data.IInitializator;
-import cz.muni.fi.pv168.project.data.Initializator;
 import cz.muni.fi.pv168.project.storage.sql.dao.CarRideDao;
 import cz.muni.fi.pv168.project.storage.sql.dao.CategoryCrudDao;
 import cz.muni.fi.pv168.project.storage.sql.dao.CurrencyDao;
@@ -26,6 +24,7 @@ import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CategoryMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.CurrencyMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.EntityMapper;
 import cz.muni.fi.pv168.project.storage.sql.entity.mapper.TemplateMapper;
+
 import java.util.function.Supplier;
 
 public class Module extends AbstractModule {
@@ -35,8 +34,6 @@ public class Module extends AbstractModule {
         }).to(TransactionManagerImpl.class);
         bind(new TypeLiteral<Supplier<ConnectionHandler>>() {
         }).to(TransactionConnectionSupplier.class);
-        bind(new TypeLiteral<IInitializator>() {
-        }).to(Initializator.class);
 
         bind(new TypeLiteral<EntityMapper<CategoryEntity, Category>>() {
         }).to(CategoryMapper.class);
