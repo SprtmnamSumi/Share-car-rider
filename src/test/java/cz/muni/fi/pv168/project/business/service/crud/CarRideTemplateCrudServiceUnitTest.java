@@ -5,8 +5,6 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.business.service.crud.CarRideTemplateCrudService;
-import cz.muni.fi.pv168.project.business.service.crud.EntityAlreadyExistsException;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +24,22 @@ public class CarRideTemplateCrudServiceUnitTest {
     private CarRideTemplateCrudService carRideTemplateCrudService;
     private Repository<Template> templateRepository;
     private Validator<Template> templateValidator;
+
+    private static Template createTemplateInstance(String guid) {
+        return new Template(
+                guid,
+                "Porsak",
+                "skvela jizda",
+                5.0,
+                15.0,
+                40.0,
+                2,
+                0.05,
+                new Category("1", "Blue", 7),
+                new Currency("2", "Czech crown", "Kc", 22.3),
+                22.3
+        );
+    }
 
     @BeforeEach
     @SuppressWarnings("unchecked")
@@ -131,21 +145,5 @@ public class CarRideTemplateCrudServiceUnitTest {
 
         verify(templateRepository, times(1))
                 .deleteAll();
-    }
-
-    private static Template createTemplateInstance(String guid) {
-        return new Template(
-                guid,
-                "Porsak",
-                "skvela jizda",
-                5.0,
-                15.0,
-                40.0,
-                2,
-                0.05,
-                new Category("1", "Blue", 7),
-                new Currency("Czech crown", "Kc", 22.3),
-                22.3
-        );
     }
 }

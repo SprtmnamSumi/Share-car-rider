@@ -36,7 +36,8 @@ public class BatchImporterCurrencyJSON {
 
                 Currency currency;
 
-                currency = new Currency(currencyObject.getString("name"),
+                currency = new Currency(currencyObject.getString("guid"),
+                        currencyObject.getString("name"),
                         currencyObject.getString("symbol"),
                         currencyObject.getDouble("rate_to_dollar"));
 

@@ -2,8 +2,18 @@ package cz.muni.fi.pv168.project.ui.notification;
 
 import cz.muni.fi.pv168.project.ui.icons.CachedIconLoader;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 

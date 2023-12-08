@@ -8,7 +8,7 @@ import cz.muni.fi.pv168.project.ui.model.Column;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.List;
 
 /**
  * {@link javax.swing.table.TableModel} for {@link Template} objects.

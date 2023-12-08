@@ -6,12 +6,12 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
-
 import javax.inject.Inject;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
+import javax.inject.Inject;
 
 public class PrefilledEntityProvider implements EntityProvider {
     private final Random randomGenerator = new Random();
@@ -41,9 +41,9 @@ public class PrefilledEntityProvider implements EntityProvider {
         double commission = randomGenerator.nextInt(0, 100);
         LocalDateTime dateTime = LocalDateTime.now();
         Category category = categories.isEmpty() ? null : categories.get(randomGenerator.nextInt(0, categories.size()));
-        Currency currency = categories.isEmpty() ? null : currencies.get(randomGenerator.nextInt(0, currencies.size()));
+        Currency currency = currencies.isEmpty() ? null : currencies.get(randomGenerator.nextInt(0, currencies.size()));
         return new CarRide(guidProvider.newGuid(), name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers,
-                commission, dateTime, category, currency, currency != null ? currency.getNewestRateToDollar() : 0.0f);
+                commission, category, currency, currency != null ? currency.getNewestRateToDollar() : 0.0f, dateTime);
     }
 
     @Override
@@ -70,12 +70,12 @@ public class PrefilledEntityProvider implements EntityProvider {
 
     @Override
     public Currency getCurrency() {
-        return new Currency("New Currency", "$", 1.0);
+        return new Currency(guidProvider.newGuid(), "New CurrencyEntity", "$", 1.0);
     }
 
-    private Color getRandomColor(){
-        return new Color(randomGenerator.nextInt(0,255),
-                randomGenerator.nextInt(0,255),
-                randomGenerator.nextInt(0,255));
+    private Color getRandomColor() {
+        return new Color(randomGenerator.nextInt(0, 255),
+                randomGenerator.nextInt(0, 255),
+                randomGenerator.nextInt(0, 255));
     }
 }

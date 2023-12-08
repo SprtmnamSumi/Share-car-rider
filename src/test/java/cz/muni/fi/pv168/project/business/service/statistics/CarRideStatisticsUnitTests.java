@@ -23,6 +23,58 @@ public class CarRideStatisticsUnitTests {
     private final List<CarRide> oneCarRideList = new ArrayList<>(List.of(carRideOne));
     private final List<CarRide> multipleCarRidesList = new ArrayList<>(List.of(carRideOne, carRideTwo, carRideThree));
 
+    public static CarRide createCarRideOne(String guid) {
+        return new CarRide(
+                guid,
+                "Porsak",
+                "skvela jizda",
+                5.0,
+                15.0,
+                40.0,
+                2,
+                0.05,
+                new Category("1", "Blue", 7),
+                new Currency("2", "Zloty", "zl", 3.97),
+                3.97,
+                LocalDateTime.now()
+
+        );
+    }
+
+    public static CarRide createCarRideTwo(String guid) {
+        return new CarRide(
+                guid,
+                "Porsak",
+                "skvela jizda",
+                80.0,
+                20.0,
+                35.0,
+                2,
+                0.10,
+                new Category("1", "Blue", 7),
+                new Currency("2", "Czech crown", "Kc", 22.3),
+                22.3,
+                LocalDateTime.of(2001, 1, 1, 11, 0, 0)
+        );
+    }
+
+    public static CarRide createCarRideThree(String guid) {
+        return new CarRide(
+                guid,
+                "Skoda",
+                "skvela jizda",
+                16.0,
+                6.0,
+                37.0,
+                2,
+                0.17,
+                new Category("1", "Blue", 7),
+                new Currency("2", "USD", "$", 1.0),
+                1,
+                LocalDateTime.of(2001, 1, 1, 11, 0, 0)
+        );
+    }
+
     @Test
     void zeroCarRideTotalDistance() {
         assertThat(iCarRideStatistics.getTotalDistance(emptyList)).isEqualTo(0.0);
@@ -83,8 +135,8 @@ public class CarRideStatisticsUnitTests {
     void multipleCarRideTotalExpenses() {
         assertThat(iCarRideStatistics.getTotalExpenses(multipleCarRidesList)).isEqualTo(
                 carRideOne.getDistance() * carRideOne.getFuelConsumption() / 100 * carRideOne.getCostOfFuelPerLitreInDollars()
-        + carRideTwo.getDistance() * carRideTwo.getFuelConsumption() / 100 * carRideTwo.getCostOfFuelPerLitreInDollars()
-        + carRideThree.getDistance() * carRideThree.getFuelConsumption() / 100 * carRideThree.getCostOfFuelPerLitreInDollars());
+                        + carRideTwo.getDistance() * carRideTwo.getFuelConsumption() / 100 * carRideTwo.getCostOfFuelPerLitreInDollars()
+                        + carRideThree.getDistance() * carRideThree.getFuelConsumption() / 100 * carRideThree.getCostOfFuelPerLitreInDollars());
     }
 
     // May unexpectedly fail if tested exactly at midnight.
@@ -104,57 +156,5 @@ public class CarRideStatisticsUnitTests {
     @Test
     void multipleCarRideTotalRides() {
         assertThat(iCarRideStatistics.getTotalRides(multipleCarRidesList)).isEqualTo(3);
-    }
-
-    public static CarRide createCarRideOne(String guid) {
-        return new CarRide(
-                guid,
-                "Porsak",
-                "skvela jizda",
-                5.0,
-                15.0,
-                40.0,
-                2,
-                0.05,
-                LocalDateTime.now(),
-                new Category("1", "Blue", 7),
-                new Currency("Zloty", "zl", 3.97),
-                3.97
-
-        );
-    }
-
-    public static CarRide createCarRideTwo(String guid) {
-        return new CarRide(
-                guid,
-                "Porsak",
-                "skvela jizda",
-                80.0,
-                20.0,
-                35.0,
-                2,
-                0.10,
-                LocalDateTime.of(2001, 1, 1, 11, 0, 0),
-                new Category("1", "Blue", 7),
-                new Currency("Czech crown", "Kc", 22.3),
-                22.3
-        );
-    }
-
-    public static CarRide createCarRideThree(String guid) {
-        return new CarRide(
-                guid,
-                "Skoda",
-                "skvela jizda",
-                16.0,
-                6.0,
-                37.0,
-                2,
-                0.17,
-                LocalDateTime.of(2001, 1, 1, 11, 0, 0),
-                new Category("1", "Blue", 7),
-                new Currency("USD", "$", 1.0),
-                1
-        );
     }
 }

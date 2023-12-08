@@ -10,7 +10,6 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,7 +44,8 @@ public class BatchImporterTemplateJSON {
                         categoryObject.getString("name"),
                         categoryObject.getInt("color"));
 
-                currency = new Currency(currencyObject.getString("name"),
+                currency = new Currency(currencyObject.getString("guid"),
+                        currencyObject.getString("name"),
                         currencyObject.getString("symbol"),
                         currencyObject.getDouble("rate_to_dollar"));
 

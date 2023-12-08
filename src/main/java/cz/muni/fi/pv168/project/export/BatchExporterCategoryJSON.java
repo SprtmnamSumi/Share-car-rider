@@ -1,11 +1,12 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Category;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class BatchExporterCategoryJSON {

@@ -7,27 +7,27 @@ import javax.inject.Singleton;
 
 @Singleton
 public class CurrencyConverter implements ICurrencyConverter {
-//    private Currency defaultCurrency;
+//    private CurrencyEntity defaultCurrency;
 
     @Inject
     // TODO
-//    TableModel<Currency> currencyListModel
+//    TableModel<CurrencyEntity> currencyListModel
     public CurrencyConverter() {
 //        Properties properties = Config.loadProperties();
 //        var currency = properties.getProperty(Config.PropertiesEnum.COLOR_THEME_PROPERY.toString());
 ////        var defaultCurrecy = currencyListModel.getAll().stream().filter(x -> x.getName().equals(currency)).findFirst().orElseThrow();
 ////        this.defaultCurrency = defaultCurrecy;
 //
-//        this.defaultCurrency = new Currency("CZK", "Kč", 1.0);
+//        this.defaultCurrency = new CurrencyEntity("CZK", "Kč", 1.0);
     }
 
 //    @Override
-//    public Currency getDefaultCurrency() {
+//    public CurrencyEntity getDefaultCurrency() {
 //        return defaultCurrency;
 //    }
 
 //    @Override
-//    public void setDefaultCurrency(Currency currency) {
+//    public void setDefaultCurrency(CurrencyEntity currency) {
 //        Config.saveDefaultCurrency(currency);
 //        this.defaultCurrency = currency;
 //    }
@@ -61,12 +61,12 @@ public class CurrencyConverter implements ICurrencyConverter {
     }
 
 //    @Override
-//    public double convertFromDefaultCurrency(Currency wantedCurrency, double amountInGivenCurrency) {
+//    public double convertFromDefaultCurrency(CurrencyEntity wantedCurrency, double amountInGivenCurrency) {
 //        return convertBetwweenCurrencies(defaultCurrency, wantedCurrency, amountInGivenCurrency);
 //    }
 //
 //    @Override
-//    public double convertTodefaultCurrency(Currency givenCurrency, double amountInGivenCurrency) {
+//    public double convertTodefaultCurrency(CurrencyEntity givenCurrency, double amountInGivenCurrency) {
 //        return convertBetwweenCurrencies(givenCurrency, defaultCurrency, amountInGivenCurrency);
 //    }
 //

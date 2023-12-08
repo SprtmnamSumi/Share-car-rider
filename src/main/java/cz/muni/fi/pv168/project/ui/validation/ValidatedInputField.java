@@ -1,11 +1,12 @@
 package cz.muni.fi.pv168.project.ui.validation;
 
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
+
+import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JTextField;
 
 public class ValidatedInputField extends JTextField implements Validable {
 

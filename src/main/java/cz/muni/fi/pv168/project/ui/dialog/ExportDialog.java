@@ -10,6 +10,12 @@ import cz.muni.fi.pv168.project.export.BatchExporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchExporterTemplateJSON;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,11 +26,6 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 
 public class ExportDialog extends JDialog implements PropertyChangeListener {
@@ -51,7 +52,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
 
 
         // Create a combo box for export options
-        exportOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
+        exportOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "CurrencyEntity", "Category", "Template"});
         exportOptionsComboBox.setSelectedIndex(0); // Default selection
 
         JButton fileButton = new JButton("Select a file");
@@ -133,7 +134,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
                 BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
                 batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
                 break;
-            case "Currency":
+            case "CurrencyEntity":
                 List<Currency> currencyList = new LinkedList<>();
                 currencyList = currencies.getAll();
 

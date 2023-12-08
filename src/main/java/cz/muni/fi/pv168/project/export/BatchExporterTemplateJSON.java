@@ -1,11 +1,12 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Template;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class BatchExporterTemplateJSON {
@@ -24,6 +25,7 @@ public class BatchExporterTemplateJSON {
                 categoryObject.put("color", template.getCategory().getColour());
 
                 // Populate currencyObject
+                currencyObject.put("guid", template.getCategory().getGuid());
                 currencyObject.put("name", template.getCurrency().getName());
                 currencyObject.put("symbol", template.getCurrency().getSymbol());
                 currencyObject.put("rate_to_dollar", template.getCurrency().getNewestRateToDollar());

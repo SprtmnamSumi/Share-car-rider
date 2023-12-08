@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
 
-import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @param <T> entity type.
  */
-public interface ICrudService<T extends Entity> {
+public interface ICrudService<T extends Model> {
 
     /**
      * Find all entities.

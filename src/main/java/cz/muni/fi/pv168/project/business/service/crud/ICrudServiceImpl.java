@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
-import cz.muni.fi.pv168.project.business.model.Entity;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
@@ -9,14 +9,15 @@ import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import javax.inject.Inject;
 import java.util.List;
 
-class ICrudServiceImpl<T extends Entity> implements ICrudService<T> {
+class ICrudServiceImpl<T extends Model> implements ICrudService<T> {
     private final Repository<T> entityRepository;
     private final Validator<T> entityValidator;
     private final GuidProvider guidProvider;
+
     @Inject
     ICrudServiceImpl(Repository<T> entityRepository,
-                            Validator<T> entityValidator,
-                            GuidProvider guidProvider) {
+                     Validator<T> entityValidator,
+                     GuidProvider guidProvider) {
         this.entityRepository = entityRepository;
         this.entityValidator = entityValidator;
         this.guidProvider = guidProvider;

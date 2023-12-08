@@ -3,15 +3,15 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
-import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
+
 import javax.inject.Inject;
-import javax.swing.JTable;
 
 class ModalDialogFactory implements DialogFactory {
     private final EntityListModelAdapter<Category> categoryListModel;
@@ -21,9 +21,10 @@ class ModalDialogFactory implements DialogFactory {
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CategoryTableModel categoryTableMode;
     private final CurrencyConverter currencyConverter;
+    private final GuidProvider guidProvider;
 
     @Inject
-    ModalDialogFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Currency> currencyListModel, EntityListModelAdapter<Template> templateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableMode, CurrencyConverter currencyConverter) {
+    ModalDialogFactory(EntityListModelAdapter<Category> categoryListModel, EntityListModelAdapter<Currency> currencyListModel, EntityListModelAdapter<Template> templateListModel, TableModel<Template> repository, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableMode, CurrencyConverter currencyConverter, GuidProvider guidProvider) {
         this.categoryListModel = categoryListModel;
         this.currencyListModel = currencyListModel;
         this.templateListModel = templateListModel;
@@ -31,6 +32,7 @@ class ModalDialogFactory implements DialogFactory {
         this.categoryActionFactory = categoryActionFactory;
         this.categoryTableMode = categoryTableMode;
         this.currencyConverter = currencyConverter;
+        this.guidProvider = guidProvider;
     }
 
     @Override
@@ -50,6 +52,6 @@ class ModalDialogFactory implements DialogFactory {
 
     @Override
     public EntityDialog<Currency> getAddCurrencyDialog(Currency currency) {
-        return new AddCurrencyDialog(currency);
+        return new AddCurrencyDialog(guidProvider, currency);
     }
 }

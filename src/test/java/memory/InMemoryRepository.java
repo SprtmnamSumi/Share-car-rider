@@ -1,7 +1,7 @@
-package cz.muni.fi.pv168.project.storage;
+package memory;
 
 
-import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 
 import java.util.Collection;
@@ -15,7 +15,7 @@ import java.util.Optional;
  *
  * @param <T> entity type
  */
-public class InMemoryRepository<T extends Entity> implements Repository<T> {
+public class InMemoryRepository<T extends Model> implements Repository<T> {
 
     private Map<String, T> data = new HashMap<>();
 
@@ -23,7 +23,7 @@ public class InMemoryRepository<T extends Entity> implements Repository<T> {
         initEntities.forEach(this::create);
     }
 
-    private Optional<T> findByGuid(String guid) {
+    public Optional<T> findByGuid(String guid) {
         if (guid == null) {
             throw new IllegalArgumentException("Guid cannot be null.");
         }

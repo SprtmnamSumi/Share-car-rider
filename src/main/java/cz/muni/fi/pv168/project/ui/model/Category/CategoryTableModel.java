@@ -8,7 +8,7 @@ import cz.muni.fi.pv168.project.ui.model.Column;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.List;
 
 /**
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.
@@ -21,7 +21,5 @@ public class CategoryTableModel extends TableModel<Category> {
 
                 Column.readonly("Name", String.class, Category::getName),
                 Column.readonly("Colour", Integer.class, Category::getColour)));
-
     }
-
 }

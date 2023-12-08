@@ -1,20 +1,20 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.ui.NotificationController;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.validation.Validable;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ItemEvent;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.ListModel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ItemEvent;
 
 public class CategoryBar extends JPanel implements Validable {
     private final JComboBox<Category> categoryJComboBox;

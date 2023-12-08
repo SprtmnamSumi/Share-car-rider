@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.business.service.crud;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.repository.Repository;
-import cz.muni.fi.pv168.project.business.service.crud.CurrencyCrudService;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +20,15 @@ public class CurrencyCrudServiceUnitTest {
     private CurrencyCrudService currencyCrudService;
     private Repository<Currency> currencyRepository;
     private Validator<Currency> currencyValidator;
+
+    private static Currency createCurrencyInstance() {
+        return new Currency(
+                "2",
+                "USD",
+                "$",
+                22.3
+        );
+    }
 
     @BeforeEach
     @SuppressWarnings("unchecked")
@@ -112,13 +120,5 @@ public class CurrencyCrudServiceUnitTest {
 
         verify(currencyRepository, times(1))
                 .deleteAll();
-    }
-
-    private static Currency createCurrencyInstance() {
-        return new Currency(
-                "USD",
-                "$",
-                22.3
-        );
     }
 }

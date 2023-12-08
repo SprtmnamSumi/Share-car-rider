@@ -11,9 +11,10 @@ import cz.muni.fi.pv168.project.ui.panels.filters.DistanceFilterPanel;
 import cz.muni.fi.pv168.project.ui.panels.filters.FilterBoxPanel;
 import cz.muni.fi.pv168.project.ui.panels.filters.FilterPanel;
 import cz.muni.fi.pv168.project.ui.panels.filters.PassengersFilterPanel;
-import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class CarRideFilterPanel extends JPanel {
     private final FilterPanel distanceFilter;
@@ -28,7 +29,7 @@ public class CarRideFilterPanel extends JPanel {
         passengerFilter = new PassengersFilterPanel(filter);
         dateFilter = new DateFilterPanel(filter);
         categoryPanel = new FilterBoxPanel<>(filter, categories, Filters.CATEGORY_FILTER, "Category");
-        currencyPanel = new FilterBoxPanel<>(filter, currencyTableModel, Filters.CURRENCY_FILTER, "Currency");
+        currencyPanel = new FilterBoxPanel<>(filter, currencyTableModel, Filters.CURRENCY_FILTER, "CurrencyEntity");
         distanceFilter = new DistanceFilterPanel(filter);
 
         this.add(passengerFilter);

@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.validation;
 
+import javax.swing.JPanel;
 import java.awt.FlowLayout;
 import java.awt.event.KeyListener;
 import java.util.Arrays;
-import javax.swing.JPanel;
 
 public class ValidatedJPanel extends JPanel implements Validable {
     private ValidatedInputField[] validables;

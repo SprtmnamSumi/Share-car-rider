@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.data;
 
+import com.google.inject.Inject;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
@@ -7,18 +8,15 @@ import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
-import javax.inject.Singleton;
 import java.util.List;
-
-@Singleton
-public class ImportInitializator {
+public class ImportInitializer {
     private final TableModel<Category> categories;
     private final TableModel<CarRide> rides;
     private final TableModel<Currency> currencies;
     private final TableModel<Template> templates;
     TestDataGenerator generator;
-
-    public ImportInitializator(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates) {
+    @Inject
+    ImportInitializer(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates) {
         this.categories = categories;
         this.rides = rides;
         this.currencies = currencies;
@@ -26,7 +24,7 @@ public class ImportInitializator {
         generator = new TestDataGenerator(guidProvider);
     }
 
-    public void initializeeCarRide(List<CarRide> ride) {
+    public void initializeCarRide(List<CarRide> ride) {
         ride.forEach(rides::addRow);
     }
 
@@ -46,7 +44,6 @@ public class ImportInitializator {
         while (rides.getRowCount() > 0) {
             rides.deleteRow(0);
         }
-
     }
 
     public void redoCategory() {

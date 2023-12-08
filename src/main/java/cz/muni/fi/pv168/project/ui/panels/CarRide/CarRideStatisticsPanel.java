@@ -6,10 +6,11 @@ import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.NameValuePanel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 public class CarRideStatisticsPanel extends JPanel {
     private final TableModel<CarRide> model;
