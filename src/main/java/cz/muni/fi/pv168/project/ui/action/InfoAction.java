@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 
 public final class InfoAction extends AbstractAction {
-
     public InfoAction() {
         super("Info", null);
         putValue(SMALL_ICON, new CachedIconLoader().getIcon("info.png"));
