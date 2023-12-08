@@ -24,6 +24,7 @@ public class BatchExporterTemplateJSON {
                 categoryObject.put("color", template.getCategory().getColour());
 
                 // Populate currencyObject
+                currencyObject.put("guid", template.getCategory().getGuid());
                 currencyObject.put("name", template.getCurrency().getName());
                 currencyObject.put("symbol", template.getCurrency().getSymbol());
                 currencyObject.put("rate_to_dollar", template.getCurrency().getNewestRateToDollar());
