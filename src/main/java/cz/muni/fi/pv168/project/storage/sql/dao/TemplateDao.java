@@ -18,7 +18,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
 
 
     @Inject
-    public TemplateDao(Supplier<ConnectionHandler> connections) {
+    TemplateDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
     }

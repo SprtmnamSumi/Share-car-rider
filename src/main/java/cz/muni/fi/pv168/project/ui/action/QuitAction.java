@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.ui.icons.CachedIconLoader;
+
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
@@ -16,13 +18,7 @@ public final class QuitAction extends AbstractAction {
 
     public QuitAction() {
         super("Quit");
-        try {
-            quitPicture = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/cross.png"));
-            Icon customIcon = new ImageIcon(quitPicture);
-            putValue(SMALL_ICON, customIcon);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        putValue(SMALL_ICON, new CachedIconLoader().getIcon("cross.png"));
         putValue(SHORT_DESCRIPTION, "Terminates the application");
         putValue(MNEMONIC_KEY, KeyEvent.VK_Q);
     }
