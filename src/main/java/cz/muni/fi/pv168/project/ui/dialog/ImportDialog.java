@@ -131,7 +131,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
             case "Car Rides":
                 BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
                 List<CarRide> carRideList =  batchImporterCarRideJSON.importData(file.toPath());
-                importInitializator.initializeCarRide(carRideList);
+                importInitializator.initializeeCarRide(carRideList);
                 break;
             case "Currency":
                 BatchImporterCurrencyJSON batchImporterCurrencyJSON = new BatchImporterCurrencyJSON();

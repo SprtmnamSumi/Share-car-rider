@@ -10,25 +10,29 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public final class QuitAction extends AbstractAction {
+public final class SettingsAction extends AbstractAction {
 
-    private BufferedImage quitPicture;
+    private BufferedImage settingsPicture;
 
-    public QuitAction() {
-        super("Quit");
+    public SettingsAction() {
+        super("Settings");
         try {
-            quitPicture = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/cross.png"));
-            Icon customIcon = new ImageIcon(quitPicture);
+            settingsPicture = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/settings.png"));
+            Icon customIcon = new ImageIcon(settingsPicture);
             putValue(SMALL_ICON, customIcon);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        putValue(SHORT_DESCRIPTION, "Terminates the application");
-        putValue(MNEMONIC_KEY, KeyEvent.VK_Q);
+        putValue(SHORT_DESCRIPTION, "Settings");
+        putValue(MNEMONIC_KEY, KeyEvent.VK_S);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.exit(0);
+
     }
 }
+
+
+
+

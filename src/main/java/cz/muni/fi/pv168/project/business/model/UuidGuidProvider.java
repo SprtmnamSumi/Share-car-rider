@@ -11,4 +11,3 @@ class UuidGuidProvider implements GuidProvider {
         return UUID.randomUUID().toString(); // TODO can be error
     }
 }
-
