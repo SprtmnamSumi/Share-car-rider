@@ -18,7 +18,7 @@ import javax.inject.Inject;
 public final class CategoryCrudDao extends CrudDao<CategoryEntity> implements DataAccessObject<CategoryEntity> {
 
     @Inject
-    public CategoryCrudDao(Supplier<ConnectionHandler> connections) {
+    CategoryCrudDao(Supplier<ConnectionHandler> connections) {
         super(connections);
         super.setdataAccess(this);
     }
