@@ -59,7 +59,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                              """;
 
-        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, newTemplate.getGuid());
             statement.setLong(2, newTemplate.getCurrencyId());
             statement.setString(3, newTemplate.getTitle());
@@ -73,7 +73,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
             statement.setDouble(11, newTemplate.getNewestConversionRate());
         };
 
-        return super.create(newTemplate, sql, sayHello);
+        return super.create(newTemplate, sql, statementSetup);
 
     }
 
@@ -157,7 +157,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                 WHERE id = ?
                 """;
 
-        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, entity.getGuid());
             statement.setLong(2, entity.getCurrencyId());
             statement.setString(3, entity.getTitle());
@@ -171,7 +171,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
             statement.setDouble(11, entity.getNewestConversionRate());
             statement.setDouble(12, entity.getId());
         };
-        return super.update(entity, sql, sayHello);
+        return super.update(entity, sql, statementSetup);
     }
 
     @Override

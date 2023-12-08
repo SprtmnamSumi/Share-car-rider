@@ -6,17 +6,12 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
-import cz.muni.fi.pv168.project.business.service.export.Import;
 import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-
 import javax.inject.Inject;
-import javax.swing.JDialog;
 
 class ModalDialogFactory implements DialogFactory {
     private final EntityListModelAdapter<Category> categoryListModel;
@@ -74,8 +69,8 @@ class ModalDialogFactory implements DialogFactory {
     }
 
     @Override
-    public ImportDialog getImportDialog(ICarRideTableFilter carRideFilterModel) {
-        return new ImportDialog(carRideFilterModel, templateTableModel, currencyTableModel, categoryTableModel, importInitializer);
+    public ImportDialog getImportDialog() {
+        return new ImportDialog(importInitializer);
     }
 
     @Override

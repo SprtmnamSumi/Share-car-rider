@@ -8,14 +8,13 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.CarRideEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
-
 import javax.inject.Inject;
 
 public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements EntityMapper<CarRideEntity, CarRide> {
 
 
-    private final DataAccessObject<CategoryEntity> departmentDao;
-    private final EntityMapper<CategoryEntity, Category> departmentMapper;
+    private final DataAccessObject<CategoryEntity> categoryDao;
+    private final EntityMapper<CategoryEntity, Category> categoryMapeer;
     private final DataAccessObject<CurrencyEntity> currencyDao;
     private final EntityMapper<CurrencyEntity, Currency> currencyMapper;
 
@@ -23,17 +22,17 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
     public CarRideMapper(DataAccessObject<CategoryEntity> categoryDao, EntityMapper<CategoryEntity, Category> categoryMapper,
                          DataAccessObject<CurrencyEntity> currencyDao, EntityMapper<CurrencyEntity, Currency> currencyMapper) {
 
-        this.departmentDao = categoryDao;
-        this.departmentMapper = categoryMapper;
+        this.categoryDao = categoryDao;
+        this.categoryMapeer = categoryMapper;
         this.currencyDao = currencyDao;
         this.currencyMapper = currencyMapper;
     }
 
     @Override
     public CarRide mapToBusiness(CarRideEntity entity) {
-        var category = departmentDao
+        var category = categoryDao
                 .findById(entity.getCategoryId())
-                .map(departmentMapper::mapToBusiness)
+                .map(categoryMapeer::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Entity not found, id: " +
                         entity.getCategoryId()));
 
@@ -63,7 +62,7 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
     @Override
     protected CarRideEntity getEntity(CarRide entity, Long dbID) {
 
-        var categoryEntity = departmentDao
+        var categoryEntity = categoryDao
                 .findByGuid(entity.getCategory().getGuid())
                 .orElseThrow(() -> new DataStorageException("Entity not found, guid: " +
                         entity.getCategory().getGuid()));

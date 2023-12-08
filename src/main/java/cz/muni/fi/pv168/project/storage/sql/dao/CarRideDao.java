@@ -18,8 +18,6 @@ import javax.inject.Inject;
  * DAO for {@link TemplateEntity} entity.
  */
 public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAccessObject<CarRideEntity> {
-
-
     @Inject
     CarRideDao(Supplier<ConnectionHandler> connections) {
         super(connections);
@@ -64,8 +62,8 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                              """;
 
-        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
-            System.out.println(statement.getParameterMetaData().getParameterCount());
+
+        ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, newTemplate.getGuid());
             statement.setLong(2, newTemplate.getCurrencyId());
             statement.setString(3, newTemplate.getTitle());
@@ -83,7 +81,7 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
             statement.setObject(12, odt);
         };
 
-        return super.create(newTemplate, sql, sayHello);
+        return super.create(newTemplate, sql, statementSetup);
 
     }
 
@@ -172,7 +170,7 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                 WHERE id = ?
                 """;
 
-        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, entity.getGuid());
             statement.setLong(2, entity.getCurrencyId());
             statement.setString(3, entity.getTitle());
@@ -191,7 +189,7 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
 
             statement.setObject(13, entity.getId());
         };
-        return super.update(entity, sql, sayHello);
+        return super.update(entity, sql, statementSetup);
     }
 
     @Override
