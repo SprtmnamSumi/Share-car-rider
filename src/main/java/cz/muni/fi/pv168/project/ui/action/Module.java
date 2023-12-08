@@ -14,6 +14,8 @@ import cz.muni.fi.pv168.project.ui.action.Templates.TemplateActionFactory;
 public class Module extends AbstractModule {
     @Override
     protected void configure() {
+
+        bind(IOActionFactory.class);
         bind(new TypeLiteral<DefaultActionFactory<CarRide>>() {
         }).to(CarRideActionFactory.class);
         bind(new TypeLiteral<DefaultActionFactory<Category>>() {

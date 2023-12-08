@@ -17,62 +17,47 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ExportDialog extends JDialog implements PropertyChangeListener {
-
-    private final String title = "Export data";
+    private final static String EXPORT = "Export";
+    private final static String CANCEL = "Cancel";
     private final JOptionPane optionPane;
     private final TableModel<Template> templates;
     private final TableModel<Currency> currencies;
     private final TableModel<Category> categories;
-    private final String btnExportTitle = "Export";
-    private final String btnCancelTitle = "Cancel";
     private final ICarRideTableFilter carRideTableFilter;
-    private final JComboBox<String> exportOptionsComboBox;
+    private final JButton fileButton = new JButton("Select a file");
+    private final JComboBox<String> exportOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
     private File selectedFile;
-    private String selectedExportOption;
 
-    public ExportDialog(Frame frame, ICarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories) {
-        super(frame, true);
+    ExportDialog(ICarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories) {
+        super(Frame.getFrames()[0], "Export data", true);
         this.carRideTableFilter = carRideTableFilter;
         this.templates = templates;
         this.currencies = currencies;
         this.categories = categories;
-        setTitle(title);
 
-
-        // Create a combo box for export options
-        exportOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "CurrencyEntity", "Category", "Template"});
         exportOptionsComboBox.setSelectedIndex(0); // Default selection
 
-        JButton fileButton = new JButton("Select a file");
-        fileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                int result = fileChooser.showSaveDialog(ExportDialog.this);
-
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    selectedFile = fileChooser.getSelectedFile();
-                }
+        fileButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            if (fileChooser.showSaveDialog(ExportDialog.this) == JFileChooser.APPROVE_OPTION) {
+                selectedFile = fileChooser.getSelectedFile();
             }
         });
 
-        Object[] array = {"Select a file", fileButton, "Select data to export:", exportOptionsComboBox};
+        Object[] fileSelection = {"Select a file", fileButton, "Select data to export:", exportOptionsComboBox};
+        Object[] options = {EXPORT, CANCEL};
 
-        Object[] options = {btnExportTitle, btnCancelTitle};
-
-        optionPane = new JOptionPane(array,
+        optionPane = new JOptionPane(fileSelection,
                 JOptionPane.PLAIN_MESSAGE,
                 JOptionPane.YES_NO_OPTION,
                 null,
@@ -80,7 +65,6 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
                 options[0]);
 
         setContentPane(optionPane);
-
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -107,16 +91,8 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
             // Reset the JOptionPane's value
             optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
 
-            if (btnExportTitle.equals(value)) {
-                if (selectedFile != null) {
-
-                    selectedExportOption = (String) exportOptionsComboBox.getSelectedItem();
-                    //if (selectedExportOption == null || selectedExportOption.isEmpty()) {
-                    //JOptionPane.showMessageDialog(this, "Please select an export option.", "Warning", JOptionPane.WARNING_MESSAGE);
-                    //return;
-                    //}
-                    performExport(selectedFile);
-                }
+            if (EXPORT.equals(value) && selectedFile != null) {
+                performExport((String) Objects.requireNonNull(exportOptionsComboBox.getSelectedItem()), selectedFile);
             }
 
             clearAndHide();
@@ -124,43 +100,34 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
     }
 
 
-    private void performExport(File file) {
+    private void performExport(String selectedExportOption, File file) {
 
         switch (selectedExportOption) {
-            case "Car Rides":
-                List<CarRide> carRideList = new LinkedList<>();
-                carRideList = carRideTableFilter.getRideCompoundMatcher().getData();
-
+            case "Car Rides" -> {
+                List<CarRide> carRideList = carRideTableFilter.getRideCompoundMatcher().getData();
                 BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
                 batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
-                break;
-            case "CurrencyEntity":
-                List<Currency> currencyList = new LinkedList<>();
-                currencyList = currencies.getAll();
-
+            }
+            case "CurrencyEntity" -> {
+                List<Currency> currencyList = currencies.getAll();
                 BatchExporterCurrencyJSON batchExporterCurrencyJSON = new BatchExporterCurrencyJSON();
                 batchExporterCurrencyJSON.exportData(currencyList, selectedFile.getAbsolutePath());
-                break;
-            case "Category":
-                List<Category> categoryList = new LinkedList<>();
-                categoryList = categories.getAll();
-
+            }
+            case "Category" -> {
+                List<Category> categoryList = categories.getAll();
                 BatchExporterCategoryJSON batchExporterCategoryJSON = new BatchExporterCategoryJSON();
                 batchExporterCategoryJSON.exportData(categoryList, selectedFile.getAbsolutePath());
-                break;
-            case "Template":
-                List<Template> templateList = new LinkedList<>();
-                templateList = templates.getAll();
-
+            }
+            case "Template" -> {
+                List<Template> templateList = templates.getAll();
                 BatchExporterTemplateJSON batchExporterTemplateJSON = new BatchExporterTemplateJSON();
                 batchExporterTemplateJSON.exportData(templateList, selectedFile.getAbsolutePath());
-                break;
-            default:
-                throw new IllegalStateException("You shouldn't be here, how did you even get here?");
+            }
+            default -> throw new IllegalStateException("You shouldn't be here, how did you even get here?");
         }
     }
 
-    public void clearAndHide() {
+    private void clearAndHide() {
         setVisible(false);
     }
 }

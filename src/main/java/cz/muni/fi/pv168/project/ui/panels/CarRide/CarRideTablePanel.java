@@ -34,7 +34,6 @@ public class CarRideTablePanel extends AbstractTablePanel {
     private Action addCarRideAction;
     private Action editCarRideAction;
     private Action deleteCarRideAction;
-    private Action saveAsTemplateAction;
 
     public CarRideTablePanel(CarRideTableModel carRideTableModel,
                              DefaultActionFactory<CarRide> actionFactory,
@@ -83,7 +82,6 @@ public class CarRideTablePanel extends AbstractTablePanel {
         popupMenu.add(addCarRideAction);
         popupMenu.add(editCarRideAction);
         popupMenu.add(deleteCarRideAction);
-        popupMenu.add(saveAsTemplateAction);
         return popupMenu;
     }
 

@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.ui.panels.Category;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
 import cz.muni.fi.pv168.project.util.ConversionUtils;
 
@@ -26,7 +27,7 @@ public class CategoryTablePanel extends AbstractTablePanel {
     private Action editCategoryAction;
     private Action deleteCategoryAction;
 
-    public CategoryTablePanel(CategoryTableModel categoryTableModel,
+    public CategoryTablePanel(TableModel<Category> categoryTableModel,
                               DefaultActionFactory<Category> actionFactory) {
         super(categoryTableModel);
         setUpTable(actionFactory);
