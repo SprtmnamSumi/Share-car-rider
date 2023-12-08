@@ -2,10 +2,8 @@ package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
-import cz.muni.fi.pv168.project.data.Initializer;
 import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
@@ -14,7 +12,6 @@ import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.InfoAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
-import cz.muni.fi.pv168.project.ui.action.SettingsAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
@@ -39,14 +36,10 @@ class MainWindowImpl implements MainWindow {
     private final JFrame frame;
     private final NotificationController notificationController;
     private final Action quitAction = new QuitAction();
-    private final Action addCarRideAction;
-    private final Action addCategory;
-    private final Action settingsAction;
     private final Action chooseCurrencyAction;
     private final Action importAction;
     private final Action exportAction;
     private final Action colorThemeAction;
-    private final Action addTemplate;
     private final Action info;
 
     @Inject
@@ -59,24 +52,20 @@ class MainWindowImpl implements MainWindow {
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
                    ICarRideStatistics ICarRideStatistics,
-                   GuidProvider guidProvider
+                   ImportInitializer importInit
     ) {
         frame = createFrame();
-
-        ImportInitializer importInit = new ImportInitializer(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
-
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
         TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
 
-        addCarRideAction = carActionFactory.getAddAction(carRideTablePanel.getTable());
-        addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
-        addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
+        Action addCarRideAction = carActionFactory.getAddAction(carRideTablePanel.getTable());
+        Action addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
+        Action addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
 
         chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
 
-        settingsAction = new SettingsAction();
         importAction = new ImportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel, importInit);
         exportAction = new ExportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel);
         colorThemeAction = new ColorThemeAction();
@@ -102,14 +91,6 @@ class MainWindowImpl implements MainWindow {
     public void show() {
         frame.setVisible(true);
     }
-
-    private void initialize(Initializer initializator){
-        try { // TODO
-            initializator.initialize(150); // TODO
-        } catch (Exception e) { // TODO
-        } // TODO
-    }
-
     private JFrame createFrame() {
         var frame = new JFrame("Share Car Ride");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
