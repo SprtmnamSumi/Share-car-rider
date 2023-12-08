@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.data;
 
-import com.google.inject.Inject;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
@@ -16,8 +15,8 @@ public class ImportInitializer {
     private final TableModel<Currency> currencies;
     private final TableModel<Template> templates;
     TestDataGenerator generator;
-    @Inject
-    ImportInitializer(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates) {
+
+    public ImportInitializer(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates) {
         this.categories = categories;
         this.rides = rides;
         this.currencies = currencies;
@@ -25,7 +24,7 @@ public class ImportInitializer {
         generator = new TestDataGenerator(guidProvider);
     }
 
-    public void initializeCarRide(List<CarRide> ride) {
+    public void initializeeCarRide(List<CarRide> ride) {
         ride.forEach(rides::addRow);
     }
 

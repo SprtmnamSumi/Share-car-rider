@@ -5,6 +5,8 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
+import cz.muni.fi.pv168.project.data.ImportInitializer;
+import cz.muni.fi.pv168.project.data.Initializer;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
@@ -12,6 +14,7 @@ import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.InfoAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
+import cz.muni.fi.pv168.project.ui.action.SettingsAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
@@ -32,9 +35,7 @@ import javax.swing.JTable;
 import javax.swing.WindowConstants;
 
 class MainWindowImpl implements MainWindow {
-
     private final JFrame frame;
-
     private final NotificationController notificationController;
     private final Action quitAction = new QuitAction();
     private final Action addCarRideAction;
@@ -61,7 +62,8 @@ class MainWindowImpl implements MainWindow {
     ) {
         frame = createFrame();
 
-        ImportInitializator importInit = new ImportInitializator(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
+        ImportInitializer importInit = new ImportInitializer(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
+
 
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
@@ -98,6 +100,13 @@ class MainWindowImpl implements MainWindow {
     @Override
     public void show() {
         frame.setVisible(true);
+    }
+
+    private void initialize(Initializer initializator) {
+        try { // TODO
+            initializator.initialize(150); // TODO
+        } catch (Exception e) { // TODO
+        } // TODO
     }
 
     private JFrame createFrame() {
