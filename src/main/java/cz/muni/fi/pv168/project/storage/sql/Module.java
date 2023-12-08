@@ -34,7 +34,6 @@ public class Module extends AbstractModule {
         }).to(TransactionManagerImpl.class);
         bind(new TypeLiteral<Supplier<ConnectionHandler>>() {
         }).to(TransactionConnectionSupplier.class);
-
         bind(new TypeLiteral<EntityMapper<CategoryEntity, Category>>() {
         }).to(CategoryMapper.class);
         bind(new TypeLiteral<EntityMapper<CurrencyEntity, Currency>>() {
