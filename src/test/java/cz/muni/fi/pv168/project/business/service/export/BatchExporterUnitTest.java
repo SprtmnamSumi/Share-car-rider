@@ -54,7 +54,6 @@ class BatchExporterUnitTest {
 
         assertExportedContent(
                 """
-<<<<<<< HEAD
                         {"carrides": [{
                           "date": "2001-01-01T11:00:00",
                           "passengers": 2,
@@ -92,7 +91,6 @@ class BatchExporterUnitTest {
 
         assertExportedContent(
                 """
-<<<<<<< HEAD
                         {"carrides": [
                           {
                             "date": "2001-01-01T11:00:00",

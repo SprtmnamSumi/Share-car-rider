@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.db.actions;
 
 
+import cz.muni.fi.pv168.project.data.Initializer;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
 
 import static cz.muni.fi.pv168.project.wiring.Injector.getInjector;
@@ -12,14 +13,12 @@ public final class ReCreateDatabase {
         var dbManager = injector.getInstance(DatabaseManager.class);
         dbManager.destroySchema();
         dbManager.initSchema();
-<<<<<<< HEAD
 
-   //     var initializator = injector.getInstance(IInitializator.class);
-    //    initializator.initialize(150);
+       var initializator = injector.getInstance(Initializer.class);
+       initializator.initialize(150);
 
         System.out.println("Database created...");
         System.out.println("Database connection string: " + dbManager.getDatabaseConnectionString());
-=======
->>>>>>> 4cbeb7c (Rebase issues)
+
     }
 }
