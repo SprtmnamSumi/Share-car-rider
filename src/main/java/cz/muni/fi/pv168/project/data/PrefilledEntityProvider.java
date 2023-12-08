@@ -69,7 +69,9 @@ public class PrefilledEntityProvider implements EntityProvider {
 
     @Override
     public Currency getCurrency() {
-        return new Currency("New Currency", "$", 1.0);
+        List<Currency> currencies = currencyCrudService.findAll();
+        Currency currency = currencies.get(randomGenerator.nextInt(0, currencies.size()));
+        return new Currency(guidProvider.newGuid(), "New CurrencyEntity", currency.getSymbol(), currency.getNewestRateToDollar());
     }
 
     private Color getRandomColor() {

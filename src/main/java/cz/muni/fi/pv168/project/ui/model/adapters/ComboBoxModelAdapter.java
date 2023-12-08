@@ -1,10 +1,10 @@
 package cz.muni.fi.pv168.project.ui.model.adapters;
 
-import java.util.Objects;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
+import java.util.Objects;
 
 /**
  * This class adapts {@link ListModel} to {@link ComboBoxModel}. The purpose is to allow

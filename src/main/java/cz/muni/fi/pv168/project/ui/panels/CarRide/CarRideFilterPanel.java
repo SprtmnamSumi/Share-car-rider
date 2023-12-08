@@ -11,9 +11,10 @@ import cz.muni.fi.pv168.project.ui.panels.filters.DistanceFilterPanel;
 import cz.muni.fi.pv168.project.ui.panels.filters.FilterBoxPanel;
 import cz.muni.fi.pv168.project.ui.panels.filters.FilterPanel;
 import cz.muni.fi.pv168.project.ui.panels.filters.PassengersFilterPanel;
-import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class CarRideFilterPanel extends JPanel {
     private final FilterPanel distanceFilter;

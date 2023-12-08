@@ -5,8 +5,9 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.ui.filters.matchers.CarRideMatcherFactory;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import java.util.Date;
+
 import javax.swing.table.TableRowSorter;
+import java.util.Date;
 
 
 public final class CarRideTableFilter implements ICarRideTableFilter {

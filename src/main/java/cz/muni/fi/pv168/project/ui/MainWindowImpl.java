@@ -56,10 +56,6 @@ class MainWindowImpl implements MainWindow {
     ) {
         frame = createFrame();
 
-
-        ImportInitializer importInit = new ImportInitializer(guidProvider, categoryTableModel, carRideTableModel, currencyTableModel, templateTableModel);
-
-
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
         TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
@@ -95,7 +91,7 @@ class MainWindowImpl implements MainWindow {
     public void show() {
         frame.setVisible(true);
     }
-    
+
     private void initialize(Initializer initializator) {
         try { // TODO
             initializator.initialize(150); // TODO

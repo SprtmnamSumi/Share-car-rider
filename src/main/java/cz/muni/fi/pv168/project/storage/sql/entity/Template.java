@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.storage.sql.entity;
 
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Model;
+
 import java.util.Objects;
 
 public class Template extends Model {

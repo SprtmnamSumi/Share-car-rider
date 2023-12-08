@@ -6,8 +6,9 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 import cz.muni.fi.pv168.project.ui.model.Column;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-import java.util.List;
+
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.

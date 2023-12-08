@@ -6,14 +6,14 @@ import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import org.h2.jdbcx.JdbcConnectionPool;
+import org.tinylog.Logger;
+
+import javax.sql.DataSource;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import javax.inject.Inject;
-import javax.sql.DataSource;
-import org.h2.jdbcx.JdbcConnectionPool;
-import org.tinylog.Logger;
 
 
 /**
@@ -43,8 +43,8 @@ public final class DatabaseManager {
     public static DatabaseManager createProductionInstance() {
         String connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
         var dbManager = new DatabaseManager(connectionString);
-        System.out.println("Database created...");
-        System.out.println("Database connection string: " + dbManager.getDatabaseConnectionString());
+        Logger.info("Database created...");
+        Logger.info("Database connection string: " + dbManager.getDatabaseConnectionString());
         return dbManager;
     }
 
