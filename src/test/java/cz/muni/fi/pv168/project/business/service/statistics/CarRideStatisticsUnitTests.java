@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.business.service.statistics;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CarRideStatisticsUnitTests {
-    private final ICarRideStatistics iCarRideStatistics = new CarRideStatistics(new CurrencyConverter());
+    private final ICarRideStatistics iCarRideStatistics = new CarRideStatistics();
 
     private final CarRide carRideOne = createCarRideOne("c-1");
     private final CarRide carRideTwo = createCarRideTwo("c-2");
