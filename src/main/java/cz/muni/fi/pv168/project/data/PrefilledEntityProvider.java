@@ -70,7 +70,7 @@ public class PrefilledEntityProvider implements EntityProvider {
 
     @Override
     public Currency getCurrency() {
-        return new Currency(guidProvider.newGuid(), "New CurrencyEntity", "$", 1.0);
+        return new Currency(guidProvider.newGuid(), "New Currency", "$", 1.0);
     }
 
     private Color getRandomColor() {
