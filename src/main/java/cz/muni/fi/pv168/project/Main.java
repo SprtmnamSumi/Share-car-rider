@@ -2,17 +2,19 @@ package cz.muni.fi.pv168.project;
 
 import com.google.inject.Injector;
 import cz.muni.fi.pv168.project.business.service.properties.Config;
+import cz.muni.fi.pv168.project.data.Initializer;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.action.NuclearQuitAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
 import cz.muni.fi.pv168.project.ui.theme.ColorTheme;
+
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import java.awt.EventQueue;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 import static cz.muni.fi.pv168.project.wiring.Injector.getInjector;
 
@@ -24,6 +26,7 @@ public class Main {
         _injector = getInjector();
         Config.tryCreateProperties();
         initLookAndFeel();
+        initDataStructures(_injector.getInstance(Initializer.class));
 
         EventQueue.invokeLater(() -> {
             try {
@@ -46,6 +49,13 @@ public class Main {
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, lookAndFeelsClassName + " layout initialization failed", ex);
         }
+    }
+
+    private static void initDataStructures(Initializer initializer){
+        try { // TODO
+            initializer.initialize(150); // TODO
+        } catch (Exception e) { // TODO
+        } // TODO
     }
 
     private static void showInitializationFailedDialog(Exception ex) {

@@ -3,21 +3,21 @@ package cz.muni.fi.pv168.project.ui.action;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.data.ImportInitializator;
+import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
 import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public final class ImportAction extends AbstractAction {
 
@@ -26,9 +26,9 @@ public final class ImportAction extends AbstractAction {
     private final TableModel<Currency> currencies;
     private final TableModel<Category> categories;
     private BufferedImage importPicture;
-    private ImportInitializator im;
+    private ImportInitializer im;
 
-    public ImportAction(CarRideTableFilter carRideTableFilte, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ImportInitializator importInitializator) {
+    public ImportAction(CarRideTableFilter carRideTableFilte, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ImportInitializer importInitializator) {
         super("Import");
         this.carRideTableFilter = carRideTableFilte;
         this.templates = templates;

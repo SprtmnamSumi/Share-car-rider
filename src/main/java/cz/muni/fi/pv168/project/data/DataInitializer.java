@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class Initializator implements IInitializator {
+class DataInitializer implements Initializer {
     private final TableModel<Category> categories;
     private final TableModel<CarRide> rides;
     private final TableModel<Currency> currencies;
@@ -19,7 +19,7 @@ public class Initializator implements IInitializator {
     TestDataGenerator generator;
 
     @Inject
-    public Initializator(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates) {
+    DataInitializer(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates) {
         this.categories = categories;
         this.rides = rides;
         this.currencies = currencies;
