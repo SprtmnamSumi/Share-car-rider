@@ -36,9 +36,9 @@ class AddCurrencyDialog extends EntityDialog<Currency> {
     }
 
     private void addFields() {
-        add("CurrencyEntity name", nameTextField);
-        add("CurrencyEntity symbol", symbolTextField);
-        add("CurrencyEntity rate to dollar", rateToDollar);
+        add("name", nameTextField);
+        add("symbol", symbolTextField);
+        add("rate to dollar", rateToDollar);
     }
 
     @Override
