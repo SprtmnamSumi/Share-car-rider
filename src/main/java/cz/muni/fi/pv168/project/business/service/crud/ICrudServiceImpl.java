@@ -5,8 +5,9 @@ import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
-import java.util.List;
+
 import javax.inject.Inject;
+import java.util.List;
 
 class ICrudServiceImpl<T extends Model> implements ICrudService<T> {
     private final Repository<T> entityRepository;

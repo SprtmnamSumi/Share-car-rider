@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
+import javax.inject.Inject;
 
 public class PrefilledEntityProvider implements EntityProvider {
     private final Random randomGenerator = new Random();
@@ -69,12 +70,15 @@ public class PrefilledEntityProvider implements EntityProvider {
 
     @Override
     public Currency getCurrency() {
-        return new Currency("dfdfd", "New Currency", "$", 1.0);
+
+        List<Currency> currencies = currencyCrudService.findAll();
+        Currency currency = currencies.get(randomGenerator.nextInt(0, currencies.size()));
+        return new Currency(guidProvider.newGuid(), "New CurrencyEntity", currency.getSymbol(), currency.getNewestRateToDollar());
     }
 
-    private Color getRandomColor(){
-        return new Color(randomGenerator.nextInt(0,255),
-                randomGenerator.nextInt(0,255),
-                randomGenerator.nextInt(0,255));
+    private Color getRandomColor() {
+        return new Color(randomGenerator.nextInt(0, 255),
+                randomGenerator.nextInt(0, 255),
+                randomGenerator.nextInt(0, 255));
     }
 }

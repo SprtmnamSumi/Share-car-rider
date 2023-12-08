@@ -16,15 +16,15 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
-import cz.muni.fi.pv168.project.ui.validation.Validable;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import java.awt.event.ItemEvent;
-import java.time.LocalDateTime;
-import java.util.UUID;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.ListModel;
+import java.awt.event.ItemEvent;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2, 150));

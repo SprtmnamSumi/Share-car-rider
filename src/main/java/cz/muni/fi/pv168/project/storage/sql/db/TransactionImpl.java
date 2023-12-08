@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Objects;

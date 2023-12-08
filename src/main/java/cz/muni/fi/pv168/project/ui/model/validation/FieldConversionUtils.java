@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.project.ui.model.validation;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 
 public class FieldConversionUtils {
     public static boolean validateDouble(JTextField field){

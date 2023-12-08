@@ -12,11 +12,14 @@ public final class ReCreateDatabase {
         var dbManager = injector.getInstance(DatabaseManager.class);
         dbManager.destroySchema();
         dbManager.initSchema();
+<<<<<<< HEAD
 
    //     var initializator = injector.getInstance(IInitializator.class);
     //    initializator.initialize(150);
 
         System.out.println("Database created...");
         System.out.println("Database connection string: " + dbManager.getDatabaseConnectionString());
+=======
+>>>>>>> 4cbeb7c (Rebase issues)
     }
 }

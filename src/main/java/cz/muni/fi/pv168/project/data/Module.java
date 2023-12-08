@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.data;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 import com.google.inject.TypeLiteral;
 
 public class Module extends AbstractModule {

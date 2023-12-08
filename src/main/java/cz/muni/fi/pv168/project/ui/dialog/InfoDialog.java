@@ -1,12 +1,12 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InfoDialog extends JDialog {
     private final String title = "Info";

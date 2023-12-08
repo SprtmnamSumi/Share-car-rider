@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
