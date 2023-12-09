@@ -6,7 +6,7 @@ class ValidationUtils {
             Double.parseDouble(text);
             return true;
         }
-        catch(IllegalArgumentException e){
+        catch(NumberFormatException e){
             return false;
         }
     }
