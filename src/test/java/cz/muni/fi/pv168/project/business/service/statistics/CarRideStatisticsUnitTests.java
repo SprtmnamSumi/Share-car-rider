@@ -108,7 +108,6 @@ public class CarRideStatisticsUnitTests {
         assertThat(iCarRideStatistics.getTotalExpenses(oneCarRideList)).isEqualTo(carRideOne.getDistance() * carRideOne.getFuelConsumption() / 100 * carRideOne.getCostOfFuelPerLitreInDollars());
     }
 
-    // TODO May unexpectedly fail if tested exactly at midnight.
     @Test
     void oneCarRideTodayExpenses() {
         assertThat(iCarRideStatistics.getTodayExpenses(oneCarRideList)).isEqualTo(carRideOne.getDistance() * carRideOne.getFuelConsumption() / 100 * carRideOne.getCostOfFuelPerLitreInDollars());
@@ -137,7 +136,6 @@ public class CarRideStatisticsUnitTests {
                         + carRideThree.getDistance() * carRideThree.getFuelConsumption() / 100 * carRideThree.getCostOfFuelPerLitreInDollars());
     }
 
-    // TODO May unexpectedly fail if tested exactly at midnight.
     @Test
     void multipleCarRideTodayExpenses() {
         assertThat(iCarRideStatistics.getTodayExpenses(multipleCarRidesList)).isEqualTo(carRideOne.getDistance() * carRideOne.getFuelConsumption() / 100 * carRideOne.getCostOfFuelPerLitreInDollars());
