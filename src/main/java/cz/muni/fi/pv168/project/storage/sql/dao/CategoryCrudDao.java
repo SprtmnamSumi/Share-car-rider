@@ -4,20 +4,18 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
-
-import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
+import javax.inject.Inject;
 
 /**
  * DAO for {@link Category} entity.
  */
 public final class CategoryCrudDao extends CrudDao<CategoryEntity> implements DataAccessObject<CategoryEntity> {
-
     @Inject
     CategoryCrudDao(Supplier<ConnectionHandler> connections) {
         super(connections);
@@ -44,13 +42,13 @@ public final class CategoryCrudDao extends CrudDao<CategoryEntity> implements Da
                 VALUES (?, ?, ?);
                 """;
 
-        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, newCategory.getGuid());
             statement.setString(2, newCategory.getName());
             statement.setInt(3, newCategory.getColour());
         };
 
-        return super.create(newCategory, sql, sayHello);
+        return super.create(newCategory, sql, statementSetup);
     }
 
     @Override
@@ -100,12 +98,12 @@ public final class CategoryCrudDao extends CrudDao<CategoryEntity> implements Da
                 WHERE id = ?
                 """;
 
-        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, entity.getName());
             statement.setInt(2, entity.getColour());
             statement.setLong(3, entity.getId());
         };
-        return super.update(entity, sql, sayHello);
+        return super.update(entity, sql, statementSetup);
     }
 
     @Override

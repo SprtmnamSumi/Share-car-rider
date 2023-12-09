@@ -5,7 +5,6 @@ public class CategoryEntity extends Entity {
     private String name;
     private int colour;
 
-    // Constructors
     public CategoryEntity(Long id, String guid, String name, int colour) {
         super(id, guid);
         this.guid = guid;

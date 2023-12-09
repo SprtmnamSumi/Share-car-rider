@@ -31,13 +31,6 @@
 
 package cz.muni.fi.pv168.project.ui.model.common;
 
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -48,6 +41,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.plaf.basic.BasicButtonUI;
 
 /**
  * Component to be used as tabComponent;
@@ -56,19 +56,6 @@ import java.awt.event.MouseListener;
  */
 public class ButtonTabComponent extends JPanel {
     private final static MouseListener buttonMouseListener = new MouseAdapter() {
-//        public void mouseEntered(MouseEvent e) {
-//            Component component = e.getComponent();
-//            if (component instanceof AbstractButton button) {
-//                button.setBorderPainted(true);
-//            }
-//        }
-
-//        public void mouseExited(MouseEvent e) {
-//            Component component = e.getComponent();
-//            if (component instanceof AbstractButton button) {
-//                button.setBorderPainted(false);
-//            }
-//        }
     };
 
     private final Action action;

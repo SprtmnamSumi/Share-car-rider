@@ -8,14 +8,13 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
-
 import javax.inject.Inject;
 
 public class TemplateMapper extends Mapper<TemplateEntity, Template> implements EntityMapper<TemplateEntity, Template> {
 
 
-    private final DataAccessObject<CategoryEntity> departmentDao;
-    private final EntityMapper<CategoryEntity, Category> departmentMapper;
+    private final DataAccessObject<CategoryEntity> categoryDao;
+    private final EntityMapper<CategoryEntity, Category> categoryMapper;
     private final DataAccessObject<CurrencyEntity> currencyDao;
     private final EntityMapper<CurrencyEntity, Currency> currencyMapper;
 
@@ -23,17 +22,17 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
     public TemplateMapper(DataAccessObject<CategoryEntity> categoryDao, EntityMapper<CategoryEntity, Category> categoryMapper,
                           DataAccessObject<CurrencyEntity> currencyDao, EntityMapper<CurrencyEntity, Currency> currencyMapper) {
 
-        this.departmentDao = categoryDao;
-        this.departmentMapper = categoryMapper;
+        this.categoryDao = categoryDao;
+        this.categoryMapper = categoryMapper;
         this.currencyDao = currencyDao;
         this.currencyMapper = currencyMapper;
     }
 
     @Override
     public Template mapToBusiness(TemplateEntity entity) {
-        var category = departmentDao
+        var category = categoryDao
                 .findById(entity.getCategoryId())
-                .map(departmentMapper::mapToBusiness)
+                .map(categoryMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Entity not found, id: " +
                         entity.getCategoryId()));
 
@@ -62,7 +61,7 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
     @Override
     protected TemplateEntity getEntity(Template entity, Long dbID) {
 
-        var categoryEntity = departmentDao
+        var categoryEntity = categoryDao
                 .findByGuid(entity.getCategory().getGuid())
                 .orElseThrow(() -> new DataStorageException("Entity not found, guid: " +
                         entity.getCategory().getGuid()));

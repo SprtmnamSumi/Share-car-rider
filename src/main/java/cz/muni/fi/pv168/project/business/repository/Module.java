@@ -15,17 +15,9 @@ import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
 public class Module extends AbstractModule {
     @Override
     protected void configure() {
-
-
-//        bind(new TypeLiteral<Repository<CarRide>>() {
-//        }).toInstance(new InMemoryRepository<>(new ArrayList<CarRide>()));
-
-
         bind(new TypeLiteral<Repository<CarRide>>() {
         }).to(new TypeLiteral<SqlRepository<CarRide, CarRideEntity>>() {
         });
-
-
         bind(new TypeLiteral<Repository<Template>>() {
         }).to(new TypeLiteral<SqlRepository<Template, TemplateEntity>>() {
         });
