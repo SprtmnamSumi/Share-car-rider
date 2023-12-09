@@ -41,7 +41,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
     private final CostBar costBar;
     private final TableModel<Template> entityCrudService;
     private final ValidableListener validableListener;
-
     private final CarRide carRide;
 
     CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, TableModel<Category> categoryTableModel, CurrencyConverter currencyConverter) {
