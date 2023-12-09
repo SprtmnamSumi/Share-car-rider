@@ -9,14 +9,6 @@ import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterTemplateJSON;
-import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
-import cz.muni.fi.pv168.project.ui.model.TableModel;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,35 +18,27 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class ImportDialog extends JDialog implements PropertyChangeListener {
 
-    private final String title = "Import data";
     private final JOptionPane optionPane;
-
-    private final String btnString1 = "Import";
-    private final String btnString2 = "Cancel";
-    private final String btnString3 = "Overwrite";
-
-
-    private final TableModel<Template> templates;
-    private final TableModel<Currency> currencies;
-    private final TableModel<Category> categories;
-    private final ICarRideTableFilter carRideTableFilter;
+    private final String importName = "Import";
+    private final String cancelName = "Cancel";
+    private final String overwriteName = "Overwrite";
     private final JComboBox<String> importOptionsComboBox;
-
+    private final ImportInitializer importInitializator;
     private File selectedFile;
     private String selectedImportOption;
-    private ImportInitializer importInitializator;
 
-    public ImportDialog(Frame aFrame, String aWord, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ICarRideTableFilter carRideTableFilter, ImportInitializer importInitializator) {
-        super(aFrame, true);
-        this.templates = templates;
-        this.currencies = currencies;
-        this.categories = categories;
-        this.carRideTableFilter = carRideTableFilter;
+    public ImportDialog(ImportInitializer importInitializator) {
+        super(Frame.getFrames()[0], "Import data", true);
         this.importInitializator = importInitializator;
-        setTitle(title);
+
 
         // Create a combo box for export options
         importOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
@@ -76,7 +60,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
 
         Object[] array = {msgString1, fileButton, "Select data to export:", importOptionsComboBox};
 
-        Object[] options = {btnString1, btnString2, btnString3};
+        Object[] options = {importName, cancelName, overwriteName};
 
         optionPane = new JOptionPane(array,
                 JOptionPane.PLAIN_MESSAGE,
@@ -112,12 +96,12 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
             optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
 
 
-            if (btnString1.equals(value)) {
+            if (importName.equals(value)) {
                 if (selectedFile != null) {
                     selectedImportOption = (String) importOptionsComboBox.getSelectedItem();
                     performImport(selectedFile);
                 }
-            } else if (btnString3.equals(value)) {
+            } else if (overwriteName.equals(value)) {
                 if (selectedFile != null) {
                     selectedImportOption = (String) importOptionsComboBox.getSelectedItem();
                     performOverwrite(selectedFile);
@@ -133,12 +117,12 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
         switch (selectedImportOption) {
             case "Car Rides":
                 BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
-                List<CarRide> carRideList =  batchImporterCarRideJSON.importData(file.toPath());
+                List<CarRide> carRideList = batchImporterCarRideJSON.importData(file.toPath());
                 importInitializator.initializeCarRide(carRideList);
                 break;
             case "Currency":
                 BatchImporterCurrencyJSON batchImporterCurrencyJSON = new BatchImporterCurrencyJSON();
-                List<Currency>currencyList = batchImporterCurrencyJSON.importData(file.toPath());
+                List<Currency> currencyList = batchImporterCurrencyJSON.importData(file.toPath());
                 importInitializator.initializeCurrency(currencyList);
                 break;
             case "Category":
@@ -148,7 +132,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
                 break;
             case "Template":
                 BatchImporterTemplateJSON batchImporterTemplateJSON = new BatchImporterTemplateJSON();
-                List<Template> templateList =  batchImporterTemplateJSON.importData(file.toPath());
+                List<Template> templateList = batchImporterTemplateJSON.importData(file.toPath());
                 importInitializator.initializeTemplate(templateList);
                 break;
             default:

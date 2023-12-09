@@ -1,34 +1,20 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
-import cz.muni.fi.pv168.project.data.ImportInitializer;
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
-import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.icons.CachedIconLoader;
-import cz.muni.fi.pv168.project.ui.model.TableModel;
-
-import javax.swing.AbstractAction;
-import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+
 
 public final class ImportAction extends AbstractAction {
+    private final DialogFactory dialogFactory;
 
-    private final CarRideTableFilter carRideTableFilter;
-    private final TableModel<Template> templates;
-    private final TableModel<Currency> currencies;
-    private final TableModel<Category> categories;
-    private final ImportInitializer im;
-
-    public ImportAction(CarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ImportInitializer importInitializator) {
+    public ImportAction(DialogFactory dialogFactory, ICarRideTableFilter carRideTableFilter) {
         super("Import");
-        this.carRideTableFilter = carRideTableFilter;
-        this.templates = templates;
-        this.currencies = currencies;
-        this.categories = categories;
-        this.im = importInitializator;
+        this.dialogFactory = dialogFactory;
         putValue(SMALL_ICON, new CachedIconLoader().getIcon("import.png"));
         putValue(SHORT_DESCRIPTION, "Imports data");
         putValue(MNEMONIC_KEY, KeyEvent.VK_I);
@@ -36,8 +22,7 @@ public final class ImportAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        ImportDialog popupDialog = new ImportDialog(new JFrame("Popup"), "str", templates, currencies, categories, carRideTableFilter, im);
+        ImportDialog popupDialog = dialogFactory.getImportDialog();
         popupDialog.setSize(300, 200);
 
         // Center the custom dialog on the screen

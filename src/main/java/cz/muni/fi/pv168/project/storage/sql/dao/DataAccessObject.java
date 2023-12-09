@@ -11,7 +11,6 @@ import java.util.Optional;
  */
 public interface DataAccessObject<E> {
 
-
     /**
      * Creates a new entity using the underlying data source.
      *

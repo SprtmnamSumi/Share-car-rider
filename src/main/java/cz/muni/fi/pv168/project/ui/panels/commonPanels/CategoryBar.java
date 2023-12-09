@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.validation.Validable;
@@ -21,7 +22,7 @@ public class CategoryBar extends JPanel implements Validable {
     private final JButton addCategoryButton;
 
 
-    public CategoryBar(ListModel<Category> categoryModel, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, ValidableListener validableListener) {
+    public CategoryBar(ListModel<Category> categoryModel, DefaultActionFactory<Category> categoryActionFactory, TableModel<Category> categoryTableModel, ValidableListener validableListener) {
         super(new FlowLayout(FlowLayout.CENTER));
 
         this.categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));

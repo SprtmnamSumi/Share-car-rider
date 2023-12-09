@@ -4,14 +4,13 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
-
-import javax.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Supplier;
+import javax.inject.Inject;
 
 /**
  * DAO for {@link TemplateEntity} entity.
@@ -46,14 +45,14 @@ public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAc
                 VALUES (?, ?, ?, ?);
                 """;
 
-        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, newTemplate.getGuid());
             statement.setString(2, newTemplate.getName());
             statement.setString(3, newTemplate.getSymbol());
             statement.setDouble(4, newTemplate.getNewestRateToDollar());
         };
 
-        return super.create(newTemplate, sql, sayHello);
+        return super.create(newTemplate, sql, statementSetup);
 
     }
 
@@ -109,13 +108,13 @@ public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAc
                 WHERE id = ?
                 """;
 
-        ISetUp<PreparedStatement, SQLException> sayHello = (PreparedStatement statement) -> {
+        ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, entity.getGuid());
             statement.setString(2, entity.getName());
             statement.setString(3, entity.getSymbol());
             statement.setDouble(4, entity.getNewestRateToDollar());
         };
-        return super.update(entity, sql, sayHello);
+        return super.update(entity, sql, statementSetup);
     }
 
     @Override

@@ -9,6 +9,7 @@ import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ExportAction;
+import cz.muni.fi.pv168.project.ui.action.IOActionFactory;
 import cz.muni.fi.pv168.project.ui.action.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.InfoAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
@@ -46,13 +47,13 @@ class MainWindowImpl implements MainWindow {
     MainWindowImpl(DefaultActionFactory<CarRide> carActionFactory,
                    DefaultActionFactory<Category> categoryActionFactory,
                    DefaultActionFactory<Template> templateActionFactory,
+                   IOActionFactory ioActionFactory,
                    CurrencyActionFactory currencyActionFactory,
                    CarRideTableModel carRideTableModel,
                    CategoryTableModel categoryTableModel,
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
-                   ICarRideStatistics ICarRideStatistics,
-                   ImportInitializer importInit
+                   ICarRideStatistics ICarRideStatistics
     ) {
         frame = createFrame();
 
@@ -66,8 +67,8 @@ class MainWindowImpl implements MainWindow {
 
         chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
 
-        importAction = new ImportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel, importInit);
-        exportAction = new ExportAction(carRideTablePanel.getFilter(), templateTableModel, currencyTableModel, categoryTableModel);
+        importAction = ioActionFactory.getImportAction(carRideTablePanel.getFilter());
+        exportAction = ioActionFactory.getExportAction(carRideTablePanel.getFilter());
         colorThemeAction = new ColorThemeAction();
         info = new InfoAction();
 

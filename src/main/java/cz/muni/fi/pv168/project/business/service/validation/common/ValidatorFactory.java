@@ -20,9 +20,20 @@ public class ValidatorFactory {
     }
 
     public static Validator<String> doubleValidator() {
-        return value -> ValidationUtils.validateDouble(value) && Double.parseDouble(value) >= 0.0f
+        return doubleValidator(Double.MIN_VALUE, Double.MAX_VALUE);
+    }
+
+    /**
+     * Creates double validator with value bounds
+     * @param min INCLUSIVE left bound of value - minimal allowed value
+     * @param max EXCLUSIVE right bound of value
+     * @return double validator
+     */
+    public static Validator<String> doubleValidator(double min, double max) {
+        return value -> ValidationUtils.validateDouble(value)
+                && Double.parseDouble(value) >= min && Double.parseDouble(value) < max
                 ? ValidationResult.success() : ValidationResult.failed(
-                        String.format("Number %s is not Double or is not positive", value));
+                String.format("Number %s is not allowed Double", value));
     }
 
     @SafeVarargs
