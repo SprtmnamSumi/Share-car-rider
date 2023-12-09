@@ -6,8 +6,6 @@ import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterTemplateJSON;
 import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
@@ -39,21 +37,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
         importOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
         importOptionsComboBox.setSelectedIndex(0); // Default selection
 
-        String msgString1 = "Select a file";
-        JButton fileButton = new JButton("Select a file");
-        fileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                int result = fileChooser.showOpenDialog(ImportDialog.this);
-
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    selectedFile = fileChooser.getSelectedFile();
-                }
-            }
-        });
-
-        Object[] array = {msgString1, fileButton, "Select data to export:", importOptionsComboBox};
+        Object[] array = getObjects();
 
         String cancelName = "Cancel";
         Object[] options = {importName, cancelName, overwriteName};
@@ -74,6 +58,22 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
             }
         });
         optionPane.addPropertyChangeListener(this);
+    }
+
+    private Object[] getObjects() {
+        String msgString1 = "Select a file";
+        JButton fileButton = new JButton("Select a file");
+        fileButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showOpenDialog(ImportDialog.this);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+                selectedFile = fileChooser.getSelectedFile();
+            }
+        });
+
+        Object[] array = {msgString1, fileButton, "Select data to export:", importOptionsComboBox};
+        return array;
     }
 
     public void propertyChange(PropertyChangeEvent e) {
@@ -113,6 +113,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
     }
 
     private void performOverwrite(File file) {
+        Logger.info("Performing overwrite before import from file: " + file.getAbsolutePath());
         Initialize(file, true);
     }
 
@@ -136,6 +137,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
                 batchImporterTemplateJSON.importData(file.toPath(), importInitializer, overwrite);
                 break;
             default:
+                Logger.error("Selected unsupported import action.");
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
         }
     }
