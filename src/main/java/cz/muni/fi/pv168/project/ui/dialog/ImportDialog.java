@@ -24,16 +24,15 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
 
     private final JOptionPane optionPane;
     private final String importName = "Import";
-    private final String cancelName = "Cancel";
     private final String overwriteName = "Overwrite";
     private final JComboBox<String> importOptionsComboBox;
-    private final ImportInitializer importInitializator;
+    private final ImportInitializer importInitializer;
     private File selectedFile;
     private String selectedImportOption;
 
-    public ImportDialog(ImportInitializer importInitializator) {
+    public ImportDialog(ImportInitializer importInitializer) {
         super(Frame.getFrames()[0], "Import data", true);
-        this.importInitializator = importInitializator;
+        this.importInitializer = importInitializer;
 
 
         // Create a combo box for export options
@@ -56,6 +55,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
 
         Object[] array = {msgString1, fileButton, "Select data to export:", importOptionsComboBox};
 
+        String cancelName = "Cancel";
         Object[] options = {importName, cancelName, overwriteName};
 
         optionPane = new JOptionPane(array,
@@ -121,19 +121,19 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
         switch (selectedImportOption) {
             case "Car Rides":
                 BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
-                batchImporterCarRideJSON.importData(file.toPath(), importInitializator, overwrite);
+                batchImporterCarRideJSON.importData(file.toPath(), importInitializer, overwrite);
                 break;
             case "Currency":
                 BatchImporterCurrencyJSON batchImporterCurrencyJSON = new BatchImporterCurrencyJSON();
-                batchImporterCurrencyJSON.importData(file.toPath(), importInitializator, overwrite);
+                batchImporterCurrencyJSON.importData(file.toPath(), importInitializer, overwrite);
                 break;
             case "Category":
                 BatchImporterCategoryJSON batchImporterCategoryJSON = new BatchImporterCategoryJSON();
-                batchImporterCategoryJSON.importData(file.toPath(), importInitializator, overwrite);
+                batchImporterCategoryJSON.importData(file.toPath(), importInitializer, overwrite);
                 break;
             case "Template":
                 BatchImporterTemplateJSON batchImporterTemplateJSON = new BatchImporterTemplateJSON();
-                batchImporterTemplateJSON.importData(file.toPath(), importInitializator, overwrite);
+                batchImporterTemplateJSON.importData(file.toPath(), importInitializer, overwrite);
                 break;
             default:
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");

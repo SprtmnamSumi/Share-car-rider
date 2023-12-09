@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
 
+import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -9,6 +10,7 @@ public final class TransactionManagerImpl implements TransactionManager {
     private final DatabaseManager databaseManager;
     private Transaction transaction;
 
+    @Inject
     public TransactionManagerImpl(DatabaseManager databaseManager) {
         this.databaseManager = Objects.requireNonNull(databaseManager);
     }

@@ -8,11 +8,11 @@ import cz.muni.fi.pv168.project.business.service.export.batch.BatchImporter;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchOperationException;
 import cz.muni.fi.pv168.project.business.service.export.format.Format;
 import cz.muni.fi.pv168.project.business.service.export.format.FormatMapping;
-
 import java.util.Collection;
+import org.tinylog.Logger;
 
 
-public class GenericImport implements Import{
+public class GenericImport implements Import {
     private final ICrudService<CarRide> carRideICrudService;
     private final ICrudService<Category> categoryICrudService;
     private final ICrudService<Currency> currencyICrudService;
@@ -21,7 +21,7 @@ public class GenericImport implements Import{
     public GenericImport(
             ICrudService<CarRide> carRideICrudService,
             ICrudService<Category> categoryICrudService,
-            ICrudService <Currency> currencyICrudService,
+            ICrudService<Currency> currencyICrudService,
             Collection<BatchImporter> importers
     ) {
         this.carRideICrudService = carRideICrudService;
@@ -41,6 +41,7 @@ public class GenericImport implements Import{
         batch.carRides().forEach(this::createCarRide);
         batch.categories().forEach(this::createCategory);
         batch.currencies().forEach(this::createCurrency);
+        Logger.info("Data imported properly");
     }
 
     private void createCarRide(CarRide carRide) {
