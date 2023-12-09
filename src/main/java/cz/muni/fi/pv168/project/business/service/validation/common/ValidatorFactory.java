@@ -14,9 +14,20 @@ public class ValidatorFactory {
     }
 
     public static Validator<String> intValidator() {
-        return value -> ValidationUtils.validateInteger(value) && Integer.parseInt(value) >= 0
+        return intValidator(Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Creates int validator with value bounds
+     * @param min INCLUSIVE left bound of value - minimal allowed value
+     * @param max EXCLUSIVE right bound of value
+     * @return int validator
+     */
+    public static Validator<String> intValidator(int min, int max) {
+        return value -> ValidationUtils.validateInteger(value)
+                && Integer.parseInt(value) >= min && Integer.parseInt(value) < max
                 ? ValidationResult.success() : ValidationResult.failed(
-                    String.format("Number %s is not Integer or is not positive", value));
+                String.format("Number %s is not allowed Integer", value));
     }
 
     public static Validator<String> doubleValidator() {

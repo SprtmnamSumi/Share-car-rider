@@ -4,7 +4,7 @@ class ValidationUtils {
     static boolean validateDouble(String text){
         try{
             Double.parseDouble(text);
-            return true;
+            return !text.contains("f");
         }
         catch(NumberFormatException e){
             return false;

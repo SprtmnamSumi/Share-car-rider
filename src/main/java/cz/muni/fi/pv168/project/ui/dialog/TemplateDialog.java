@@ -30,7 +30,6 @@ class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField commission = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final Template template;
     private final CostBar costBar;
-
     private final ValidableListener validableListener;
 
     TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter, DefaultActionFactory<Category> categoryActionFactory, TableModel<Category> categoryTableModel) {
