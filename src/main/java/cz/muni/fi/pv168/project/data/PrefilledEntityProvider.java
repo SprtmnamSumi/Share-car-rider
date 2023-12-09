@@ -20,7 +20,7 @@ public class PrefilledEntityProvider implements EntityProvider {
     private final ICrudService<Currency> currencyCrudService;
 
     @Inject
-    public PrefilledEntityProvider(GuidProvider guidProvider,
+    PrefilledEntityProvider(GuidProvider guidProvider,
                                    ICrudService<Category> categoryCrudService,
                                    ICrudService<Currency> templateCrudService1) {
         this.guidProvider = guidProvider;

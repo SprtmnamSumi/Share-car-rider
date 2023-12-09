@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
 
 public class ValidatedInputField extends JTextField implements Validable {
 
@@ -14,10 +15,11 @@ public class ValidatedInputField extends JTextField implements Validable {
 
     private final Validator<String> validator;
 
-    public ValidatedInputField(Validator<String> validator) {
+    @SafeVarargs
+    public ValidatedInputField(Validator<String>... validators) {
         super();
         this.addKeyListener(listener);
-        this.validator = validator;
+        this.validator = Validator.compose(Arrays.stream(validators).toList());
     }
 
     @Override

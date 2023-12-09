@@ -62,6 +62,7 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                              """;
 
+
         ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
             statement.setString(1, newTemplate.getGuid());
             statement.setLong(2, newTemplate.getCurrencyId());
@@ -153,7 +154,8 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
     public CarRideEntity update(CarRideEntity entity) {
         var sql = """
                 UPDATE CarRide
-                SET    guid = ?,
+                SET
+                guid = ?,
                  currencyId = ?,
                  title = ?,
                  description = ?,
@@ -176,7 +178,7 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
             statement.setDouble(5, entity.getDistance());
             statement.setDouble(6, entity.getFuelConsumption());
             statement.setDouble(7, entity.getCostOfFuelPerLitre());
-            statement.setDouble(8, entity.getNumberOfPassengers());
+            statement.setInt(8, entity.getNumberOfPassengers());
             statement.setDouble(9, entity.getCommission());
             statement.setLong(10, entity.getCategoryId());
             statement.setDouble(11, entity.getNewestConversionRate());

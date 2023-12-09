@@ -4,9 +4,9 @@ class ValidationUtils {
     static boolean validateDouble(String text){
         try{
             Double.parseDouble(text);
-            return true;
+            return !text.contains("f");
         }
-        catch(IllegalArgumentException e){
+        catch(NumberFormatException e){
             return false;
         }
     }

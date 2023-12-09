@@ -23,7 +23,7 @@ public class Main {
         _injector = getInjector();
         Config.tryCreateProperties();
         initLookAndFeel();
-        fillDatabaseWithTestData();
+//        fillDatabaseWithTestData();
 
         EventQueue.invokeLater(() -> {
             try {

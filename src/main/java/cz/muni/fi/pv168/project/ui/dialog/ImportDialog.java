@@ -1,169 +1,82 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterTemplateJSON;
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
+import org.tinylog.Logger;
+
 import javax.swing.JOptionPane;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.io.File;
 
-public class ImportDialog extends JDialog implements PropertyChangeListener {
-
-    private final String title = "Import data";
-    private final JOptionPane optionPane;
-    private final String importName = "Import";
-    private final String cancelName = "Cancel";
-    private final String overwriteName = "Overwrite";
-    private final JComboBox<String> importOptionsComboBox;
+public class ImportDialog extends IODialog{
+    private final static String IMPORT = "Import";
+    private final static String CANCEL = "Cancel";
+    private final static String OVERWRITE = "Overwrite";
     private final ImportInitializer importInitializer;
-    private File selectedFile;
-    private String selectedImportOption;
 
-    public ImportDialog(Frame aFrame, ImportInitializer importInitializer) {
-        super(aFrame, true);
+    public ImportDialog(ImportInitializer importInitializer) {
+        super(IMPORT, CANCEL, OVERWRITE);
         this.importInitializer = importInitializer;
-        setTitle(title);
 
-        // Create a combo box for export options
-        importOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
-        importOptionsComboBox.setSelectedIndex(0); // Default selection
-
-        String msgString1 = "Select a file";
-        JButton fileButton = new JButton("Select a file");
-        fileButton.addActionListener(new ActionListener() {
+        this.addComponentListener(new ComponentAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                int result = fileChooser.showOpenDialog(ImportDialog.this);
+            public void componentShown(ComponentEvent e) {
+                optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE); // Reset the JOptionPane's value
+            }
 
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    selectedFile = fileChooser.getSelectedFile();
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                if (getSelectedFile() != null) {
+                    if(IMPORT.equals(optionPane.getValue())){
+                        performImport(getSelectedEntity(), getSelectedFile());
+                    }
+                    if(OVERWRITE.equals(optionPane.getValue())){
+                        performOverwrite(getSelectedEntity(), getSelectedFile());
+                    }
                 }
             }
         });
-
-        Object[] array = {msgString1, fileButton, "Select data to export:", importOptionsComboBox};
-
-        Object[] options = {importName, cancelName, overwriteName};
-
-        optionPane = new JOptionPane(array,
-                JOptionPane.PLAIN_MESSAGE,
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                null,
-                options,
-                options[0]);
-
-        setContentPane(optionPane);
-
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                optionPane.setValue(JOptionPane.CLOSED_OPTION);
-            }
-        });
-        optionPane.addPropertyChangeListener(this);
     }
 
-    public void propertyChange(PropertyChangeEvent e) {
-        String prop = e.getPropertyName();
-
-        if (isVisible()
-                && (e.getSource() == optionPane)
-                && (JOptionPane.VALUE_PROPERTY.equals(prop)
-                || JOptionPane.INPUT_VALUE_PROPERTY.equals(prop))) {
-            Object value = optionPane.getValue();
-
-            if (value == JOptionPane.UNINITIALIZED_VALUE) {
-                return;
+    private void performImport(String importOption, File file) {
+        Logger.info("Importing data from file: " + file.getAbsolutePath());
+        switch (importOption) {
+            case "Car Rides" -> {
+                importInitializer.initializeCarRide(
+                        new BatchImporterCarRideJSON().importData(file.toPath()));
             }
-
-            optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
-
-
-            if (importName.equals(value)) {
-                if (selectedFile != null) {
-                    selectedImportOption = (String) importOptionsComboBox.getSelectedItem();
-                    performImport(selectedFile);
-                }
-            } else if (overwriteName.equals(value)) {
-                if (selectedFile != null) {
-                    selectedImportOption = (String) importOptionsComboBox.getSelectedItem();
-                    performOverwrite(selectedFile);
-                }
+            case "Currency" -> {
+                importInitializer.initializeCurrency(
+                        new BatchImporterCurrencyJSON().importData(file.toPath()));
             }
-
-            clearAndHide();
-        }
-    }
-
-    private void performImport(File file) {
-        System.out.println("Importing data from file: " + file.getAbsolutePath());
-        switch (selectedImportOption) {
-            case "Car Rides":
-                BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
-                List<CarRide> carRideList = batchImporterCarRideJSON.importData(file.toPath());
-                importInitializer.initializeCarRide(carRideList);
-                break;
-            case "Currency":
-                BatchImporterCurrencyJSON batchImporterCurrencyJSON = new BatchImporterCurrencyJSON();
-                List<Currency> currencyList = batchImporterCurrencyJSON.importData(file.toPath());
-                importInitializer.initializeCurrency(currencyList);
-                break;
-            case "Category":
-                BatchImporterCategoryJSON batchImporterCategoryJSON = new BatchImporterCategoryJSON();
-                List<Category> categoryList = batchImporterCategoryJSON.importData(file.toPath());
-                importInitializer.initializeCategory(categoryList);
-                break;
-            case "Template":
-                BatchImporterTemplateJSON batchImporterTemplateJSON = new BatchImporterTemplateJSON();
-                List<Template> templateList = batchImporterTemplateJSON.importData(file.toPath());
-                importInitializer.initializeTemplate(templateList);
-                break;
-            default:
+            case "Category" -> {
+                importInitializer.initializeCategory(
+                        new BatchImporterCategoryJSON().importData(file.toPath()));
+            }
+            case "Template" -> {
+                importInitializer.initializeTemplate(
+                        new BatchImporterTemplateJSON().importData(file.toPath()));
+            }
+            default -> {
+                Logger.error("Selected unsupported import action.");
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
+            }
         }
     }
 
-    private void performOverwrite(File file) {
-        System.out.println("Performing overwrite operation");
-
-        switch (selectedImportOption) {
-            case "Car Rides":
-                importInitializer.redoCarRide();
-                break;
-            case "Currency":
-                importInitializer.redoCurrency();
-                break;
-            case "Category":
-                importInitializer.redoCategory();
-                break;
-            case "Template":
-                importInitializer.redoTemplate();
-                break;
-            default:
-                throw new IllegalStateException("You shouldn't be here, how did you even get here?");
+    private void performOverwrite(String importOption, File file) {
+        Logger.info("Performing overwrite before import from file: " + file.getAbsolutePath());
+        switch (importOption) {
+            case "Car Rides" -> importInitializer.redoCarRide();
+            case "Currency" -> importInitializer.redoCurrency();
+            case "Category" -> importInitializer.redoCategory();
+            case "Template" -> importInitializer.redoTemplate();
+            default -> throw new IllegalStateException("You shouldn't be here, how did you even get here?");
         }
-        performImport(file);
-    }
-
-    public void clearAndHide() {
-        setVisible(false);
+        performImport(importOption, file);
     }
 }
