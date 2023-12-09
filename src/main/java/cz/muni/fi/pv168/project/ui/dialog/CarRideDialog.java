@@ -9,7 +9,6 @@ import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
@@ -60,8 +59,9 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validableListener);
         templateBar = new TemplateBar(templateComboBoxModel, saveAsTemplate);
-        this.costBar = new CostBar(currencyModel, currencyConverter, validableListener);
-        validableListener.setListeners(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, categoryBar);
+        costBar = new CostBar(currencyModel, currencyConverter, validableListener);
+        validableListener.setListeners(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers,
+                commission, costBar, categoryBar, dateBar);
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {

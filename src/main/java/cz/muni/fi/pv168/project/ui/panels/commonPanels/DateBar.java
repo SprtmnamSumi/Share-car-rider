@@ -1,7 +1,10 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
+import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.PlaceholderTextField;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
+import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
 import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
 
@@ -11,45 +14,44 @@ import java.awt.FlowLayout;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class DateBar extends JPanel {
-    JDatePicker tf;
-    PlaceholderTextField tf1;
-    PlaceholderTextField tf2;
+public class DateBar extends ValidatedJPanel {
+    JDatePicker date;
+    ValidatedInputField hoursField = new ValidatedInputField(ValidatorFactory.intValidator(0,24));
+    ValidatedInputField minutesField = new ValidatedInputField(ValidatorFactory.intValidator(0,60));
     DateModel<LocalDate> mod = new LocalDateModel();
 
     public DateBar() {
-        super(new FlowLayout(FlowLayout.CENTER));
+        super();
+        this.setValidables(hoursField, minutesField);
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        tf = new JDatePicker(mod);
-        this.add(tf);
+        date = new JDatePicker(mod);
+        this.add(date);
 
-        tf1 = new PlaceholderTextField();
-        tf1.setPlaceholder("hr");
-        tf1.setPreferredSize(new Dimension(200, 30));
-        this.add(tf1);
+        hoursField.setText("hr");
+        hoursField.setPreferredSize(new Dimension(200, 30));
+        this.add(hoursField);
 
-        tf2 = new PlaceholderTextField();
-        tf2.setPlaceholder("min");
-        tf2.setPreferredSize(new Dimension(200, 30));
-        this.add(tf2);
+        minutesField.setText("min");
+        minutesField.setPreferredSize(new Dimension(200, 30));
+        this.add(minutesField);
     }
 
     public LocalDateTime getDate() {
-        int minute = Integer.parseInt(tf2.getText());
-        int hour = Integer.parseInt(tf1.getText());
+        int minute = Integer.parseInt(minutesField.getText());
+        int hour = Integer.parseInt(hoursField.getText());
 
         var day = mod.getDay();
         int month = mod.getMonth();
         int year = mod.getYear();
 
-        LocalDateTime date = LocalDateTime.of(year, month + 1, day, hour, minute);
-        return date;
+        return LocalDateTime.of(year, month + 1, day, hour, minute);
     }
 
     public void setDate(LocalDateTime dateField) {
         LocalDate localDate = dateField.toLocalDate();
         mod.setValue(localDate);
-        tf1.setText(String.valueOf(dateField.getHour()));
-        tf2.setText(String.valueOf(dateField.getMinute()));
+        hoursField.setText(String.valueOf(dateField.getHour()));
+        minutesField.setText(String.valueOf(dateField.getMinute()));
     }
 }
