@@ -1,14 +1,15 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
-import java.util.Objects;
 import java.util.function.Supplier;
+import javax.inject.Inject;
 
 public class TransactionExecutorImpl implements TransactionExecutor {
 
     private final Supplier<Transaction> transactions;
 
-    public TransactionExecutorImpl(Supplier<Transaction> transactions) {
-        this.transactions = Objects.requireNonNull(transactions);
+    @Inject
+    public TransactionExecutorImpl(DatabaseManager databaseManager) {
+        this.transactions = databaseManager::getTransactionHandler;
     }
 
     @Override

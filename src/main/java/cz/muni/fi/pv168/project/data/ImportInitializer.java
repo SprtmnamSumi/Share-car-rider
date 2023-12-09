@@ -4,63 +4,80 @@ import com.google.inject.Inject;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
+import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-
 import java.util.List;
+
 public class ImportInitializer {
-    private final TableModel<Category> categories;
-    private final TableModel<CarRide> rides;
-    private final TableModel<Currency> currencies;
-    private final TableModel<Template> templates;
-    TestDataGenerator generator;
+    private final TableModel<Category> categoryTableModel;
+    private final TableModel<CarRide> carRideTableModel;
+    private final TableModel<Currency> currencyTableModel;
+    private final TableModel<Template> templateTableModel;
+    private final TransactionExecutor transactionExecutor;
+    private final ICrudService<Currency> currencyICrudService;
+    private final ICrudService<Category> categoryICrudService;
+    private final ICrudService<Template> templateICrudService;
+    private final ICrudService<CarRide> carRideICrudService;
+
     @Inject
-    ImportInitializer(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates) {
-        this.categories = categories;
-        this.rides = rides;
-        this.currencies = currencies;
-        this.templates = templates;
-        generator = new TestDataGenerator(guidProvider);
+    ImportInitializer(TableModel<Category> categoryTable, TableModel<CarRide> rideTable, TableModel<Currency> currencyTable, TableModel<Template> templateTable, TransactionExecutor transactionExecutor,
+                      ICrudService<Currency> currencyICrudService, ICrudService<Category> categoryICrudService, ICrudService<Template> templateICrudService, ICrudService<CarRide> carRideICrudService
+    ) {
+        this.categoryTableModel = categoryTable;
+        this.carRideTableModel = rideTable;
+        this.currencyTableModel = currencyTable;
+        this.templateTableModel = templateTable;
+        this.transactionExecutor = transactionExecutor;
+        this.currencyICrudService = currencyICrudService;
+        this.categoryICrudService = categoryICrudService;
+        this.templateICrudService = templateICrudService;
+        this.carRideICrudService = carRideICrudService;
     }
 
-    public void initializeCarRide(List<CarRide> ride) {
-        ride.forEach(rides::addRow);
+
+    public void initializeCarRide(List<CarRide> rides, boolean rewrite) {
+        transactionExecutor.executeInTransaction(() -> {
+            if (rewrite) {
+                carRideICrudService.deleteAll();
+            }
+            rides.forEach(carRideICrudService::create);
+        });
+        carRideTableModel.refresh();
     }
 
-    public void initializeCategory(List<Category> cat) {
-        cat.forEach(categories::addRow);
+
+    public void initializeCategory(List<Category> categories, boolean rewrite) {
+        transactionExecutor.executeInTransaction(() -> {
+            if (rewrite) {
+                categoryICrudService.deleteAll();
+            }
+            categories.forEach(categoryICrudService::create);
+        });
+        categoryTableModel.refresh();
     }
 
-    public void initializeCurrency(List<Currency> cur) {
-        cur.forEach(currencies::addRow);
+
+    public void initializeCurrency(List<Currency> currencies, boolean rewrite) {
+        transactionExecutor.executeInTransaction(() -> {
+            if (rewrite) {
+                currencyICrudService.deleteAll();
+            }
+            currencies.forEach(currencyICrudService::create);
+        });
+        currencyTableModel.refresh();
     }
 
-    public void initializeTemplate(List<Template> template) {
-        template.forEach(templates::addRow);
+
+    public void initializeTemplate(List<Template> templates, boolean rewrite) {
+        transactionExecutor.executeInTransaction(() -> {
+            if (rewrite) {
+                currencyICrudService.deleteAll();
+            }
+            templates.forEach(templateICrudService::create);
+        });
+        templateTableModel.refresh();
     }
 
-    public void redoCarRide() {
-        while (rides.getRowCount() > 0) {
-            rides.deleteRow(0);
-        }
-    }
-
-    public void redoCategory() {
-        while (categories.getRowCount() > 0) {
-            categories.deleteRow(0);
-        }
-    }
-
-    public void redoCurrency() {
-        while (currencies.getRowCount() > 0) {
-            currencies.deleteRow(0);
-        }
-    }
-
-    public void redoTemplate() {
-        while (templates.getRowCount() > 0) {
-            templates.deleteRow(0);
-        }
-    }
 }

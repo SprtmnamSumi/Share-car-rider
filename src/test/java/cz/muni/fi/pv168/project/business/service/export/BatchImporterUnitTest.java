@@ -22,7 +22,7 @@ class BatchImporterUnitTest {
     @Test
     void importNoCarRides() {
         Path importFilePath = TEST_RESOURCES.resolve("empty.json");
-        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer);
+        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
 
         assertThat(carRides).isEmpty();
     }
@@ -30,7 +30,7 @@ class BatchImporterUnitTest {
     @Test
     void singleCarRide() {
         Path importFilePath = TEST_RESOURCES.resolve("single-carride.json");
-        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer);
+        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
 
         assertThat(carRides)
                 .usingRecursiveFieldByFieldElementComparator()
@@ -42,7 +42,7 @@ class BatchImporterUnitTest {
     @Test
     void multipleCarRides() {
         Path importFilePath = TEST_RESOURCES.resolve("multiple-carrides.json");
-        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer);
+        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
 
         assertThat(carRides)
                 .usingRecursiveFieldByFieldElementComparator()

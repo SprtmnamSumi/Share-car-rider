@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.tinylog.Logger;
 
 public class ImportDialog extends JDialog implements PropertyChangeListener {
 
@@ -108,49 +109,35 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
     }
 
     private void performImport(File file) {
-        System.out.println("Importing data from file: " + file.getAbsolutePath());
-        switch (selectedImportOption) {
-            case "Car Rides":
-                BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
-                batchImporterCarRideJSON.importData(file.toPath(), importInitializator);
-                break;
-            case "Currency":
-                BatchImporterCurrencyJSON batchImporterCurrencyJSON = new BatchImporterCurrencyJSON();
-                batchImporterCurrencyJSON.importData(file.toPath(), importInitializator);
-                break;
-            case "Category":
-                BatchImporterCategoryJSON batchImporterCategoryJSON = new BatchImporterCategoryJSON();
-                batchImporterCategoryJSON.importData(file.toPath(), importInitializator);
-                break;
-            case "Template":
-                BatchImporterTemplateJSON batchImporterTemplateJSON = new BatchImporterTemplateJSON();
-                batchImporterTemplateJSON.importData(file.toPath(), importInitializator);
-                break;
-            default:
-                throw new IllegalStateException("You shouldn't be here, how did you even get here?");
-        }
+        Initialize(file, false);
     }
 
     private void performOverwrite(File file) {
-        System.out.println("Performing overwrite operation");
+        Initialize(file, true);
+    }
 
+    private void Initialize(File file, boolean overwrite) {
+        Logger.info("Importing data from file: " + file.getAbsolutePath());
         switch (selectedImportOption) {
             case "Car Rides":
-                importInitializator.redoCarRide();
+                BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
+                batchImporterCarRideJSON.importData(file.toPath(), importInitializator, overwrite);
                 break;
             case "Currency":
-                importInitializator.redoCurrency();
+                BatchImporterCurrencyJSON batchImporterCurrencyJSON = new BatchImporterCurrencyJSON();
+                batchImporterCurrencyJSON.importData(file.toPath(), importInitializator, overwrite);
                 break;
             case "Category":
-                importInitializator.redoCategory();
+                BatchImporterCategoryJSON batchImporterCategoryJSON = new BatchImporterCategoryJSON();
+                batchImporterCategoryJSON.importData(file.toPath(), importInitializator, overwrite);
                 break;
             case "Template":
-                importInitializator.redoTemplate();
+                BatchImporterTemplateJSON batchImporterTemplateJSON = new BatchImporterTemplateJSON();
+                batchImporterTemplateJSON.importData(file.toPath(), importInitializator, overwrite);
                 break;
             default:
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
         }
-        performImport(file);
     }
 
     public void clearAndHide() {

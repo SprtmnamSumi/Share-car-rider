@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Function;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 public class importer<T> {
 
@@ -25,7 +26,7 @@ public class importer<T> {
             templateList = importer.apply(jsonObject);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e.getMessage());
             return null;
         }
         initialize.apply(templateList);

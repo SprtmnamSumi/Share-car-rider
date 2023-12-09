@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class BatchImporterCategoryJSON extends importer<Category> {
 
 
-    public List<Category> importData(Path filePath, ImportInitializer initializer) {
+    public List<Category> importData(Path filePath, ImportInitializer initializer, boolean overwrite) {
         Function<JSONObject, List<Category>> importer = json -> {
             List<Category> categoryList = new LinkedList<>();
             JSONArray categoryArray = json.getJSONArray("categories");
@@ -33,7 +33,7 @@ public class BatchImporterCategoryJSON extends importer<Category> {
         };
 
         Function<List<Category>, Void> init = list -> {
-            initializer.initializeCategory(list);
+            initializer.initializeCategory(list, overwrite);
             return null;
         };
 

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 
 public class BatchImporterCurrencyJSON extends importer<Currency> {
-    public List<Currency> importData(Path filePath, ImportInitializer initializer) {
+    public List<Currency> importData(Path filePath, ImportInitializer initializer, boolean overwrite) {
         Function<JSONObject, List<Currency>> importer = json -> {
             List<Currency> currencyList = new LinkedList<>();
             JSONArray currencyArray = json.getJSONArray("currencies");
@@ -32,7 +32,7 @@ public class BatchImporterCurrencyJSON extends importer<Currency> {
         };
 
         Function<List<Currency>, Void> init = list -> {
-            initializer.initializeCurrency(list);
+            initializer.initializeCurrency(list, overwrite);
             return null;
         };
 

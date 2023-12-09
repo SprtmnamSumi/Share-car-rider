@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 public class BatchImporterTemplateJSON extends importer<Template> {
 
-    public List<Template> importData(Path filePath, ImportInitializer initializer) {
+    public List<Template> importData(Path filePath, ImportInitializer initializer, boolean overwrite) {
         Function<JSONObject, List<Template>> importer = json -> {
             List<Template> templateList = new LinkedList<>();
             JSONArray templateArray = json.getJSONArray("templates");
@@ -50,7 +50,7 @@ public class BatchImporterTemplateJSON extends importer<Template> {
         };
 
         Function<List<Template>, Void> init = list -> {
-            initializer.initializeTemplate(list);
+            initializer.initializeTemplate(list, overwrite);
             return null;
         };
 

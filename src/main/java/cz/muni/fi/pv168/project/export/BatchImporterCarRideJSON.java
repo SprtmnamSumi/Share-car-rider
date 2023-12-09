@@ -17,7 +17,7 @@ import org.json.JSONObject;
 public class BatchImporterCarRideJSON extends importer<CarRide> {
 
 
-    public List<CarRide> importData(Path filePath, ImportInitializer initializer) {
+    public List<CarRide> importData(Path filePath, ImportInitializer initializer, boolean overwrite) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         Function<JSONObject, List<CarRide>> importer = json -> {
             List<CarRide> carRideList = new LinkedList<>();
@@ -59,7 +59,7 @@ public class BatchImporterCarRideJSON extends importer<CarRide> {
         };
 
         Function<List<CarRide>, Void> init = list -> {
-            initializer.initializeCarRide(list);
+            initializer.initializeCarRide(list, overwrite);
             return null;
         };
 
