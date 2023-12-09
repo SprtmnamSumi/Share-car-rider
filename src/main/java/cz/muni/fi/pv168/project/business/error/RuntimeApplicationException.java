@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.business.error;
 
 import java.io.Serial;
+import org.tinylog.Logger;
 
 public class RuntimeApplicationException extends RuntimeException implements ApplicationException {
 
@@ -16,11 +17,13 @@ public class RuntimeApplicationException extends RuntimeException implements App
 
     public RuntimeApplicationException(String userMessage, String message) {
         super(message);
+        Logger.error("RuntimeApplicationException occurred: " + userMessage + ", message");
         this.userMessage = userMessage;
     }
 
     public RuntimeApplicationException(String userMessage, String message, Throwable cause) {
         super(message, cause);
+        Logger.error("RuntimeApplicationException occurred: " + userMessage + ", message" + cause.getMessage());
         this.userMessage = userMessage;
     }
 
@@ -29,6 +32,7 @@ public class RuntimeApplicationException extends RuntimeException implements App
     }
 
     public static RuntimeApplicationException withDefaultUserMessage(String message) {
+        Logger.error("RuntimeApplicationException occurred: " + message);
         return new RuntimeApplicationException(DEFAULT_USER_MESSAGE, message);
     }
 
