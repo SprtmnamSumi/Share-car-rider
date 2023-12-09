@@ -8,7 +8,7 @@ import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 
 class AddCurrencyDialog extends EntityDialog<Currency> {
     private final ValidatedInputField nameTextField = new ValidatedInputField(ValidatorFactory.stringValidator(1, 150));
-    private final ValidatedInputField symbolTextField = new ValidatedInputField(ValidatorFactory.stringValidator(1, 1));
+    private final ValidatedInputField symbolTextField = new ValidatedInputField(ValidatorFactory.stringValidator(1, 3));
     private final ValidatedInputField rateToDollar = new ValidatedInputField(ValidatorFactory
             .eitherValidator(ValidatorFactory.doubleValidator(), ValidatorFactory.intValidator()));
     private final Currency currency;
