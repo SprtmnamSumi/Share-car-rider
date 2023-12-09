@@ -1,10 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action;
 
-import javax.inject.Inject;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
-import cz.muni.fi.pv168.project.ui.dialog.ExportDialog;
-import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
+
+import javax.inject.Inject;
 
 public class IOActionFactory {
     private final DialogFactory dialogFactory;
@@ -17,7 +16,7 @@ public class IOActionFactory {
         return new ExportAction(dialogFactory, carRideFilterModel);
     }
 
-    public ImportAction getImportAction(ICarRideTableFilter carRideFilterModel) {
-        return new ImportAction(dialogFactory, carRideFilterModel);
+    public ImportAction getImportAction() {
+        return new ImportAction(dialogFactory);
     }
 }

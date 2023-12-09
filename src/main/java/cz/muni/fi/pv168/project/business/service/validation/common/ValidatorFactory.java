@@ -20,7 +20,7 @@ public class ValidatorFactory {
     }
 
     public static Validator<String> doubleValidator() {
-        return doubleValidator(Double.MIN_VALUE, Double.MAX_VALUE);
+        return doubleValidator(-Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
     /**
