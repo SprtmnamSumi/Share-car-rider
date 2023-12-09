@@ -91,7 +91,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
             optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
 
             if (EXPORT.equals(value) && selectedFile != null) {
-                performExport((String) Objects.requireNonNull(exportOptionsComboBox.getSelectedItem()), selectedFile);
+                performExport((String) Objects.requireNonNull(exportOptionsComboBox.getSelectedItem()));
             }
 
             clearAndHide();
@@ -99,7 +99,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
     }
 
 
-    private void performExport(String selectedExportOption, File file) {
+    private void performExport(String selectedExportOption) {
 
         switch (selectedExportOption) {
             case "Car Rides" -> {
