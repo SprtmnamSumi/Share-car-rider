@@ -108,7 +108,7 @@ public class ExportDialog extends JDialog implements PropertyChangeListener {
                 BatchExporterCarRideJSON batchExporterCarRideJSON = new BatchExporterCarRideJSON();
                 batchExporterCarRideJSON.exportData(carRideList, selectedFile.getAbsolutePath());
             }
-            case "CurrencyEntity" -> {
+            case "Currency" -> {
                 List<Currency> currencyList = currencies.getAll();
                 BatchExporterCurrencyJSON batchExporterCurrencyJSON = new BatchExporterCurrencyJSON();
                 batchExporterCurrencyJSON.exportData(currencyList, selectedFile.getAbsolutePath());

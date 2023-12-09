@@ -27,7 +27,6 @@ public final class ExportAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         ExportDialog popupDialog = dialogFactory.getExportDialog(carRideFilterModel);
         popupDialog.setSize(400, 200);
-
         popupDialog.setLocationRelativeTo(null);
         popupDialog.setVisible(true);
     }
