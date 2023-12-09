@@ -29,7 +29,6 @@ import java.util.List;
 
 public class ImportDialog extends JDialog implements PropertyChangeListener {
 
-    private final String title = "Import data";
     private final JOptionPane optionPane;
 
     private final String btnString1 = "Import";
@@ -45,16 +44,15 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
 
     private File selectedFile;
     private String selectedImportOption;
-    private ImportInitializer importInitializator;
+    private final ImportInitializer importInitializator;
 
-    public ImportDialog(Frame aFrame, String aWord, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ICarRideTableFilter carRideTableFilter, ImportInitializer importInitializator) {
-        super(aFrame, true);
+    public ImportDialog(ICarRideTableFilter carRideTableFilter, TableModel<Template> templates, TableModel<Currency> currencies, TableModel<Category> categories, ImportInitializer importInitializator) {
+        super(Frame.getFrames()[0], "Import data", true);
         this.templates = templates;
         this.currencies = currencies;
         this.categories = categories;
         this.carRideTableFilter = carRideTableFilter;
         this.importInitializator = importInitializator;
-        setTitle(title);
 
         // Create a combo box for export options
         importOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
