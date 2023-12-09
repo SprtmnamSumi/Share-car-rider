@@ -3,6 +3,8 @@ package cz.muni.fi.pv168.project.ui;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
+import cz.muni.fi.pv168.project.ui.filters.CarRideTableFilter;
+import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.wiring.ProductionDatabaseProvider;
 
 

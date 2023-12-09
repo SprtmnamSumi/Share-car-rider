@@ -44,7 +44,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
 
     private final CarRide carRide;
 
-    CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
+    CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, TableModel<Category> categoryTableModel, CurrencyConverter currencyConverter) {
         this.carRide = carRide;
         this.entityCrudService = entityCrudService;
 
