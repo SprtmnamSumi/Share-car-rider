@@ -9,11 +9,11 @@ import cz.muni.fi.pv168.project.business.service.export.batch.BatchExporter;
 import cz.muni.fi.pv168.project.business.service.export.batch.BatchOperationException;
 import cz.muni.fi.pv168.project.business.service.export.format.Format;
 import cz.muni.fi.pv168.project.business.service.export.format.FormatMapping;
-
 import java.util.Collection;
+import org.tinylog.Logger;
 
 
-public class GenericExport implements Export{
+public class GenericExport implements Export {
 
     private final ICrudService<CarRide> carRideICrudService;
     private final ICrudService<Category> categoryICrudService;
@@ -24,7 +24,7 @@ public class GenericExport implements Export{
     public GenericExport(
             ICrudService<CarRide> carRideICrudService,
             ICrudService<Category> categoryICrudService,
-            ICrudService <Currency> currencyICrudService,
+            ICrudService<Currency> currencyICrudService,
             Collection<BatchExporter> exporters
     ) {
         this.carRideICrudService = carRideICrudService;
@@ -32,6 +32,7 @@ public class GenericExport implements Export{
         this.currencyICrudService = currencyICrudService;
         this.exporters = new FormatMapping<>(exporters);
     }
+
     @Override
     public void exportData(String filePath) {
         var exporter = getExporter(filePath);
@@ -39,6 +40,7 @@ public class GenericExport implements Export{
                 categoryICrudService.findAll(),
                 currencyICrudService.findAll());
         exporter.exportBatch(batch, filePath);
+        Logger.info("Data exported successfully");
     }
 
     @Override
@@ -49,8 +51,12 @@ public class GenericExport implements Export{
     private BatchExporter getExporter(String filePath) {
         var extension = filePath.substring(filePath.lastIndexOf('.') + 1);
         var importer = exporters.findByExtension(extension);
-        if (importer == null)
+        if (importer == null) {
+            Logger.error("Extension %s has no registered formatter".formatted(extension));
             throw new BatchOperationException("Extension %s has no registered formatter".formatted(extension));
+        }
+
+
         return importer;
     }
 }
