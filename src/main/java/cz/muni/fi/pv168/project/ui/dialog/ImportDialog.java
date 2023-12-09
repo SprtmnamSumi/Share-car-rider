@@ -1,9 +1,5 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
@@ -17,7 +13,6 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -117,23 +112,19 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
         switch (selectedImportOption) {
             case "Car Rides":
                 BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
-                List<CarRide> carRideList = batchImporterCarRideJSON.importData(file.toPath());
-                importInitializator.initializeCarRide(carRideList);
+                batchImporterCarRideJSON.importData(file.toPath(), importInitializator);
                 break;
             case "Currency":
                 BatchImporterCurrencyJSON batchImporterCurrencyJSON = new BatchImporterCurrencyJSON();
-                List<Currency> currencyList = batchImporterCurrencyJSON.importData(file.toPath());
-                importInitializator.initializeCurrency(currencyList);
+                batchImporterCurrencyJSON.importData(file.toPath(), importInitializator);
                 break;
             case "Category":
                 BatchImporterCategoryJSON batchImporterCategoryJSON = new BatchImporterCategoryJSON();
-                List<Category> categoryList = batchImporterCategoryJSON.importData(file.toPath());
-                importInitializator.initializeCategory(categoryList);
+                batchImporterCategoryJSON.importData(file.toPath(), importInitializator);
                 break;
             case "Template":
                 BatchImporterTemplateJSON batchImporterTemplateJSON = new BatchImporterTemplateJSON();
-                List<Template> templateList = batchImporterTemplateJSON.importData(file.toPath());
-                importInitializator.initializeTemplate(templateList);
+                batchImporterTemplateJSON.importData(file.toPath(), importInitializator);
                 break;
             default:
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");

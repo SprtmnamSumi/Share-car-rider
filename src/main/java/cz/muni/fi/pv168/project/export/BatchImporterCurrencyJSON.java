@@ -1,35 +1,20 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.data.ImportInitializer;
+import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Function;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.format.DateTimeFormatter;
-import java.util.LinkedList;
-import java.util.List;
 
-
-public class BatchImporterCurrencyJSON {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
-    public List<Currency> importData(Path filePath) {
-        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(filePath))) {
-            byte[] buffer = new byte[4096];
-            StringBuilder content = new StringBuilder();
-
-            int bytesRead;
-            while ((bytesRead = bis.read(buffer)) != -1) {
-                content.append(new String(buffer, 0, bytesRead));
-            }
-
-            JSONObject jsonObject = new JSONObject(content.toString());
-            JSONArray currencyArray = jsonObject.getJSONArray("currencies");
-
+public class BatchImporterCurrencyJSON extends importer<Currency> {
+    public List<Currency> importData(Path filePath, ImportInitializer initializer) {
+        Function<JSONObject, List<Currency>> importer = json -> {
             List<Currency> currencyList = new LinkedList<>();
+            JSONArray currencyArray = json.getJSONArray("currencies");
 
             for (int i = 0; i < currencyArray.length(); i++) {
                 JSONObject currencyObject = currencyArray.getJSONObject(i);
@@ -43,11 +28,17 @@ public class BatchImporterCurrencyJSON {
 
                 currencyList.add(currency);
             }
-
             return currencyList;
-        } catch (IOException e) {
-            e.printStackTrace();
+        };
+
+        Function<List<Currency>, Void> init = list -> {
+            initializer.initializeCurrency(list);
             return null;
-        }
+        };
+
+        return super.importData(filePath, importer, init);
     }
 }
+    
+    
+

@@ -3,35 +3,25 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.nio.file.Files;
+import cz.muni.fi.pv168.project.data.ImportInitializer;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-public class BatchImporterCarRideJSON {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+public class BatchImporterCarRideJSON extends importer<CarRide> {
 
-    public List<CarRide> importData(Path filePath) {
-        try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(filePath))) {
-            byte[] buffer = new byte[4096];
-            StringBuilder content = new StringBuilder();
 
-            int bytesRead;
-            while ((bytesRead = bis.read(buffer)) != -1) {
-                content.append(new String(buffer, 0, bytesRead));
-            }
-
-            JSONObject jsonObject = new JSONObject(content.toString());
-            JSONArray carRidesArray = jsonObject.getJSONArray("carrides");
-
+    public List<CarRide> importData(Path filePath, ImportInitializer initializer) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        Function<JSONObject, List<CarRide>> importer = json -> {
             List<CarRide> carRideList = new LinkedList<>();
+            JSONArray carRidesArray = json.getJSONArray("carrides");
 
             for (int i = 0; i < carRidesArray.length(); i++) {
                 JSONObject carRideObject = carRidesArray.getJSONObject(i);
@@ -65,11 +55,14 @@ public class BatchImporterCarRideJSON {
                         LocalDateTime.parse(carRideObject.getString("date"), formatter));
                 carRideList.add(carRide);
             }
-
             return carRideList;
-        } catch (IOException e) {
-            e.printStackTrace();
+        };
+
+        Function<List<CarRide>, Void> init = list -> {
+            initializer.initializeCarRide(list);
             return null;
-        }
+        };
+
+        return super.importData(filePath, importer, init);
     }
 }
