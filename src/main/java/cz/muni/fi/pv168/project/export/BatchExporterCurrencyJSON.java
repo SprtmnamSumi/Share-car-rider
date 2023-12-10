@@ -1,16 +1,15 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class BatchExporterCurrencyJSON {
-    public void exportData(List<Currency> currencies, String filePath) {
+    public boolean exportData(List<Currency> currencies, String filePath) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             JSONArray currencyArray = new JSONArray();
 
@@ -32,6 +31,8 @@ public class BatchExporterCurrencyJSON {
             fileWriter.write(jsonObject.toString(2));
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 }

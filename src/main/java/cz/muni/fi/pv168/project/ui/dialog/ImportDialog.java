@@ -44,20 +44,20 @@ public class ImportDialog extends IODialog {
 
     private void Initialize(String importOption, File file, boolean overwrite) {
         Logger.info("Importing data from file: " + file.getAbsolutePath());
-        AsyncExecutor<Void, Boolean> asyncExecutor = switch (importOption) {
-            case "Car Rides" -> new AsyncExecutor<>(
+        AsyncExecutor asyncExecutor = switch (importOption) {
+            case "Car Rides" -> new AsyncExecutor(
                     (x) -> new BatchImporterCarRideJSON().importData(file.toPath(), importInitializer, overwrite),
                     () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
                     () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
-            case "Currency" -> new AsyncExecutor<>(
+            case "Currency" -> new AsyncExecutor(
                     (x) -> new BatchImporterCurrencyJSON().importData(file.toPath(), importInitializer, overwrite),
                     () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
                     () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
-            case "Category" -> new AsyncExecutor<>(
+            case "Category" -> new AsyncExecutor(
                     (x) -> new BatchImporterCategoryJSON().importData(file.toPath(), importInitializer, overwrite),
                     () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
                     () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
-            case "Template" -> new AsyncExecutor<>(
+            case "Template" -> new AsyncExecutor(
                     (x) -> new BatchImporterTemplateJSON().importData(file.toPath(), importInitializer, overwrite),
                     () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
                     () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));

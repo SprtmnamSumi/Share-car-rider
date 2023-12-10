@@ -7,13 +7,13 @@ import org.tinylog.Logger;
 /**
  * Implementation of asynchronous exporter for UI.
  */
-public class AsyncExecutor<L, T> {
+public class AsyncExecutor {
 
-    private final Function<L, Boolean> doStuff;
+    private final Function<Void, Boolean> doStuff;
     private final Runnable onFinish;
     private final Runnable onError;
 
-    public AsyncExecutor(Function<L, Boolean> doStuf, Runnable onFinish, Runnable onError) {
+    public AsyncExecutor(Function<Void, Boolean> doStuf, Runnable onFinish, Runnable onError) {
         this.doStuff = doStuf;
         this.onFinish = onFinish;
         this.onError = onError;
@@ -24,8 +24,7 @@ public class AsyncExecutor<L, T> {
         var asyncWorker = new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() {
-                var stuff = doStuff.apply(null);
-                return stuff;
+                return doStuff.apply(null);
             }
 
             @Override
@@ -33,9 +32,10 @@ public class AsyncExecutor<L, T> {
                 super.done();
                 boolean isOk = false;
                 try {
-                    isOk = super.get();
+                    isOk = super.get() && !isCancelled();
                 } catch (Exception e) {
                     onError.run();
+                    return;
                 }
                 (isOk ? onFinish : onError).run();
             }
