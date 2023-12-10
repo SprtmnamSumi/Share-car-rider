@@ -5,120 +5,45 @@ import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterTemplateJSON;
-import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.tinylog.Logger;
 
-public class ImportDialog extends JDialog implements PropertyChangeListener {
-    private final JOptionPane optionPane;
-    private final String importName = "Import";
-    private final String overwriteName = "Overwrite";
-    private final JComboBox<String> importOptionsComboBox;
+public class ImportDialog extends IODialog {
+    private final static String IMPORT = "Import";
+    private final static String CANCEL = "Cancel";
+    private final static String OVERWRITE = "Overwrite";
     private final ImportInitializer importInitializer;
-    private File selectedFile;
-    private String selectedImportOption;
 
     ImportDialog(ImportInitializer importInitializer) {
-        super(Frame.getFrames()[0], "Import data", true);
+        super(IMPORT, CANCEL, OVERWRITE);
         this.importInitializer = importInitializer;
 
-
-        // Create a combo box for export options
-        importOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
-        importOptionsComboBox.setSelectedIndex(0); // Default selection
-
-        Object[] array = getObjects();
-
-        String cancelName = "Cancel";
-        Object[] options = {importName, cancelName, overwriteName};
-
-        optionPane = new JOptionPane(array,
-                JOptionPane.PLAIN_MESSAGE,
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                null,
-                options,
-                options[0]);
-
-        setContentPane(optionPane);
-
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent we) {
-                optionPane.setValue(JOptionPane.CLOSED_OPTION);
-            }
-        });
-        optionPane.addPropertyChangeListener(this);
-    }
-
-    private Object[] getObjects() {
-        String msgString1 = "Select a file";
-        JButton fileButton = new JButton("Select a file");
-        fileButton.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            int result = fileChooser.showOpenDialog(ImportDialog.this);
-
-            if (result == JFileChooser.APPROVE_OPTION) {
-                selectedFile = fileChooser.getSelectedFile();
-            }
-        });
-
-        Object[] array = {msgString1, fileButton, "Select data to export:", importOptionsComboBox};
-        return array;
-    }
-
-    public void propertyChange(PropertyChangeEvent e) {
-        String prop = e.getPropertyName();
-
-        if (isVisible()
-                && (e.getSource() == optionPane)
-                && (JOptionPane.VALUE_PROPERTY.equals(prop)
-                || JOptionPane.INPUT_VALUE_PROPERTY.equals(prop))) {
-            Object value = optionPane.getValue();
-
-            if (value == JOptionPane.UNINITIALIZED_VALUE) {
-                return;
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE); // Reset the JOptionPane's value
             }
 
-            optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
-
-
-            if (importName.equals(value)) {
-                if (selectedFile != null) {
-                    selectedImportOption = (String) importOptionsComboBox.getSelectedItem();
-                    performImport(selectedFile);
-                }
-            } else if (overwriteName.equals(value)) {
-                if (selectedFile != null) {
-                    selectedImportOption = (String) importOptionsComboBox.getSelectedItem();
-                    performOverwrite(selectedFile);
+            @Override
+            public void componentHidden(ComponentEvent e) {
+                if (getSelectedFile() != null) {
+                    if (IMPORT.equals(optionPane.getValue())) {
+                        performImport(getSelectedEntity(), getSelectedFile());
+                    }
+                    if (OVERWRITE.equals(optionPane.getValue())) {
+                        performOverwrite(getSelectedEntity(), getSelectedFile());
+                    }
                 }
             }
-
-            clearAndHide();
-        }
+        });
     }
 
-    private void performImport(File file) {
-        Initialize(file, false);
-    }
-
-    private void performOverwrite(File file) {
-        Logger.info("Performing overwrite before import from file: " + file.getAbsolutePath());
-        Initialize(file, true);
-    }
-
-    private void Initialize(File file, boolean overwrite) {
+    private void Initialize(String importOption, File file, boolean overwrite) {
         Logger.info("Importing data from file: " + file.getAbsolutePath());
-        switch (selectedImportOption) {
+        switch (importOption) {
             case "Car Rides":
                 BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
                 batchImporterCarRideJSON.importData(file.toPath(), importInitializer, overwrite);
@@ -141,7 +66,12 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
         }
     }
 
-    public void clearAndHide() {
-        setVisible(false);
+    private void performImport(String importOption, File file) {
+        Initialize(importOption, file, false);
+    }
+
+    private void performOverwrite(String importOption, File file) {
+        Logger.info("Performing overwrite before import from file: " + file.getAbsolutePath());
+        Initialize(importOption, file, true);
     }
 }
