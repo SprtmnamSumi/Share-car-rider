@@ -13,7 +13,7 @@ public final class ExportAction extends AbstractAction {
     private final DialogFactory dialogFactory;
     private final ICarRideTableFilter carRideFilterModel;
 
-    public ExportAction(DialogFactory dialogFactory, ICarRideTableFilter carRideFilterModel) {
+    ExportAction(DialogFactory dialogFactory, ICarRideTableFilter carRideFilterModel) {
         super("Export");
         this.dialogFactory = dialogFactory;
         this.carRideFilterModel = carRideFilterModel;
