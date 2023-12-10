@@ -7,11 +7,10 @@ import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -19,6 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class CategoryCrudServiceUnitTest {
 
     private CategoryCrudService categoryCrudService;
@@ -27,6 +27,14 @@ public class CategoryCrudServiceUnitTest {
     private Validator<Category> categoryValidator;
     private Validator<CarRide> carRideValidator;
     private Repository<CarRide> carRideRepository;
+
+    private static Category createCategoryInstance(String guid) {
+        return new Category(
+                guid,
+                "Blue",
+                5
+        );
+    }
 
     @BeforeEach
     @SuppressWarnings("unchecked")
@@ -139,13 +147,5 @@ public class CategoryCrudServiceUnitTest {
 
         verify(categoryRepository, times(1))
                 .deleteAll();
-    }
-
-    private static Category createCategoryInstance(String guid) {
-        return new Category(
-                guid,
-                "Blue",
-                5
-        );
     }
 }

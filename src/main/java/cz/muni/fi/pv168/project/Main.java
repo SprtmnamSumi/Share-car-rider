@@ -37,8 +37,8 @@ public class Main {
 
     public static void initLookAndFeel() {
         Properties properties = Config.loadProperties();
-        String lookAndFeelsClassName = properties.getProperty(
-                Config.PropertiesEnum.COLOR_THEME_PROPERY.toString()).equals(ColorTheme.LIGHT.name())
+        @SuppressWarnings("SpellCheckingInspection") String lookAndFeelsClassName = properties.getProperty(
+                Config.PropertiesEnum.COLOR_THEME_PROPERTY.toString()).equals(ColorTheme.LIGHT.name())
                 ? "javax.swing.plaf.nimbus.NimbusLookAndFeel" : "com.jtattoo.plaf.noire.NoireLookAndFeel";
         try {
             UIManager.setLookAndFeel(lookAndFeelsClassName);

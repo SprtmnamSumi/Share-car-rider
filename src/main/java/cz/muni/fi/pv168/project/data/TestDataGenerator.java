@@ -5,7 +5,6 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,7 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 public class TestDataGenerator {
     private final List<String> CATEGORIES = List.of(
             "BMW", "Tesla", "Skoda", "Subaru", "Honda", "Bentley", "Autobus", "Helicopter helicopter", "Páracopter páracopter", "Lamboghíni", "Motorka"

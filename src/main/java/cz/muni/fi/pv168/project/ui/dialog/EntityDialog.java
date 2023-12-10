@@ -1,18 +1,17 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import net.miginfocom.swing.MigLayout;
-
+import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.util.Optional;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.util.Optional;
+import net.miginfocom.swing.MigLayout;
 
 public abstract class EntityDialog<E> {
 
@@ -34,13 +33,14 @@ public abstract class EntityDialog<E> {
 
     public Optional<E> show(JComponent parentComponent, String title, String okText) {
         okButton.setText(okText);
-        var pressedOK = isconfirmed(title);
+        var pressedOK = isConfirmed(title);
         return pressedOK ? Optional.of(getEntity()) : Optional.empty();
     }
 
     void add(String labelText, JComponent component) {
         var label = new JLabel(labelText);
         panel.add(label);
+        //noinspection SpellCheckingInspection
         panel.add(component, "wmin 250lp, grow");
     }
 
@@ -50,7 +50,7 @@ public abstract class EntityDialog<E> {
 
     abstract E getEntity();
 
-    boolean isconfirmed(String title) {
+    boolean isConfirmed(String title) {
         addDialogControls();
         dialog = new JDialog(Frame.getFrames()[0], title, Dialog.ModalityType.APPLICATION_MODAL);
         panel.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));

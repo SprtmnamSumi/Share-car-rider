@@ -1,23 +1,22 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.util.Objects;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 abstract class IODialog extends JDialog {
+    protected final JOptionPane optionPane;
+    protected final JComboBox<String> entityOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
     private final JButton fileButton = new JButton("Select a file");
     private final JButton actionButton;
     private File selectedFile;
-    protected final JOptionPane optionPane;
-    protected final JComboBox<String> entityOptionsComboBox = new JComboBox<>(new String[]{"Car Rides", "Currency", "Category", "Template"});
 
     IODialog(String... actions) {
         super(Frame.getFrames()[0], actions[0], true);
@@ -53,9 +52,11 @@ abstract class IODialog extends JDialog {
         optionPane.addPropertyChangeListener(this::propertyChange);
 
     }
+
     String getSelectedEntity() {
         return (String) entityOptionsComboBox.getSelectedItem();
     }
+
     File getSelectedFile() {
         return selectedFile;
     }

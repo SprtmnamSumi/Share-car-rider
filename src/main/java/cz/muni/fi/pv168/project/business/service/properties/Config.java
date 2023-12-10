@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.business.service.properties;
 import cz.muni.fi.pv168.project.Main;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.ui.theme.ColorTheme;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Config {
-    public static final String COLOR_THEME_PROPERY = PropertiesEnum.COLOR_THEME_PROPERY.toString();
     private final static String PROPERTIES_FILE = "src/main/resources/properties/config.properties";
 
     public static void tryCreateProperties() {
@@ -25,7 +23,7 @@ public class Config {
         }
 
         Properties properties = new Properties();
-        properties.setProperty(PropertiesEnum.COLOR_THEME_PROPERY.toString(), ColorTheme.LIGHT.toString());
+        properties.setProperty(PropertiesEnum.COLOR_THEME_PROPERTY.toString(), ColorTheme.LIGHT.toString());
 
         saveProperties(properties);
     }
@@ -54,10 +52,10 @@ public class Config {
     public static void changeColorThemeProperty() {
         Properties properties = loadProperties();
 
-        if (properties.getProperty(PropertiesEnum.COLOR_THEME_PROPERY.toString()).equals(ColorTheme.LIGHT.name())) {
-            properties.setProperty(PropertiesEnum.COLOR_THEME_PROPERY.toString(), ColorTheme.DARK.name());
+        if (properties.getProperty(PropertiesEnum.COLOR_THEME_PROPERTY.toString()).equals(ColorTheme.LIGHT.name())) {
+            properties.setProperty(PropertiesEnum.COLOR_THEME_PROPERTY.toString(), ColorTheme.DARK.name());
         } else {
-            properties.setProperty(PropertiesEnum.COLOR_THEME_PROPERY.toString(), ColorTheme.LIGHT.name());
+            properties.setProperty(PropertiesEnum.COLOR_THEME_PROPERTY.toString(), ColorTheme.LIGHT.name());
         }
 
         saveProperties(properties);
@@ -66,14 +64,14 @@ public class Config {
     public static void saveDefaultCurrency(Currency currency) {
         Properties properties = loadProperties();
 
-        properties.setProperty(PropertiesEnum.CURRENCY_PROPERY.toString(), currency.getName());
+        properties.setProperty(PropertiesEnum.CURRENCY_PROPERTY.toString(), currency.getName());
 
         saveProperties(properties);
     }
 
     public enum PropertiesEnum {
-        COLOR_THEME_PROPERY("mode"),
-        CURRENCY_PROPERY("currency");
+        COLOR_THEME_PROPERTY("mode"),
+        CURRENCY_PROPERTY("currency");
 
         private final String name;
 

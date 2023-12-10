@@ -21,7 +21,7 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
     @Inject
     CarRideDao(Supplier<ConnectionHandler> connections) {
         super(connections);
-        super.setdataAccess(this);
+        super.setDataAccess(this);
     }
 
     protected CarRideEntity entityFromResult(ResultSet resultSet) throws SQLException {

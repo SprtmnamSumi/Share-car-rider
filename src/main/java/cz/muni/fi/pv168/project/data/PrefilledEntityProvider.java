@@ -6,7 +6,6 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
-import javax.inject.Inject;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,8 +20,8 @@ public class PrefilledEntityProvider implements EntityProvider {
 
     @Inject
     PrefilledEntityProvider(GuidProvider guidProvider,
-                                   ICrudService<Category> categoryCrudService,
-                                   ICrudService<Currency> templateCrudService1) {
+                            ICrudService<Category> categoryCrudService,
+                            ICrudService<Currency> templateCrudService1) {
         this.guidProvider = guidProvider;
         this.categoryCrudService = categoryCrudService;
         this.currencyCrudService = templateCrudService1;

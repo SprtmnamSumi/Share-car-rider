@@ -4,13 +4,10 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
-import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.IOActionFactory;
-import cz.muni.fi.pv168.project.ui.action.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.InfoAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
@@ -22,7 +19,7 @@ import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
-
+import java.awt.BorderLayout;
 import javax.inject.Inject;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -31,7 +28,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
-import java.awt.BorderLayout;
 
 class MainWindowImpl implements MainWindow {
     private final JFrame frame;
@@ -92,6 +88,7 @@ class MainWindowImpl implements MainWindow {
     public void show() {
         frame.setVisible(true);
     }
+
     private JFrame createFrame() {
         var frame = new JFrame("Share Car Ride");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -103,7 +100,7 @@ class MainWindowImpl implements MainWindow {
         editMenu.setMnemonic('f');
 
         JMenu settingsMenu = new JMenu("Settings");
-        ImageIcon settingsIcon = new ImageIcon("src/main/java/cz/muni/fi/pv168/project/ui/icons/settings.png");
+        @SuppressWarnings("SpellCheckingInspection") ImageIcon settingsIcon = new ImageIcon("src/main/java/cz/muni/fi/pv168/project/ui/icons/settings.png");
         editMenu.add(settingsMenu);
         settingsMenu.setIcon(settingsIcon);
         settingsMenu.add(colorThemeAction);

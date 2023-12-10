@@ -14,7 +14,7 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
 
 
     private final DataAccessObject<CategoryEntity> categoryDao;
-    private final EntityMapper<CategoryEntity, Category> categoryMapeer;
+    private final EntityMapper<CategoryEntity, Category> categoryMapper;
     private final DataAccessObject<CurrencyEntity> currencyDao;
     private final EntityMapper<CurrencyEntity, Currency> currencyMapper;
 
@@ -23,7 +23,7 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
                          DataAccessObject<CurrencyEntity> currencyDao, EntityMapper<CurrencyEntity, Currency> currencyMapper) {
 
         this.categoryDao = categoryDao;
-        this.categoryMapeer = categoryMapper;
+        this.categoryMapper = categoryMapper;
         this.currencyDao = currencyDao;
         this.currencyMapper = currencyMapper;
     }
@@ -32,7 +32,7 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
     public CarRide mapToBusiness(CarRideEntity entity) {
         var category = categoryDao
                 .findById(entity.getCategoryId())
-                .map(categoryMapeer::mapToBusiness)
+                .map(categoryMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Entity not found, id: " +
                         entity.getCategoryId()));
 

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class CarRideStatisticsUnitTests {
     private final ICarRideStatistics iCarRideStatistics = new CarRideStatistics();
 

@@ -14,8 +14,8 @@ public final class ReCreateDatabase {
         dbManager.destroySchema();
         dbManager.initSchema();
 
-       var initializator = injector.getInstance(Initializer.class);
-       initializator.initialize(150);
+        var initializer = injector.getInstance(Initializer.class);
+        initializer.initialize(150);
 
         System.out.println("Database created...");
         System.out.println("Database connection string: " + dbManager.getDatabaseConnectionString());

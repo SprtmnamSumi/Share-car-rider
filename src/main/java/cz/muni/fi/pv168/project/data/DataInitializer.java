@@ -6,18 +6,17 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.List;
 
 @Singleton
 class DataInitializer implements Initializer {
+    final TestDataGenerator generator;
     private final TableModel<Category> categories;
     private final TableModel<CarRide> rides;
     private final TableModel<Currency> currencies;
     private final TableModel<Template> templates;
-    TestDataGenerator generator;
 
     @Inject
     DataInitializer(GuidProvider guidProvider, TableModel<Category> categories, TableModel<CarRide> rides, TableModel<Currency> currencies, TableModel<Template> templates) {

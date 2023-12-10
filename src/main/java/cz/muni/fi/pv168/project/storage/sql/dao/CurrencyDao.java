@@ -20,7 +20,7 @@ public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAc
     @Inject
     CurrencyDao(Supplier<ConnectionHandler> connections) {
         super(connections);
-        super.setdataAccess(this);
+        super.setDataAccess(this);
     }
 
     protected CurrencyEntity entityFromResult(ResultSet resultSet) throws SQLException {
@@ -59,7 +59,7 @@ public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAc
     @Override
     public Collection<CurrencyEntity> findAll() {
         var sql = """
-                SELECT id, 
+                SELECT id,
                 guid,
                        name,
                        symbol,
@@ -72,7 +72,7 @@ public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAc
     @Override
     public Optional<CurrencyEntity> findById(long id) {
         var sql = """
-                SELECT id, 
+                SELECT id,
                 guid,
                        name,
                        symbol,

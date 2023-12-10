@@ -19,7 +19,7 @@ public final class CategoryCrudDao extends CrudDao<CategoryEntity> implements Da
     @Inject
     CategoryCrudDao(Supplier<ConnectionHandler> connections) {
         super(connections);
-        super.setdataAccess(this);
+        super.setDataAccess(this);
     }
 
     protected CategoryEntity entityFromResult(ResultSet resultSet) throws SQLException {

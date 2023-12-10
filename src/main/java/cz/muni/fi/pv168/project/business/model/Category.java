@@ -26,7 +26,7 @@ public class Category extends Model {
     }
 
     public void setColour(int colour) {
-        this.colour = Objects.requireNonNull(colour, "colour must not be null");
+        this.colour = colour;
     }
 
     @Override
