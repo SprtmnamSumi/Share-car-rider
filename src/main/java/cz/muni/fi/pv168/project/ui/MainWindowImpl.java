@@ -20,6 +20,7 @@ import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.model.common.ButtonTabComponent;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
+import cz.muni.fi.pv168.project.ui.panels.Currency.CurrencyTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
 
@@ -60,10 +61,12 @@ class MainWindowImpl implements MainWindow {
         CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
         CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
         TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
+        CurrencyTablePanel currencyTablePanel = new CurrencyTablePanel(currencyTableModel, currencyActionFactory);
 
         Action addCarRideAction = carActionFactory.getAddAction(carRideTablePanel.getTable());
         Action addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
         Action addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
+        Action addCurrency = currencyActionFactory.getAddAction(currencyTablePanel.getTable());
 
         chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
 
@@ -77,11 +80,13 @@ class MainWindowImpl implements MainWindow {
         tabbedPane.addSpecialTab("Car Rides", carRideTablePanel, new ButtonTabComponent(tabbedPane, addCarRideAction, "Add new ride"));
         tabbedPane.addSpecialTab("Categories", categoryTablePanel, new ButtonTabComponent(tabbedPane, addCategory, "Add new category"));
         tabbedPane.addSpecialTab("Templates", templateTablePanel, new ButtonTabComponent(tabbedPane, addTemplate, "Add new template"));
+        tabbedPane.addSpecialTab("Currencies", currencyTablePanel, new ButtonTabComponent(tabbedPane, addCurrency, "Add new currency"));
 
         notificationController = new NotificationController(frame);
         carRideTableModel.addTableModelListener((e) -> notificationController.showTableNotification(carRideTablePanel.getTable(), e));
         categoryTableModel.addTableModelListener((e) -> notificationController.showTableNotification(categoryTablePanel.getTable(), e));
         templateTableModel.addTableModelListener((e) -> notificationController.showTableNotification(templateTablePanel.getTable(), e));
+        currencyTableModel.addTableModelListener((e) -> notificationController.showTableNotification(currencyTablePanel.getTable(), e));
 
         frame.add(tabbedPane, BorderLayout.CENTER);
         frame.setJMenuBar(createMenuBar());
