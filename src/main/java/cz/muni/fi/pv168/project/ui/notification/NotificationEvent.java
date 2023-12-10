@@ -4,11 +4,10 @@ import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
 import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
-
-import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
 import java.awt.Rectangle;
 import java.time.Instant;
+import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
 
 public class NotificationEvent {
     private final NotificationType type;
@@ -22,7 +21,8 @@ public class NotificationEvent {
         this.table = table;
         this.type = getNotificationtype(event);
         this.source = (TableModel) event.getSource();
-        this.viewIndex = table.getRowSorter().convertRowIndexToView(event.getFirstRow());
+        var index = table.getRowSorter().convertRowIndexToView(event.getFirstRow());
+        this.viewIndex = Math.max(index, 0);
         numberOfItems = 1;
     }
 

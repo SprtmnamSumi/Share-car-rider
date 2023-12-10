@@ -10,7 +10,7 @@ import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import java.util.List;
 
-public class ImportInitializer {
+public class ImportInitializer implements IImportInitializer {
     private final TableModel<Category> categoryTableModel;
     private final TableModel<CarRide> carRideTableModel;
     private final TableModel<Currency> currencyTableModel;
@@ -37,6 +37,7 @@ public class ImportInitializer {
     }
 
 
+    @Override
     public void initializeCarRide(List<CarRide> rides, boolean rewrite) {
         transactionExecutor.executeInTransaction(() -> {
             if (rewrite) {
@@ -48,6 +49,7 @@ public class ImportInitializer {
     }
 
 
+    @Override
     public void initializeCategory(List<Category> categories, boolean rewrite) {
         transactionExecutor.executeInTransaction(() -> {
             if (rewrite) {
@@ -59,6 +61,7 @@ public class ImportInitializer {
     }
 
 
+    @Override
     public void initializeCurrency(List<Currency> currencies, boolean rewrite) {
         transactionExecutor.executeInTransaction(() -> {
             if (rewrite) {
@@ -70,6 +73,7 @@ public class ImportInitializer {
     }
 
 
+    @Override
     public void initializeTemplate(List<Template> templates, boolean rewrite) {
         transactionExecutor.executeInTransaction(() -> {
             if (rewrite) {

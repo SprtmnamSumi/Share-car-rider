@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.data.ImportInitializer;
+import cz.muni.fi.pv168.project.data.IImportInitializer;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class BatchImporterCategoryJSON extends importer<Category> {
 
 
-    public List<Category> importData(Path filePath, ImportInitializer initializer, boolean overwrite) {
+    public Boolean importData(Path filePath, IImportInitializer initializer, boolean overwrite) {
         Function<JSONObject, List<Category>> importer = json -> {
             List<Category> categoryList = new LinkedList<>();
             JSONArray categoryArray = json.getJSONArray("categories");

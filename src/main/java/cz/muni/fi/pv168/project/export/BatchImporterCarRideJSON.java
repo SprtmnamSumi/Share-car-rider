@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.data.ImportInitializer;
+import cz.muni.fi.pv168.project.data.IImportInitializer;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.function.Function;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 
 public class BatchImporterCarRideJSON extends importer<CarRide> {
 
 
-    public List<CarRide> importData(Path filePath, ImportInitializer initializer, boolean overwrite) {
+    public Boolean importData(Path filePath, IImportInitializer initializer, boolean overwrite) {
+        Logger.info("Importing");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         Function<JSONObject, List<CarRide>> importer = json -> {
             List<CarRide> carRideList = new LinkedList<>();
