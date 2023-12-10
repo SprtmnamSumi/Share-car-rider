@@ -20,6 +20,8 @@ public interface ICarRideTableFilter {
 
     void filterByPassengers(int passengersCount);
 
+    void filterByName(String passengersCount);
+
     void removeFilter(Filters filter);
 
     RideCompoundMatcher getRideCompoundMatcher();
