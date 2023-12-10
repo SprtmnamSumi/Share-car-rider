@@ -48,6 +48,11 @@ public final class CarRideTableFilter implements ICarRideTableFilter {
     }
 
     @Override
+    public void filterByName(String name) {
+        rideCompoundMatcher.addMatcher(Filters.NAME_FILTER, matcherFactory.getNameMatcher(name));
+    }
+
+    @Override
     public void removeFilter(Filters filter) {
         rideCompoundMatcher.removeMatcher(filter);
     }

@@ -37,6 +37,16 @@ public class CarRideMatcherFactory {
         };
     }
 
+    public EntityMatcher<CarRide> getNameMatcher(String name) {
+        return new EntityMatcher<>() {
+            @Override
+            public boolean evaluate(CarRide entity) {
+                return entity.getTitle().contains(name);
+            }
+        };
+    }
+
+
     public EntityMatcher<CarRide> getCategoryMatcher(Category category) {
         return new EntityMatcher<>() {
             @Override
