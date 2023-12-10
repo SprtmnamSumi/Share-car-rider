@@ -47,20 +47,20 @@ public class ImportDialog extends IODialog {
         AsyncExecutor asyncExecutor = switch (importOption) {
             case "Car Rides" -> new AsyncExecutor(
                     (x) -> new BatchImporterCarRideJSON().importData(file.toPath(), importInitializer, overwrite),
-                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
+                    () -> JOptionPane.showMessageDialog(this, "Import has successfully finished."),
+                    () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
             case "Currency" -> new AsyncExecutor(
                     (x) -> new BatchImporterCurrencyJSON().importData(file.toPath(), importInitializer, overwrite),
-                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
+                    () -> JOptionPane.showMessageDialog(this, "Import has successfully finished."),
+                    () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
             case "Category" -> new AsyncExecutor(
                     (x) -> new BatchImporterCategoryJSON().importData(file.toPath(), importInitializer, overwrite),
-                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
+                    () -> JOptionPane.showMessageDialog(this, "Import has successfully finished."),
+                    () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
             case "Template" -> new AsyncExecutor(
                     (x) -> new BatchImporterTemplateJSON().importData(file.toPath(), importInitializer, overwrite),
                     () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
+                    () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
             default -> {
                 Logger.error("Selected unsupported import action.");
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");

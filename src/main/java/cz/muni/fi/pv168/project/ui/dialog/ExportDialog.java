@@ -55,23 +55,23 @@ public class ExportDialog extends IODialog {
         AsyncExecutor asyncExecutor = switch (selectedExportOption) {
             case "Car Rides" -> new AsyncExecutor(
                     (x) -> new BatchExporterCarRideJSON().exportData(carRideTableFilter.getRideCompoundMatcher().getData(), file.getAbsolutePath()),
-                    () -> JOptionPane.showMessageDialog(this, "Import has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
+                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
+                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
             case "Currency" -> new AsyncExecutor(
                     (x) -> new BatchExporterCurrencyJSON()
                             .exportData(currencies.getAll(), file.getAbsolutePath()),
-                    () -> JOptionPane.showMessageDialog(this, "Import has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
+                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
+                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
             case "Category" -> new AsyncExecutor(
                     (x) -> new BatchExporterCategoryJSON()
                             .exportData(categories.getAll(), file.getAbsolutePath()),
-                    () -> JOptionPane.showMessageDialog(this, "Import has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
+                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
+                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
             case "Template" -> new AsyncExecutor(
                     (x) -> new BatchExporterTemplateJSON()
                             .exportData(templates.getAll(), file.getAbsolutePath()),
-                    () -> JOptionPane.showMessageDialog(this, "Import has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
+                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
+                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
             default -> {
                 Logger.error("Selected unsupported export action.");
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
