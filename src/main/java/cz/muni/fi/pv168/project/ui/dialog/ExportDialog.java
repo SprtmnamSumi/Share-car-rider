@@ -12,14 +12,11 @@ import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import org.tinylog.Logger;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ExportDialog extends IODialog{

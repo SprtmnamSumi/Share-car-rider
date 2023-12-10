@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
+
 import javax.inject.Inject;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -15,7 +16,7 @@ public final class TransactionManagerImpl implements TransactionManager {
     }
 
     @Override
-    public Transaction beginTransaction() {
+    public synchronized Transaction beginTransaction() {
         if (hasActiveTransaction()) {
             throw new TransactionException("Transaction already started");
         }
@@ -29,12 +30,12 @@ public final class TransactionManagerImpl implements TransactionManager {
     }
 
     @Override
-    public ConnectionHandler getConnectionHandler() {
+    public synchronized ConnectionHandler getConnectionHandler() {
         return transaction.connection();
     }
 
     @Override
-    public boolean hasActiveTransaction() {
+    public synchronized boolean hasActiveTransaction() {
         return transaction != null && !transaction.isClosed();
     }
 }
