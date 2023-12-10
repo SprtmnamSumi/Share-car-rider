@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import org.tinylog.Logger;
 
 public class ImportDialog extends JDialog implements PropertyChangeListener {
-
     private final JOptionPane optionPane;
     private final String importName = "Import";
     private final String overwriteName = "Overwrite";
@@ -29,7 +28,7 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
     private String selectedImportOption;
 
     ImportDialog(ImportInitializer importInitializer) {
-        super(IMPORT, CANCEL, OVERWRITE);
+        super(Frame.getFrames()[0], "Import data", true);
         this.importInitializer = importInitializer;
 
 
