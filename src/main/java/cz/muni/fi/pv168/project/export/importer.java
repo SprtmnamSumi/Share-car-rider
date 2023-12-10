@@ -9,8 +9,8 @@ import java.util.function.Function;
 import org.json.JSONObject;
 import org.tinylog.Logger;
 
-public class importer<T> implements IImporter<T> {
-    
+public class importer<T> {
+
     public Boolean importData(Path filePath, Function<JSONObject, List<T>> importer, Function<List<T>, Void> initialize) {
         List<T> templateList;
         try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(filePath))) {
