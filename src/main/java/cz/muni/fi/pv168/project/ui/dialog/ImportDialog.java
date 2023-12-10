@@ -28,8 +28,8 @@ public class ImportDialog extends JDialog implements PropertyChangeListener {
     private File selectedFile;
     private String selectedImportOption;
 
-    public ImportDialog(ImportInitializer importInitializer) {
-        super(Frame.getFrames()[0], "Import data", true);
+    ImportDialog(ImportInitializer importInitializer) {
+        super(IMPORT, CANCEL, OVERWRITE);
         this.importInitializer = importInitializer;
 
 
