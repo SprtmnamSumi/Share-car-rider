@@ -10,6 +10,7 @@ import cz.muni.fi.pv168.project.export.BatchExporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchExporterTemplateJSON;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
+import javax.swing.SwingWorker;
 import org.tinylog.Logger;
 
 import javax.swing.JComboBox;
@@ -48,10 +49,26 @@ public class ExportDialog extends IODialog{
             @Override
             public void componentHidden(ComponentEvent e) {
                 if (EXPORT.equals(optionPane.getValue()) && getSelectedFile() != null) {
-                    performExport(getSelectedEntity(), getSelectedFile());
+                    performAsyncExport(getSelectedEntity(), getSelectedFile());
                 }
             }
         });
+    }
+
+    public void performAsyncExport(String selectedExportOption, File file) {
+        var asyncWorker = new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() {
+                performExport(selectedExportOption, file);
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                super.done();
+            }
+        };
+        asyncWorker.execute();
     }
 
     private void performExport(String selectedExportOption, File file) {
