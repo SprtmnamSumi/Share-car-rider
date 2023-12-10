@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.wiring;
 
 import com.google.inject.Guice;
-
 import java.util.List;
 
 public class Injector {
@@ -19,7 +18,8 @@ public class Injector {
                 new cz.muni.fi.pv168.project.business.service.statistics.Module(),
                 new cz.muni.fi.pv168.project.ui.dialog.Module(),
                 new cz.muni.fi.pv168.project.ui.icons.Module(),
-                new cz.muni.fi.pv168.project.data.Module()
+                new cz.muni.fi.pv168.project.data.Module(),
+                new cz.muni.fi.pv168.project.storage.sql.db.Module()
         ));
     }
 }

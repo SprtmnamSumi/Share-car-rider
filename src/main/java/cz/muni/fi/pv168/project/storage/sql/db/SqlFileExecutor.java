@@ -1,7 +1,6 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -48,7 +47,7 @@ final class SqlFileExecutor {
 
     private void executeSQLFile(Connection connection, String fileName) {
         final String initSchemaSql = loadSQLFromResources(fileName);
-
+        
         try (Statement statement = connection.createStatement()) {
 
             // Note: This solution is just for simplification and educational purposes only.

@@ -1,9 +1,11 @@
 package cz.muni.fi.pv168.project.business.service.export;
 
+import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static cz.muni.fi.pv168.project.business.service.statistics.CarRideStatisticsUnitTests.createCarRideThree;
 import static cz.muni.fi.pv168.project.business.service.statistics.CarRideStatisticsUnitTests.createCarRideTwo;
@@ -15,11 +17,12 @@ class BatchImporterUnitTest {
     private static final Path TEST_RESOURCES = PROJECT_ROOT.resolve(Path.of("src", "test", "resources"));
 
     private final BatchImporterCarRideJSON batchImporterCarRideJSON = new BatchImporterCarRideJSON();
+    private final ImportInitializer importInitializer = Mockito.mock(ImportInitializer.class);
 
     @Test
     void importNoCarRides() {
         Path importFilePath = TEST_RESOURCES.resolve("empty.json");
-        var carRides = batchImporterCarRideJSON.importData(importFilePath);
+        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
 
         assertThat(carRides).isEmpty();
     }
@@ -27,7 +30,7 @@ class BatchImporterUnitTest {
     @Test
     void singleCarRide() {
         Path importFilePath = TEST_RESOURCES.resolve("single-carride.json");
-        var carRides = batchImporterCarRideJSON.importData(importFilePath);
+        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
 
         assertThat(carRides)
                 .usingRecursiveFieldByFieldElementComparator()
@@ -39,7 +42,7 @@ class BatchImporterUnitTest {
     @Test
     void multipleCarRides() {
         Path importFilePath = TEST_RESOURCES.resolve("multiple-carrides.json");
-        var carRides = batchImporterCarRideJSON.importData(importFilePath);
+        var carRides = batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
 
         assertThat(carRides)
                 .usingRecursiveFieldByFieldElementComparator()
