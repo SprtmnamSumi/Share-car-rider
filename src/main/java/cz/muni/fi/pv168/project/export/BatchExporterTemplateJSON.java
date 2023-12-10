@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 
 public class BatchExporterTemplateJSON {
@@ -50,7 +51,7 @@ public class BatchExporterTemplateJSON {
 
             fileWriter.write(jsonObject.toString(2));
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e.getMessage());
             return false;
         }
         return true;
