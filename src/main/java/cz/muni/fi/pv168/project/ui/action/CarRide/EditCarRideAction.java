@@ -40,7 +40,6 @@ final class EditCarRideAction extends AbstractAction {
         CarRideTableModel carRideTableModel = (CarRideTableModel) carRidesTable.getModel();
         int modelRow = carRidesTable.convertRowIndexToModel(selectedRows[0]);
         CarRide carRide = carRideTableModel.getEntity(modelRow);
-
         EntityDialog<CarRide> dialog = modalDialogFactory.getAddCarRideDialog(carRide);
         dialog.show(carRidesTable, "Edit Car Ride", "Save")
                 .ifPresent(carRideTableModel::updateRow);

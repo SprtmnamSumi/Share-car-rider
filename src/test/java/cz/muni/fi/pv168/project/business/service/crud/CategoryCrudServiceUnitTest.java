@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.business.service.crud;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
@@ -31,12 +32,13 @@ public class CategoryCrudServiceUnitTest {
     @SuppressWarnings("unchecked")
     void setUp() {
         ICrudServiceImpl<CarRide> carRideICrudService = Mockito.mock(ICrudServiceImpl.class);
+        ICrudServiceImpl<Template> templateICrudService = Mockito.mock(ICrudServiceImpl.class);
         categoryRepository = Mockito.mock(Repository.class);
         carRideRepository = Mockito.mock(Repository.class);
         categoryValidator = Mockito.mock(Validator.class);
         carRideValidator = Mockito.mock(Validator.class);
         GuidProvider guidProvider = Mockito.mock(GuidProvider.class);
-        categoryCrudService = new CategoryCrudService(carRideICrudService, categoryRepository, categoryValidator, guidProvider);
+        categoryCrudService = new CategoryCrudService(carRideICrudService, templateICrudService, categoryRepository, categoryValidator, guidProvider);
         var carRideRepository = Mockito.mock(Repository.class);
         var carRideValidator = Mockito.mock(Validator.class);
         carRideCrudService = new CarRideCrudService(carRideRepository, carRideValidator, guidProvider);

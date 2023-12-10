@@ -18,7 +18,7 @@ public class ImportDialog extends IODialog{
     private final static String OVERWRITE = "Overwrite";
     private final ImportInitializer importInitializer;
 
-    public ImportDialog(ImportInitializer importInitializer) {
+    ImportDialog(ImportInitializer importInitializer) {
         super(IMPORT, CANCEL, OVERWRITE);
         this.importInitializer = importInitializer;
 
