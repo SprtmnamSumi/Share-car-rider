@@ -26,14 +26,11 @@ public class CurrencyActionFactory implements DefaultActionFactory<Currency> {
         return new AddCurrencyAction(table, dialogFactory, entityProvider, iconLoader.getIcon("add.png"));
     }
 
-    @Override
-    public Action getDeleteAction(JTable table) {
-        throw new UnsupportedOperationException("Delete action is not supported");
+    public Action getDeleteAction(JTable table){
+        return new DeleteCurrencyAction(table, iconLoader.getIcon("bin.png"));
     }
-
-    @Override
-    public Action getEditAction(JTable table) {
-        throw new UnsupportedOperationException("Edit action is not supported");
+    public Action getEditAction(JTable table){
+        return new EditCurrencyAction(table, dialogFactory, iconLoader.getIcon("editing.png"));
     }
 
     public Action getChooseAction(JTable table) {

@@ -19,6 +19,8 @@ CurrencyTableModel extends TableModel<Currency> {
     @Inject
     CurrencyTableModel(ICrudService<Currency> currencyCrudService) {
         super(currencyCrudService, List.of(
-                Column.readonly("Name", String.class, Currency::getName)));
+                Column.readonly("Name", String.class, Currency::getName),
+                Column.readonly("Symbol", String.class, Currency::getSymbol),
+                Column.readonly("Rate to dollar", Double.class, Currency::getNewestRateToDollar)));
     }
 }

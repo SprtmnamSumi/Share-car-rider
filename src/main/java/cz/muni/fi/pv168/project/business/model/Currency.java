@@ -3,8 +3,8 @@ package cz.muni.fi.pv168.project.business.model;
 import java.util.Objects;
 
 public class Currency extends Model {
-    private final String name;
-    private final String symbol;
+    private String name;
+    private String symbol;
     private Double newestRateToDollar;
 
     public Currency(String guid, String name, String symbol, Double newestRateToDollar) {
@@ -24,6 +24,14 @@ public class Currency extends Model {
 
     public Double getNewestRateToDollar() {
         return newestRateToDollar;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public void setNewestRateToDollar(double newestRateToDollar) {
