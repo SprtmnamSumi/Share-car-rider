@@ -2,7 +2,6 @@ package cz.muni.fi.pv168.project;
 
 import com.google.inject.Injector;
 import cz.muni.fi.pv168.project.business.service.properties.Config;
-import cz.muni.fi.pv168.project.data.Initializer;
 import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.action.NuclearQuitAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
@@ -23,7 +22,6 @@ public class Main {
         _injector = getInjector();
         Config.tryCreateProperties();
         initLookAndFeel();
-//        fillDatabaseWithTestData();
 
         EventQueue.invokeLater(() -> {
             try {
@@ -44,14 +42,6 @@ public class Main {
             UIManager.setLookAndFeel(lookAndFeelsClassName);
         } catch (Exception ex) {
             Logger.error(lookAndFeelsClassName + " layout initialization failed. Reason: " + ex);
-        }
-    }
-
-    private static void fillDatabaseWithTestData() {
-        try {
-            _injector.getInstance(Initializer.class).initialize(15);
-        } catch (Exception ex) {
-            Logger.warn("Database filling failed. Reason: " + ex);
         }
     }
 
