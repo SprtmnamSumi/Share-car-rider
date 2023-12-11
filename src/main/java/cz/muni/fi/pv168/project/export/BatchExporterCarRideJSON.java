@@ -7,11 +7,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.tinylog.Logger;
 
 public class BatchExporterCarRideJSON {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-    public void exportData(List<CarRide> carRides, String filePath) {
+    public boolean exportData(List<CarRide> carRides, String filePath) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             JSONArray carRidesArray = new JSONArray();
 
@@ -53,7 +54,9 @@ public class BatchExporterCarRideJSON {
 
             fileWriter.write(jsonObject.toString(2));
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e.getMessage());
+            return false;
         }
+        return true;
     }
 }
