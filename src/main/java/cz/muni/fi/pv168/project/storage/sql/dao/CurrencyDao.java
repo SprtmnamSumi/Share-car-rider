@@ -104,7 +104,7 @@ public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAc
                 SET guid = ?,
                     name = ?,
                     symbol  = ?,
-                    newestRateToDollar = ?,
+                    newestRateToDollar = ?
                 WHERE id = ?
                 """;
 
@@ -113,6 +113,7 @@ public final class CurrencyDao extends CrudDao<CurrencyEntity> implements DataAc
             statement.setString(2, entity.getName());
             statement.setString(3, entity.getSymbol());
             statement.setDouble(4, entity.getNewestRateToDollar());
+            statement.setDouble(5, entity.getId());
         };
         return super.update(entity, sql, statementSetup);
     }
