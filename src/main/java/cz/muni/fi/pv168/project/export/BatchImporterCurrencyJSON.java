@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.data.ImportInitializer;
+import cz.muni.fi.pv168.project.data.IImportInitializer;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 
 public class BatchImporterCurrencyJSON extends importer<Currency> {
-    public List<Currency> importData(Path filePath, ImportInitializer initializer, boolean overwrite) {
+    public Boolean importData(Path filePath, IImportInitializer initializer, boolean overwrite) {
         Function<JSONObject, List<Currency>> importer = json -> {
             List<Currency> currencyList = new LinkedList<>();
             JSONArray currencyArray = json.getJSONArray("currencies");

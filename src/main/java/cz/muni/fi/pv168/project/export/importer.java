@@ -11,7 +11,7 @@ import org.tinylog.Logger;
 
 public class importer<T> {
 
-    public List<T> importData(Path filePath, Function<JSONObject, List<T>> importer, Function<List<T>, Void> initialize) {
+    public Boolean importData(Path filePath, Function<JSONObject, List<T>> importer, Function<List<T>, Void> initialize) {
         List<T> templateList;
         try (BufferedInputStream bis = new BufferedInputStream(Files.newInputStream(filePath))) {
             byte[] buffer = new byte[4096];
@@ -24,12 +24,11 @@ public class importer<T> {
 
             JSONObject jsonObject = new JSONObject(content.toString());
             templateList = importer.apply(jsonObject);
-
         } catch (IOException e) {
             Logger.error(e.getMessage());
-            return null;
+            return false;
         }
         initialize.apply(templateList);
-        return templateList;
+        return true;
     }
 }
