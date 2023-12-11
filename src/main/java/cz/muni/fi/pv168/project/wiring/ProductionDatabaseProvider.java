@@ -24,9 +24,7 @@ public final class ProductionDatabaseProvider implements IProductionDatabaseProv
 
     private static void createDatabaseManager() {
         try {
-            DatabaseManager databaseManager = DatabaseManager.createProductionInstance();
-            databaseManager.initSchema();
-            ProductionDatabaseProvider.databaseManager = databaseManager;
+            ProductionDatabaseProvider.databaseManager = DatabaseManager.createProductionInstance();
         } catch (Exception e) {
             Logger.error("Database schema initialization failed. Reason: " + e);
         }
