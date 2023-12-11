@@ -39,7 +39,6 @@ public class CategoryTablePanel extends AbstractTablePanel {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setDefaultRenderer(Integer.class, (table, value, isSelected, hasFocus, row, column) -> {
             DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-            renderer.setBackground(ConversionUtils.getDimColor((Integer) value));
             return renderer;
         });
 

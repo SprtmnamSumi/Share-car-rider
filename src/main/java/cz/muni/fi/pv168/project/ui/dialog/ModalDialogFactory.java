@@ -65,7 +65,7 @@ class ModalDialogFactory implements DialogFactory {
 
     @Override
     public EntityDialog<Currency> getAddCurrencyDialog(Currency currency) {
-        return new AddCurrencyDialog(guidProvider, currency);
+        return new CurrencyDialog(currency);
     }
 
     @Override
