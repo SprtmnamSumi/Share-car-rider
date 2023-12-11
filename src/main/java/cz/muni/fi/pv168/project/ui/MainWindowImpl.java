@@ -4,13 +4,10 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.statistics.ICarRideStatistics;
-import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.ui.action.ColorThemeAction;
 import cz.muni.fi.pv168.project.ui.action.Currency.CurrencyActionFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.action.ExportAction;
 import cz.muni.fi.pv168.project.ui.action.IOActionFactory;
-import cz.muni.fi.pv168.project.ui.action.ImportAction;
 import cz.muni.fi.pv168.project.ui.action.InfoAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
 import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
@@ -23,22 +20,19 @@ import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Currency.CurrencyTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
-
+import java.awt.BorderLayout;
 import javax.inject.Inject;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JTable;
 import javax.swing.WindowConstants;
-import java.awt.BorderLayout;
 
 class MainWindowImpl implements MainWindow {
     private final JFrame frame;
     private final NotificationController notificationController;
     private final Action quitAction = new QuitAction();
-    private final Action chooseCurrencyAction;
     private final Action importAction;
     private final Action exportAction;
     private final Action colorThemeAction;
@@ -67,8 +61,6 @@ class MainWindowImpl implements MainWindow {
         Action addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
         Action addTemplate = templateActionFactory.getAddAction(templateTablePanel.getTable());
         Action addCurrency = currencyActionFactory.getAddAction(currencyTablePanel.getTable());
-
-        chooseCurrencyAction = currencyActionFactory.getChooseAction(new JTable(currencyTableModel));
 
         importAction = ioActionFactory.getImportAction();
         exportAction = ioActionFactory.getExportAction(carRideTablePanel.getFilter());
@@ -116,9 +108,6 @@ class MainWindowImpl implements MainWindow {
 
         editMenu.add(importAction);
         editMenu.add(exportAction);
-        editMenu.addSeparator();
-
-        editMenu.add(chooseCurrencyAction);
         editMenu.addSeparator();
 
         editMenu.add(quitAction);
