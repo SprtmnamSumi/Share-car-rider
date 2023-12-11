@@ -2,23 +2,20 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
-import cz.muni.fi.pv168.project.ui.panels.CarRide.PlaceholderTextField;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
-import org.jdatepicker.DateModel;
-import org.jdatepicker.JDatePicker;
-
-import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDatePicker;
 
 public class DateBar extends ValidatedJPanel {
-    JDatePicker date;
-    ValidatedInputField hoursField = new ValidatedInputField(ValidatorFactory.intValidator(0,24));
-    ValidatedInputField minutesField = new ValidatedInputField(ValidatorFactory.intValidator(0,60));
-    DateModel<LocalDate> mod = new LocalDateModel();
+    final JDatePicker date;
+    final ValidatedInputField hoursField = new ValidatedInputField(ValidatorFactory.intValidator(0, 24));
+    final ValidatedInputField minutesField = new ValidatedInputField(ValidatorFactory.intValidator(0, 60));
+    final DateModel<LocalDate> mod = new LocalDateModel();
 
     public DateBar() {
         super();

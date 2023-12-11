@@ -1,13 +1,12 @@
 package cz.muni.fi.pv168.project.ui.model.adapters;
 
 import cz.muni.fi.pv168.project.util.Either;
-
+import java.util.IdentityHashMap;
+import java.util.Map;
 import javax.swing.ComboBoxModel;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-import java.util.IdentityHashMap;
-import java.util.Map;
 
 /**
  * This class decorates existing {@link ListModel} or {@link ComboBoxModel} to contain also
@@ -91,15 +90,7 @@ public final class CustomValuesModelDecorator {
         }
     }
 
-    private static class TransposingListener implements ListDataListener {
-
-        private final ListDataListener delegate;
-        private final int transposition;
-
-        private TransposingListener(ListDataListener delegate, int transposition) {
-            this.delegate = delegate;
-            this.transposition = transposition;
-        }
+    private record TransposingListener(ListDataListener delegate, int transposition) implements ListDataListener {
 
         @Override
         public void intervalAdded(ListDataEvent event) {

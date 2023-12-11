@@ -18,7 +18,7 @@ public class CachedIconLoader implements IconLoader {
     public Icon getIcon(String iconName) {
         if (!cachedIcons.containsKey(iconName)) {
             try {
-                Image image = ImageIO.read(new File("src/main/resources/cz/muni/fi/pv168/project/ui/icons/" + iconName));
+                @SuppressWarnings("SpellCheckingInspection") Image image = ImageIO.read(new File("src/main/resources/cz/muni/fi/pv168/project/ui/icons/" + iconName));
                 cachedIcons.put(iconName, new ImageIcon(image));
             } catch (IOException ex) {
                 Logger.warn("Could not load image of name: " + iconName + ". Reason: " + ex);
@@ -30,7 +30,7 @@ public class CachedIconLoader implements IconLoader {
     public Icon getIcon(String iconName, int width, int height) {
         if (!cachedIcons.containsKey(iconName)) {
             try {
-                Image image = ImageIO.read(new File("src/main/resources/cz/muni/fi/pv168/project/ui/icons/" + iconName))
+                @SuppressWarnings("SpellCheckingInspection") Image image = ImageIO.read(new File("src/main/resources/cz/muni/fi/pv168/project/ui/icons/" + iconName))
                         .getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 cachedIcons.put(iconName, new ImageIcon(image));
             } catch (IOException ex) {

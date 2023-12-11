@@ -6,18 +6,16 @@ import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-
+import java.awt.event.ItemEvent;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
-import java.awt.event.ItemEvent;
 
 class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2, 150));
@@ -30,10 +28,9 @@ class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField commission = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final Template template;
     private final CostBar costBar;
-    private final ValidableListener validableListener;
 
     TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter, DefaultActionFactory<Category> categoryActionFactory, TableModel<Category> categoryTableModel) {
-        validableListener = new ValidableListener() {
+        ValidableListener validableListener = new ValidableListener() {
             @Override
             protected void onChange(boolean isValid) {
                 TemplateDialog.super.toggleOk(isValid);
@@ -44,7 +41,7 @@ class TemplateDialog extends EntityDialog<Template> {
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validableListener);
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         this.costBar = new CostBar(currencyModel, currencyConverter, validableListener);
-        this.validableListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, categoryBar);
+        validableListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, categoryBar);
         addFields();
         setValues();
         validableListener.fireChange();

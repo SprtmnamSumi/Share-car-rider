@@ -2,19 +2,16 @@ package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
-import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
-import cz.muni.fi.pv168.project.business.service.validation.Validator;
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
-
+import java.awt.Dimension;
+import java.awt.event.ItemEvent;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.ListModel;
-import java.awt.Dimension;
-import java.awt.event.ItemEvent;
 
 
 public class CostBar extends ValidatedJPanel {
@@ -64,10 +61,10 @@ public class CostBar extends ValidatedJPanel {
         return currencyJComboBox.getSelectedItem() == null;
     }
 
-    public void SetValues(double costOfFuelval, double covertRateval, Currency currency) {
+    public void SetValues(double costOfFuelValue, double covertRateValue, Currency currency) {
         setCurrency(currency);
-        setConversionRateToDollars(covertRateval);
-        setCostOfFuelInDollars(costOfFuelval);
+        setConversionRateToDollars(covertRateValue);
+        setCostOfFuelInDollars(costOfFuelValue);
     }
 
     public double getCostOfFuelInDollars() {
@@ -75,7 +72,7 @@ public class CostBar extends ValidatedJPanel {
     }
 
     public void setCostOfFuelInDollars(double costOfFuel) {
-        this.costOfFuel.setText(String.valueOf(currencyConverter.convertFromDoolarsToConvRate(Double.parseDouble(rate.getText()), costOfFuel)));
+        this.costOfFuel.setText(String.valueOf(currencyConverter.convertFromDollarsToConvRate(Double.parseDouble(rate.getText()), costOfFuel)));
     }
 
     public double getConversionRateToDollars() {

@@ -89,6 +89,7 @@ class MainWindowImpl implements MainWindow {
     public void show() {
         frame.setVisible(true);
     }
+
     private JFrame createFrame() {
         var frame = new JFrame("Share Car Ride");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -100,7 +101,7 @@ class MainWindowImpl implements MainWindow {
         editMenu.setMnemonic('f');
 
         JMenu settingsMenu = new JMenu("Settings");
-        ImageIcon settingsIcon = new ImageIcon("src/main/java/cz/muni/fi/pv168/project/ui/icons/settings.png");
+        @SuppressWarnings("SpellCheckingInspection") ImageIcon settingsIcon = new ImageIcon("src/main/java/cz/muni/fi/pv168/project/ui/icons/settings.png");
         editMenu.add(settingsMenu);
         settingsMenu.setIcon(settingsIcon);
         settingsMenu.add(colorThemeAction);

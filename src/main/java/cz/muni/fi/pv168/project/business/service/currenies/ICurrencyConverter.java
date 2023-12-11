@@ -3,13 +3,13 @@ package cz.muni.fi.pv168.project.business.service.currenies;
 import cz.muni.fi.pv168.project.business.model.Currency;
 
 public interface ICurrencyConverter {
-    double convertFromDoolarsToConvRate(double conversionRateToDollars, double amountInDolars);
+    double convertFromDollarsToConvRate(double conversionRateToDollars, double amountInDollars);
 
-    double ConvertFromConversionRateTODollars(double conversionRateToGivenCurrewncy, double amountInDolars);
+    double ConvertFromConversionRateTODollars(double conversionRateToGivenCurrency, double amountInDollars);
 
-    double convertFromDolarsToCurrency(Currency wantedCurrency, double amountInDolars);
+    double convertFromDollarsToCurrency(Currency wantedCurrency, double amountInDollars);
 
-    double convertFromCurrencyTOdollars(Currency givenCurrency, double amountInGivenCurrency);
+    double convertFromCurrencyToDollars(Currency givenCurrency, double amountInGivenCurrency);
 
-    double convertBetwweenCurrencies(Currency givenCurrency, Currency wantedCurrency, double amountInGivenCurrency);
+    double convertBetweenCurrencies(Currency givenCurrency, Currency wantedCurrency, double amountInGivenCurrency);
 }

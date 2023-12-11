@@ -20,7 +20,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
     @Inject
     TemplateDao(Supplier<ConnectionHandler> connections) {
         super(connections);
-        super.setdataAccess(this);
+        super.setDataAccess(this);
     }
 
     protected TemplateEntity entityFromResult(ResultSet resultSet) throws SQLException {

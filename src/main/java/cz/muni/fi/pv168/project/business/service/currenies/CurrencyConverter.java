@@ -6,30 +6,30 @@ import javax.inject.Singleton;
 @Singleton
 public class CurrencyConverter implements ICurrencyConverter {
     @Override
-    public double convertFromDoolarsToConvRate(double conversionRateToDollars, double amountInDolars) {
-        return amountInDolars * conversionRateToDollars;
+    public double convertFromDollarsToConvRate(double conversionRateToDollars, double amountInDollars) {
+        return amountInDollars * conversionRateToDollars;
     }
 
     @Override
-    public double convertFromDolarsToCurrency(Currency wantedCurrency, double amountInDolars) {
-        return convertFromDoolarsToConvRate(wantedCurrency.getNewestRateToDollar(), amountInDolars);
+    public double convertFromDollarsToCurrency(Currency wantedCurrency, double amountInDollars) {
+        return convertFromDollarsToConvRate(wantedCurrency.getNewestRateToDollar(), amountInDollars);
     }
 
 
     @Override
-    public double ConvertFromConversionRateTODollars(double conversionRateToGivenCurrewncy, double amountInCurrency) {
-        return amountInCurrency / conversionRateToGivenCurrewncy;
+    public double ConvertFromConversionRateTODollars(double conversionRateToGivenCurrency, double amountInDollars) {
+        return amountInDollars / conversionRateToGivenCurrency;
     }
 
     @Override
-    public double convertFromCurrencyTOdollars(Currency givenCurrency, double amountInGivenCurrency) {
+    public double convertFromCurrencyToDollars(Currency givenCurrency, double amountInGivenCurrency) {
         return ConvertFromConversionRateTODollars(givenCurrency.getNewestRateToDollar(), amountInGivenCurrency);
     }
 
     @Override
-    public double convertBetwweenCurrencies(Currency givenCurrency, Currency wantedCurrency, double amountInGivenCurrency) {
-        double amountInDolars = convertFromCurrencyTOdollars(givenCurrency, amountInGivenCurrency);
-        return convertFromDolarsToCurrency(wantedCurrency, amountInDolars);
+    public double convertBetweenCurrencies(Currency givenCurrency, Currency wantedCurrency, double amountInGivenCurrency) {
+        double amountInDollars = convertFromCurrencyToDollars(givenCurrency, amountInGivenCurrency);
+        return convertFromDollarsToCurrency(wantedCurrency, amountInDollars);
     }
 }
 

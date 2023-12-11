@@ -20,7 +20,7 @@ public abstract class CrudDao<T extends Entity> {
         this.connections = connections;
     }
 
-    protected void setdataAccess(DataAccessObject<T> dataAccess) {
+    protected void setDataAccess(DataAccessObject<T> dataAccess) {
         this.dataAccess = dataAccess;
     }
 
