@@ -44,7 +44,6 @@ public class AsyncExecutor {
             asyncWorker.execute();
         } catch (Exception e) {
             Logger.error(e.getMessage());
-            Logger.error("panda");
         }
 
     }
