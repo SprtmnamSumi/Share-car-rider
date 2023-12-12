@@ -2,30 +2,19 @@ package cz.muni.fi.pv168.project.ui.notification;
 
 import cz.muni.fi.pv168.project.ui.icons.CachedIconLoader;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class NotificationPanel extends JInternalFrame {
-    private final static Dimension size = new Dimension(250, 40);
+public class TableEventPanel extends AbstractNotificationPanel {
     private final JLabel message = new JLabel();
     private NotificationEvent notification;
 
-    public NotificationPanel() {
+    public TableEventPanel() {
         super();
-        setLookAndFeel();
-        JPanel panel = getGradientJPanel();
         panel.add(message, FlowLayout.LEFT);
         panel.add(getCloseButton(), FlowLayout.CENTER);
         panel.addMouseListener(new MouseAdapter() {
@@ -57,30 +46,5 @@ public class NotificationPanel extends JInternalFrame {
         button.setPreferredSize(new Dimension(24, 24));
         button.setIcon(new CachedIconLoader().getIcon("cross.png", 24, 24));
         return button;
-    }
-
-    private void setLookAndFeel() {
-        this.setBorder(BorderFactory.createSoftBevelBorder(0));
-        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-        this.setResizable(false);
-        this.setSize(size);
-        this.setMinimumSize(size);
-        this.setPreferredSize(size);
-    }
-
-    private JPanel getGradientJPanel() {
-        JPanel panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                if (g instanceof Graphics2D g2d) {
-                    Paint p = new GradientPaint(0.0f, 0.0f, new Color(150, 200, 255, 10),
-                            0.0f, getHeight(), new Color(150, 200, 255, 80), true);
-                    g2d.setPaint(p);
-                    g2d.fillRect(0, 0, getWidth(), getHeight());
-                }
-            }
-        };
-        panel.setLayout(new FlowLayout());
-        return panel;
     }
 }
