@@ -6,11 +6,12 @@ import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterTemplateJSON;
 import cz.muni.fi.pv168.project.ui.workers.AsyncExecutor;
+import org.tinylog.Logger;
+
+import javax.swing.JOptionPane;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
-import javax.swing.JOptionPane;
-import org.tinylog.Logger;
 
 public class ImportDialog extends IODialog {
     private final static String IMPORT = "Import";
@@ -19,7 +20,7 @@ public class ImportDialog extends IODialog {
     private final ImportInitializer importInitializer;
 
     ImportDialog(ImportInitializer importInitializer) {
-        super(IMPORT, CANCEL, OVERWRITE);
+        super("Import data", IMPORT, CANCEL, OVERWRITE);
         this.importInitializer = importInitializer;
 
         this.addComponentListener(new ComponentAdapter() {
@@ -66,7 +67,7 @@ public class ImportDialog extends IODialog {
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
             }
         };
-        asyncExecutor.importData();
+        asyncExecutor.perform();
     }
 
     private void performImport(String importOption, File file) {

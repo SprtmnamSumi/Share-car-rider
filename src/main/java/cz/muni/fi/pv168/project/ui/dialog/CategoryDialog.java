@@ -4,10 +4,11 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import java.awt.Color;
-import java.util.Arrays;
+
 import javax.swing.JColorChooser;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+import java.awt.Color;
+import java.util.Arrays;
 
 final class CategoryDialog extends EntityDialog<Category> {
 

@@ -1,8 +1,9 @@
 package cz.muni.fi.pv168.project.ui.workers;
 
-import java.util.function.Function;
-import javax.swing.SwingWorker;
 import org.tinylog.Logger;
+
+import javax.swing.SwingWorker;
+import java.util.function.Function;
 
 /**
  * Implementation of asynchronous exporter for UI.
@@ -13,14 +14,14 @@ public class AsyncExecutor {
     private final Runnable onFinish;
     private final Runnable onError;
 
-    public AsyncExecutor(Function<Void, Boolean> doStuf, Runnable onFinish, Runnable onError) {
-        this.doStuff = doStuf;
+    public AsyncExecutor(Function<Void, Boolean> doStuff, Runnable onFinish, Runnable onError) {
+        this.doStuff = doStuff;
         this.onFinish = onFinish;
         this.onError = onError;
     }
 
 
-    public void importData() {
+    public void perform() {
         var asyncWorker = new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() {
@@ -34,6 +35,7 @@ public class AsyncExecutor {
                 try {
                     isOk = super.get() && !isCancelled();
                 } catch (Exception e) {
+                    Logger.error("Async task failed. Reason: " + e.getMessage());
                     onError.run();
                     return;
                 }

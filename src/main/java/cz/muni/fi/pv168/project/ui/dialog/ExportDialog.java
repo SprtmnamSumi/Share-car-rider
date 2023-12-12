@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.export.BatchExporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchExporterCategoryJSON;
@@ -10,30 +12,43 @@ import cz.muni.fi.pv168.project.export.BatchExporterTemplateJSON;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.workers.AsyncExecutor;
+import org.tinylog.Logger;
+
+import javax.swing.JOptionPane;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
-import javax.swing.JOptionPane;
-import org.tinylog.Logger;
+import java.util.List;
+import java.util.function.Function;
 
 
 public class ExportDialog extends IODialog {
     private final static String EXPORT = "Export";
     private final static String CANCEL = "Cancel";
-    private final TableModel<Template> templates;
-    private final TableModel<Currency> currencies;
-    private final TableModel<Category> categories;
-    private final ICarRideTableFilter carRideTableFilter;
+    private TableModel<Template> templates;
+    private TableModel<Currency> currencies;
+    private TableModel<Category> categories;
+    private ICarRideTableFilter carRideTableFilter;
+
+    ExportDialog(List<Model> data) {
+        super("Export Selection", EXPORT, CANCEL);
+        this.forceSelectEntity(getSupportedEntity(data));
+        initActions(()->export(getSelectedEntity(), getSelectedFile(), data));
+    }
 
     ExportDialog(ICarRideTableFilter carRideTableFilter,
                  TableModel<Template> templates,
                  TableModel<Currency> currencies,
                  TableModel<Category> categories) {
-        super(EXPORT, CANCEL);
+        super("Export data", EXPORT, CANCEL);
         this.carRideTableFilter = carRideTableFilter;
         this.templates = templates;
         this.currencies = currencies;
         this.categories = categories;
+        initActions(()->export(getSelectedEntity(), getSelectedFile()));
+    }
+
+    private void initActions(Runnable exportButtonAction){
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
@@ -43,40 +58,68 @@ public class ExportDialog extends IODialog {
             @Override
             public void componentHidden(ComponentEvent e) {
                 if (EXPORT.equals(optionPane.getValue()) && getSelectedFile() != null) {
-                    performExport(getSelectedEntity(), getSelectedFile());
+                    exportButtonAction.run();
                 }
             }
         });
     }
 
-    private void performExport(String selectedExportOption, File file) {
+    private void export(String selectedExportOption, File file) {
         Logger.info("Performing Export of " + selectedExportOption + " data to file: " + file.getAbsolutePath());
 
-        AsyncExecutor asyncExecutor = switch (selectedExportOption) {
-            case "Car Rides" -> new AsyncExecutor(
-                    (x) -> new BatchExporterCarRideJSON().exportData(carRideTableFilter.getRideCompoundMatcher().getData(), file.getAbsolutePath()),
-                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
-            case "Currency" -> new AsyncExecutor(
-                    (x) -> new BatchExporterCurrencyJSON()
-                            .exportData(currencies.getAll(), file.getAbsolutePath()),
-                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
-            case "Category" -> new AsyncExecutor(
-                    (x) -> new BatchExporterCategoryJSON()
-                            .exportData(categories.getAll(), file.getAbsolutePath()),
-                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
-            case "Template" -> new AsyncExecutor(
-                    (x) -> new BatchExporterTemplateJSON()
-                            .exportData(templates.getAll(), file.getAbsolutePath()),
-                    () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                    () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
+        Function<Void, Boolean> exportFunction = switch (selectedExportOption) {
+            case "Car Rides" -> (x) -> new BatchExporterCarRideJSON()
+                    .exportData(carRideTableFilter.getRideCompoundMatcher().getData(), file.getAbsolutePath());
+            case "Currency" -> (x) -> new BatchExporterCurrencyJSON()
+                    .exportData(currencies.getAll(), file.getAbsolutePath());
+            case "Category" -> (x) -> new BatchExporterCategoryJSON()
+                    .exportData(categories.getAll(), file.getAbsolutePath());
+            case "Template" ->
+                    (x) -> new BatchExporterTemplateJSON().exportData(templates.getAll(), file.getAbsolutePath());
             default -> {
                 Logger.error("Selected unsupported export action.");
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
             }
         };
-        asyncExecutor.importData();
+        performExport(exportFunction);
+    }
+
+    private void export(String selectedExportOption, File file, List<Model> data) {
+        Logger.info("Performing Export of " + selectedExportOption + " data to file: " + file.getAbsolutePath());
+        Function<Void, Boolean> exportFunction = switch (selectedExportOption) {
+            case "Car Rides" -> (x) -> new BatchExporterCarRideJSON()
+                    .exportData(data.stream().map(model -> (CarRide) model).toList(), file.getAbsolutePath());
+            case "Currency" -> (x) -> new BatchExporterCurrencyJSON()
+                    .exportData(data.stream().map(model -> (Currency) model).toList(), file.getAbsolutePath());
+            case "Category" -> (x) -> new BatchExporterCategoryJSON()
+                    .exportData(data.stream().map(model -> (Category) model).toList(), file.getAbsolutePath());
+            case "Template" -> (x) -> new BatchExporterTemplateJSON()
+                    .exportData(data.stream().map(model -> (Template) model).toList(), file.getAbsolutePath());
+            default -> {
+                Logger.error("Selected unsupported export action.");
+                throw new IllegalStateException("You shouldn't be here, how did you even get here?");
+            }
+        };
+        performExport(exportFunction);
+    }
+
+    private void performExport(Function<Void, Boolean> exportFunction) {
+        new AsyncExecutor(exportFunction,
+                () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
+                () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."))
+                .perform();
+    }
+
+    private String getSupportedEntity(List<Model> data) {
+        if (data.get(0) instanceof CarRide) {
+            return "Car Rides";
+        }
+        if (data.get(0) instanceof Category) {
+            return "Category";
+        }
+        if (data.get(0) instanceof Template) {
+            return "Template";
+        }
+        return "Currency";
     }
 }

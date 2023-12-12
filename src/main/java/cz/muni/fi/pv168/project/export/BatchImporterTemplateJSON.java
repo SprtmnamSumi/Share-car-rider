@@ -4,12 +4,13 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.data.IImportInitializer;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 public class BatchImporterTemplateJSON extends importer<Template> {

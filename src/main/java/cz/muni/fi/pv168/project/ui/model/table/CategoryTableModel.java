@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.model.Category;
+package cz.muni.fi.pv168.project.ui.model.table;
 
 import com.google.inject.Singleton;
 import cz.muni.fi.pv168.project.business.model.CarRide;
@@ -18,7 +18,6 @@ public class CategoryTableModel extends TableModel<Category> {
     @Inject
     CategoryTableModel(ICrudService<Category> categoryCrudService) {
         super(categoryCrudService, List.of(
-
                 Column.readonly("Name", String.class, Category::getName),
                 Column.readonly("Colour", Integer.class, Category::getColour)));
     }

@@ -6,12 +6,13 @@ import cz.muni.fi.pv168.project.ui.MainWindow;
 import cz.muni.fi.pv168.project.ui.action.NuclearQuitAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
 import cz.muni.fi.pv168.project.ui.theme.ColorTheme;
-import java.awt.EventQueue;
-import java.util.Properties;
+import org.tinylog.Logger;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import org.tinylog.Logger;
+import java.awt.EventQueue;
+import java.util.Properties;
 
 import static cz.muni.fi.pv168.project.wiring.Injector.getInjector;
 

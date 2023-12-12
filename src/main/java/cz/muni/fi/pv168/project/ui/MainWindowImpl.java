@@ -10,17 +10,17 @@ import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.action.IOActionFactory;
 import cz.muni.fi.pv168.project.ui.action.InfoAction;
 import cz.muni.fi.pv168.project.ui.action.QuitAction;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import cz.muni.fi.pv168.project.ui.model.table.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.table.CurrencyTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
+import cz.muni.fi.pv168.project.ui.model.table.TemplateTableModel;
 import cz.muni.fi.pv168.project.ui.model.common.ButtonTabComponent;
 import cz.muni.fi.pv168.project.ui.panels.CarRide.CarRideTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Currency.CurrencyTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
-import java.awt.BorderLayout;
+
 import javax.inject.Inject;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.WindowConstants;
+import java.awt.BorderLayout;
 
 class MainWindowImpl implements MainWindow {
     private final JFrame frame;
@@ -44,7 +45,7 @@ class MainWindowImpl implements MainWindow {
                    DefaultActionFactory<Template> templateActionFactory,
                    IOActionFactory ioActionFactory,
                    CurrencyActionFactory currencyActionFactory,
-                   CarRideTableModel carRideTableModel,
+                   TableModel<CarRide> carRideTableModel,
                    CategoryTableModel categoryTableModel,
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
@@ -52,10 +53,10 @@ class MainWindowImpl implements MainWindow {
     ) {
         frame = createFrame();
 
-        CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
-        CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
-        TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory);
-        CurrencyTablePanel currencyTablePanel = new CurrencyTablePanel(currencyTableModel, currencyActionFactory);
+        CarRideTablePanel carRideTablePanel = new CarRideTablePanel(carRideTableModel, carActionFactory, ioActionFactory, categoryTableModel, currencyTableModel, ICarRideStatistics);
+        CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory, ioActionFactory);
+        TemplateTablePanel templateTablePanel = new TemplateTablePanel(templateTableModel, templateActionFactory, ioActionFactory);
+        CurrencyTablePanel currencyTablePanel = new CurrencyTablePanel(currencyTableModel, currencyActionFactory, ioActionFactory);
 
         Action addCarRideAction = carActionFactory.getAddAction(carRideTablePanel.getTable());
         Action addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());

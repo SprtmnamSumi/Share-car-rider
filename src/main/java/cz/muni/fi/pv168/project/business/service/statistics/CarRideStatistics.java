@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.business.service.statistics;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;

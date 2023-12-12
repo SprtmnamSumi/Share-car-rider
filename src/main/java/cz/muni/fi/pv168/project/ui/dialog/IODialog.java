@@ -1,15 +1,15 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.io.File;
 
 abstract class IODialog extends JDialog {
     protected final JOptionPane optionPane;
@@ -18,8 +18,8 @@ abstract class IODialog extends JDialog {
     private final JButton actionButton;
     private File selectedFile;
 
-    IODialog(String... actions) {
-        super(Frame.getFrames()[0], actions[0], true);
+    IODialog(String title, String... actions) {
+        super(Frame.getFrames()[0], title, true);
         this.setResizable(false);
         entityOptionsComboBox.setSelectedIndex(0); // Default selection
 
@@ -52,7 +52,10 @@ abstract class IODialog extends JDialog {
         optionPane.addPropertyChangeListener(this::propertyChange);
 
     }
-
+    void forceSelectEntity(String entity){
+        entityOptionsComboBox.removeAllItems();
+        entityOptionsComboBox.addItem(entity);
+    }
     String getSelectedEntity() {
         return (String) entityOptionsComboBox.getSelectedItem();
     }

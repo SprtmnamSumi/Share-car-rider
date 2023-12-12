@@ -1,9 +1,7 @@
 package cz.muni.fi.pv168.project.ui.panels;
 
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.util.Iterator;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -11,6 +9,9 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.util.Iterator;
 
 
 public abstract class AbstractTablePanel extends JPanel {

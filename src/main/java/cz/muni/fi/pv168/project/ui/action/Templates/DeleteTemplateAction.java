@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.action.Templates;
 
-import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
@@ -26,7 +27,7 @@ final class DeleteTemplateAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var templateTableModel = (TemplateTableModel) templateTable.getModel();
+        var templateTableModel = (TableModel<Template>) templateTable.getModel();
         Arrays.stream(templateTable.getSelectedRows())
                 .map(templateTable::convertRowIndexToModel)
                 .boxed()

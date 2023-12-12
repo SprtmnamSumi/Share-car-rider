@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.wiring;
 
 import com.google.inject.Guice;
+
 import java.util.List;
 
 public class Injector {

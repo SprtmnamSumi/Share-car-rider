@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.ui.action.CarRide;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
+import cz.muni.fi.pv168.project.ui.model.table.CarRideTableModel;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;

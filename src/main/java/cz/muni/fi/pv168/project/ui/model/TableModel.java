@@ -4,12 +4,13 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
 
 /**
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.

@@ -6,11 +6,12 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
+
+import javax.inject.Inject;
 import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import javax.inject.Inject;
 
 public class PrefilledEntityProvider implements EntityProvider {
     private final Random randomGenerator = new Random();

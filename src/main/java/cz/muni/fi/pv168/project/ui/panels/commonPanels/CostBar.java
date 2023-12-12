@@ -7,11 +7,12 @@ import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
-import java.awt.Dimension;
-import java.awt.event.ItemEvent;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.ListModel;
+import java.awt.Dimension;
+import java.awt.event.ItemEvent;
 
 
 public class CostBar extends ValidatedJPanel {

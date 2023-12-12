@@ -4,15 +4,16 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.data.IImportInitializer;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.tinylog.Logger;
+
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.tinylog.Logger;
 
 
 public class BatchImporterCarRideJSON extends importer<CarRide> {

@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.ui.renderers;
 
 
 import cz.muni.fi.pv168.project.business.model.Currency;
+
 import javax.swing.JLabel;
 
 public final class CurrencyRenderer extends AbstractRenderer<Currency> {

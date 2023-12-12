@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.project.ui.action.Category;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.table.CategoryTableModel;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;

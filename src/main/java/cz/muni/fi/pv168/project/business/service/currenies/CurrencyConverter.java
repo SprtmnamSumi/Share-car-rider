@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.business.service.currenies;
 
 import cz.muni.fi.pv168.project.business.model.Currency;
+
 import javax.inject.Singleton;
 
 @Singleton

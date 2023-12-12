@@ -1,12 +1,13 @@
 package cz.muni.fi.pv168.project.export;
 
 import cz.muni.fi.pv168.project.business.model.Template;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.tinylog.Logger;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 
 public class BatchExporterTemplateJSON {

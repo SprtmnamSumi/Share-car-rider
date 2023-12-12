@@ -2,9 +2,10 @@ package cz.muni.fi.pv168.project.business.service.export;
 
 import cz.muni.fi.pv168.project.business.service.mocks.MockImportInitializer;
 import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
+import org.junit.jupiter.api.Test;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import org.junit.jupiter.api.Test;
 
 import static cz.muni.fi.pv168.project.business.service.statistics.CarRideStatisticsUnitTests.createCarRideThree;
 import static cz.muni.fi.pv168.project.business.service.statistics.CarRideStatisticsUnitTests.createCarRideTwo;
