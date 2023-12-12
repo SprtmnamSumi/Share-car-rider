@@ -93,8 +93,11 @@ class TemplateDialog extends EntityDialog<Template> {
         template.setDistance(Double.parseDouble(distanceField.getText()));
         template.setFuelConsumption(Double.parseDouble(fuelConsumption.getText()));
         template.setCostOfFuelPerLitre(costBar.getCostOfFuelInDollars());
+
         template.setCurrency(costBar.getCurrency());
+        costBar.getCurrency().setNewestRateToDollar(costBar.getConversionRateToDollars());
         template.setConversionRateToDollar(costBar.getConversionRateToDollars());
+
         template.setNumberOfPassengers(Integer.parseInt(numberOfPassengers.getText()));
         template.setCommission(Double.parseDouble(commission.getText()));
         template.setCategory(categoryBar.getSelectedItem());

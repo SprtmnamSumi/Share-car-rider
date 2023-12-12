@@ -119,7 +119,9 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setDate(dateBar.getDate());
 
         carRide.setCurrency(costBar.getCurrency());
+        costBar.getCurrency().setNewestRateToDollar(costBar.getConversionRateToDollars());
         carRide.setConversionRateToDollar(costBar.getConversionRateToDollars());
+
         carRide.setCostOfFuelPerLitre(costBar.getCostOfFuelInDollars());
 
         return carRide;

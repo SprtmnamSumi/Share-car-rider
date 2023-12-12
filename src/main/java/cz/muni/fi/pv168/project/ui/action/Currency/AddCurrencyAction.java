@@ -22,7 +22,7 @@ final class AddCurrencyAction extends AbstractAction {
         this.entityProvider = entityProvider;
         this.currencyTable = currencyTable;
         putValue(SMALL_ICON, icon);
-        putValue(SHORT_DESCRIPTION, "Adds new CurrencyEntity");
+        putValue(SHORT_DESCRIPTION, "Adds new Currency");
         putValue(MNEMONIC_KEY, KeyEvent.VK_A);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke("ctrl N"));
     }
@@ -31,7 +31,7 @@ final class AddCurrencyAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         var currencyTableModel = (CurrencyTableModel) currencyTable.getModel();
         dialogFactory.getAddCurrencyDialog(entityProvider.getCurrency())
-                .show(currencyTable, "Add CurrencyEntity", "Add")
+                .show(currencyTable, "Add Currency", "Add")
                 .ifPresent(currencyTableModel::addRow);
     }
 }

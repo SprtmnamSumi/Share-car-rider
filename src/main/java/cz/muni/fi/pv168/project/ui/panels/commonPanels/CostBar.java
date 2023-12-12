@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.ListModel;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
+import org.checkerframework.checker.units.qual.C;
 
 
 public class CostBar extends ValidatedJPanel {
@@ -41,7 +42,7 @@ public class CostBar extends ValidatedJPanel {
         costOfFuel.setPreferredSize(new Dimension(150, 30));
         this.add(costOfFuel);
 
-        JLabel currencyLabel = new JLabel("CurrencyEntity:");
+        JLabel currencyLabel = new JLabel("Currency:");
         this.add(currencyLabel);
         currencyJComboBox.setPreferredSize(new Dimension(150, 30));
         this.add(currencyJComboBox);
