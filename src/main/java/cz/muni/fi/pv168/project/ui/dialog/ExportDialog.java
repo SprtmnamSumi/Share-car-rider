@@ -11,7 +11,7 @@ import cz.muni.fi.pv168.project.export.BatchExporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchExporterTemplateJSON;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-import cz.muni.fi.pv168.project.ui.workers.AsyncExecutor;
+import cz.muni.fi.pv168.project.ui.workers.IOWorkerProvider;
 import org.tinylog.Logger;
 
 import javax.swing.JOptionPane;
@@ -25,22 +25,26 @@ import java.util.function.Function;
 public class ExportDialog extends IODialog {
     private final static String EXPORT = "Export";
     private final static String CANCEL = "Cancel";
+    private final IOWorkerProvider workerProvider;
     private TableModel<Template> templates;
     private TableModel<Currency> currencies;
     private TableModel<Category> categories;
     private ICarRideTableFilter carRideTableFilter;
 
-    ExportDialog(List<Model> data) {
+    ExportDialog(IOWorkerProvider workerProvider, List<Model> data) {
         super("Export Selection", EXPORT, CANCEL);
+        this.workerProvider = workerProvider;
         this.forceSelectEntity(getSupportedEntity(data));
         initActions(()->export(getSelectedEntity(), getSelectedFile(), data));
     }
 
-    ExportDialog(ICarRideTableFilter carRideTableFilter,
+    ExportDialog(IOWorkerProvider workerProvider,
+                 ICarRideTableFilter carRideTableFilter,
                  TableModel<Template> templates,
                  TableModel<Currency> currencies,
                  TableModel<Category> categories) {
         super("Export data", EXPORT, CANCEL);
+        this.workerProvider = workerProvider;
         this.carRideTableFilter = carRideTableFilter;
         this.templates = templates;
         this.currencies = currencies;
@@ -104,10 +108,12 @@ public class ExportDialog extends IODialog {
     }
 
     private void performExport(Function<Void, Boolean> exportFunction) {
-        new AsyncExecutor(exportFunction,
-                () -> JOptionPane.showMessageDialog(this, "Export has successfully finished."),
-                () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."))
-                .perform();
+        boolean success = workerProvider.submitExport(exportFunction,
+                () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
+        if(!success){
+            Logger.info("Export did not start, because another IO action is in progress");
+            JOptionPane.showMessageDialog(this, "Export did not start, because another IO action is in progress");
+        }
     }
 
     private String getSupportedEntity(List<Model> data) {

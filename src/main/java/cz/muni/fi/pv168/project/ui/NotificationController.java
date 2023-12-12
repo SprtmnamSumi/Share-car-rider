@@ -1,9 +1,12 @@
 package cz.muni.fi.pv168.project.ui;
 
 import cz.muni.fi.pv168.project.ui.model.TableModel;
+import cz.muni.fi.pv168.project.ui.notification.AbstractNotificationPanel;
 import cz.muni.fi.pv168.project.ui.notification.NotificationEvent;
-import cz.muni.fi.pv168.project.ui.notification.NotificationPanel;
+import cz.muni.fi.pv168.project.ui.notification.TableEventPanel;
+import cz.muni.fi.pv168.project.ui.notification.IOEventPanel;
 
+import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
@@ -15,17 +18,21 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class NotificationController {
     private final static int TIME_LIMIT = 5;
-    private final NotificationPanel notificationPanel = new NotificationPanel();
+    private final TableEventPanel tableEventPanel = new TableEventPanel();
+    private final IOEventPanel ioEventPanel = new IOEventPanel();
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private final Window window;
-    private ScheduledFuture currentNotification;
+    private final AtomicReference<AbstractNotificationPanel> currentNotification = new AtomicReference<>();
+    private ScheduledFuture currentFuture;
 
     public NotificationController(Window window) {
         this.window = window;
-        this.window.add(notificationPanel);
+        this.window.add(tableEventPanel);
+        this.window.add(ioEventPanel);
         window.addWindowStateListener((a) -> SwingUtilities.invokeLater(this::refreshPosition));
         window.addComponentListener(new ComponentAdapter() {
             @Override
@@ -35,13 +42,16 @@ public class NotificationController {
         });
     }
 
+    public void showIOProgressNotification(String message){
+        ioEventPanel.setMessage(message);
+        showNotification(ioEventPanel);
+    }
+
     public void showTableNotification(JTable table, TableModelEvent event) {
-        updateNotification(table, event);
-        if (currentNotification != null) {
-            currentNotification.cancel(true);
+        if(!ioEventPanel.isShowing()){
+            updateNotification(table, event);
+            showNotification(tableEventPanel);
         }
-        refreshPosition();
-        runNotification();
     }
 
     /**
@@ -50,9 +60,9 @@ public class NotificationController {
      */
     private void updateNotification(JTable table, TableModelEvent event) {
         if (event.getType() == TableModelEvent.DELETE) {
-            notificationPanel.setNotification(new NotificationEvent(table, event));
+            tableEventPanel.setNotification(new NotificationEvent(table, event));
         } else {
-            SwingUtilities.invokeLater(() -> notificationPanel.setNotification(new NotificationEvent(table, event)));
+            SwingUtilities.invokeLater(() -> tableEventPanel.setNotification(new NotificationEvent(table, event)));
         }
     }
 
@@ -62,19 +72,24 @@ public class NotificationController {
      */
     private void refreshPosition() {
         Point location = new Point(
-                window.getSize().width - notificationPanel.getWidth() - 25,
-                window.getSize().height - notificationPanel.getHeight() - 70);
-        notificationPanel.setLocation(location);
+                window.getSize().width - ioEventPanel.getWidth() - 25,
+                window.getSize().height - ioEventPanel.getHeight() - 70);
+        ioEventPanel.setLocation(location);
+        tableEventPanel.setLocation(location);
     }
 
     /**
      * Lifecycle of visible notification
      */
-    private void runNotification() {
-        notificationPanel.setVisible(true);
-        currentNotification = executor.schedule(() -> {
-            notificationPanel.setVisible(false);
-            currentNotification = null;
+    private void showNotification(AbstractNotificationPanel notification) {
+        if (currentNotification.get() != null && !currentFuture.isCancelled()) {
+            currentFuture.cancel(true);
+        }
+        refreshPosition();
+        notification.setVisible(true);
+        currentFuture = executor.schedule(() -> {
+            notification.setVisible(false);
+            currentNotification.set(null);
         }, TIME_LIMIT, TimeUnit.SECONDS);
     }
 }

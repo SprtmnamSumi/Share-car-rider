@@ -20,6 +20,7 @@ import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Currency.CurrencyTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
+import cz.muni.fi.pv168.project.ui.workers.IOWorkerProvider;
 
 import javax.inject.Inject;
 import javax.swing.Action;
@@ -49,7 +50,8 @@ class MainWindowImpl implements MainWindow {
                    CategoryTableModel categoryTableModel,
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
-                   ICarRideStatistics ICarRideStatistics
+                   ICarRideStatistics ICarRideStatistics,
+                   IOWorkerProvider workerProvider
     ) {
         frame = createFrame();
 
@@ -80,6 +82,8 @@ class MainWindowImpl implements MainWindow {
         categoryTableModel.addTableModelListener((e) -> notificationController.showTableNotification(categoryTablePanel.getTable(), e));
         templateTableModel.addTableModelListener((e) -> notificationController.showTableNotification(templateTablePanel.getTable(), e));
         currencyTableModel.addTableModelListener((e) -> notificationController.showTableNotification(currencyTablePanel.getTable(), e));
+
+        workerProvider.setListener(notificationController);
 
         frame.add(tabbedPane, BorderLayout.CENTER);
         frame.setJMenuBar(createMenuBar());

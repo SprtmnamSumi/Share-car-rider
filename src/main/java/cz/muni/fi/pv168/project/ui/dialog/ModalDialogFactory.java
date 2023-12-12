@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.ui.dialog;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
@@ -12,6 +11,7 @@ import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
+import cz.muni.fi.pv168.project.ui.workers.IOWorkerProvider;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -26,7 +26,7 @@ class ModalDialogFactory implements DialogFactory {
     private final ImportInitializer importInitializer;
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CurrencyConverter currencyConverter;
-    private final GuidProvider guidProvider;
+    private final IOWorkerProvider workerProvider;
 
     @Inject
     ModalDialogFactory(EntityListModelAdapter<Category> categoryListModel,
@@ -37,7 +37,7 @@ class ModalDialogFactory implements DialogFactory {
                        TableModel<Category> categoryTableModel,
                        DefaultActionFactory<Category> categoryActionFactory,
                        CurrencyConverter currencyConverter,
-                       GuidProvider guidProvider,
+                       IOWorkerProvider workerProvider,
                        ImportInitializer importInitializer) {
         this.categoryListModel = categoryListModel;
         this.currencyListModel = currencyListModel;
@@ -48,7 +48,7 @@ class ModalDialogFactory implements DialogFactory {
         this.importInitializer = importInitializer;
         this.categoryTableModel = categoryTableModel;
         this.currencyConverter = currencyConverter;
-        this.guidProvider = guidProvider;
+        this.workerProvider = workerProvider;
     }
 
     @Override
@@ -73,16 +73,16 @@ class ModalDialogFactory implements DialogFactory {
 
     @Override
     public ImportDialog getImportDialog() {
-        return new ImportDialog(importInitializer);
+        return new ImportDialog(workerProvider, importInitializer);
     }
 
     @Override
     public ExportDialog getExportDialog(ICarRideTableFilter carRideFilterModel) {
-        return new ExportDialog(carRideFilterModel, templateTableModel, currencyTableModel, categoryTableModel);
+        return new ExportDialog(workerProvider, carRideFilterModel, templateTableModel, currencyTableModel, categoryTableModel);
     }
 
     @Override
     public ExportDialog getExportDialog(List<Model> data) {
-        return new ExportDialog(data);
+        return new ExportDialog(workerProvider, data);
     }
 }
