@@ -33,7 +33,6 @@ final class AddCarRideAction extends AbstractAction {
     private void addCarRide(CarRide carRide) {
         var carRidesTableModel = (TableModel<CarRide>) carRidesTable.getModel();
         carRidesTableModel.addRow(carRide);
-        carRide.getCurrency().setNewestRateToDollar(carRide.getConversionToDollars());
     }
 
     @Override

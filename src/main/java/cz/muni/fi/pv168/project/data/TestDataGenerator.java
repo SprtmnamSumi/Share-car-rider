@@ -69,7 +69,7 @@ public class TestDataGenerator {
         double commission = randomGenerator.nextInt(0, 100);
         Category category = categories.get(randomGenerator.nextInt(categories.size()));
         Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
-        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, currency.getNewestRateToDollar());
+        return new Template(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency);
     }
 
     private Currency createTestCurrency(Tuple curr) {
@@ -93,7 +93,7 @@ public class TestDataGenerator {
                 randomGenerator.nextInt(0, 60));
         Category category = categories.get(randomGenerator.nextInt(categories.size()));
         Currency currency = currencies.get(randomGenerator.nextInt(currencies.size()));
-        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, currency.getNewestRateToDollar(), date);
+        return new CarRide(guid, name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, category, currency, date);
     }
 
     public List<CarRide> createTestRides(int count, List<Category> categories, List<Currency> currencies) {

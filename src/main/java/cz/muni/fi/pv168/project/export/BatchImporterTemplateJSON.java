@@ -43,8 +43,7 @@ public class BatchImporterTemplateJSON extends importer<Template> {
                         templateObject.getInt("passengers"),
                         templateObject.getDouble("commission"),
                         category,
-                        currency,
-                        currency.getNewestRateToDollar());
+                        currency);
                 templateList.add(template);
             }
             return templateList;

@@ -38,7 +38,6 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                 resultSet.getDouble("commission"),
                 resultSet.getLong("categoryId"),
                 resultSet.getLong("currencyId"),
-                resultSet.getDouble("newestConversionRateToDollar"),
                 ((OffsetDateTime) resultSet.getObject("date")).toLocalDateTime()
         );
     }
@@ -57,10 +56,9 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                  numberOfPassengers,
                  commission,
                  categoryId,
-                 newestConversionRateToDollar,
-                                  date
+                 date
                              )
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                              """;
 
 
@@ -75,11 +73,10 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
             statement.setInt(8, newTemplate.getNumberOfPassengers());
             statement.setDouble(9, newTemplate.getCommission());
             statement.setLong(10, newTemplate.getCategoryId());
-            statement.setDouble(11, newTemplate.getNewestConversionRate());
 
             ZoneId zone = ZoneId.of("Europe/Prague");
             OffsetDateTime odt = newTemplate.getDate().atZone(zone).toOffsetDateTime();
-            statement.setObject(12, odt);
+            statement.setObject(11, odt);
         };
 
         return super.create(newTemplate, sql, statementSetup);
@@ -100,7 +97,6 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                  numberOfPassengers,
                  commission,
                  categoryId,
-                 newestConversionRateToDollar,
                  date
                 FROM CarRide
                 """;
@@ -121,7 +117,6 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                   numberOfPassengers,
                   commission,
                   categoryId,
-                 newestConversionRateToDollar,
                  date
                  FROM CarRide
                  WHERE id = ?
@@ -143,7 +138,6 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                  numberOfPassengers,
                  commission,
                  categoryId,
-                 newestConversionRateToDollar,
                  date
                 FROM CarRide
                 WHERE guid = ?
@@ -166,7 +160,6 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
                  numberOfPassengers = ?,
                  commission = ?,
                  categoryId = ?,
-                 newestConversionRateToDollar = ?,
                  date = ?
                 WHERE id = ?
                 """;
@@ -182,13 +175,12 @@ public final class CarRideDao extends CrudDao<CarRideEntity> implements DataAcce
             statement.setInt(8, entity.getNumberOfPassengers());
             statement.setDouble(9, entity.getCommission());
             statement.setLong(10, entity.getCategoryId());
-            statement.setDouble(11, entity.getNewestConversionRate());
 
             ZoneId zone = ZoneId.of("Europe/Prague");
             OffsetDateTime odt = entity.getDate().atZone(zone).toOffsetDateTime();
-            statement.setObject(12, odt);
+            statement.setObject(11, odt);
 
-            statement.setObject(13, entity.getId());
+            statement.setObject(12, entity.getId());
         };
         return super.update(entity, sql, statementSetup);
     }

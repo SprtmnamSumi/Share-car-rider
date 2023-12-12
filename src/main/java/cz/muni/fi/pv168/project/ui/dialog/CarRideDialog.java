@@ -66,7 +66,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 var template = (Template) e.getItem();
-                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), template.getCategory(), template.getCurrency(), template.getConversionToDollars(), LocalDateTime.now());
+                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), template.getCategory(), template.getCurrency(), LocalDateTime.now());
                 setValues(templateCarRide);
             }
         });
@@ -90,7 +90,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         categoryBar.setSelectedItem(carRide.getCategory());
         dateBar.setDate(carRide.getDate());
         commission.setText(String.valueOf(carRide.getCommission()));
-        costBar.SetValues(carRide.getCostOfFuelPerLitreInDollars(), carRide.getConversionToDollars(), carRide.getCurrency());
+        costBar.SetValues(carRide.getCostOfFuelPerLitreInDollars(), carRide.getCurrency() != null ? carRide.getCurrency().getNewestRateToDollar() : 0.0f, carRide.getCurrency());
         validableListener.fireChange();
     }
 
@@ -118,8 +118,9 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setCategory(categoryBar.getSelectedItem());
         carRide.setDate(dateBar.getDate());
 
-        carRide.setCurrency(costBar.getCurrency());
-        carRide.setConversionRateToDollar(costBar.getConversionRateToDollars());
+        var currency = costBar.getCurrency();
+        carRide.setCurrency(currency);
+        currency.setNewestRateToDollar(costBar.getConversionRateToDollars());
         carRide.setCostOfFuelPerLitre(costBar.getCostOfFuelInDollars());
 
         return carRide;
@@ -132,7 +133,7 @@ final class CarRideDialog extends EntityDialog<CarRide> {
                 ride.getDistance(), ride.getFuelConsumption(),
                 ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(),
                 ride.getCommission(), ride.getCategory(),
-                ride.getCurrency(), ride.getConversionToDollars());
+                ride.getCurrency());
     }
 
     private void addTemplate(Template templateToBeAdded) {

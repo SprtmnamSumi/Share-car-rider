@@ -45,7 +45,6 @@ public class BatchExporterCarRideJSON {
                 carRideObject.put("date", carRide.getDate().format(formatter));
                 carRideObject.put("category", categoryObject);
                 carRideObject.put("currency", currencyObject);
-                carRideObject.put("newest_conversion_rate", carRide.getConversionToDollars());
 
                 carRidesArray.put(carRideObject);
             }

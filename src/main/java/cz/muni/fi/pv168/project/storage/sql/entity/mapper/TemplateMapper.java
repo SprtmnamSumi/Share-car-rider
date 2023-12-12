@@ -54,8 +54,7 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
                 entity.getNumberOfPassengers(),
                 entity.getCommission(),
                 category,
-                currency,
-                entity.getNewestConversionRate()
+                currency
         );
     }
 
@@ -83,7 +82,6 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
                 entity.getNumberOfPassengers(),
                 entity.getCommission(),
                 categoryEntity.getId(),
-                currencyEntity.getId(),
-                entity.getConversionToDollars());
+                currencyEntity.getId());
     }
 }

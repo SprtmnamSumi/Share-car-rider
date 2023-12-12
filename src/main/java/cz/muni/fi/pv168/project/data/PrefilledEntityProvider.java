@@ -43,7 +43,7 @@ public class PrefilledEntityProvider implements EntityProvider {
         Category category = categories.isEmpty() ? null : categories.get(randomGenerator.nextInt(0, categories.size()));
         Currency currency = currencies.isEmpty() ? null : currencies.get(randomGenerator.nextInt(0, currencies.size()));
         return new CarRide(guidProvider.newGuid(), name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers,
-                commission, category, currency, currency != null ? currency.getNewestRateToDollar() : 0.0f, dateTime);
+                commission, category, currency, dateTime);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PrefilledEntityProvider implements EntityProvider {
         Category category = categories.isEmpty() ? null : categories.get(randomGenerator.nextInt(0, categories.size()));
         Currency currency = currencies.isEmpty() ? null : currencies.get(randomGenerator.nextInt(0, currencies.size()));
         return new Template(guidProvider.newGuid(), name, description, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers,
-                commission, category, currency, currency != null ? currency.getNewestRateToDollar() : 0.0);
+                commission, category, currency);
     }
 
     @Override

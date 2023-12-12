@@ -16,7 +16,7 @@ public class TemplateEntity extends Entity {
 
     public TemplateEntity(Long id, String guid, String title, String description, Double distance, double fuelConsumption,
                           double costOfFuelPerLitre, int numberOfPassengers, double commission,
-                          Long categoryId, Long currencyID, double newestConversionRate) {
+                          Long categoryId, Long currencyID) {
         super(id, guid);
 
         this.title = title;
@@ -26,10 +26,8 @@ public class TemplateEntity extends Entity {
         this.costOfFuelPerLitre = costOfFuelPerLitre;
         this.numberOfPassengers = numberOfPassengers;
         this.commission = commission;
-
         this.categoryId = categoryId;
         this.currencyId = currencyID;
-        this.newestConversionRate = newestConversionRate;
     }
 
     // Add getters and setters for each field
@@ -105,14 +103,6 @@ public class TemplateEntity extends Entity {
 
     public void setCurrencyId(Long currencyId) {
         this.currencyId = currencyId;
-    }
-
-    public double getNewestConversionRate() {
-        return newestConversionRate;
-    }
-
-    public void setNewestConversionRate(double newestConversionRate) {
-        this.newestConversionRate = newestConversionRate;
     }
 }
 

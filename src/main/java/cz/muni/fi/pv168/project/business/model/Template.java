@@ -13,12 +13,9 @@ public class Template extends Model {
     protected double commission;
     protected Category category;
 
-    protected double newestConversionRateToDollar;
-
-    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, double newestConversionRateToDollar) {
+    public Template(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency) {
         super(guid);
         this.currency = currency;
-        this.newestConversionRateToDollar = newestConversionRateToDollar;
         setTitle(Title);
         setDescription(Description);
         setDistance(Distance);
@@ -123,21 +120,11 @@ public class Template extends Model {
                && Objects.equals(costOfFuelPerLitre, template.costOfFuelPerLitre)
                && Objects.equals(numberOfPassengers, template.numberOfPassengers)
                && Objects.equals(commission, template.commission)
-               && Objects.equals(currency, template.currency)
-               && Objects.equals(newestConversionRateToDollar, template.newestConversionRateToDollar);
+               && Objects.equals(currency, template.currency);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, category, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, currency, newestConversionRateToDollar);
-    }
-
-
-    public double getConversionToDollars() {
-        return newestConversionRateToDollar;
-    }
-
-    public void setConversionRateToDollar(double newestConversionRateToDollar) {
-        this.newestConversionRateToDollar = newestConversionRateToDollar;
+        return Objects.hash(title, description, category, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, currency);
     }
 }

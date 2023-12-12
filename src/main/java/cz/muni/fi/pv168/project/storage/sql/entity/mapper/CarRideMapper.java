@@ -55,7 +55,6 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
                 entity.getCommission(),
                 category,
                 currency,
-                entity.getNewestConversionRate(),
                 entity.getDate()
         );
     }
@@ -85,7 +84,6 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
                 entity.getCommission(),
                 categoryEntity.getId(),
                 currencyEntity.getId(),
-                entity.getConversionToDollars(),
                 entity.getDate());
     }
 }

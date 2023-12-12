@@ -54,7 +54,6 @@ public class BatchImporterCarRideJSON extends importer<CarRide> {
                         carRideObject.getDouble("commission"),
                         category,
                         currency,
-                        currency.getNewestRateToDollar(),
                         LocalDateTime.parse(carRideObject.getString("date"), formatter));
                 carRideList.add(carRide);
             }

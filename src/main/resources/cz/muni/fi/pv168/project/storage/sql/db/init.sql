@@ -27,8 +27,7 @@ CREATE TABLE IF NOT EXISTS "Template"
     `costOfFuelPerLitre`           DOUBLE PRECISION NOT NULL,
     `numberOfPassengers`           integer          NOT NULL,
     `commission`                   DOUBLE PRECISION NOT NULL,
-    `categoryId`                   BIGINT REFERENCES "Category" (`id`),
-    `newestConversionRateToDollar` DOUBLE PRECISION NOT NULL
+    `categoryId`                   BIGINT REFERENCES "Category" (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS "CarRide"
@@ -44,6 +43,5 @@ CREATE TABLE IF NOT EXISTS "CarRide"
     `numberOfPassengers`           integer                  NOT NULL,
     `commission`                   DOUBLE PRECISION         NOT NULL,
     `categoryId`                   BIGINT REFERENCES "Category" (`id`),
-    `newestConversionRateToDollar` DOUBLE PRECISION         NOT NULL,
     `date`                         TIMESTAMP WITH TIME ZONE NOT NULL
 );

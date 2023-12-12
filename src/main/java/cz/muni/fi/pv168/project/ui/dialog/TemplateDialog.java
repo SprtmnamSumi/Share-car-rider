@@ -68,7 +68,7 @@ class TemplateDialog extends EntityDialog<Template> {
         descriptionField.setText(template.getDescription());
         distanceField.setText(template.getDistance().toString());
         fuelConsumption.setText(String.valueOf(template.getFuelConsumption()));
-        costBar.SetValues(template.getCostOfFuelPerLitreInDollars(), template.getConversionToDollars(), template.getCurrency());
+        costBar.SetValues(template.getCostOfFuelPerLitreInDollars(), template.getCurrency().getNewestRateToDollar(), template.getCurrency());
         numberOfPassengers.setText(String.valueOf(template.getNumberOfPassengers()));
         commission.setText(String.valueOf(template.getCommission()));
         categoryBar.setSelectedItem(template.getCategory());
@@ -93,8 +93,11 @@ class TemplateDialog extends EntityDialog<Template> {
         template.setDistance(Double.parseDouble(distanceField.getText()));
         template.setFuelConsumption(Double.parseDouble(fuelConsumption.getText()));
         template.setCostOfFuelPerLitre(costBar.getCostOfFuelInDollars());
-        template.setCurrency(costBar.getCurrency());
-        template.setConversionRateToDollar(costBar.getConversionRateToDollars());
+
+        var currency = costBar.getCurrency();
+        template.setCurrency(currency);
+        currency.setNewestRateToDollar(costBar.getConversionRateToDollars());
+
         template.setNumberOfPassengers(Integer.parseInt(numberOfPassengers.getText()));
         template.setCommission(Double.parseDouble(commission.getText()));
         template.setCategory(categoryBar.getSelectedItem());

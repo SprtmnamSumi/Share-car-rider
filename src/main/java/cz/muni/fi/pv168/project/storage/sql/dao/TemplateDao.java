@@ -36,8 +36,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                 resultSet.getInt("numberOfPassengers"),
                 resultSet.getDouble("commission"),
                 resultSet.getLong("categoryId"),
-                resultSet.getLong("currencyId"),
-                resultSet.getDouble("newestConversionRateToDollar")
+                resultSet.getLong("currencyId")
         );
     }
 
@@ -54,10 +53,9 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  costOfFuelPerLitre,
                  numberOfPassengers,
                  commission,
-                 categoryId,
-                 newestConversionRateToDollar
+                 categoryId
                              )
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                              """;
 
         ISetUp<PreparedStatement, SQLException> statementSetup = (PreparedStatement statement) -> {
@@ -71,7 +69,6 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
             statement.setInt(8, newTemplate.getNumberOfPassengers());
             statement.setDouble(9, newTemplate.getCommission());
             statement.setLong(10, newTemplate.getCategoryId());
-            statement.setDouble(11, newTemplate.getNewestConversionRate());
         };
 
         return super.create(newTemplate, sql, statementSetup);
@@ -91,8 +88,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  costOfFuelPerLitre,
                  numberOfPassengers,
                  commission,
-                 categoryId,
-                 newestConversionRateToDollar
+                 categoryId
                 FROM Template
                 """;
         return super.findAll(sql);
@@ -111,8 +107,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                   costOfFuelPerLitre,
                   numberOfPassengers,
                   commission,
-                  categoryId,
-                 newestConversionRateToDollar
+                  categoryId
                  FROM Template
                  WHERE id = ?
                  """;
@@ -132,8 +127,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  costOfFuelPerLitre,
                  numberOfPassengers,
                  commission,
-                 categoryId,
-                 newestConversionRateToDollar
+                 categoryId
                 FROM Template
                 WHERE guid = ?
                 """;
@@ -153,8 +147,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
                  costOfFuelPerLitre = ?,
                  numberOfPassengers = ?,
                  commission = ?,
-                 categoryId = ?,
-                 newestConversionRateToDollar = ?
+                 categoryId = ?
                 WHERE id = ?
                 """;
 
@@ -169,8 +162,7 @@ public final class TemplateDao extends CrudDao<TemplateEntity> implements DataAc
             statement.setInt(8, entity.getNumberOfPassengers());
             statement.setDouble(9, entity.getCommission());
             statement.setLong(10, entity.getCategoryId());
-            statement.setDouble(11, entity.getNewestConversionRate());
-            statement.setDouble(12, entity.getId());
+            statement.setDouble(11, entity.getId());
         };
         return super.update(entity, sql, statementSetup);
     }

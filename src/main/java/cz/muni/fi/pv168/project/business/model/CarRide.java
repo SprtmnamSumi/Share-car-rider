@@ -7,8 +7,8 @@ import java.util.Objects;
 public class CarRide extends Template {
     private LocalDateTime date;
 
-    public CarRide(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, double newestConversionRate, LocalDateTime Date) {
-        super(guid, Title, Description, Distance, FuelConsumption, CostOfFuelPerLitre, NumberOfPassengers, commission, Category, currency, newestConversionRate);
+    public CarRide(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, LocalDateTime Date) {
+        super(guid, Title, Description, Distance, FuelConsumption, CostOfFuelPerLitre, NumberOfPassengers, commission, Category, currency);
         setDate(Date);
     }
 
@@ -34,12 +34,11 @@ public class CarRide extends Template {
                 && Objects.equals(numberOfPassengers, carRide.numberOfPassengers)
                 && Objects.equals(commission, carRide.commission)
                 && Objects.equals(currency, carRide.currency)
-                && Objects.equals(newestConversionRateToDollar, carRide.newestConversionRateToDollar)
                 && Objects.equals(date, carRide.getDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, category, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, currency, newestConversionRateToDollar, date);
+        return Objects.hash(title, description, category, distance, fuelConsumption, costOfFuelPerLitre, numberOfPassengers, commission, currency, date);
     }
 }

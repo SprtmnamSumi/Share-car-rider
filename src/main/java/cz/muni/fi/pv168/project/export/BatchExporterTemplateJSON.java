@@ -42,7 +42,6 @@ public class BatchExporterTemplateJSON {
                 templateObject.put("commission", template.getCommission());
                 templateObject.put("category", categoryObject);
                 templateObject.put("currency", currencyObject);
-                templateObject.put("newest_conversion_rate", template.getConversionToDollars());
 
                 templateArray.put(templateObject);
             }
