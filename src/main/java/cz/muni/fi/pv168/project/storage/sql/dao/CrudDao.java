@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 
 import cz.muni.fi.pv168.project.storage.sql.db.ConnectionHandler;
 import cz.muni.fi.pv168.project.storage.sql.entity.Entity;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

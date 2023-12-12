@@ -1,7 +1,8 @@
 package cz.muni.fi.pv168.project.business.error;
 
-import java.io.Serial;
 import org.tinylog.Logger;
+
+import java.io.Serial;
 
 public class RuntimeApplicationException extends RuntimeException implements ApplicationException {
 
@@ -23,7 +24,7 @@ public class RuntimeApplicationException extends RuntimeException implements App
 
     public RuntimeApplicationException(String userMessage, String message, Throwable cause) {
         super(message, cause);
-        Logger.error("RuntimeApplicationException occurred: " + userMessage + ", message" + cause.getMessage());
+        Logger.error("RuntimeApplicationException occurred: " + userMessage + ", message" + (cause != null ? cause.getMessage() : "no cause"));
         this.userMessage = userMessage;
     }
 

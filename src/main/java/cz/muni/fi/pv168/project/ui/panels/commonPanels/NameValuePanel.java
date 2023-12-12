@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.project.ui.panels.commonPanels;
 
-import java.awt.FlowLayout;
-import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
+import java.awt.Font;
 
 public class NameValuePanel extends JPanel {
     private final static Font boldFont = new JLabel().getFont().deriveFont(Font.BOLD);

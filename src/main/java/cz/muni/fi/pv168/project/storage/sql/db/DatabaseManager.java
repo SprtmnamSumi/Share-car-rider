@@ -1,11 +1,12 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
+import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
-import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
-import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import cz.muni.fi.pv168.project.ui.model.table.CurrencyTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 import org.h2.jdbcx.JdbcConnectionPool;
 import org.tinylog.Logger;
 
@@ -22,9 +23,9 @@ import java.sql.SQLException;
 public final class DatabaseManager {
     private static final String PROJECT_NAME = "share-car-rider";
     private static final String DB_PROPERTIES_STRING = "DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false";
-    private static CarRideTableModel carRideTableModel;
-    private static CategoryTableModel categoryTableModel;
-    private static TemplateTableModel templateTableModel;
+    private static TableModel<CarRide> carRideTableModel;
+    private static TableModel<Category> categoryTableModel;
+    private static TableModel<Template> templateTableModel;
     private static CurrencyTableModel currencyTableModel;
     private static GuidProvider guidProvider;
 

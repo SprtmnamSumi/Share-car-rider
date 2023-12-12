@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.model.Currency;
+package cz.muni.fi.pv168.project.ui.model.table;
 
 import com.google.inject.Singleton;
 import cz.muni.fi.pv168.project.business.model.CarRide;
@@ -14,8 +14,7 @@ import java.util.List;
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.
  */
 @Singleton
-public class
-CurrencyTableModel extends TableModel<Currency> {
+public class CurrencyTableModel extends TableModel<Currency> {
     @Inject
     CurrencyTableModel(ICrudService<Currency> currencyCrudService) {
         super(currencyCrudService, List.of(

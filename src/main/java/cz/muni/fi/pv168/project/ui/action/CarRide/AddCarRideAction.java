@@ -5,13 +5,14 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.data.EntityProvider;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.EntityDialog;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
+
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 final class AddCarRideAction extends AbstractAction {
     private final JTable carRidesTable;
@@ -30,7 +31,7 @@ final class AddCarRideAction extends AbstractAction {
     }
 
     private void addCarRide(CarRide carRide) {
-        var carRidesTableModel = (CarRideTableModel) carRidesTable.getModel();
+        var carRidesTableModel = (TableModel<CarRide>) carRidesTable.getModel();
         carRidesTableModel.addRow(carRide);
         carRide.getCurrency().setNewestRateToDollar(carRide.getConversionToDollars());
     }

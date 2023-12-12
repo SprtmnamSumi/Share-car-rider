@@ -1,7 +1,9 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
@@ -33,10 +35,12 @@ public class CurrencyCrudServiceUnitTest {
     @BeforeEach
     @SuppressWarnings("unchecked")
     void setUp() {
+        ICrudServiceImpl<CarRide> carRideICrudService = Mockito.mock(ICrudServiceImpl.class);
+        ICrudServiceImpl<Template> templateICrudService = Mockito.mock(ICrudServiceImpl.class);
         currencyRepository = Mockito.mock(Repository.class);
         currencyValidator = Mockito.mock(Validator.class);
         GuidProvider guidProvider = Mockito.mock(GuidProvider.class);
-        currencyCrudService = new CurrencyCrudService(currencyRepository, currencyValidator, guidProvider);
+        currencyCrudService = new CurrencyCrudService(carRideICrudService, templateICrudService, currencyRepository, currencyValidator, guidProvider);
     }
 
     @Test

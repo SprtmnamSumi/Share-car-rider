@@ -3,12 +3,13 @@ package cz.muni.fi.pv168.project.ui.filters;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.ui.filters.matchers.EntityMatcher;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
+
+import javax.swing.table.TableRowSorter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.swing.table.TableRowSorter;
 
 
 public interface ICarRideTableFilter {
@@ -28,11 +29,11 @@ public interface ICarRideTableFilter {
 
     class RideCompoundMatcher extends EntityMatcher<CarRide> {
 
-        private final TableRowSorter<CarRideTableModel> rowSorter;
+        private final TableRowSorter<TableModel<CarRide>> rowSorter;
 
         private final Map<Filters, EntityMatcher<CarRide>> entityMatchers = new HashMap<>();
 
-        public RideCompoundMatcher(TableRowSorter<CarRideTableModel> rowSorter) {
+        public RideCompoundMatcher(TableRowSorter<TableModel<CarRide>> rowSorter) {
             this.rowSorter = rowSorter;
         }
 

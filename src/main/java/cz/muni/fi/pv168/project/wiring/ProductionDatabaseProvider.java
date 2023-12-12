@@ -2,8 +2,9 @@ package cz.muni.fi.pv168.project.wiring;
 
 
 import cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager;
-import javax.inject.Singleton;
 import org.tinylog.Logger;
+
+import javax.inject.Singleton;
 
 /**
  * Dependency provider for production environment.

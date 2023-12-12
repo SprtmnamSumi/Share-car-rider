@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.project.ui.model.Template;
+package cz.muni.fi.pv168.project.ui.model.table;
 
 import com.google.inject.Singleton;
 import cz.muni.fi.pv168.project.business.model.Category;

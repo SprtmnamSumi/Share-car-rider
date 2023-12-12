@@ -1,7 +1,7 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
-import java.util.function.Supplier;
 import javax.inject.Inject;
+import java.util.function.Supplier;
 
 public class TransactionExecutorImpl implements TransactionExecutor {
 

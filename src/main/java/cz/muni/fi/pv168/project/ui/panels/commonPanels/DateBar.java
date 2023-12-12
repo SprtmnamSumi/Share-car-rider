@@ -4,12 +4,13 @@ import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFact
 import cz.muni.fi.pv168.project.ui.model.LocalDateModel;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedJPanel;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDatePicker;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import org.jdatepicker.DateModel;
-import org.jdatepicker.JDatePicker;
 
 public class DateBar extends ValidatedJPanel {
     final JDatePicker date;

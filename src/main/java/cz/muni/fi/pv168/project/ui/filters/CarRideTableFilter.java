@@ -1,12 +1,14 @@
 package cz.muni.fi.pv168.project.ui.filters;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.ui.filters.matchers.CarRideMatcherFactory;
-import cz.muni.fi.pv168.project.ui.model.CarRide.CarRideTableModel;
-import java.util.Date;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
+
 import javax.swing.table.TableRowSorter;
+import java.util.Date;
 
 
 public final class CarRideTableFilter implements ICarRideTableFilter {
@@ -14,7 +16,7 @@ public final class CarRideTableFilter implements ICarRideTableFilter {
 
     private final CarRideMatcherFactory matcherFactory;
 
-    public CarRideTableFilter(TableRowSorter<CarRideTableModel> rowSorter) {
+    public CarRideTableFilter(TableRowSorter<TableModel<CarRide>> rowSorter) {
         rideCompoundMatcher = new RideCompoundMatcher(rowSorter);
         matcherFactory = new CarRideMatcherFactory();
         rowSorter.setRowFilter(rideCompoundMatcher);

@@ -8,6 +8,7 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.CarRideEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
+
 import javax.inject.Inject;
 
 public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements EntityMapper<CarRideEntity, CarRide> {

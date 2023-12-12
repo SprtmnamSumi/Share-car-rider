@@ -1,15 +1,16 @@
 package cz.muni.fi.pv168.project.ui.icons;
 
 import com.google.inject.Singleton;
+import org.tinylog.Logger;
+
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import org.tinylog.Logger;
 
 @Singleton
 public class CachedIconLoader implements IconLoader {

@@ -1,8 +1,9 @@
 package cz.muni.fi.pv168.project.ui.action.Templates;
 
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.data.EntityProvider;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
-import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
@@ -29,7 +30,7 @@ final class AddTemplateAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        var templateTableModel = (TemplateTableModel) templateTable.getModel();
+        TableModel<Template> templateTableModel = (TableModel) templateTable.getModel();
         var dialog = dialogFactory.getAddTemplateDialog(entityProvider.getTemplate());
         dialog.show(templateTable, "Add Template", "Add")
                 .ifPresent(templateTableModel::addRow);

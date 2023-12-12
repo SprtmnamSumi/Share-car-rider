@@ -1,13 +1,14 @@
 package cz.muni.fi.pv168.project.export;
 
+import org.json.JSONObject;
+import org.tinylog.Logger;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Function;
-import org.json.JSONObject;
-import org.tinylog.Logger;
 
 public class importer<T> {
 

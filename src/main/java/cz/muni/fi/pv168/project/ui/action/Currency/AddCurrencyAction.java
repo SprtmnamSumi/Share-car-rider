@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.ui.action.Currency;
 
 import cz.muni.fi.pv168.project.data.EntityProvider;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
-import cz.muni.fi.pv168.project.ui.model.Currency.CurrencyTableModel;
+import cz.muni.fi.pv168.project.ui.model.table.CurrencyTableModel;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;

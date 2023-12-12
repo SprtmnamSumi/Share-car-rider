@@ -1,14 +1,12 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
-import java.awt.event.ItemEvent;
-import java.time.LocalDateTime;
+
 import javax.swing.JComboBox;
+import java.awt.event.ItemEvent;
 
 class DeleteCurrencyDialog extends EntityDialog<Currency> {
     private final JComboBox<Currency> currencyComboBoxModel;

@@ -1,9 +1,10 @@
 package cz.muni.fi.pv168.project.ui.action;
 
 import cz.muni.fi.pv168.project.ui.icons.CachedIconLoader;
-import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import java.awt.event.ActionEvent;
 
 public final class InfoAction extends AbstractAction {
     public InfoAction() {

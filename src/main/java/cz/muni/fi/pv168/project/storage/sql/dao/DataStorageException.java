@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.project.storage.sql.dao;
 
 
 import cz.muni.fi.pv168.project.business.error.RuntimeApplicationException;
+
 import java.io.Serial;
 
 /**

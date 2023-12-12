@@ -4,23 +4,27 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
-import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.validation.Validable;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ItemEvent;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.ListModel;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ItemEvent;
 
 public class CategoryBar extends JPanel implements Validable {
     private final JComboBox<Category> categoryJComboBox;
     private final JButton addCategoryButton;
 
 
-    public CategoryBar(ListModel<Category> categoryModel, DefaultActionFactory<Category> categoryActionFactory, TableModel<Category> categoryTableModel, ValidableListener validableListener) {
+    public CategoryBar(ListModel<Category> categoryModel,
+                       DefaultActionFactory<Category> categoryActionFactory,
+                       TableModel<Category> categoryTableModel,
+                       ValidableListener validableListener) {
         super(new FlowLayout(FlowLayout.CENTER));
 
         this.categoryJComboBox = new JComboBox<>(new ComboBoxModelAdapter<>(categoryModel));
@@ -35,10 +39,7 @@ public class CategoryBar extends JPanel implements Validable {
         this.addCategoryButton.setPreferredSize(new Dimension(200, 30));
 
         this.addCategoryButton.addActionListener(e -> {
-            CategoryTablePanel categoryTablePanel = new CategoryTablePanel(categoryTableModel, categoryActionFactory);
-            var addCategory = categoryActionFactory.getAddAction(categoryTablePanel.getTable());
-            addCategory.actionPerformed(e);
-
+            categoryActionFactory.getAddAction(new JTable(categoryTableModel)).actionPerformed(e);
         });
 
         this.add(categoryJComboBox);
