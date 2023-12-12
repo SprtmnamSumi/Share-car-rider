@@ -35,7 +35,6 @@ public class CarRideStatisticsUnitTests {
                 0.05,
                 new Category("1", "Blue", 7),
                 new Currency("2", "Zloty", "zl", 3.97),
-                3.97,
                 LocalDateTime.now()
 
         );
@@ -53,7 +52,6 @@ public class CarRideStatisticsUnitTests {
                 0.10,
                 new Category("1", "Blue", 7),
                 new Currency("2", "Czech crown", "Kc", 22.3),
-                22.3,
                 LocalDateTime.of(2001, 1, 1, 11, 0, 0)
         );
     }
@@ -70,7 +68,6 @@ public class CarRideStatisticsUnitTests {
                 0.17,
                 new Category("1", "Blue", 7),
                 new Currency("2", "USD", "$", 1.0),
-                1,
                 LocalDateTime.of(2001, 1, 1, 11, 0, 0)
         );
     }

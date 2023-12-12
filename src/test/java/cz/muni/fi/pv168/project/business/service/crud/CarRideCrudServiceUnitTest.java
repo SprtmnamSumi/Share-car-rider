@@ -39,7 +39,6 @@ public class CarRideCrudServiceUnitTest {
                 0.05,
                 new Category("1", "Blue", 7),
                 new Currency("2", "Czech crown", "Kc", 22.3),
-                22.3,
                 LocalDateTime.now()
         );
     }

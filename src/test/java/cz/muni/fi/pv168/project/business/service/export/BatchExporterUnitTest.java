@@ -64,7 +64,6 @@ class BatchExporterUnitTest {
                           "guid": "c-2",
                           "description": "skvela jizda",
                           "fuel_consumption": 20,
-                          "newest_conversion_rate": 22.3,
                           "commission": 0.1,
                           "currency": {
                             "symbol": "Kc",
@@ -102,7 +101,6 @@ class BatchExporterUnitTest {
                             "guid": "c-2",
                             "description": "skvela jizda",
                             "fuel_consumption": 20,
-                            "newest_conversion_rate": 22.3,
                             "commission": 0.1,
                             "currency": {
                               "symbol": "Kc",
@@ -125,7 +123,6 @@ class BatchExporterUnitTest {
                             "guid": "c-3",
                             "description": "skvela jizda",
                             "fuel_consumption": 6,
-                            "newest_conversion_rate": 1,
                             "commission": 0.17,
                             "currency": {
                               "symbol": "$",
