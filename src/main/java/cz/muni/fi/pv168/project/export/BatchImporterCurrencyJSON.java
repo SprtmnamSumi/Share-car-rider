@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.function.Function;
 
 
-public class BatchImporterCurrencyJSON extends importer<Currency> {
-    public Boolean importData(Path filePath, IImportInitializer initializer, boolean overwrite) {
+public class BatchImporterCurrencyJSON extends Importer<Currency> {
+    public Boolean importData(Path filePath, IImportInitializer initializer, IImportInitializer.MODE mode) {
         Function<JSONObject, List<Currency>> importer = json -> {
             List<Currency> currencyList = new LinkedList<>();
             JSONArray currencyArray = json.getJSONArray("currencies");
@@ -33,7 +33,7 @@ public class BatchImporterCurrencyJSON extends importer<Currency> {
         };
 
         Function<List<Currency>, Void> init = list -> {
-            initializer.initializeCurrency(list, overwrite);
+            initializer.initializeCurrency(list, mode);
             return null;
         };
 

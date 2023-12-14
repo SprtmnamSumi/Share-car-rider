@@ -8,13 +8,12 @@ import java.util.function.Function;
 /**
  * Implementation of asynchronous exporter for UI.
  */
-public class AsyncExecutor {
-
+class AsyncWorker {
     private final Function<Void, Boolean> doStuff;
     private final Runnable onFinish;
     private final Runnable onError;
 
-    public AsyncExecutor(Function<Void, Boolean> doStuff, Runnable onFinish, Runnable onError) {
+    AsyncWorker(Function<Void, Boolean> doStuff, Runnable onFinish, Runnable onError) {
         this.doStuff = doStuff;
         this.onFinish = onFinish;
         this.onError = onError;
@@ -47,7 +46,5 @@ public class AsyncExecutor {
         } catch (Exception e) {
             Logger.error(e.getMessage());
         }
-
     }
-
 }

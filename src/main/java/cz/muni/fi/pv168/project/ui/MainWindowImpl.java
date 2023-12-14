@@ -20,7 +20,7 @@ import cz.muni.fi.pv168.project.ui.panels.Category.CategoryTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Currency.CurrencyTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.Template.TemplateTablePanel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TabPanel;
-import cz.muni.fi.pv168.project.ui.workers.IOWorkerProvider;
+import cz.muni.fi.pv168.project.ui.workers.WorkerProvider;
 
 import javax.inject.Inject;
 import javax.swing.Action;
@@ -51,7 +51,7 @@ class MainWindowImpl implements MainWindow {
                    TemplateTableModel templateTableModel,
                    CurrencyTableModel currencyTableModel,
                    ICarRideStatistics ICarRideStatistics,
-                   IOWorkerProvider workerProvider
+                   WorkerProvider workerProvider
     ) {
         frame = createFrame();
 

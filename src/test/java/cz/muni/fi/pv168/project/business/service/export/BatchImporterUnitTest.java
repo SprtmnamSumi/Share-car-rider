@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.business.service.export;
 
 import cz.muni.fi.pv168.project.business.service.mocks.MockImportInitializer;
+import cz.muni.fi.pv168.project.data.IImportInitializer;
 import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class BatchImporterUnitTest {
     @Test
     void importNoCarRides() {
         Path importFilePath = TEST_RESOURCES.resolve("empty.json");
-        batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
+        batchImporterCarRideJSON.importData(importFilePath, importInitializer, IImportInitializer.MODE.ADD);
 
         assertThat(importInitializer.carRideList).isEmpty();
     }
@@ -31,7 +32,7 @@ class BatchImporterUnitTest {
     @Test
     void singleCarRide() {
         Path importFilePath = TEST_RESOURCES.resolve("single-carride.json");
-        batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
+        batchImporterCarRideJSON.importData(importFilePath, importInitializer, IImportInitializer.MODE.ADD);
 
         assertThat(importInitializer.carRideList)
                 .usingRecursiveFieldByFieldElementComparator()
@@ -43,7 +44,7 @@ class BatchImporterUnitTest {
     @Test
     void multipleCarRides() {
         Path importFilePath = TEST_RESOURCES.resolve("multiple-carrides.json");
-        batchImporterCarRideJSON.importData(importFilePath, importInitializer, false);
+        batchImporterCarRideJSON.importData(importFilePath, importInitializer, IImportInitializer.MODE.ADD);
 
         assertThat(importInitializer.carRideList)
                 .usingRecursiveFieldByFieldElementComparator()

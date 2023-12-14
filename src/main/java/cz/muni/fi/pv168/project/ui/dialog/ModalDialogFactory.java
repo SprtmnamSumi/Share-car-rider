@@ -11,7 +11,7 @@ import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.EntityListModelAdapter;
-import cz.muni.fi.pv168.project.ui.workers.IOWorkerProvider;
+import cz.muni.fi.pv168.project.ui.workers.WorkerProvider;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -26,7 +26,7 @@ class ModalDialogFactory implements DialogFactory {
     private final ImportInitializer importInitializer;
     private final DefaultActionFactory<Category> categoryActionFactory;
     private final CurrencyConverter currencyConverter;
-    private final IOWorkerProvider workerProvider;
+    private final WorkerProvider workerProvider;
 
     @Inject
     ModalDialogFactory(EntityListModelAdapter<Category> categoryListModel,
@@ -37,7 +37,7 @@ class ModalDialogFactory implements DialogFactory {
                        TableModel<Category> categoryTableModel,
                        DefaultActionFactory<Category> categoryActionFactory,
                        CurrencyConverter currencyConverter,
-                       IOWorkerProvider workerProvider,
+                       WorkerProvider workerProvider,
                        ImportInitializer importInitializer) {
         this.categoryListModel = categoryListModel;
         this.currencyListModel = currencyListModel;
