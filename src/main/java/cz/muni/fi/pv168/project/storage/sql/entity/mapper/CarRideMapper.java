@@ -8,7 +8,6 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.CarRideEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
-
 import javax.inject.Inject;
 
 public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements EntityMapper<CarRideEntity, CarRide> {
@@ -38,10 +37,10 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
                         entity.getCategoryId()));
 
         var currency = currencyDao
-                .findById(entity.getCategoryId())
+                .findById(entity.getCurrencyId())
                 .map(currencyMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Entity not found, id: " +
-                        entity.getCategoryId()));
+                        entity.getCurrencyId()));
 
 
         return new CarRide(
