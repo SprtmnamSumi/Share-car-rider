@@ -8,7 +8,6 @@ import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
 import cz.muni.fi.pv168.project.storage.sql.entity.CategoryEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.CurrencyEntity;
 import cz.muni.fi.pv168.project.storage.sql.entity.TemplateEntity;
-
 import javax.inject.Inject;
 
 public class TemplateMapper extends Mapper<TemplateEntity, Template> implements EntityMapper<TemplateEntity, Template> {
@@ -38,10 +37,10 @@ public class TemplateMapper extends Mapper<TemplateEntity, Template> implements 
                         entity.getCategoryId()));
 
         var currency = currencyDao
-                .findById(entity.getCategoryId())
+                .findById(entity.getCurrencyId())
                 .map(currencyMapper::mapToBusiness)
                 .orElseThrow(() -> new DataStorageException("Entity not found, id: " +
-                        entity.getCategoryId()));
+                        entity.getCurrencyId()));
 
 
         return new Template(

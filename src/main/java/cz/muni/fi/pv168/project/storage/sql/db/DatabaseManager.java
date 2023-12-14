@@ -1,20 +1,13 @@
 package cz.muni.fi.pv168.project.storage.sql.db;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Category;
-import cz.muni.fi.pv168.project.business.model.GuidProvider;
-import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.storage.sql.dao.DataStorageException;
-import cz.muni.fi.pv168.project.ui.model.table.CurrencyTableModel;
-import cz.muni.fi.pv168.project.ui.model.TableModel;
-import org.h2.jdbcx.JdbcConnectionPool;
-import org.tinylog.Logger;
-
-import javax.sql.DataSource;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import javax.sql.DataSource;
+import org.h2.jdbcx.JdbcConnectionPool;
+import org.tinylog.Logger;
 
 
 /**
@@ -23,11 +16,6 @@ import java.sql.SQLException;
 public final class DatabaseManager {
     private static final String PROJECT_NAME = "share-car-rider";
     private static final String DB_PROPERTIES_STRING = "DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false";
-    private static TableModel<CarRide> carRideTableModel;
-    private static TableModel<Category> categoryTableModel;
-    private static TableModel<Template> templateTableModel;
-    private static CurrencyTableModel currencyTableModel;
-    private static GuidProvider guidProvider;
 
     private final DataSource dataSource;
     private final SqlFileExecutor sqlFileExecutor;
@@ -43,10 +31,7 @@ public final class DatabaseManager {
 
     public static DatabaseManager createProductionInstance() {
         String connectionString = "jdbc:h2:%s;%s".formatted(createDbFileSystemPath(), DB_PROPERTIES_STRING);
-        var dbManager = new DatabaseManager(connectionString);
-        Logger.info("Database created...");
-        Logger.info("Database connection string: " + dbManager.getDatabaseConnectionString());
-        return dbManager;
+        return new DatabaseManager(connectionString);
     }
 
     private static Path createDbFileSystemPath() {
