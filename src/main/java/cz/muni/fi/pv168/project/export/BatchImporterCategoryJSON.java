@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.function.Function;
 
 
-public class BatchImporterCategoryJSON extends importer<Category> {
+public class BatchImporterCategoryJSON extends Importer<Category> {
 
 
-    public Boolean importData(Path filePath, IImportInitializer initializer, boolean overwrite) {
+    public Boolean importData(Path filePath, IImportInitializer initializer, IImportInitializer.MODE mode) {
         Function<JSONObject, List<Category>> importer = json -> {
             List<Category> categoryList = new LinkedList<>();
             JSONArray categoryArray = json.getJSONArray("categories");
@@ -34,7 +34,7 @@ public class BatchImporterCategoryJSON extends importer<Category> {
         };
 
         Function<List<Category>, Void> init = list -> {
-            initializer.initializeCategory(list, overwrite);
+            initializer.initializeCategory(list, mode);
             return null;
         };
 

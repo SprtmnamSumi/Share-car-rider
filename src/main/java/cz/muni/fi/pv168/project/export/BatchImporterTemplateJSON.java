@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.project.export;
 
+import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
@@ -13,9 +14,9 @@ import java.util.List;
 import java.util.function.Function;
 
 
-public class BatchImporterTemplateJSON extends importer<Template> {
+public class BatchImporterTemplateJSON extends Importer<Template> {
 
-    public Boolean importData(Path filePath, IImportInitializer initializer, boolean overwrite) {
+    public Boolean importData(Path filePath, IImportInitializer initializer, IImportInitializer.MODE mode) {
         Function<JSONObject, List<Template>> importer = json -> {
             List<Template> templateList = new LinkedList<>();
             JSONArray templateArray = json.getJSONArray("templates");
@@ -51,7 +52,9 @@ public class BatchImporterTemplateJSON extends importer<Template> {
         };
 
         Function<List<Template>, Void> init = list -> {
-            initializer.initializeTemplate(list, overwrite);
+            initializer.initializeCategory(list.stream().map(Template::getCategory).toList(), IImportInitializer.MODE.INTERSECTION);
+            initializer.initializeCurrency(list.stream().map(Template::getCurrency).toList(), IImportInitializer.MODE.INTERSECTION);
+            initializer.initializeTemplate(list, mode);
             return null;
         };
 

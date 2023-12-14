@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
@@ -39,50 +40,43 @@ public class ImportInitializer implements IImportInitializer {
 
 
     @Override
-    public void initializeCarRide(List<CarRide> rides, boolean rewrite) {
-        transactionExecutor.executeInTransaction(() -> {
-            if (rewrite) {
-                carRideICrudService.deleteAll();
-            }
-            rides.forEach(carRideICrudService::create);
-        });
-        carRideTableModel.refresh();
+    public void initializeCarRide(List<CarRide> rides, MODE mode) {
+        initialize(carRideTableModel, carRideICrudService, rides, mode);
     }
 
 
     @Override
-    public void initializeCategory(List<Category> categories, boolean rewrite) {
-        transactionExecutor.executeInTransaction(() -> {
-            if (rewrite) {
-                categoryICrudService.deleteAll();
-            }
-            categories.forEach(categoryICrudService::create);
-        });
-        categoryTableModel.refresh();
+    public void initializeCategory(List<Category> categories, MODE mode) {
+        initialize(categoryTableModel, categoryICrudService, categories, mode);
     }
 
 
     @Override
-    public void initializeCurrency(List<Currency> currencies, boolean rewrite) {
-        transactionExecutor.executeInTransaction(() -> {
-            if (rewrite) {
-                currencyICrudService.deleteAll();
-            }
-            currencies.forEach(currencyICrudService::create);
-        });
-        currencyTableModel.refresh();
+    public void initializeCurrency(List<Currency> currencies, MODE mode) {
+        initialize(currencyTableModel, currencyICrudService, currencies, mode);
     }
 
 
     @Override
-    public void initializeTemplate(List<Template> templates, boolean rewrite) {
-        transactionExecutor.executeInTransaction(() -> {
-            if (rewrite) {
-                currencyICrudService.deleteAll();
-            }
-            templates.forEach(templateICrudService::create);
-        });
-        templateTableModel.refresh();
+    public void initializeTemplate(List<Template> templates, MODE mode) {
+        initialize(templateTableModel, templateICrudService, templates, mode);
     }
 
+    private <T extends Model> void initialize(TableModel<T> model, ICrudService<T> crudService, List<T> newEntities, MODE mode){
+        transactionExecutor.executeInTransaction(() -> {
+            switch(mode){
+                case ADD -> newEntities.forEach(crudService::create);
+                case OVERWRITE -> {
+                    carRideICrudService.deleteAll();
+                    newEntities.forEach(crudService::create);
+                }
+                case INTERSECTION -> {
+                    List<T> existingEntities = crudService.findAll();
+                    newEntities.stream().distinct().filter(entity -> !existingEntities.contains(entity)).toList()
+                            .forEach(crudService::create);
+                }
+            }
+        });
+        model.refresh();
+    }
 }

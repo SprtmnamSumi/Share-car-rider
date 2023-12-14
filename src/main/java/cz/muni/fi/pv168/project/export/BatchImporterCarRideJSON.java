@@ -3,6 +3,7 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
+import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.data.IImportInitializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,10 +17,10 @@ import java.util.List;
 import java.util.function.Function;
 
 
-public class BatchImporterCarRideJSON extends importer<CarRide> {
+public class BatchImporterCarRideJSON extends Importer<CarRide> {
+    BatchImporterCategoryJSON categoryImporter = new BatchImporterCategoryJSON();
 
-
-    public Boolean importData(Path filePath, IImportInitializer initializer, boolean overwrite) {
+    public Boolean importData(Path filePath, IImportInitializer initializer, IImportInitializer.MODE mode) {
         Logger.info("Importing");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         Function<JSONObject, List<CarRide>> importer = json -> {
@@ -62,7 +63,9 @@ public class BatchImporterCarRideJSON extends importer<CarRide> {
         };
 
         Function<List<CarRide>, Void> init = list -> {
-            initializer.initializeCarRide(list, overwrite);
+            initializer.initializeCategory(list.stream().map(CarRide::getCategory).toList(), IImportInitializer.MODE.INTERSECTION);
+            initializer.initializeCurrency(list.stream().map(CarRide::getCurrency).toList(), IImportInitializer.MODE.INTERSECTION);
+            initializer.initializeCarRide(list, mode);
             return null;
         };
 

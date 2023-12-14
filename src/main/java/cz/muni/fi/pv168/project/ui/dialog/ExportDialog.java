@@ -11,7 +11,7 @@ import cz.muni.fi.pv168.project.export.BatchExporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchExporterTemplateJSON;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
-import cz.muni.fi.pv168.project.ui.workers.IOWorkerProvider;
+import cz.muni.fi.pv168.project.ui.workers.WorkerProvider;
 import org.tinylog.Logger;
 
 import javax.swing.JOptionPane;
@@ -25,20 +25,20 @@ import java.util.function.Function;
 public class ExportDialog extends IODialog {
     private final static String EXPORT = "Export";
     private final static String CANCEL = "Cancel";
-    private final IOWorkerProvider workerProvider;
+    private final WorkerProvider workerProvider;
     private TableModel<Template> templates;
     private TableModel<Currency> currencies;
     private TableModel<Category> categories;
     private ICarRideTableFilter carRideTableFilter;
 
-    ExportDialog(IOWorkerProvider workerProvider, List<Model> data) {
+    ExportDialog(WorkerProvider workerProvider, List<Model> data) {
         super("Export Selection", EXPORT, CANCEL);
         this.workerProvider = workerProvider;
         this.forceSelectEntity(getSupportedEntity(data));
         initActions(()->export(getSelectedEntity(), getSelectedFile(), data));
     }
 
-    ExportDialog(IOWorkerProvider workerProvider,
+    ExportDialog(WorkerProvider workerProvider,
                  ICarRideTableFilter carRideTableFilter,
                  TableModel<Template> templates,
                  TableModel<Currency> currencies,
@@ -108,8 +108,9 @@ public class ExportDialog extends IODialog {
     }
 
     private void performExport(Function<Void, Boolean> exportFunction) {
-        boolean success = workerProvider.submitExport(exportFunction,
-                () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."));
+        boolean success = workerProvider.submitTask(exportFunction,
+                () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."),
+                "Export");
         if(!success){
             Logger.info("Export did not start, because another IO action is in progress");
             JOptionPane.showMessageDialog(this, "Export did not start, because another IO action is in progress");

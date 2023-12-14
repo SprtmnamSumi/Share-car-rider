@@ -1,12 +1,12 @@
 package cz.muni.fi.pv168.project.ui.dialog;
 
+import cz.muni.fi.pv168.project.data.IImportInitializer;
 import cz.muni.fi.pv168.project.data.ImportInitializer;
 import cz.muni.fi.pv168.project.export.BatchImporterCarRideJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCategoryJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterCurrencyJSON;
 import cz.muni.fi.pv168.project.export.BatchImporterTemplateJSON;
-import cz.muni.fi.pv168.project.ui.workers.AsyncExecutor;
-import cz.muni.fi.pv168.project.ui.workers.IOWorkerProvider;
+import cz.muni.fi.pv168.project.ui.workers.WorkerProvider;
 import org.tinylog.Logger;
 
 import javax.swing.JOptionPane;
@@ -19,10 +19,10 @@ public class ImportDialog extends IODialog {
     private final static String IMPORT = "Import";
     private final static String CANCEL = "Cancel";
     private final static String OVERWRITE = "Overwrite";
-    private final IOWorkerProvider workerProvider;
+    private final WorkerProvider workerProvider;
     private final ImportInitializer importInitializer;
 
-    ImportDialog(IOWorkerProvider workerProvider, ImportInitializer importInitializer) {
+    ImportDialog(WorkerProvider workerProvider, ImportInitializer importInitializer) {
         super("Import data", IMPORT, CANCEL, OVERWRITE);
         this.importInitializer = importInitializer;
         this.workerProvider = workerProvider;
@@ -49,22 +49,24 @@ public class ImportDialog extends IODialog {
 
     private void Initialize(String importOption, File file, boolean overwrite) {
         Logger.info("Importing data from file: " + file.getAbsolutePath());
+        IImportInitializer.MODE mode = overwrite ? IImportInitializer.MODE.OVERWRITE : IImportInitializer.MODE.ADD;
         Function<Void, Boolean> importFunction = switch (importOption) {
             case "Car Rides" ->
-                    (x) -> new BatchImporterCarRideJSON().importData(file.toPath(), importInitializer, overwrite);
+                    (x) -> new BatchImporterCarRideJSON().importData(file.toPath(), importInitializer, mode);
             case "Currency" ->
-                    (x) -> new BatchImporterCurrencyJSON().importData(file.toPath(), importInitializer, overwrite);
+                    (x) -> new BatchImporterCurrencyJSON().importData(file.toPath(), importInitializer, mode);
             case "Category" ->
-                    (x) -> new BatchImporterCategoryJSON().importData(file.toPath(), importInitializer, overwrite);
+                    (x) -> new BatchImporterCategoryJSON().importData(file.toPath(), importInitializer, mode);
             case "Template" ->
-                    (x) -> new BatchImporterTemplateJSON().importData(file.toPath(), importInitializer, overwrite);
+                    (x) -> new BatchImporterTemplateJSON().importData(file.toPath(), importInitializer, mode);
             default -> {
                 Logger.error("Selected unsupported import action.");
                 throw new IllegalStateException("You shouldn't be here, how did you even get here?");
             }
         };
-        boolean success = workerProvider.submitImport(importFunction,
-                () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."));
+        boolean success = workerProvider.submitTask(importFunction,
+                () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished."),
+                "Import");
         if(!success){
             Logger.info("Import did not start, because another IO action is in progress");
             JOptionPane.showMessageDialog(this, "Import did not start, because another blocking IO is in progress");

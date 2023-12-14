@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Function;
 
-public class importer<T> {
+public abstract class Importer<T> {
 
     public Boolean importData(Path filePath, Function<JSONObject, List<T>> importer, Function<List<T>, Void> initialize) {
         List<T> templateList;
