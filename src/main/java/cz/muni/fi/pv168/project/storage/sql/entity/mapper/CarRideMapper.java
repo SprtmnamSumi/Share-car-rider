@@ -70,7 +70,7 @@ public class CarRideMapper extends Mapper<CarRideEntity, CarRide> implements Ent
         var currencyEntity = currencyDao
                 .findByGuid(entity.getCurrency().getGuid())
                 .orElseThrow(() -> new DataStorageException("Entity not found, guid: " +
-                        entity.getCategory().getGuid()));
+                        entity.getCurrency().getGuid()));
 
         return new CarRideEntity(
                 dbID,
