@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.NameValuePanel;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.BorderFactory;
@@ -30,10 +31,6 @@ public class CarRideStatisticsPanel extends JPanel {
         this.model = model;
         this.ICarRideStatistics = ICarRideStatistics1;
         this.carRideTableFilter = carRideTableFilter;
-
-        var label = new JLabel("$");
-        label.setFont(new Font("Arial", Font.PLAIN, 24));
-        add(label, BorderLayout.PAGE_START);
 
         JPanel panel = new JPanel(new BorderLayout());
         add(panel);

@@ -24,12 +24,15 @@ import cz.muni.fi.pv168.project.ui.workers.WorkerProvider;
 
 import javax.inject.Inject;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.WindowConstants;
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 class MainWindowImpl implements MainWindow {
     private final JFrame frame;
@@ -128,12 +131,21 @@ class MainWindowImpl implements MainWindow {
         return helpMenu;
     }
 
+    private JLabel getBaseCurrencySymbol(){
+        var currencySymbol = new JLabel("$");
+        currencySymbol.setBorder(BorderFactory.createEmptyBorder(0,4,0,4));
+        currencySymbol.setFont(new Font("Arial", Font.PLAIN, 13));
+        currencySymbol.setToolTipText("Base currency");
+        return currencySymbol;
+    }
+
     private JMenuBar createMenuBar() {
         var menuBar = new JMenuBar();
         var editBar = editBar();
         menuBar.add(editBar);
         var helpBar = helpBar();
         menuBar.add(helpBar);
+        menuBar.add(getBaseCurrencySymbol());
         return menuBar;
     }
 }
