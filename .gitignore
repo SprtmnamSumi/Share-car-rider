@@ -21,3 +21,4 @@ src/main/resources/properties
 src/main/resources/properties/config.properties
 
 /db/
+/logs/
