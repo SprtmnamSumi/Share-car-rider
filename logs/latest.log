@@ -1,0 +1,2 @@
+2023-12-26 20:07:01 [main] cz.muni.fi.pv168.project.storage.sql.db.DatabaseManager.createDbFileSystemPath()
+DEBUG: Root directory for the database already exists: /Users/ondrejman/Documents/pv-168-project-share-car-rider/db
