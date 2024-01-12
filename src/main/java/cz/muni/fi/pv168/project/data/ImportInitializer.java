@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.model.Template;
+import cz.muni.fi.pv168.project.business.service.crud.ForbiddenOperationException;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
 import cz.muni.fi.pv168.project.storage.sql.db.TransactionExecutor;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
@@ -67,7 +68,9 @@ public class ImportInitializer implements IImportInitializer {
             switch(mode){
                 case ADD -> newEntities.forEach(crudService::create);
                 case OVERWRITE -> {
-                    crudService.deleteAll();
+                    if (!crudService.deleteAll().isValid()){
+                        throw new ForbiddenOperationException("Model is referenced in another table.");
+                    };
                     newEntities.forEach(crudService::create);
                 }
                 case INTERSECTION -> {

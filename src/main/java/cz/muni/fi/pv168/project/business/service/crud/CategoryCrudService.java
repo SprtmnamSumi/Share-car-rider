@@ -46,19 +46,17 @@ class CategoryCrudService extends ICrudServiceImpl<Category> {
                                 .collect(Collectors.toSet())).isEmpty()
                         ? ValidationResult.success()
                         : ValidationResult.failed("Category is referenced in another table");
-
-
     }
 
     @Override
     public ValidationResult deleteByGuid(String guid) {
         ValidationResult result = deleteValidator.validate(guid);
-        return result.getValidationErrors().isEmpty() ? super.deleteByGuid(guid) : result;
+        return result.isValid() ? super.deleteByGuid(guid) : result;
     }
 
     @Override
     public ValidationResult deleteAll() {
         ValidationResult result = deleteAllValidator.validate(null);
-        return result.getValidationErrors().isEmpty() ? super.deleteAll() : result;
+        return result.isValid() ? super.deleteAll() : result;
     }
 }
