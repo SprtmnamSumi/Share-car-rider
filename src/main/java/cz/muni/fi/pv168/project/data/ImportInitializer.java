@@ -67,7 +67,7 @@ public class ImportInitializer implements IImportInitializer {
             switch(mode){
                 case ADD -> newEntities.forEach(crudService::create);
                 case OVERWRITE -> {
-                    carRideICrudService.deleteAll();
+                    crudService.deleteAll();
                     newEntities.forEach(crudService::create);
                 }
                 case INTERSECTION -> {
