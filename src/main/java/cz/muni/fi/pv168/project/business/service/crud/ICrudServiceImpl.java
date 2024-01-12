@@ -1,15 +1,13 @@
 package cz.muni.fi.pv168.project.business.service.crud;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.GuidProvider;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.repository.Repository;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.Validator;
-import org.tinylog.Logger;
-
-import javax.inject.Inject;
 import java.util.List;
+import javax.inject.Inject;
+import org.tinylog.Logger;
 
 class ICrudServiceImpl<T extends Model> implements ICrudService<T> {
     private final Repository<T> entityRepository;
@@ -66,8 +64,9 @@ class ICrudServiceImpl<T extends Model> implements ICrudService<T> {
     }
 
     @Override
-    public void deleteAll() {
+    public ValidationResult deleteAll() {
         Logger.info("All entities deleted successfully");
         entityRepository.deleteAll();
+        return ValidationResult.success();
     }
 }

@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.business.service.crud;
 
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
-
 import java.util.List;
 
 /**
@@ -36,5 +35,5 @@ public interface ICrudService<T extends Model> {
     /**
      * Delete all entities.
      */
-    void deleteAll();
+    ValidationResult deleteAll();
 }
