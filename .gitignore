@@ -19,3 +19,6 @@ hs_err_pid*
 src/main/resources/properties
 ../../../../../../resources/properties
 src/main/resources/properties/config.properties
+
+/db/
+/logs/

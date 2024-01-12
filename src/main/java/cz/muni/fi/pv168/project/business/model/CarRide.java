@@ -7,7 +7,7 @@ import java.util.Objects;
 public class CarRide extends Template {
     private LocalDateTime date;
 
-    public CarRide(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, LocalDateTime Date, Category Category, Currency currency, double newestConversionRate) {
+    public CarRide(String guid, String Title, String Description, Double Distance, double FuelConsumption, double CostOfFuelPerLitre, int NumberOfPassengers, double commission, Category Category, Currency currency, double newestConversionRate, LocalDateTime Date) {
         super(guid, Title, Description, Distance, FuelConsumption, CostOfFuelPerLitre, NumberOfPassengers, commission, Category, currency, newestConversionRate);
         setDate(Date);
     }

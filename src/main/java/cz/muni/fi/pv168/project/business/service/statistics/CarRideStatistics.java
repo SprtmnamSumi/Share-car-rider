@@ -1,21 +1,12 @@
 package cz.muni.fi.pv168.project.business.service.statistics;
 
-import com.google.inject.Inject;
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.service.currenies.ICurrencyConverter;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
 public class CarRideStatistics implements ICarRideStatistics {
-    private final ICurrencyConverter ICurrencyConverter;
-
-    @Inject
-    public CarRideStatistics(ICurrencyConverter ICurrencyConverter) {
-        this.ICurrencyConverter = ICurrencyConverter;
-    }
-
     @Override
     public Double getTotalDistance(List<CarRide> carRides) {
         return carRides.stream().map(CarRide::getDistance).mapToDouble(d -> d).sum();
@@ -28,7 +19,6 @@ public class CarRideStatistics implements ICarRideStatistics {
             totalExpenses += getCarRideCost(carRide);
         }
         return totalExpenses;
-//        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(totalExpenses);
     }
 
     @Override
@@ -40,7 +30,6 @@ public class CarRideStatistics implements ICarRideStatistics {
             }
         }
         return todayExpenses;
-//        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(todayExpenses);
     }
 
     @Override
@@ -50,7 +39,6 @@ public class CarRideStatistics implements ICarRideStatistics {
             totalRevenues += getCarRideCost(carRide) * (1 + carRide.getCommission() / 100);
         }
         return totalRevenues;
-//        return ICurrencyConverter.convertFromDolarsToDefaultCurrency(totalRevenues);
     }
 
     @Override

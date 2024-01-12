@@ -1,38 +1,28 @@
 package cz.muni.fi.pv168.project.ui.action;
 
+import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
 import cz.muni.fi.pv168.project.ui.dialog.ImportDialog;
+import cz.muni.fi.pv168.project.ui.icons.CachedIconLoader;
+
+import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+
 
 public final class ImportAction extends AbstractAction {
+    private final DialogFactory dialogFactory;
 
-    private BufferedImage importPicture;
-
-    public ImportAction() {
+    ImportAction(DialogFactory dialogFactory) {
         super("Import");
-        try {
-            importPicture = ImageIO.read(new File("src/main/java/cz/muni/fi/pv168/project/ui/icons/import.png"));
-            Icon customIcon = new ImageIcon(importPicture);
-            putValue(SMALL_ICON, customIcon);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        this.dialogFactory = dialogFactory;
+        putValue(SMALL_ICON, new CachedIconLoader().getIcon("import.png"));
         putValue(SHORT_DESCRIPTION, "Imports data");
         putValue(MNEMONIC_KEY, KeyEvent.VK_I);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        ImportDialog popupDialog = new ImportDialog(new JFrame("Popup"), "str");
+        ImportDialog popupDialog = dialogFactory.getImportDialog();
         popupDialog.setSize(300, 200);
 
         // Center the custom dialog on the screen

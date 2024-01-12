@@ -2,13 +2,14 @@ package cz.muni.fi.pv168.project.ui.action.Templates;
 
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.ui.dialog.DialogFactory;
-import cz.muni.fi.pv168.project.ui.model.Template.TemplateTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
+
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 final class EditTemplateAction extends AbstractAction {
 
@@ -34,7 +35,7 @@ final class EditTemplateAction extends AbstractAction {
         if (templateTable.isEditing()) {
             templateTable.getCellEditor().cancelCellEditing();
         }
-        TemplateTableModel templateListModel = (TemplateTableModel) templateTable.getModel();
+        TableModel<Template> templateListModel = (TableModel<Template>) templateTable.getModel();
         int modelRow = templateTable.convertRowIndexToModel(selectedRows[0]);
         Template template = templateListModel.getEntity(modelRow);
         var dialog = dialogFactory.getAddTemplateDialog(template);

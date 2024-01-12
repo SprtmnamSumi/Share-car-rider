@@ -6,36 +6,32 @@ import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
+import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CostBar;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import java.awt.event.ItemEvent;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import java.awt.event.ItemEvent;
 
 class TemplateDialog extends EntityDialog<Template> {
     private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2, 150));
     private final JTextField descriptionField = new JTextField();
     private final JComboBox<Template> templateComboBoxModel;
-
     private final CategoryBar categoryBar;
-
     private final ValidatedInputField distanceField = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final ValidatedInputField fuelConsumption = new ValidatedInputField(ValidatorFactory.doubleValidator());
-
     private final ValidatedInputField numberOfPassengers = new ValidatedInputField(ValidatorFactory.intValidator());
     private final ValidatedInputField commission = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final Template template;
     private final CostBar costBar;
 
-    private final ValidableListener validableListener;
-
-    TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel) {
-        validableListener = new ValidableListener() {
+    TemplateDialog(Template template, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, CurrencyConverter currencyConverter, DefaultActionFactory<Category> categoryActionFactory, TableModel<Category> categoryTableModel) {
+        ValidableListener validableListener = new ValidableListener() {
             @Override
             protected void onChange(boolean isValid) {
                 TemplateDialog.super.toggleOk(isValid);
@@ -46,7 +42,7 @@ class TemplateDialog extends EntityDialog<Template> {
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validableListener);
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         this.costBar = new CostBar(currencyModel, currencyConverter, validableListener);
-        this.validableListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, costBar);
+        validableListener.setListeners(titleField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar, categoryBar);
         addFields();
         setValues();
         validableListener.fireChange();
@@ -97,8 +93,11 @@ class TemplateDialog extends EntityDialog<Template> {
         template.setDistance(Double.parseDouble(distanceField.getText()));
         template.setFuelConsumption(Double.parseDouble(fuelConsumption.getText()));
         template.setCostOfFuelPerLitre(costBar.getCostOfFuelInDollars());
+
         template.setCurrency(costBar.getCurrency());
+        costBar.getCurrency().setNewestRateToDollar(costBar.getConversionRateToDollars());
         template.setConversionRateToDollar(costBar.getConversionRateToDollars());
+
         template.setNumberOfPassengers(Integer.parseInt(numberOfPassengers.getText()));
         template.setCommission(Double.parseDouble(commission.getText()));
         template.setCategory(categoryBar.getSelectedItem());

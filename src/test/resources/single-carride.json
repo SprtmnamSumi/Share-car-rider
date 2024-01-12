@@ -1,0 +1,27 @@
+{
+  "carrides": [
+    {
+      "guid": "124",
+      "date": "2001-01-01T11:00:00",
+      "passengers": 2,
+      "cost_of_fuel_per_litre": 35,
+      "distance": 80,
+      "description": "skvela jizda",
+      "fuel_consumption": 20,
+      "newest_conversion_rate": 22.3,
+      "commission": 0.1,
+      "currency": {
+        "guid": "2",
+        "symbol": "Kc",
+        "name": "Czech crown",
+        "rate_to_dollar": 22.3
+      },
+      "title": "Porsak",
+      "category": {
+        "color": 7,
+        "name": "Blue",
+        "guid": "1"
+      }
+    }
+  ]
+}

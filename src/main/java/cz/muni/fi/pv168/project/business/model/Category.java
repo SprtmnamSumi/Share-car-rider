@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.project.business.model;
 
 import java.util.Objects;
 
-public class Category extends Entity {
+public class Category extends Model {
 
     private String name;
     private int colour;
@@ -26,11 +26,24 @@ public class Category extends Entity {
     }
 
     public void setColour(int colour) {
-        this.colour = Objects.requireNonNull(colour, "colour must not be null");
+        this.colour = colour;
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category category)) return false;
+
+        return name.equals(category.name) && colour == category.colour;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, colour);
     }
 }

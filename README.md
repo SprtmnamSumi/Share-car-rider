@@ -1,6 +1,7 @@
 # PV168 Project: Share Car Rider
 
-Desktop application to track personal rides along with passengers, distance and money spent on fuel.
+Desktop application to track personal rides along with passengers, distance and money spent on fuel. Some notifications
+are clickable.
 Icons are used from [Flaticon](https://www.flaticon.com/).
 
 ## Team Information

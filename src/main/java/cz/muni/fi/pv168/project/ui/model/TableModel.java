@@ -1,10 +1,13 @@
 package cz.muni.fi.pv168.project.ui.model;
 
 import cz.muni.fi.pv168.project.business.model.CarRide;
-import cz.muni.fi.pv168.project.business.model.Entity;
+import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.service.crud.ICrudService;
+import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +15,7 @@ import java.util.List;
 /**
  * {@link javax.swing.table.TableModel} for {@link CarRide} objects.
  */
-public abstract class TableModel<T extends Entity> extends AbstractTableModel implements EntityTableModel<T> {
+public abstract class TableModel<T extends Model> extends AbstractTableModel implements EntityTableModel<T> {
 
     private final List<Column<T, ?>> columns;
     private final ICrudService<T> entityCrudService;
@@ -20,7 +23,7 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
 
     public TableModel(ICrudService<T> entityCrudService, List<Column<T, ?>> columns) {
         this.entityCrudService = entityCrudService;
-        this.entities = new ArrayList<T>(entityCrudService.findAll());
+        this.entities = new ArrayList<>(entityCrudService.findAll());
         this.columns = columns;
     }
 
@@ -65,10 +68,14 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
     }
 
     public void deleteRow(int rowIndex) {
-        var entityToBeDeleted = getEntity(rowIndex);
-        entityCrudService.deleteByGuid(entityToBeDeleted.getGuid());
-        entities.remove(rowIndex);
-        fireTableRowsDeleted(rowIndex, rowIndex);
+        T entityToBeDeleted = getEntity(rowIndex);
+        ValidationResult result = entityCrudService.deleteByGuid(entityToBeDeleted.getGuid());
+        if (result.getValidationErrors().isEmpty()) {
+            entities.remove(rowIndex);
+            fireTableRowsDeleted(rowIndex, rowIndex);
+        } else {
+            showDeleteAlert(rowIndex, result.getValidationErrors());
+        }
     }
 
     public void addRow(T entity) {
@@ -102,5 +109,14 @@ public abstract class TableModel<T extends Entity> extends AbstractTableModel im
 
     public List<T> getAll() {
         return Collections.unmodifiableList(entities);
+    }
+
+    private void showDeleteAlert(int row, List<String> errors) {
+        StringBuilder message = new StringBuilder()
+                .append(String.format("Data item at %d row could not be deleted. Reason: ", row));
+        for (String error : errors) {
+            message.append(error).append(System.lineSeparator());
+        }
+        JOptionPane.showMessageDialog(Frame.getFrames()[0], message.toString());
     }
 }

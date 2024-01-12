@@ -4,10 +4,8 @@ import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 public class CarRideMatcherFactory {
@@ -22,7 +20,7 @@ public class CarRideMatcherFactory {
         };
     }
 
-    public EntityMatcher<CarRide> getDistanceMatcher(int fromDistance, int toDistance) {
+    public EntityMatcher<CarRide> getDistanceMatcher(double fromDistance, double toDistance) {
         return new EntityMatcher<>() {
             @Override
             public boolean evaluate(CarRide entity) {
@@ -39,6 +37,16 @@ public class CarRideMatcherFactory {
             }
         };
     }
+
+    public EntityMatcher<CarRide> getNameMatcher(String name) {
+        return new EntityMatcher<>() {
+            @Override
+            public boolean evaluate(CarRide entity) {
+                return entity.getTitle().contains(name);
+            }
+        };
+    }
+
 
     public EntityMatcher<CarRide> getCategoryMatcher(Category category) {
         return new EntityMatcher<>() {

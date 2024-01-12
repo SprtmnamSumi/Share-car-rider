@@ -9,7 +9,6 @@ import cz.muni.fi.pv168.project.business.service.currenies.CurrencyConverter;
 import cz.muni.fi.pv168.project.business.service.validation.ValidationResult;
 import cz.muni.fi.pv168.project.business.service.validation.common.ValidatorFactory;
 import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
-import cz.muni.fi.pv168.project.ui.model.Category.CategoryTableModel;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.model.adapters.ComboBoxModelAdapter;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.CategoryBar;
@@ -18,12 +17,13 @@ import cz.muni.fi.pv168.project.ui.panels.commonPanels.DateBar;
 import cz.muni.fi.pv168.project.ui.panels.commonPanels.TemplateBar;
 import cz.muni.fi.pv168.project.ui.validation.ValidableListener;
 import cz.muni.fi.pv168.project.ui.validation.ValidatedInputField;
-import java.awt.event.ItemEvent;
-import java.time.LocalDateTime;
-import java.util.UUID;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.ListModel;
+import java.awt.event.ItemEvent;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 final class CarRideDialog extends EntityDialog<CarRide> {
     private final ValidatedInputField titleField = new ValidatedInputField(ValidatorFactory.stringValidator(2, 150));
@@ -40,10 +40,9 @@ final class CarRideDialog extends EntityDialog<CarRide> {
     private final CostBar costBar;
     private final TableModel<Template> entityCrudService;
     private final ValidableListener validableListener;
-
     private final CarRide carRide;
 
-    CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, CategoryTableModel categoryTableModel, CurrencyConverter currencyConverter) {
+    CarRideDialog(CarRide carRide, ListModel<Category> categoryModel, ListModel<Currency> currencyModel, ListModel<Template> templateModel, TableModel<Template> entityCrudService, DefaultActionFactory<Category> categoryActionFactory, TableModel<Category> categoryTableModel, CurrencyConverter currencyConverter) {
         this.carRide = carRide;
         this.entityCrudService = entityCrudService;
 
@@ -60,13 +59,14 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         templateComboBoxModel = new JComboBox<>(new ComboBoxModelAdapter<>(templateModel));
         categoryBar = new CategoryBar(categoryModel, categoryActionFactory, categoryTableModel, validableListener);
         templateBar = new TemplateBar(templateComboBoxModel, saveAsTemplate);
-        this.costBar = new CostBar(currencyModel, currencyConverter, validableListener);
-        validableListener.setListeners(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers, commission, costBar);
+        costBar = new CostBar(currencyModel, currencyConverter, validableListener);
+        validableListener.setListeners(titleField, descriptionField, distanceField, fuelConsumption, numberOfPassengers,
+                commission, costBar, categoryBar, dateBar);
 
         templateComboBoxModel.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 var template = (Template) e.getItem();
-                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), LocalDateTime.now(), template.getCategory(), template.getCurrency(), template.getConversionToDollars());
+                var templateCarRide = new CarRide(null, template.getTitle(), template.getDescription(), template.getDistance(), template.getFuelConsumption(), template.getCostOfFuelPerLitreInDollars(), template.getNumberOfPassengers(), template.getCommission(), template.getCategory(), template.getCurrency(), template.getConversionToDollars(), LocalDateTime.now());
                 setValues(templateCarRide);
             }
         });
@@ -80,7 +80,6 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         setValues(carRide);
         addFields();
     }
-
 
     public void setValues(CarRide carRide) {
         titleField.setText(carRide.getTitle());
@@ -120,7 +119,9 @@ final class CarRideDialog extends EntityDialog<CarRide> {
         carRide.setDate(dateBar.getDate());
 
         carRide.setCurrency(costBar.getCurrency());
+        costBar.getCurrency().setNewestRateToDollar(costBar.getConversionRateToDollars());
         carRide.setConversionRateToDollar(costBar.getConversionRateToDollars());
+
         carRide.setCostOfFuelPerLitre(costBar.getCostOfFuelInDollars());
 
         return carRide;
@@ -128,8 +129,12 @@ final class CarRideDialog extends EntityDialog<CarRide> {
 
     Template getAsTemplate() {
         var ride = getEntity();
-        Template template = new Template(UUID.randomUUID().toString(), ride.getTitle(), ride.getDescription(), ride.getDistance(), ride.getFuelConsumption(), ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(), ride.getCommission(), ride.getCategory(), ride.getCurrency(), ride.getConversionToDollars());
-        return template;
+        return new Template(UUID.randomUUID().toString(),
+                ride.getTitle(), ride.getDescription(),
+                ride.getDistance(), ride.getFuelConsumption(),
+                ride.getCostOfFuelPerLitreInDollars(), ride.getNumberOfPassengers(),
+                ride.getCommission(), ride.getCategory(),
+                ride.getCurrency(), ride.getConversionToDollars());
     }
 
     private void addTemplate(Template templateToBeAdded) {

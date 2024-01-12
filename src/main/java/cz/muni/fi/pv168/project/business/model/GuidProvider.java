@@ -7,6 +7,5 @@ package cz.muni.fi.pv168.project.business.model;
  * return a new identifier, which has not been used yet.
  */
 public interface GuidProvider {
-
     String newGuid();
 }

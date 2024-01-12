@@ -1,6 +1,7 @@
 package cz.muni.fi.pv168.project.ui.filters.matchers;
 
 import cz.muni.fi.pv168.project.ui.model.EntityTableModel;
+
 import javax.swing.RowFilter;
 
 /**

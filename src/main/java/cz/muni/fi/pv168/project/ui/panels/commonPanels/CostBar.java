@@ -18,7 +18,7 @@ public class CostBar extends ValidatedJPanel {
     private final ValidatedInputField costOfFuel = new ValidatedInputField(ValidatorFactory.doubleValidator());
     private final JComboBox<Currency> currencyJComboBox;
     private final CurrencyConverter currencyConverter;
-    private final ValidatedInputField rate = new ValidatedInputField(ValidatorFactory.doubleValidator());
+    private final ValidatedInputField rate = new ValidatedInputField(ValidatorFactory.doubleValidator(0.0000001f, Double.MAX_VALUE));
 
     public CostBar(ListModel<Currency> currencyModel, CurrencyConverter currencyConverter, ValidableListener validableListener) {
         super();
@@ -51,10 +51,20 @@ public class CostBar extends ValidatedJPanel {
         this.add(rate);
     }
 
-    public void SetValues(double costOfFuelval, double covertRateval, Currency currency) {
+    @Override
+    public boolean evaluate() {
+        return !isEmpty() && super.evaluate();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return currencyJComboBox.getSelectedItem() == null;
+    }
+
+    public void SetValues(double costOfFuelValue, double covertRateValue, Currency currency) {
         setCurrency(currency);
-        setConversionRateToDollars(covertRateval);
-        setCostOfFuelInDollars(costOfFuelval);
+        setConversionRateToDollars(covertRateValue);
+        setCostOfFuelInDollars(costOfFuelValue);
     }
 
     public double getCostOfFuelInDollars() {
@@ -62,7 +72,7 @@ public class CostBar extends ValidatedJPanel {
     }
 
     public void setCostOfFuelInDollars(double costOfFuel) {
-        this.costOfFuel.setText(String.valueOf(currencyConverter.convertFromDoolarsToConvRate(Double.parseDouble(rate.getText()), costOfFuel)));
+        this.costOfFuel.setText(String.valueOf(currencyConverter.convertFromDollarsToConvRate(Double.parseDouble(rate.getText()), costOfFuel)));
     }
 
     public double getConversionRateToDollars() {

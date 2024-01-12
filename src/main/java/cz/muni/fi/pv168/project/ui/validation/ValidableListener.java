@@ -1,7 +1,5 @@
 package cz.muni.fi.pv168.project.ui.validation;
 
-import cz.muni.fi.pv168.project.business.service.validation.Validator;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
