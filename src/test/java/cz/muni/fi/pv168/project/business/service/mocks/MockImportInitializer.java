@@ -10,10 +10,6 @@ import cz.muni.fi.pv168.project.data.IImportInitializer;
 import java.util.LinkedList;
 import java.util.List;
 
-import static cz.muni.fi.pv168.project.data.IImportInitializer.MODE.ADD;
-import static cz.muni.fi.pv168.project.data.IImportInitializer.MODE.INTERSECTION;
-import static cz.muni.fi.pv168.project.data.IImportInitializer.MODE.OVERWRITE;
-
 public class MockImportInitializer implements IImportInitializer {
 
     public final List<CarRide> carRideList = new LinkedList<>();
@@ -51,7 +47,7 @@ public class MockImportInitializer implements IImportInitializer {
                 list.clear();
                 list.addAll(newEntities);
             }
-            case INTERSECTION -> {}
+            case COMPLEMENT -> {}
         };
     }
 

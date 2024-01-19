@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.data.IImportInitializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -63,8 +62,8 @@ public class BatchImporterCarRideJSON extends Importer<CarRide> {
         };
 
         Function<List<CarRide>, Void> init = list -> {
-            initializer.initializeCategory(list.stream().map(CarRide::getCategory).toList(), IImportInitializer.MODE.INTERSECTION);
-            initializer.initializeCurrency(list.stream().map(CarRide::getCurrency).toList(), IImportInitializer.MODE.INTERSECTION);
+            initializer.initializeCategory(list.stream().map(CarRide::getCategory).toList(), IImportInitializer.MODE.COMPLEMENT);
+            initializer.initializeCurrency(list.stream().map(CarRide::getCurrency).toList(), IImportInitializer.MODE.COMPLEMENT);
             initializer.initializeCarRide(list, mode);
             return null;
         };

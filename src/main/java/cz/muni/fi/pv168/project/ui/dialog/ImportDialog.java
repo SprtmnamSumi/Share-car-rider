@@ -19,11 +19,12 @@ public class ImportDialog extends IODialog {
     private final static String IMPORT = "Import";
     private final static String CANCEL = "Cancel";
     private final static String OVERWRITE = "Overwrite";
+    private final static String COMPLEMENT = "Complement";
     private final WorkerProvider workerProvider;
     private final ImportInitializer importInitializer;
 
     ImportDialog(WorkerProvider workerProvider, ImportInitializer importInitializer) {
-        super("Import data", IMPORT, CANCEL, OVERWRITE);
+        super("Import data", CANCEL, OVERWRITE, COMPLEMENT, IMPORT);
         this.importInitializer = importInitializer;
         this.workerProvider = workerProvider;
 
@@ -42,14 +43,16 @@ public class ImportDialog extends IODialog {
                     if (OVERWRITE.equals(optionPane.getValue())) {
                         performOverwrite(getSelectedEntity(), getSelectedFile());
                     }
+                    if(COMPLEMENT.equals(optionPane.getValue())){
+                        performComplementImport(getSelectedEntity(), getSelectedFile());
+                    }
                 }
             }
         });
     }
 
-    private void Initialize(String importOption, File file, boolean overwrite) {
+    private void Initialize(String importOption, File file, IImportInitializer.MODE mode) {
         Logger.info("Importing data from file: " + file.getAbsolutePath());
-        IImportInitializer.MODE mode = overwrite ? IImportInitializer.MODE.OVERWRITE : IImportInitializer.MODE.ADD;
         Function<Void, Boolean> importFunction = switch (importOption) {
             case "Car Rides" ->
                     (x) -> new BatchImporterCarRideJSON().importData(file.toPath(), importInitializer, mode);
@@ -74,11 +77,15 @@ public class ImportDialog extends IODialog {
     }
 
     private void performImport(String importOption, File file) {
-        Initialize(importOption, file, false);
+        Initialize(importOption, file, IImportInitializer.MODE.ADD);
+    }
+
+    private void performComplementImport(String importOption, File file) {
+        Initialize(importOption, file, IImportInitializer.MODE.COMPLEMENT);
     }
 
     private void performOverwrite(String importOption, File file) {
         Logger.info("Performing overwrite before import from file: " + file.getAbsolutePath());
-        Initialize(importOption, file, true);
+        Initialize(importOption, file, IImportInitializer.MODE.OVERWRITE);
     }
 }

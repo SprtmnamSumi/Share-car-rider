@@ -1,6 +1,5 @@
 package cz.muni.fi.pv168.project.export;
 
-import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Template;
@@ -52,8 +51,8 @@ public class BatchImporterTemplateJSON extends Importer<Template> {
         };
 
         Function<List<Template>, Void> init = list -> {
-            initializer.initializeCategory(list.stream().map(Template::getCategory).toList(), IImportInitializer.MODE.INTERSECTION);
-            initializer.initializeCurrency(list.stream().map(Template::getCurrency).toList(), IImportInitializer.MODE.INTERSECTION);
+            initializer.initializeCategory(list.stream().map(Template::getCategory).toList(), IImportInitializer.MODE.COMPLEMENT);
+            initializer.initializeCurrency(list.stream().map(Template::getCurrency).toList(), IImportInitializer.MODE.COMPLEMENT);
             initializer.initializeTemplate(list, mode);
             return null;
         };

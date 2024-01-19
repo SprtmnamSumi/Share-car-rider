@@ -73,9 +73,9 @@ public class ImportInitializer implements IImportInitializer {
                     };
                     newEntities.forEach(crudService::create);
                 }
-                case INTERSECTION -> {
-                    List<T> existingEntities = crudService.findAll();
-                    newEntities.stream().distinct().filter(entity -> !existingEntities.contains(entity)).toList()
+                case COMPLEMENT -> {
+                    List<String> existingEntities = crudService.findAll().stream().map(Model::getGuid).toList();
+                    newEntities.stream().distinct().filter(entity -> !existingEntities.contains(entity.getGuid())).toList()
                             .forEach(crudService::create);
                 }
             }

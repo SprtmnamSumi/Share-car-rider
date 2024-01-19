@@ -5,6 +5,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -20,7 +21,6 @@ abstract class IODialog extends JDialog {
 
     IODialog(String title, String... actions) {
         super(Frame.getFrames()[0], title, true);
-        this.setResizable(false);
         entityOptionsComboBox.setSelectedIndex(0); // Default selection
 
         actionButton = new JButton(actions[0]);
@@ -33,7 +33,6 @@ abstract class IODialog extends JDialog {
                 actions,
                 actions[0]);
 
-        this.setContentPane(optionPane);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
@@ -50,6 +49,9 @@ abstract class IODialog extends JDialog {
             }
         });
         optionPane.addPropertyChangeListener(this::propertyChange);
+        this.setContentPane(optionPane);
+        this.setMinimumSize(new Dimension(this.getContentPane().getPreferredSize().width+25, this.getContentPane().getPreferredSize().height));
+        this.setResizable(false);
 
     }
     void forceSelectEntity(String entity){

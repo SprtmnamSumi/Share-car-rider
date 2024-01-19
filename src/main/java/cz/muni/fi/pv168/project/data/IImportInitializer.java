@@ -17,6 +17,6 @@ public interface IImportInitializer {
     void initializeTemplate(List<Template> templates, MODE mode);
 
     enum MODE{
-        ADD, OVERWRITE, INTERSECTION
+        ADD, OVERWRITE, COMPLEMENT
     }
 }
