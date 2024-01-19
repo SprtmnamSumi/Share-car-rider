@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.project.ui.action.DefaultActionFactory;
 import cz.muni.fi.pv168.project.ui.action.IOActionFactory;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.panels.AbstractTablePanel;
+import cz.muni.fi.pv168.project.util.ConversionUtils;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
@@ -13,6 +14,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.function.Consumer;
 
 /**
@@ -40,6 +42,7 @@ public class CategoryTablePanel extends AbstractTablePanel {
         table.getSelectionModel().addListSelectionListener(this::rowSelectionChanged);
         table.setDefaultRenderer(Integer.class, (table, value, isSelected, hasFocus, row, column) -> {
             DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+            renderer.setBackground(ConversionUtils.getDimColor((Integer) value));
             return renderer;
         });
 
