@@ -12,14 +12,13 @@ import cz.muni.fi.pv168.project.export.BatchExporterTemplateJSON;
 import cz.muni.fi.pv168.project.ui.filters.ICarRideTableFilter;
 import cz.muni.fi.pv168.project.ui.model.TableModel;
 import cz.muni.fi.pv168.project.ui.workers.WorkerProvider;
-import org.tinylog.Logger;
-
-import javax.swing.JOptionPane;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.util.List;
 import java.util.function.Function;
+import javax.swing.JOptionPane;
+import org.tinylog.Logger;
 
 
 public class ExportDialog extends IODialog {
@@ -32,10 +31,10 @@ public class ExportDialog extends IODialog {
     private ICarRideTableFilter carRideTableFilter;
 
     ExportDialog(WorkerProvider workerProvider, List<Model> data) {
-        super("Export Selection", EXPORT, CANCEL);
+        super("Export Selection", true, EXPORT, CANCEL);
         this.workerProvider = workerProvider;
         this.forceSelectEntity(getSupportedEntity(data));
-        initActions(()->export(getSelectedEntity(), getSelectedFile(), data));
+        initActions(() -> export(getSelectedEntity(), getSelectedFile(), data));
     }
 
     ExportDialog(WorkerProvider workerProvider,
@@ -43,16 +42,16 @@ public class ExportDialog extends IODialog {
                  TableModel<Template> templates,
                  TableModel<Currency> currencies,
                  TableModel<Category> categories) {
-        super("Export data", EXPORT, CANCEL);
+        super("Export data", true, EXPORT, CANCEL);
         this.workerProvider = workerProvider;
         this.carRideTableFilter = carRideTableFilter;
         this.templates = templates;
         this.currencies = currencies;
         this.categories = categories;
-        initActions(()->export(getSelectedEntity(), getSelectedFile()));
+        initActions(() -> export(getSelectedEntity(), getSelectedFile()));
     }
 
-    private void initActions(Runnable exportButtonAction){
+    private void initActions(Runnable exportButtonAction) {
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
@@ -111,7 +110,7 @@ public class ExportDialog extends IODialog {
         boolean success = workerProvider.submitTask(exportFunction,
                 () -> JOptionPane.showMessageDialog(this, "Export has NOT successfully finished."),
                 "Export");
-        if(!success){
+        if (!success) {
             Logger.info("Export did not start, because another IO action is in progress");
             JOptionPane.showMessageDialog(this, "Export did not start, because another IO action is in progress");
         }
