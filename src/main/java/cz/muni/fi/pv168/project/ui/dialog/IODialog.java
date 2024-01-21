@@ -26,26 +26,16 @@ abstract class IODialog extends JDialog {
         actionButton = new JButton(actions[0]);
         actionButton.setEnabled(false);
 
-        Object[] fileSelection;
-        if (showSelectData) {
-            Object[] objects = {"Select a file:", fileButton, "Select data:", entityOptionsComboBox};
-            fileSelection = objects;
-            optionPane = new JOptionPane(fileSelection,
-                    JOptionPane.PLAIN_MESSAGE,
-                    JOptionPane.YES_NO_OPTION,
-                    null,
-                    actions,
-                    actions[0]);
-        } else {
-            Object[] objects = {"Select a file:", fileButton};
-            fileSelection = objects;
-            optionPane = new JOptionPane(fileSelection,
-                    JOptionPane.PLAIN_MESSAGE,
-                    JOptionPane.YES_NO_OPTION,
-                    null,
-                    actions,
-                    actions[0]);
-        }
+        Object[] fileSelection = showSelectData
+                ? new Object[]{"Select a file:", fileButton, "Select data:", entityOptionsComboBox}
+                : new Object[]{"Select a file:", fileButton};
+
+        optionPane = new JOptionPane(fileSelection,
+                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.YES_NO_OPTION,
+                null,
+                actions,
+                actions[0]);
 
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
