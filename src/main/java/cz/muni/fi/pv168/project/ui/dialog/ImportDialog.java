@@ -21,7 +21,7 @@ public class ImportDialog extends IODialog {
     private final static String IMPORT = "Import";
     private final static String CANCEL = "Cancel";
     private final static String OVERWRITE = "Overwrite";
-    private final static String COMPLEMENT = "Complement";
+    private final static String COMPLEMENT = "Try-Import";
 
 
     private final WorkerProvider workerProvider;
@@ -108,7 +108,7 @@ public class ImportDialog extends IODialog {
             }
         };
         boolean success = workerProvider.submitTask(importFunction,
-                () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished, incorrect file format or try incorrect import option"),
+                () -> JOptionPane.showMessageDialog(this, "Import has NOT successfully finished, incorrect file format or incorrect import option"),
                 "Import");
         if (!success) {
             Logger.info("Import did not start, because another IO action is in progress");
