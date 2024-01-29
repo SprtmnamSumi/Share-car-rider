@@ -6,13 +6,8 @@ import cz.muni.fi.pv168.project.business.model.Currency;
 import cz.muni.fi.pv168.project.business.model.Model;
 import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.data.IImportInitializer;
-
 import java.util.LinkedList;
 import java.util.List;
-
-import static cz.muni.fi.pv168.project.data.IImportInitializer.MODE.ADD;
-import static cz.muni.fi.pv168.project.data.IImportInitializer.MODE.INTERSECTION;
-import static cz.muni.fi.pv168.project.data.IImportInitializer.MODE.OVERWRITE;
 
 public class MockImportInitializer implements IImportInitializer {
 
@@ -45,14 +40,15 @@ public class MockImportInitializer implements IImportInitializer {
     }
 
     private <T extends Model> void initialize(List<T> list, List<T> newEntities, MODE mode) {
-        switch(mode) {
+        switch (mode) {
             case ADD -> list.addAll(newEntities);
             case OVERWRITE -> {
                 list.clear();
                 list.addAll(newEntities);
             }
-            case INTERSECTION -> {}
-        };
+            case INTERSECTION -> {
+            }
+        }
     }
 
 }

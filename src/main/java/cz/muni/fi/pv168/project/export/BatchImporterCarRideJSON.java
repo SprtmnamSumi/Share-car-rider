@@ -3,18 +3,16 @@ package cz.muni.fi.pv168.project.export;
 import cz.muni.fi.pv168.project.business.model.CarRide;
 import cz.muni.fi.pv168.project.business.model.Category;
 import cz.muni.fi.pv168.project.business.model.Currency;
-import cz.muni.fi.pv168.project.business.model.Template;
 import cz.muni.fi.pv168.project.data.IImportInitializer;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.tinylog.Logger;
-
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.tinylog.Logger;
 
 
 public class BatchImporterCarRideJSON extends Importer<CarRide> {
@@ -27,7 +25,13 @@ public class BatchImporterCarRideJSON extends Importer<CarRide> {
             List<CarRide> carRideList = new LinkedList<>();
             JSONArray carRidesArray = json.getJSONArray("carrides");
 
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+            }
+
             for (int i = 0; i < carRidesArray.length(); i++) {
+
                 JSONObject carRideObject = carRidesArray.getJSONObject(i);
                 JSONObject currencyObject = carRideObject.getJSONObject("currency");
                 JSONObject categoryObject = carRideObject.getJSONObject("category");

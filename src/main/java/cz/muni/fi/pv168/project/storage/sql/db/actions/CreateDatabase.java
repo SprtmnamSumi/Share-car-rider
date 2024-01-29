@@ -14,7 +14,7 @@ public final class CreateDatabase {
         dbManager.initSchema();
 
         var initializer = injector.getInstance(Initializer.class);
-        initializer.initialize(15);
+        initializer.initialize(50);
 
         System.out.println("Database created...");
         System.out.println("Database connection string: " + dbManager.getDatabaseConnectionString());
